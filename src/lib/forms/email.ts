@@ -19,16 +19,29 @@ type OperationalKind = (typeof OPERATIONAL_KINDS)[number];
 const SUBJECTS: Record<OperationalKind, string> = {
   contact: "[Midwest Pixel Fest] General Contact",
   vendor_interest: "[Midwest Pixel Fest] Vendor Interest",
-  sponsor_inquiry: "[Midwest Pixel Fest] Sponsor Inquiry",
+  sponsor_inquiry: "[Midwest Pixel Fest] New Sponsorship Inquiry",
   volunteer_interest: "[Midwest Pixel Fest] Volunteer Interest",
   guest_inquiry: "[Midwest Pixel Fest] Guest Inquiry",
   press_inquiry: "[Midwest Pixel Fest] Press Inquiry",
 };
 
+function emailSubject(payload: DeliveryPayload, kind: OperationalKind): string {
+  if (kind === "sponsor_inquiry") {
+    const company =
+      typeof payload.fields.company === "string"
+        ? payload.fields.company.replace(/[\r\n]+/g, " ").trim().slice(0, 80)
+        : "";
+    return company
+      ? `[Midwest Pixel Fest] New Sponsorship Inquiry — ${company}`
+      : SUBJECTS.sponsor_inquiry;
+  }
+  return SUBJECTS[kind];
+}
+
 const KIND_LABELS: Record<OperationalKind, string> = {
   contact: "General Contact",
   vendor_interest: "Vendor Interest",
-  sponsor_inquiry: "Sponsor Inquiry",
+  sponsor_inquiry: "New Sponsorship Inquiry",
   volunteer_interest: "Volunteer Interest",
   guest_inquiry: "Guest Inquiry",
   press_inquiry: "Press Inquiry",
@@ -46,11 +59,12 @@ const FIELD_LABELS: Record<string, string> = {
   vendorType: "Vendor type",
   whatYouSell: "What you sell",
   notifyApplications: "Notify when applications open",
-  company: "Company / organization",
+  company: "Business / organization",
   phone: "Phone",
-  orgType: "Organization type",
-  partnership: "Partnership type",
-  budget: "Budget notes",
+  location: "Business location",
+  partnership: "Package interest",
+  interest: "Partnership interest",
+  involvement: "Desired involvement",
   notes: "Notes",
   ageRange: "Age range",
   areas: "Areas of interest",
@@ -187,6 +201,8 @@ export async function sendOperationalEmail(
     return { ok: false, code: "not_configured" };
   }
 
+  const kind = payload.kind;
+
   const apiKey = process.env.RESEND_API_KEY?.trim();
   const from = process.env.FORM_FROM_EMAIL?.trim();
   const to = process.env.CONTACT_NOTIFICATION_EMAIL?.trim();
@@ -204,9 +220,9 @@ export async function sendOperationalEmail(
     const { error } = await resend.emails.send({
       from,
       to,
-      subject: SUBJECTS[payload.kind],
-      html: buildHtml(payload, payload.kind),
-      text: buildText(payload, payload.kind),
+      subject: emailSubject(payload, kind),
+      html: buildHtml(payload, kind),
+      text: buildText(payload, kind),
       ...(replyTo ? { replyTo } : {}),
     });
 
@@ -217,7 +233,7 @@ export async function sendOperationalEmail(
           : "unknown";
       console.error("form_email_failed", {
         provider: "resend",
-        kind: payload.kind,
+        kind,
         name: errorName,
       });
       return { ok: false, code: "delivery_failed" };
@@ -227,7 +243,7 @@ export async function sendOperationalEmail(
   } catch {
     console.error("form_email_failed", {
       provider: "resend",
-      kind: payload.kind,
+      kind,
       name: "network_or_sdk",
     });
     return { ok: false, code: "delivery_failed" };

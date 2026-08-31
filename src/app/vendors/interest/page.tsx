@@ -41,7 +41,7 @@ export default function VendorInterestPage() {
       <RelatedLinks
         links={[
           { href: "/vendors", label: "Vendors" },
-          { href: "/sponsors/inquiry", label: "Sponsor Inquiry" },
+          { href: "/sponsors/inquiry", label: "Become a Sponsor" },
           { href: "/travel", label: "Travel" },
           { href: "/faq", label: "FAQ" },
         ]}

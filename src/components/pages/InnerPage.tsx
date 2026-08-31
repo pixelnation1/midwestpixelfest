@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { EventCta } from "@/components/cta/EventCta";
 import { Badge } from "@/components/ui/Badge";
 import { Container } from "@/components/ui/Container";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildBreadcrumbJsonLd } from "@/lib/structured-data";
+import type { AnalyticsEventName } from "@/lib/analytics";
 
 export type BreadcrumbItem = {
   name: string;
@@ -19,6 +21,13 @@ type InnerPageProps = {
   children: React.ReactNode;
   after?: React.ReactNode;
   className?: string;
+  meta?: React.ReactNode;
+  actions?: Array<{
+    href: string;
+    label: string;
+    variant?: "primary" | "secondary" | "ghost";
+    eventName?: AnalyticsEventName;
+  }>;
 };
 
 export function InnerPage({
@@ -31,6 +40,8 @@ export function InnerPage({
   children,
   after,
   className,
+  meta,
+  actions,
 }: InnerPageProps) {
   const crumbLabel = breadcrumbLabel ?? title;
   const breadcrumbs =
@@ -83,6 +94,26 @@ export function InnerPage({
             {title}
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{intro}</p>
+          {meta ? (
+            <p className="mt-4 font-display text-sm uppercase tracking-[0.16em] text-cyan sm:text-base">
+              {meta}
+            </p>
+          ) : null}
+          {actions && actions.length > 0 ? (
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+              {actions.map((action) => (
+                <EventCta
+                  key={action.href + action.label}
+                  href={action.href}
+                  label={action.label}
+                  variant={action.variant}
+                  size="lg"
+                  className="w-full sm:w-auto"
+                  eventName={action.eventName}
+                />
+              ))}
+            </div>
+          ) : null}
         </Container>
       </header>
       <Container className="py-12 sm:py-16">{children}</Container>

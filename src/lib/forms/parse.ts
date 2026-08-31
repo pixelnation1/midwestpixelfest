@@ -3,7 +3,6 @@ import {
   CONTACT_TYPES,
   COVERAGE_TYPES,
   GUEST_CATEGORIES,
-  PARTNERSHIP_TYPES,
   VENDOR_TYPES,
   VOLUNTEER_AREAS,
 } from "@/lib/forms/options";
@@ -24,6 +23,7 @@ import {
   stripControlChars,
   validateEmail,
 } from "@/lib/forms/validate";
+import { getSponsorshipInterestOptions } from "@/lib/sponsorships";
 
 function clean(value: string): string {
   return stripControlChars(value).trim();
@@ -121,18 +121,24 @@ export function parseAndValidate(
     const email = clean(readString(formData, "email"));
     const phone = clean(readString(formData, "phone"));
     const website = clean(readString(formData, "website"));
-    const orgType = clean(readString(formData, "orgType"));
+    const location = clean(readString(formData, "location"));
     const partnership = clean(readString(formData, "partnership"));
-    const budget = clean(readString(formData, "budget"));
+    const interest = clean(readString(formData, "interest"));
+    const involvement = clean(readString(formData, "involvement"));
     const notes = clean(readString(formData, "notes"));
-    addError(errors, "company", requiredText(company, "a company or organization", FIELD_LIMITS.medium));
+    addError(errors, "company", requiredText(company, "a business or organization name", FIELD_LIMITS.medium));
     addError(errors, "contactName", requiredText(contactName, "a contact name"));
     addError(errors, "email", validateEmail(email));
     addError(errors, "phone", optionalText(phone, "Phone", FIELD_LIMITS.phone));
     addError(errors, "website", optionalUrl(website));
-    addError(errors, "orgType", optionalText(orgType, "Organization type"));
-    addError(errors, "partnership", requireOneOf(partnership, PARTNERSHIP_TYPES, "a partnership type"));
-    addError(errors, "budget", optionalText(budget, "Budget notes", FIELD_LIMITS.medium));
+    addError(errors, "location", optionalText(location, "Business location"));
+    addError(
+      errors,
+      "partnership",
+      requireOneOf(partnership, getSponsorshipInterestOptions(), "a sponsorship interest"),
+    );
+    addError(errors, "interest", optionalText(interest, "Partnership interest", FIELD_LIMITS.message));
+    addError(errors, "involvement", optionalText(involvement, "Desired involvement", FIELD_LIMITS.message));
     addError(errors, "notes", optionalText(notes, "Notes", FIELD_LIMITS.message));
     Object.assign(fields, {
       company,
@@ -140,9 +146,10 @@ export function parseAndValidate(
       email,
       phone,
       website,
-      orgType,
+      location,
       partnership,
-      budget,
+      interest,
+      involvement,
       notes,
     });
   }
@@ -235,7 +242,10 @@ export function parseAndValidate(
 
   const consent = readString(formData, "contactConsent");
   if (kind !== "newsletter" && consent !== "on") {
-    errors.contactConsent = "Confirm that we may contact you about this inquiry.";
+    errors.contactConsent =
+      kind === "sponsor_inquiry"
+        ? "Confirm that this inquiry does not create a sponsorship agreement."
+        : "Confirm that we may contact you about this inquiry.";
   }
 
   if (Object.keys(errors).length > 0) {

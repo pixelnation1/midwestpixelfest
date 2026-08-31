@@ -65,7 +65,8 @@ export function Button({
       Boolean(external) ||
       href.startsWith("http://") ||
       href.startsWith("https://");
-    if (href.startsWith("mailto:") || isRemote) {
+    const isHash = href.startsWith("#");
+    if (href.startsWith("mailto:") || isRemote || isHash) {
       return (
         <a
           href={href}

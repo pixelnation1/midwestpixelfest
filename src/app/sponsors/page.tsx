@@ -1,139 +1,138 @@
 import type { Metadata } from "next";
+import { PackageGrid } from "@/components/sponsors/PackageGrid";
+import { SponsorFaq } from "@/components/sponsors/SponsorFaq";
+import { SponsorOpportunities } from "@/components/sponsors/SponsorOpportunities";
+import { SponsorshipComparison } from "@/components/sponsors/SponsorshipComparison";
+import { InnerPage } from "@/components/pages/InnerPage";
+import { TrackPageEvent } from "@/components/seo/TrackPageEvent";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { ContentSection } from "@/components/ui/ContentSection";
 import { CtaStrip } from "@/components/ui/CtaStrip";
-import { InfoCard } from "@/components/ui/InfoCard";
-import { InnerPage } from "@/components/pages/InnerPage";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
+import { ANALYTICS_EVENTS } from "@/lib/analytics";
 import { createPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
+import { sponsorshipFaqs, sponsorshipPaymentUrl } from "@/lib/sponsorships";
+import { buildFaqPageJsonLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Sponsor Midwest Pixel Fest | Partnership Opportunities",
+  title: "Sponsor Midwest Pixel Fest 2027 | Kansas Convention Partnerships",
   description:
-    "Sponsor Midwest Pixel Fest in Emporia, Kansas. Regional visibility with gamers, cosplayers, collectors, families, students, and creators. Packages and pricing are not published yet.",
+    "Sponsorship opportunities for Midwest Pixel Fest 2027 in Emporia, Kansas. Partner with a gaming, cosplay, collectibles, and community convention. Inquire about packages or a custom partnership — an inquiry is not an agreement.",
   path: "/sponsors",
 });
 
-const opportunities = [
+const whyPoints = [
   {
-    name: "Presenting Partner",
-    note: "Lead visibility across the inaugural weekend.",
+    title: "Meet the floor, not a generic audience slide",
+    body: "Midwest Pixel Fest is being built for people who play games, wear costumes, trade cards, and spend a weekend in a convention hall. Sponsorship puts your business next to that community in Emporia.",
   },
   {
-    name: "Gaming Area Partner",
-    note: "Association with free play, retro, or competitive space.",
+    title: "Help launch a new regional weekend",
+    body: "This is the inaugural year. Partners who show up now are part of standing up a Midwest convention — not buying a leftover logo on a finished poster.",
   },
   {
-    name: "Cosplay Partner",
-    note: "Support for contest, meetup, or photo programming.",
+    title: "Visibility tied to real programming",
+    body: "Recognition can live on the website, in sponsor listings, and on-site as the floor plan allows. Higher packages can discuss activations. Nothing here invents impression counts.",
   },
   {
-    name: "Tournament Partner",
-    note: "Brackets and side events once formats are locked.",
+    title: "Room to participate, not only to logo",
+    body: "Some partners want a listing. Others want to talk about gaming, cosplay, tournaments, or attendee experience. Those conversations start with an inquiry.",
   },
   {
-    name: "Stage / Panel Partner",
-    note: "Stages, screens, and featured conversations.",
+    title: "Local and regional businesses belong here",
+    body: "Emporia sits on a corridor that already moves people between Kansas City, Wichita, Topeka, Lawrence, and the rest of the region. Nearby shops, hospitality, and brands are part of the weekend we want.",
   },
   {
-    name: "Community Partner",
-    note: "Local and regional brands that want a floor presence.",
-  },
-  {
-    name: "Attendee experience",
-    note: "Wayfinding, comfort, and on-site moments that make the weekend easier to attend.",
-  },
-  {
-    name: "Hotel / Travel Partner",
-    note: "Room blocks and visitor support after the venue is public.",
-  },
-  {
-    name: "Local Business Partner",
-    note: "Emporia and surrounding businesses that want in on the weekend.",
+    title: "Digital and on-site recognition, package by package",
+    body: "What you get is whatever the package — and later the written agreement — actually includes. We will not promise placements we have not scoped.",
   },
 ];
-
-const inquiryHref = "/sponsors/inquiry";
-const inquiryLabel = "Sponsor Inquiry";
 
 export default function SponsorsPage() {
   return (
     <InnerPage
       path="/sponsors"
       breadcrumbLabel="Sponsors"
-      eyebrow="Partners"
-      title="Sponsor Midwest Pixel Fest"
-      intro={`${site.name} is looking for brands, hotels, and local organizations that want to help launch a regional convention in ${site.location} on ${site.dateLabel}. Official packages and pricing are not published yet.`}
+      eyebrow="Partner with the fest"
+      title="Sponsor Midwest Pixel Fest 2027"
+      intro="Midwest Pixel Fest is bringing gaming, cosplay, collectibles, creators, vendors, and community experiences together in Emporia, Kansas. Sponsorship is how local, regional, and interested national businesses can be part of that weekend."
+      meta={`${site.dateLabel} · ${site.location}`}
+      actions={[
+        { href: "#packages", label: "View Sponsorship Opportunities" },
+        {
+          href: "/sponsors/inquiry",
+          label: "Become a Sponsor",
+          variant: "secondary",
+        },
+      ]}
     >
-      <ContentSection title="Why sponsor">
+      <TrackPageEvent name={ANALYTICS_EVENTS.sponsor_page_view} />
+      <JsonLd data={buildFaqPageJsonLd(sponsorshipFaqs)} />
+
+      <ContentSection title="Why sponsor Midwest Pixel Fest">
         <p>
-          Sponsorship is about showing up where the Midwest already gathers for
-          games, costumes, and collectibles — and helping a new regional
-          weekend get on its feet in Emporia.
-        </p>
-        <p>
-          The audience we are building toward includes gamers, cosplayers,
-          collectors, families, students, creators, and local-to-regional
-          businesses. We will not invent attendance numbers to sell a deck.
+          You are not buying a guaranteed crowd size. You are associating your
+          business with a play-first convention in Emporia — games, cosplay,
+          collectibles, and the people who travel for that mix.
         </p>
       </ContentSection>
 
-      <ContentSection title="Who we want to work with">
+      <ul className="grid gap-4 md:grid-cols-2">
+        {whyPoints.map((item) => (
+          <li key={item.title} className="border border-line bg-panel p-6 sm:p-8">
+            <h3 className="font-display text-xl uppercase tracking-wide text-paper sm:text-2xl">
+              {item.title}
+            </h3>
+            <p className="mt-3 text-muted">{item.body}</p>
+          </li>
+        ))}
+      </ul>
+
+      <PackageGrid />
+      <SponsorshipComparison />
+      <SponsorOpportunities />
+
+      <ContentSection title="How sponsorship works">
         <p>
-          Game shops, collectible brands, hospitality, civic partners, campuses,
-          media, and companies that already talk to this crowd. Custom
-          partnerships are on the table once the weekend shape is locked.
+          Inquiry, then review, then approval, then a written agreement, then
+          payment. This website does not collect card information and does not
+          reserve a package when you submit the form.
         </p>
+        {sponsorshipPaymentUrl ? (
+          <p>Payment instructions are shared after an agreement is in place.</p>
+        ) : (
+          <p>
+            Payment terms are provided after a sponsorship is approved and
+            finalized.
+          </p>
+        )}
       </ContentSection>
 
-      <div className="py-8">
-        <h2 className="font-display text-3xl uppercase tracking-wide sm:text-4xl">
-          Sponsorship opportunities
-        </h2>
-        <p className="mt-4 max-w-3xl text-muted">
-          These are categories, not priced tiers. Dollar amounts, inclusions,
-          and a downloadable deck will be posted when they are real.
-        </p>
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-          {opportunities.map((item) => (
-            <li key={item.name}>
-              <InfoCard title={item.name}>
-                <p>{item.note}</p>
-              </InfoCard>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <ContentSection title="Custom partnerships">
-        <p>
-          If a category above is close but not right, say so when inquiry opens.
-          Activations will be built around the actual floor, not a generic
-          sponsor grid copied from another show.
-        </p>
-      </ContentSection>
+      <SponsorFaq />
 
       <CtaStrip
-        title="Request sponsorship information"
+        title="Ready to talk?"
         actions={[
-          { href: inquiryHref, label: inquiryLabel },
+          { href: "/sponsors/inquiry", label: "Become a Sponsor" },
           { href: "/about", label: "About Midwest Pixel Fest", variant: "secondary" },
           { href: "/press", label: "Press", variant: "secondary" },
         ]}
       >
         <p>
-          Use the sponsor inquiry form to introduce your organization.
-          Submitting it does not create a sponsorship agreement. A prospectus
-          will be posted here when it exists.
+          Introduce your business on the inquiry form. We will follow up using
+          the contact information you provide. Submitting the form does not
+          create a sponsorship agreement.
         </p>
       </CtaStrip>
 
       <RelatedLinks
         links={[
+          { href: "/sponsors/inquiry", label: "Become a Sponsor" },
           { href: "/about", label: "About" },
-          { href: "/press", label: "Press" },
           { href: "/vendors", label: "Vendors" },
-          { href: "/news", label: "News" },
+          { href: "/press", label: "Press" },
+          { href: "/contact", label: "Contact" },
         ]}
       />
     </InnerPage>

@@ -22,9 +22,9 @@ const paths = [
   {
     eyebrow: "Sponsors",
     title: "Partner with the fest",
-    body: "Packages are still in progress. An inquiry is not a sponsorship agreement.",
-    primary: { href: "/sponsors/inquiry", label: "Sponsor Inquiry" },
-    secondary: { href: "/sponsors", label: "Sponsors", variant: "secondary" as const },
+    body: "Want to put your business in front of the Midwest Pixel Fest community? An inquiry is not a sponsorship agreement.",
+    primary: { href: "/sponsors", label: "View Sponsorship Opportunities" },
+    secondary: { href: "/sponsors/inquiry", label: "Become a Sponsor", variant: "secondary" as const },
   },
   {
     eyebrow: "Creators / Guests",

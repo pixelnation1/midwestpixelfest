@@ -1,6 +1,7 @@
 import { getAllNews } from "@/content/news";
 import { getAllGuests } from "@/content/guests";
 import { absoluteUrl } from "@/lib/site";
+import { getPublishedSponsors } from "@/lib/sponsorships";
 
 /**
  * Public routes included in the sitemap today.
@@ -21,8 +22,8 @@ export const publicRoutes = [
   { path: "/vendors", changeFrequency: "monthly" as const, priority: 0.7 },
   { path: "/vendors/interest", changeFrequency: "monthly" as const, priority: 0.5 },
   { path: "/travel", changeFrequency: "monthly" as const, priority: 0.7 },
-  { path: "/sponsors", changeFrequency: "monthly" as const, priority: 0.6 },
-  { path: "/sponsors/inquiry", changeFrequency: "monthly" as const, priority: 0.5 },
+  { path: "/sponsors", changeFrequency: "monthly" as const, priority: 0.7 },
+  { path: "/sponsors/inquiry", changeFrequency: "monthly" as const, priority: 0.6 },
   { path: "/faq", changeFrequency: "monthly" as const, priority: 0.6 },
   { path: "/volunteer", changeFrequency: "monthly" as const, priority: 0.5 },
   { path: "/volunteer/interest", changeFrequency: "monthly" as const, priority: 0.4 },
@@ -81,5 +82,16 @@ export async function getDynamicSitemapEntries(): Promise<SitemapEntry[]> {
     priority: 0.7,
   }));
 
-  return [...news, ...guestProfiles];
+  const partnerDirectory =
+    getPublishedSponsors().length > 0
+      ? [
+          {
+            url: absoluteUrl("/sponsors/partners"),
+            changeFrequency: "weekly" as const,
+            priority: 0.6,
+          },
+        ]
+      : [];
+
+  return [...news, ...guestProfiles, ...partnerDirectory];
 }

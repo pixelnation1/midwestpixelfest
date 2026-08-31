@@ -7,6 +7,10 @@ export const ANALYTICS_EVENTS = {
   guest_inquiry_submit: "guest_inquiry_submit",
   press_inquiry_submit: "press_inquiry_submit",
   contact_submit: "contact_submit",
+  sponsor_page_view: "sponsor_page_view",
+  sponsor_package_select: "sponsor_package_select",
+  sponsor_inquiry_start: "sponsor_inquiry_start",
+  sponsor_custom_partnership_click: "sponsor_custom_partnership_click",
 } as const;
 
 export type AnalyticsEventName =

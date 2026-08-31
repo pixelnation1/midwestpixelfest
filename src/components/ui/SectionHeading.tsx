@@ -8,6 +8,7 @@ type SectionHeadingProps = {
   align?: "left" | "center";
   tone?: "magenta" | "cyan" | "gold" | "lime";
   className?: string;
+  id?: string;
 };
 
 export function SectionHeading({
@@ -17,6 +18,7 @@ export function SectionHeading({
   align = "left",
   tone = "magenta",
   className,
+  id,
 }: SectionHeadingProps) {
   return (
     <div
@@ -31,7 +33,10 @@ export function SectionHeading({
           {eyebrow}
         </Badge>
       ) : null}
-      <h2 className="font-display text-4xl uppercase leading-[0.95] tracking-wide text-paper sm:text-5xl lg:text-6xl">
+      <h2
+        id={id}
+        className="font-display text-4xl uppercase leading-[0.95] tracking-wide text-paper sm:text-5xl lg:text-6xl"
+      >
         {title}
       </h2>
       {description ? (

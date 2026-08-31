@@ -159,6 +159,7 @@ export const footerGroups = [
     links: [
       { href: "/vendors", label: "Vendors" },
       { href: "/sponsors", label: "Sponsors" },
+      { href: "/sponsors/inquiry", label: "Become a Sponsor" },
       { href: "/volunteer", label: "Volunteer" },
       { href: "/guests/inquiry", label: "Guest Inquiry" },
       { href: "/press", label: "Press" },
@@ -351,7 +352,7 @@ export function getFaqs() {
     {
       question: "Can my business sponsor?",
       answer:
-        "Yes — introduce your organization on the sponsor inquiry form. Categories are outlined on the Sponsors page. Submitting that form does not create a sponsorship agreement, and dollar amounts are not published yet.",
+        "Yes. Sponsorship packages and custom partnership conversations live on the Sponsors page. Start with the inquiry form. Submitting that form does not create a sponsorship agreement, reserve a package, or collect payment. Prices are confirmed in writing after review.",
     },
     {
       question: "Can I volunteer?",

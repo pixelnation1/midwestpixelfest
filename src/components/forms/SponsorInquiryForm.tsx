@@ -1,28 +1,29 @@
 "use client";
 
-import { ConsentCheckbox } from "@/components/forms/ConsentCheckbox";
+import { Checkbox } from "@/components/forms/Checkbox";
 import { InquiryForm } from "@/components/forms/InquiryForm";
 import { Select } from "@/components/forms/Select";
 import { TextArea } from "@/components/forms/TextArea";
 import { TextInput } from "@/components/forms/TextInput";
-import { formOptionLists } from "@/lib/forms/options";
 import { FIELD_LIMITS } from "@/lib/forms/validate";
+import { getSponsorshipInterestOptions } from "@/lib/sponsorships";
 
-export function SponsorInquiryForm() {
+type SponsorInquiryFormProps = {
+  defaultInterest?: string;
+};
+
+export function SponsorInquiryForm({ defaultInterest }: SponsorInquiryFormProps) {
   return (
     <InquiryForm
       kind="sponsor_inquiry"
-      submitLabel="Send Sponsor Inquiry"
-      successTitle="Your interest has been received"
+      submitLabel="Send Sponsorship Inquiry"
+      successTitle="Sponsorship inquiry received."
+      successNote={null}
+      successLinks={[
+        { href: "/sponsors", label: "Return to Sponsors" },
+        { href: "/", label: "Explore Midwest Pixel Fest" },
+      ]}
     >
-      <TextInput
-        id="sponsor-company"
-        name="company"
-        label="Company / Organization"
-        required
-        autoComplete="organization"
-        maxLength={FIELD_LIMITS.medium}
-      />
       <TextInput
         id="sponsor-contact"
         name="contactName"
@@ -30,6 +31,14 @@ export function SponsorInquiryForm() {
         required
         autoComplete="name"
         maxLength={FIELD_LIMITS.short}
+      />
+      <TextInput
+        id="sponsor-company"
+        name="company"
+        label="Business / Organization Name"
+        required
+        autoComplete="organization"
+        maxLength={FIELD_LIMITS.medium}
       />
       <TextInput
         id="sponsor-email"
@@ -51,39 +60,54 @@ export function SponsorInquiryForm() {
       <TextInput
         id="sponsor-website"
         name="website"
-        label="Website"
+        label="Business Website"
         type="text"
         autoComplete="url"
         maxLength={FIELD_LIMITS.url}
       />
       <TextInput
-        id="sponsor-org-type"
-        name="orgType"
-        label="Type of organization"
-        maxLength={FIELD_LIMITS.short}
+        id="sponsor-location"
+        name="location"
+        label="Business Location"
+        autoComplete="address-level2"
+        maxLength={FIELD_LIMITS.medium}
       />
       <Select
         id="sponsor-partnership"
         name="partnership"
-        label="What kind of partnership are you interested in?"
+        label="Sponsorship Interest"
         required
-        options={formOptionLists.partnershipTypes}
+        options={getSponsorshipInterestOptions()}
+        defaultValue={defaultInterest}
+        hint="Working package names. Choosing one does not reserve it."
       />
-      <TextInput
-        id="sponsor-budget"
-        name="budget"
-        label="Budget notes"
-        hint="Optional. A range or general note is enough — we are not asking for an exact amount."
-        maxLength={FIELD_LIMITS.medium}
+      <TextArea
+        id="sponsor-interest"
+        name="interest"
+        label="What interests you about partnering with Midwest Pixel Fest?"
+        rows={4}
+        maxLength={FIELD_LIMITS.message}
+      />
+      <TextArea
+        id="sponsor-involvement"
+        name="involvement"
+        label="How would you like your business involved?"
+        rows={4}
+        maxLength={FIELD_LIMITS.message}
       />
       <TextArea
         id="sponsor-notes"
         name="notes"
-        label="Notes"
-        rows={5}
+        label="Additional Notes"
+        rows={4}
         maxLength={FIELD_LIMITS.message}
       />
-      <ConsentCheckbox />
+      <Checkbox
+        id="contactConsent"
+        name="contactConsent"
+        required
+        label="I understand this inquiry does not create a sponsorship agreement."
+      />
     </InquiryForm>
   );
 }

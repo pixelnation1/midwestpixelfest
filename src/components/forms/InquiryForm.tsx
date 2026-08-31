@@ -25,6 +25,8 @@ type InquiryFormProps = {
   kind: FormKind;
   submitLabel: string;
   successTitle: string;
+  successNote?: string | null;
+  successLinks?: Array<{ href: string; label: string }>;
   children: React.ReactNode;
 };
 
@@ -32,6 +34,8 @@ export function InquiryForm({
   kind,
   submitLabel,
   successTitle,
+  successNote,
+  successLinks,
   children,
 }: InquiryFormProps) {
   const [state, action, pending] = useActionState(submitForm, idleFormState);
@@ -43,7 +47,14 @@ export function InquiryForm({
   }, [kind, state.status]);
 
   if (state.status === "success") {
-    return <FormSuccess title={successTitle} message={state.message} />;
+    return (
+      <FormSuccess
+        title={successTitle}
+        message={state.message}
+        note={successNote}
+        links={successLinks}
+      />
+    );
   }
 
   return (

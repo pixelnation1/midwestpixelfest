@@ -12,6 +12,7 @@ type SelectProps = {
   placeholder?: string;
   error?: string;
   hint?: string;
+  defaultValue?: string;
 };
 
 export function Select({
@@ -23,12 +24,15 @@ export function Select({
   placeholder = "Select one",
   error,
   hint,
+  defaultValue,
 }: SelectProps) {
   const fieldError = useFieldError(name, error);
   const describedBy =
     [hint ? `${id}-hint` : null, fieldError ? `${id}-error` : null]
       .filter(Boolean)
       .join(" ") || undefined;
+  const selected =
+    defaultValue && options.includes(defaultValue) ? defaultValue : "";
 
   return (
     <FormField id={id} label={label} required={required} hint={hint} error={fieldError}>
@@ -36,7 +40,7 @@ export function Select({
         id={id}
         name={name}
         required={required}
-        defaultValue=""
+        defaultValue={selected}
         aria-invalid={fieldError ? true : undefined}
         aria-describedby={describedBy}
         className={inputBorder(fieldError)}

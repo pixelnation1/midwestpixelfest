@@ -11,6 +11,7 @@ type EventCtaProps = {
   size?: "md" | "lg";
   className?: string;
   eventName?: AnalyticsEventName;
+  eventPayload?: Record<string, string | number | boolean>;
   external?: boolean;
   onClick?: () => void;
 };
@@ -22,6 +23,7 @@ export function EventCta({
   size = "md",
   className,
   eventName,
+  eventPayload,
   external = false,
   onClick,
 }: EventCtaProps) {
@@ -34,7 +36,10 @@ export function EventCta({
       external={external}
       onClick={() => {
         if (eventName) {
-          trackEvent(eventName, eventName === "ticket_click" ? { outbound: external } : undefined);
+          const payload =
+            eventPayload ??
+            (eventName === "ticket_click" ? { outbound: external } : undefined);
+          trackEvent(eventName, payload);
         }
         onClick?.();
       }}

@@ -145,11 +145,13 @@ export function buildBreadcrumbJsonLd(
   };
 }
 
-export function buildFaqPageJsonLd(): JsonLd {
+export function buildFaqPageJsonLd(
+  items: ReadonlyArray<{ question: string; answer: string }> = faqs,
+): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((item) => ({
+    mainEntity: items.map((item) => ({
       "@type": "Question",
       name: item.question,
       acceptedAnswer: {
