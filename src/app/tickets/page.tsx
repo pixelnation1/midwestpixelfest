@@ -2,16 +2,21 @@ import type { Metadata } from "next";
 import { Badge } from "@/components/ui/Badge";
 import { EmailSignup } from "@/components/home/EmailSignup";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { createPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Tickets",
-  description: `Badge sales for ${site.name}. Tickets are not on sale yet.`,
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "Tickets | Midwest Pixel Fest",
+  description:
+    "Midwest Pixel Fest badges are not on sale yet. Join the list for the on-sale window, pricing, and badge types for the Emporia, Kansas convention.",
+  path: "/tickets",
+});
 
 export default function TicketsPage() {
   return (
     <InnerPage
+      path="/tickets"
+      breadcrumbLabel="Tickets"
       eyebrow="Badges"
       title="Get tickets"
       intro={`${site.dateLabel}. Weekend badges, day badges, and special access options will be posted here when sales open. Nothing is for sale yet.`}

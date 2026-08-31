@@ -20,10 +20,10 @@ export function Hero() {
         aria-hidden="true"
         style={{ animationDelay: "1.4s" }}
       />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 overflow-hidden">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 overflow-hidden" aria-hidden="true">
         <div className="hero-floor h-[420px] w-full opacity-80" />
       </div>
-      <div className="scanlines absolute inset-0 opacity-40" />
+      <div className="scanlines absolute inset-0 opacity-40" aria-hidden="true" />
 
       <Container className="relative flex min-h-[calc(100dvh-4rem)] flex-col justify-center py-16 sm:py-24">
         <div className="flex flex-wrap items-center gap-3">

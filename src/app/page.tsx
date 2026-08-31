@@ -7,6 +7,14 @@ import { FeaturedGuests } from "@/components/home/FeaturedGuests";
 import { GamingPreview } from "@/components/home/GamingPreview";
 import { Hero } from "@/components/home/Hero";
 import { VendorsSection } from "@/components/home/VendorsSection";
+import { createPageMetadata } from "@/lib/seo";
+import { site } from "@/lib/site";
+
+export const metadata = createPageMetadata({
+  title: site.defaultTitle,
+  description: site.description,
+  path: "/",
+});
 
 export default function HomePage() {
   return (

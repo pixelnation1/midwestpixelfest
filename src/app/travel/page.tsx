@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { createPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Travel",
-  description: `Getting to ${site.name} in ${site.location} — driving, hotels, and local info.`,
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "Travel to Midwest Pixel Fest | Emporia, Kansas",
+  description:
+    "Travel information for Midwest Pixel Fest in Emporia, Kansas — driving, hotels, and nearby airports. Venue and hotel blocks will be posted with the official dates.",
+  path: "/travel",
+});
 
 export default function TravelPage() {
   return (
     <InnerPage
+      path="/travel"
+      breadcrumbLabel="Travel"
       eyebrow="Getting here"
       title="Travel"
       intro={`${site.name} is based in ${site.location}, a college town on the I-35 corridor. Hotel blocks, parking maps, and venue addresses will publish with the official dates.`}

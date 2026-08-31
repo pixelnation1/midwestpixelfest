@@ -1,24 +1,32 @@
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/Button";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { createPageMetadata } from "@/lib/seo";
 import { gamingPillars } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Gaming",
+export const metadata: Metadata = createPageMetadata({
+  title: "Gaming at Midwest Pixel Fest | Tournaments, Retro Gaming & TCGs",
   description:
-    "Retro gaming, console tournaments, tabletop, trading card games, and free play at Midwest Pixel Fest.",
-};
+    "Retro gaming, console tournaments, tabletop, trading card games, and free play at Midwest Pixel Fest in Emporia, Kansas.",
+  path: "/gaming",
+});
 
 export default function GamingPage() {
   return (
     <InnerPage
+      path="/gaming"
+      breadcrumbLabel="Gaming"
       eyebrow="Press start"
       title="Gaming"
       intro="Midwest Pixel Fest is being built as a play-first convention. Expect dedicated space for retro hardware, console competition, tabletop, trading card games, and open free play."
     >
       <ul className="grid gap-4 md:grid-cols-2">
         {gamingPillars.map((pillar) => (
-          <li key={pillar.title} className="border border-line bg-panel p-8" id={pillar.title === "Trading Card Games" ? "tcg" : undefined}>
+          <li
+            key={pillar.title}
+            className="scroll-mt-24 border border-line bg-panel p-8"
+            id={pillar.slug}
+          >
             <h2 className="font-display text-3xl uppercase tracking-wide">
               {pillar.title}
             </h2>

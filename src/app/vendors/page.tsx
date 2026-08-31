@@ -3,16 +3,20 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { EmailSignup } from "@/components/home/EmailSignup";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Vendors",
+export const metadata: Metadata = createPageMetadata({
+  title: "Vendors & Artist Alley | Midwest Pixel Fest",
   description:
-    "Vendor and artist applications for Midwest Pixel Fest in Emporia, Kansas.",
-};
+    "Vendor hall and artist alley applications for Midwest Pixel Fest in Emporia, Kansas. Applications are not open yet.",
+  path: "/vendors",
+});
 
 export default function VendorsPage() {
   return (
     <InnerPage
+      path="/vendors"
+      breadcrumbLabel="Vendors"
       eyebrow="Sell at the fest"
       title="Vendors & artists"
       intro="Applications are not open yet. When they are, this page is the official place to apply for vendor hall and artist alley space."

@@ -8,13 +8,17 @@ export default function NotFound() {
         404
       </p>
       <h1 className="mt-4 font-display text-6xl uppercase tracking-wide">
-        This screen does not exist
+        Player not found
       </h1>
       <p className="mt-4 max-w-lg text-muted">
-        The page you are looking for is not on the map. Head back to the floor.
+        This page is not on the map. Head back to the floor or check the
+        schedule while we keep building the weekend.
       </p>
-      <div className="mt-8">
+      <div className="mt-8 flex flex-wrap gap-4">
         <Button href="/">Back to Home</Button>
+        <Button href="/schedule" variant="secondary">
+          View Schedule
+        </Button>
       </div>
     </Container>
   );

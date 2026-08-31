@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { Badge } from "@/components/ui/Badge";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { createPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Schedule",
-  description: `Programming, panels, and tournaments at ${site.name}.`,
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "Midwest Pixel Fest Schedule | Panels, Gaming & Events",
+  description:
+    "The Midwest Pixel Fest schedule for panels, gaming, cosplay, and events in Emporia, Kansas. Times will be posted as the 2027 weekend is locked.",
+  path: "/schedule",
+});
 
 const blocks = [
   {
@@ -31,6 +34,8 @@ const blocks = [
 export default function SchedulePage() {
   return (
     <InnerPage
+      path="/schedule"
+      breadcrumbLabel="Schedule"
       eyebrow="Programming"
       title="Schedule"
       intro={`${site.dateLabel}. The official hour-by-hour grid will publish closer to the event. Here is the weekend shape we are building toward.`}

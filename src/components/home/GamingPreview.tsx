@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -17,19 +18,21 @@ export function GamingPreview() {
 
         <ul className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {gamingPillars.map((pillar, index) => (
-            <li
-              key={pillar.title}
-              className="border border-line bg-panel p-5 transition-colors hover:border-cyan hover:bg-panel-2"
-            >
-              <p className="font-pixel text-[10px] uppercase tracking-[0.2em] text-cyan">
-                0{index + 1}
-              </p>
-              <h3 className="mt-3 font-display text-2xl uppercase leading-tight tracking-wide">
-                {pillar.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted">
-                {pillar.description}
-              </p>
+            <li key={pillar.title}>
+              <Link
+                href={pillar.href}
+                className="block h-full border border-line bg-panel p-5 transition-colors hover:border-cyan hover:bg-panel-2"
+              >
+                <p className="font-pixel text-[10px] uppercase tracking-[0.2em] text-cyan">
+                  0{index + 1}
+                </p>
+                <h3 className="mt-3 font-display text-2xl uppercase leading-tight tracking-wide">
+                  {pillar.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted">
+                  {pillar.description}
+                </p>
+              </Link>
             </li>
           ))}
         </ul>

@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 export function CosplaySection() {
   return (
     <section className="relative overflow-hidden border-b border-line bg-ink-2 py-20 sm:py-28">
-      <div className="pointer-events-none absolute inset-0">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="stage-light absolute left-1/4 top-0 h-72 w-32 -translate-x-1/2 bg-gradient-to-b from-magenta/35 to-transparent blur-2xl" />
         <div
           className="stage-light absolute left-1/2 top-0 h-80 w-40 -translate-x-1/2 bg-gradient-to-b from-cyan/30 to-transparent blur-2xl"

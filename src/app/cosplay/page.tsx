@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/Button";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Cosplay",
+export const metadata: Metadata = createPageMetadata({
+  title: "Cosplay at Midwest Pixel Fest | Contests, Meetups & Community",
   description:
     "Cosplay contests, meetups, and community programming at Midwest Pixel Fest in Emporia, Kansas.",
-};
+  path: "/cosplay",
+});
 
 export default function CosplayPage() {
   return (
     <InnerPage
+      path="/cosplay"
+      breadcrumbLabel="Cosplay"
       eyebrow="Costume & character"
       title="Cosplay takes center stage"
       intro="Cosplay is not a side stage at Midwest Pixel Fest. Contests, creator meetups, and a floor that welcomes first-timers and veterans are part of the inaugural weekend."

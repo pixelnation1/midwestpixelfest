@@ -9,6 +9,6 @@ export const alt = shareImageAlt;
 export const size = shareImageSize;
 export const contentType = shareImageContentType;
 
-export default function OpenGraphImage() {
+export default function TwitterImage() {
   return generateShareImage();
 }

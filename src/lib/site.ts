@@ -1,14 +1,61 @@
+export const siteUrl = "https://midwestpixelfest.com";
+
+export type Venue = {
+  name: string;
+  streetAddress: string | null;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode: string | null;
+  addressCountry: "US";
+};
+
+/**
+ * Event facts used by metadata and JSON-LD.
+ * Keep startDate, endDate, and venue null until they are officially announced.
+ * Event schema will not render until all three are present.
+ */
+export const event = {
+  status: "tba" as const,
+  year: 2027,
+  startDate: null as string | null,
+  endDate: null as string | null,
+  venue: null as Venue | null,
+  ticketUrl: null as string | null,
+};
+
 export const site = {
   name: "Midwest Pixel Fest",
   shortName: "Pixel Fest",
   organizer: "PixelNation",
   location: "Emporia, Kansas",
-  year: 2027,
+  city: "Emporia",
+  region: "Kansas",
+  regionCode: "KS",
+  country: "US",
+  year: event.year,
   dateLabel: "2027 — Date To Be Announced",
   tagline: "Gaming • Cosplay • Collectibles • Community",
   description:
     "Midwest Pixel Fest brings gaming, cosplay, collectibles, creators, vendors and community together in Emporia, Kansas.",
+  defaultTitle:
+    "Midwest Pixel Fest | Gaming, Cosplay & Pop Culture Convention in Kansas",
+  siteUrl,
+  ogImagePath: "/opengraph-image",
+  twitterImagePath: "/twitter-image",
 } as const;
+
+export function absoluteUrl(path = "/"): string {
+  if (path === "/") {
+    return site.siteUrl;
+  }
+  return `${site.siteUrl}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+export function isEventSchemaReady(
+  value = event,
+): value is typeof event & { startDate: string; endDate: string; venue: Venue } {
+  return Boolean(value.startDate && value.endDate && value.venue?.name);
+}
 
 export const navItems = [
   { href: "/", label: "Home" },
@@ -23,10 +70,10 @@ export const navItems = [
 ] as const;
 
 export const socialLinks = [
-  { name: "Facebook", href: "#", comingSoon: true },
-  { name: "Instagram", href: "#", comingSoon: true },
-  { name: "YouTube", href: "#", comingSoon: true },
-  { name: "TikTok", href: "#", comingSoon: true },
+  { name: "Facebook", href: null as string | null, comingSoon: true },
+  { name: "Instagram", href: null as string | null, comingSoon: true },
+  { name: "YouTube", href: null as string | null, comingSoon: true },
+  { name: "TikTok", href: null as string | null, comingSoon: true },
 ] as const;
 
 export const exploreCards = [
@@ -107,22 +154,32 @@ export const guestPlaceholders = [
 export const gamingPillars = [
   {
     title: "Retro Gaming",
+    slug: "retro-gaming",
+    href: "/gaming#retro-gaming",
     description: "Classic hardware, cabinets, and the games that started it.",
   },
   {
     title: "Console Tournaments",
+    slug: "console-tournaments",
+    href: "/gaming#console-tournaments",
     description: "Brackets, side events, and a crowd that actually watches.",
   },
   {
     title: "Tabletop Gaming",
+    slug: "tabletop",
+    href: "/gaming#tabletop",
     description: "Open tables, library games, and space to sit down and play.",
   },
   {
     title: "Trading Card Games",
+    slug: "tcg",
+    href: "/gaming#tcg",
     description: "Casual trades, constructed events, and sealed when we can.",
   },
   {
     title: "Free Play",
+    slug: "free-play",
+    href: "/gaming#free-play",
     description: "Grab a controller. No signup required. Stay as long as you want.",
   },
 ] as const;

@@ -48,7 +48,7 @@ export function ExploreTheFest() {
                 </h3>
                 <p className="mt-3 flex-1 text-muted">{card.description}</p>
                 <span className="mt-6 font-display text-sm uppercase tracking-[0.2em] text-paper/70 group-hover:text-inherit">
-                  Enter ▸
+                  View {card.title} ▸
                 </span>
               </Link>
             </li>

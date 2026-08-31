@@ -2,12 +2,15 @@ import type { Metadata } from "next";
 import { Badge } from "@/components/ui/Badge";
 import { EmailSignup } from "@/components/home/EmailSignup";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { createPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Sponsors",
-  description: `Sponsorship opportunities for ${site.name}, presented by ${site.organizer}.`,
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "Sponsor Midwest Pixel Fest | Partnership Opportunities",
+  description:
+    "Sponsorship and partnership opportunities for Midwest Pixel Fest, presented by PixelNation in Emporia, Kansas. Official packages are in progress.",
+  path: "/sponsors",
+});
 
 const tiers = [
   {
@@ -27,6 +30,8 @@ const tiers = [
 export default function SponsorsPage() {
   return (
     <InnerPage
+      path="/sponsors"
+      breadcrumbLabel="Sponsors"
       eyebrow="Partners"
       title="Sponsors"
       intro={`${site.name} is looking for brands, venues, hotels, and local organizations that want to help launch a serious regional convention in ${site.location}. Official packages are in progress.`}
