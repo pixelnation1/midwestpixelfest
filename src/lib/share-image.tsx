@@ -5,6 +5,11 @@ export const shareImageAlt =
 export const shareImageSize = { width: 1200, height: 630 };
 export const shareImageContentType = "image/png";
 
+/**
+ * Share cards stay generated artwork. The full JPG logo is too detailed
+ * (and too large) to rasterize reliably inside ImageResponse, and it would
+ * also be unreadable if used as the entire 1200×630 card.
+ */
 export function generateShareImage() {
   return new ImageResponse(
     (

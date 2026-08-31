@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PixelLogo } from "@/components/brand/PixelLogo";
+import { SiteLogo } from "@/components/brand/SiteLogo";
 import { Container } from "@/components/ui/Container";
 import {
   footerGroups,
@@ -16,20 +16,35 @@ export function Footer() {
     <footer className="mt-auto border-t border-line bg-ink-2">
       <Container className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <Link href="/" className="inline-flex items-center gap-3 text-paper">
-            <PixelLogo size={40} />
-            <span className="font-display text-2xl uppercase tracking-[0.12em]">
-              {site.name}
-            </span>
+          <Link
+            href="/"
+            className="inline-flex items-center text-paper"
+            aria-label={`${site.name} home`}
+          >
+            <SiteLogo variant="footer" />
           </Link>
+          <p className="mt-4 font-display text-2xl uppercase tracking-[0.12em] text-paper">
+            {site.name}
+          </p>
+          <p className="mt-4 font-pixel text-xs text-gold">{site.dateLabel}</p>
+          <p className="mt-1 font-display text-sm uppercase tracking-[0.2em] text-cyan">
+            {site.location}
+          </p>
+          <p className="mt-2 text-sm text-muted">
+            Presented by{" "}
+            <a
+              href={site.organizerUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cyan transition-colors hover:text-magenta"
+            >
+              {site.organizer}
+            </a>
+          </p>
           <p className="mt-4 max-w-md text-muted">
             A regional convention for gaming, cosplay, collectibles, creators,
             and community.
           </p>
-          <p className="mt-4 font-display text-sm uppercase tracking-[0.2em] text-cyan">
-            {site.location}
-          </p>
-          <p className="mt-1 font-pixel text-xs text-gold">{site.dateLabel}</p>
           <p className="mt-1 text-sm text-muted">{site.venueLabel}</p>
         </div>
 

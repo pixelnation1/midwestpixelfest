@@ -1,3 +1,4 @@
+import { SiteLogo } from "@/components/brand/SiteLogo";
 import { TicketCta } from "@/components/cta/TicketCta";
 import { Badge } from "@/components/ui/Badge";
 import { EventCta } from "@/components/cta/EventCta";
@@ -26,22 +27,24 @@ export function Hero() {
       </div>
       <div className="scanlines absolute inset-0 opacity-40" aria-hidden="true" />
 
-      <Container className="relative flex min-h-[calc(100dvh-4rem)] flex-col justify-center py-16 sm:py-24">
-        <div className="flex flex-wrap items-center gap-3">
+      <Container className="relative flex min-h-[calc(100dvh-4.5rem)] flex-col justify-center py-16 sm:py-24">
+        <SiteLogo variant="hero" priority decorative />
+
+        <div className="mt-6 flex flex-wrap items-center gap-3">
           <Badge tone="cyan">{site.location}</Badge>
           <Badge tone="gold">{site.dateLabel}</Badge>
         </div>
 
-        <p className="mt-8 font-pixel text-xs uppercase tracking-[0.28em] text-magenta sm:text-sm">
+        <p className="mt-6 font-pixel text-xs uppercase tracking-[0.28em] text-magenta sm:text-sm">
           Inaugural year · Presented by {site.organizer}
         </p>
 
         <h1
           id="hero-heading"
-          className="mt-4 max-w-5xl font-display text-[clamp(2.6rem,11vw,8.75rem)] uppercase leading-[0.82] tracking-[0.04em] text-paper glow-pulse"
+          className="mt-4 max-w-5xl font-display text-[clamp(2.4rem,9vw,7.5rem)] uppercase leading-[0.86] tracking-[0.04em] text-paper glow-pulse"
         >
-          Midwest
-          <span className="block text-magenta">Pixel Fest</span>
+          Midwest Pixel Fest
+          <span className="block text-magenta">2027</span>
         </h1>
 
         <p className="mt-6 max-w-xl font-display text-lg uppercase tracking-[0.18em] text-cyan sm:text-xl">

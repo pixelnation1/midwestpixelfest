@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { PixelLogo } from "@/components/brand/PixelLogo";
+import { SiteLogo } from "@/components/brand/SiteLogo";
 import { TicketCta } from "@/components/cta/TicketCta";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
@@ -47,19 +47,13 @@ export function Header() {
           : "border-transparent bg-ink/40 backdrop-blur-sm",
       )}
     >
-      <Container className="flex h-16 items-center justify-between gap-3 lg:h-[4.25rem] lg:gap-4">
+      <Container className="flex h-[3.75rem] items-center justify-between gap-3 lg:h-[4.5rem] lg:gap-4">
         <Link
           href="/"
-          className="flex min-w-0 shrink-0 items-center gap-2.5 text-paper no-underline"
+          className="flex shrink-0 items-center text-paper no-underline"
           aria-label={`${site.name} home`}
         >
-          <PixelLogo size={36} />
-          <span className="font-display text-[15px] leading-[0.9] uppercase tracking-[0.12em] sm:text-base">
-            <span className="block text-[10px] tracking-[0.28em] text-cyan sm:text-[11px]">
-              Midwest
-            </span>
-            Pixel Fest
-          </span>
+          <SiteLogo variant="header" priority />
         </Link>
 
         <nav aria-label="Primary" className="hidden min-w-0 items-center lg:flex">
@@ -132,7 +126,7 @@ export function Header() {
           aria-label="Mobile navigation"
           className="border-t border-line bg-ink lg:hidden"
         >
-          <Container className="flex max-h-[calc(100dvh-4rem)] flex-col overflow-y-auto py-6">
+          <Container className="flex max-h-[calc(100dvh-3.75rem)] flex-col overflow-y-auto py-6">
             <div className="mb-4 flex justify-end">
               <button
                 type="button"
