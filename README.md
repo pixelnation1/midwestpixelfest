@@ -20,29 +20,67 @@ npm run lint
 npm run build
 ```
 
+No email, newsletter, or analytics provider is required to run the site locally. Forms fail safely until delivery is configured. See `docs/forms-and-email.md`.
+
 ## Environment variables
 
-Copy `.env.example`. None are required for a local preview. Forms will not accept submissions until `FORM_WEBHOOK_URL` is set. See `docs/forms-and-email.md`.
+Copy `.env.example` to `.env.local`. Never commit `.env.local` or real secrets.
+
+**Never prefix secret keys with `NEXT_PUBLIC_`.** Anything with that prefix is exposed to the browser.
+
+| Variable | Visibility | Required? | Purpose |
+| --- | --- | --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Public | Optional locally. Set in production. | Canonical origin. Defaults to `https://midwestpixelfest.com`. |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | Public | Optional | Public business inbox shown on Contact and Privacy. Not used to send mail. |
+| `RESEND_API_KEY` | Server-only | Required for live inquiry email | Resend API key. |
+| `FORM_FROM_EMAIL` | Server-only | Required with Resend | Verified From address. |
+| `CONTACT_NOTIFICATION_EMAIL` | Server-only | Required with Resend | Inbox that receives inquiry notifications. |
+| `NEWSLETTER_WEBHOOK_URL` | Server-only | Required for live newsletter signup | JSON POST endpoint for list signup. |
+| `FORM_WEBHOOK_URL` | Server-only | Optional | Legacy/extra JSON webhook for inquiry forms (not newsletter). |
+| `EMAIL_PROVIDER_API_KEY` | Server-only | Optional | Bearer token for `FORM_WEBHOOK_URL`. |
+| `GOOGLE_SITE_VERIFICATION` | Server-only | Optional until Search Console is connected | HTML-tag `content` value only. |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Public | Optional | GA4 ID (`G-…`). Scripts load only when set. |
+
+Live inquiry forms need Resend (`RESEND_API_KEY` + `FORM_FROM_EMAIL` + `CONTACT_NOTIFICATION_EMAIL`) and/or `FORM_WEBHOOK_URL`.
+
+Live newsletter signup needs `NEWSLETTER_WEBHOOK_URL`. Newsletter leads are **not** emailed to the operational inbox.
 
 ### Google Search Console
 
-1. In Search Console, choose **HTML tag** verification.
-2. Copy only the `content` value from the meta tag (not the full tag).
-3. In Vercel: **Project → Settings → Environment Variables**.
-4. Add `GOOGLE_SITE_VERIFICATION` for Production (and Preview if you want).
+Search Console is **not** connected until `GOOGLE_SITE_VERIFICATION` is set and the property is verified.
+
+1. Open [Google Search Console](https://search.google.com/search-console).
+2. Add a property for `https://midwestpixelfest.com`.
+3. Choose a verification method (HTML tag is the one this site supports via env).
+4. If using HTML tag verification, add `GOOGLE_SITE_VERIFICATION` in Vercel (the `content` value only, not the full meta tag).
 5. Redeploy.
+6. Submit `https://midwestpixelfest.com/sitemap.xml`.
 
 Sitemap: https://midwestpixelfest.com/sitemap.xml  
 Robots: https://midwestpixelfest.com/robots.txt
 
 ### Analytics (optional)
 
-Set `NEXT_PUBLIC_GA_MEASUREMENT_ID` to a `G-` measurement ID. GA4 scripts load only when that value is present.
+Set `NEXT_PUBLIC_GA_MEASUREMENT_ID` to a real `G-` measurement ID. GA4 loads with Next.js `afterInteractive` scripts only when that value is present. `trackEvent` is a no-op if GA is not configured.
 
 ### Tickets
 
-Set `event.ticketUrl` in `src/lib/site.ts` to the public Ticketleap URL when it is ready. Leave it `null` until then. Do not invent a checkout link.
+Set `event.ticketUrl` in `src/lib/site.ts` to the public Ticketleap checkout URL when it is ready. Leave it `null` until then. Do not invent a checkout link.
 
 ### Contact inbox
 
 `NEXT_PUBLIC_CONTACT_EMAIL` is the public business address shown on Contact and Privacy. Do not put a personal address there.
+
+## Production checklist (manual)
+
+Do this after credentials are in Vercel. There is no public admin dashboard.
+
+- [ ] Submit the contact form and confirm a notification email arrives
+- [ ] Submit a vendor inquiry and confirm the notification
+- [ ] Submit the newsletter form and confirm the webhook/list provider received it
+- [ ] Confirm inquiry email subject, fields, and Reply-To
+- [ ] Confirm GA4 events (`contact_submit`, `vendor_interest_submit`, `newsletter_signup`, and `ticket_click` once tickets are live)
+- [ ] Open https://midwestpixelfest.com/sitemap.xml
+- [ ] Open https://midwestpixelfest.com/robots.txt
+- [ ] Verify the domain in Google Search Console and submit the sitemap
+- [ ] Confirm the ticket CTA once the real Ticketleap URL is set

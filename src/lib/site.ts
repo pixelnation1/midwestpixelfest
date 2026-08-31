@@ -1,4 +1,13 @@
-export const siteUrl = "https://midwestpixelfest.com";
+import { parseAllowedHttpUrl } from "@/lib/safe-url";
+
+const PRODUCTION_SITE_URL = "https://midwestpixelfest.com";
+
+function resolveSiteUrl(): string {
+  const parsed = parseAllowedHttpUrl(process.env.NEXT_PUBLIC_SITE_URL);
+  return parsed ? parsed.origin : PRODUCTION_SITE_URL;
+}
+
+export const siteUrl = resolveSiteUrl();
 
 export type Venue = {
   name: string;

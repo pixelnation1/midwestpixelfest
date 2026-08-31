@@ -6,8 +6,9 @@ import {
   parseAndValidate,
   successState,
 } from "@/lib/forms/parse";
+import { checkFormRateLimit } from "@/lib/forms/rate-limit";
 import type { FormState } from "@/lib/forms/validate";
-import { idleFormState } from "@/lib/forms/validate";
+import { readString } from "@/lib/forms/validate";
 
 const SUCCESS_COPY: Record<string, string> = {
   newsletter: "You're on the list. We'll share official Midwest Pixel Fest updates as they land.",
@@ -24,6 +25,14 @@ const SUCCESS_COPY: Record<string, string> = {
     "Your press inquiry has been received. Official media credentials are not open yet.",
 };
 
+const NOT_CONFIGURED_MESSAGE =
+  "This form is not connected to a delivery provider yet, so we did not record your submission. Try again after the inquiry inbox is live, or check News for updates.";
+
+const DELIVERY_FAILED_MESSAGE = "We couldn't send your submission. Please try again.";
+
+const RATE_LIMITED_MESSAGE =
+  "Too many submissions. Please wait a few minutes and try again.";
+
 export async function submitForm(
   _prev: FormState,
   formData: FormData,
@@ -35,33 +44,33 @@ export async function submitForm(
   }
 
   if (parsed.spam) {
-    return successState(SUCCESS_COPY.contact);
+    const kind = readString(formData, "kind");
+    return successState(SUCCESS_COPY[kind] ?? SUCCESS_COPY.contact);
   }
 
-  if (!isFormDeliveryConfigured()) {
-    return errorState(
-      "This form is not connected to a delivery provider yet, so we did not record your submission. Try again after the inquiry inbox is live, or check News for updates.",
-    );
+  const rate = await checkFormRateLimit();
+  if (!rate.ok) {
+    return errorState(RATE_LIMITED_MESSAGE);
+  }
+
+  const kind = parsed.data.kind;
+
+  if (!isFormDeliveryConfigured(kind)) {
+    return errorState(NOT_CONFIGURED_MESSAGE);
   }
 
   const result = await deliverSubmission({
-    kind: parsed.data.kind,
+    kind,
     submittedAt: new Date().toISOString(),
     fields: parsed.data.fields,
   });
 
   if (!result.ok) {
     if (result.code === "not_configured") {
-      return errorState(
-        "This form is not connected to a delivery provider yet, so we did not record your submission.",
-      );
+      return errorState(NOT_CONFIGURED_MESSAGE);
     }
-    return errorState(
-      "We couldn't send your submission. Wait a moment and try again.",
-    );
+    return errorState(DELIVERY_FAILED_MESSAGE);
   }
 
-  return successState(SUCCESS_COPY[parsed.data.kind] ?? SUCCESS_COPY.contact);
+  return successState(SUCCESS_COPY[kind] ?? SUCCESS_COPY.contact);
 }
-
-export { idleFormState };

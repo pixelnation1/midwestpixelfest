@@ -22,14 +22,17 @@ export const gaMeasurementId =
 
 /**
  * No-op unless GA4 is configured and gtag is on the page.
+ * Never throws. Safe to call from client click handlers.
  */
 export function trackEvent(
   name: AnalyticsEventName,
   payload?: Record<string, string | number | boolean>,
 ): void {
   if (typeof window === "undefined") return;
+  if (!gaMeasurementId) return;
   const gtag = (
     window as Window & { gtag?: (...args: unknown[]) => void }
   ).gtag;
-  gtag?.("event", name, payload);
+  if (typeof gtag !== "function") return;
+  gtag("event", name, payload);
 }

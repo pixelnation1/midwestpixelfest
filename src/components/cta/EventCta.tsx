@@ -33,7 +33,9 @@ export function EventCta({
       className={cn(className)}
       external={external}
       onClick={() => {
-        if (eventName) trackEvent(eventName);
+        if (eventName) {
+          trackEvent(eventName, eventName === "ticket_click" ? { outbound: external } : undefined);
+        }
         onClick?.();
       }}
     >

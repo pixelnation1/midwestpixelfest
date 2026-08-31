@@ -1,7 +1,19 @@
+import { parseAllowedHttpUrl } from "@/lib/safe-url";
 import { event } from "@/lib/site";
 
+function publicTicketUrl(): string | null {
+  if (!event.ticketUrl) return null;
+  const parsed = parseAllowedHttpUrl(event.ticketUrl);
+  return parsed ? parsed.toString() : null;
+}
+
+/** Validated public checkout URL, or null until a real http(s) Ticketleap URL is set. */
+export function getPublicTicketUrl(): string | null {
+  return publicTicketUrl();
+}
+
 export function isTicketSalesOpen(): boolean {
-  return Boolean(event.ticketUrl);
+  return Boolean(publicTicketUrl());
 }
 
 export type TicketAction = {
@@ -15,9 +27,10 @@ export type TicketAction = {
  * Purchase: "Buy Tickets" when ticketUrl is set, otherwise checkout-finalizing copy.
  */
 export function getTicketAction(intent: "nav" | "purchase" = "nav"): TicketAction {
-  if (event.ticketUrl) {
+  const checkout = publicTicketUrl();
+  if (checkout) {
     return {
-      href: event.ticketUrl,
+      href: checkout,
       label: "Buy Tickets",
       external: true,
     };

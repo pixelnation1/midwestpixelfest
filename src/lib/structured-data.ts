@@ -6,6 +6,7 @@ import {
   organizer,
   site,
 } from "@/lib/site";
+import { getPublicTicketUrl } from "@/lib/tickets";
 
 const organizationId = `${site.siteUrl}/#organization`;
 const websiteId = `${site.siteUrl}/#website`;
@@ -74,6 +75,8 @@ export function buildEventJsonLd(): JsonLd | null {
     return null;
   }
 
+  const ticketOfferUrl = getPublicTicketUrl();
+
   const location = event.venue
     ? {
         "@type": "Place",
@@ -115,11 +118,11 @@ export function buildEventJsonLd(): JsonLd | null {
       url: organizer.url,
     },
     location,
-    ...(event.ticketUrl
+    ...(ticketOfferUrl
       ? {
           offers: {
             "@type": "Offer",
-            url: event.ticketUrl,
+            url: ticketOfferUrl,
             availability: "https://schema.org/InStock",
           },
         }
