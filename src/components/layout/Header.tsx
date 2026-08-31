@@ -83,8 +83,12 @@ export function Header() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2">
-          <TicketCta intent="nav" className="hidden sm:inline-flex" />
-          <TicketCta intent="nav" size="md" className="px-3 text-xs sm:hidden" />
+          <span className="hidden sm:inline-flex">
+            <TicketCta intent="nav" />
+          </span>
+          <span className="inline-flex sm:hidden">
+            <TicketCta intent="nav" size="md" className="px-3 text-xs" />
+          </span>
           <button
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center border border-paper/20 text-paper lg:hidden"

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { site } from "@/lib/site";
 
 export function EventIntro() {
   return (
@@ -16,19 +15,15 @@ export function EventIntro() {
         </div>
         <div className="space-y-5 text-lg leading-relaxed text-muted lg:col-span-5">
           <p>
-            Midwest Pixel Fest is a gaming, cosplay and pop-culture convention
-            coming to Emporia, Kansas on {site.dateLabel}.
+            Midwest Pixel Fest is being built as a play-first weekend: video
+            games, retro cabinets, tabletop, trading cards, cosplay, vendors,
+            and the people who show up for all of it.
           </p>
           <p>
-            {site.name} brings gaming, cosplay, creators, collectors, artists,
-            vendors, tournaments, and community together for a weekend-long
-            celebration in {site.location}.
-          </p>
-          <p>
-            This is not a borrowed big-city template. It is a regional floor
-            built for the people who already drive across state lines for a
-            good con — and for the locals who have been waiting for one of
-            their own.
+            Emporia sits on the I-35 corridor as a meeting point for Kansas
+            City, Wichita, Topeka, Lawrence, Manhattan, and the surrounding
+            Midwest. This is a regional floor, not a scaled-down copy of a
+            coastal mega-con.
           </p>
           <p>
             <Link

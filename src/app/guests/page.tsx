@@ -23,7 +23,7 @@ export default function GuestsPage() {
       breadcrumbLabel="Guests"
       eyebrow="Talent & creators"
       title="Special guests"
-      intro={`Guest announcements are coming. Confirmed names for ${site.dateLabel} in ${site.location} will appear here — not as placeholders.`}
+      intro={`Guest announcements are coming. Confirmed names for ${site.dateLabel} in ${site.location} will appear here.`}
     >
       <ContentSection title="Guest announcements are coming.">
         <p>
@@ -65,8 +65,8 @@ export default function GuestsPage() {
         </ul>
       ) : (
         <p className="border border-line bg-panel p-6 text-muted">
-          The guest list is empty on purpose. We will not invent silhouettes or
-          fake names to fill this page.
+          No guests are announced yet. When a name is official, it will appear
+          here with appearance details.
         </p>
       )}
 

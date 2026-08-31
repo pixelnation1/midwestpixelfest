@@ -39,28 +39,28 @@ export const ticketProducts = [
     name: "Weekend General Admission",
     price: 30,
     priceLabel: "$30",
-    description: "Access to Saturday and Sunday.",
+    description: "Saturday + Sunday",
   },
   {
     id: "saturday",
     name: "Saturday General Admission",
     price: 20,
     priceLabel: "$20",
-    description: "Saturday access only.",
+    description: "Saturday only",
   },
   {
     id: "sunday",
     name: "Sunday General Admission",
     price: 15,
     priceLabel: "$15",
-    description: "Sunday access only.",
+    description: "Sunday only",
   },
   {
     id: "kids",
     name: "Kids 12 & Under",
     price: 0,
     priceLabel: "Free",
-    description: "Free with a paid adult.",
+    description: "With a paid adult",
   },
 ] as const;
 
@@ -77,7 +77,7 @@ export const site = {
   year: event.year,
   dateLabel: "October 16–17, 2027",
   dateLongLabel: "Saturday, October 16 – Sunday, October 17, 2027",
-  venueLabel: "Emporia, Kansas — venue details coming soon",
+  venueLabel: "Emporia, Kansas — venue announcement coming",
   tagline: "Gaming • Cosplay • Collectibles • Community",
   description:
     "Midwest Pixel Fest is a gaming, cosplay, collectibles, and pop-culture convention in Emporia, Kansas on October 16–17, 2027.",
@@ -287,7 +287,7 @@ export function getFaqs() {
     {
       question: "Where is Midwest Pixel Fest?",
       answer:
-        "Midwest Pixel Fest is in Emporia, Kansas. The exact venue will be announced. Venue details are coming soon.",
+        "Midwest Pixel Fest is in Emporia, Kansas. The exact venue will be announced.",
     },
     {
       question: "How much are tickets?",

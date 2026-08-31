@@ -1,5 +1,5 @@
-import { EventCta } from "@/components/cta/EventCta";
 import { TicketCta } from "@/components/cta/TicketCta";
+import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { isTicketSalesOpen } from "@/lib/tickets";
@@ -8,7 +8,7 @@ const paths = [
   {
     eyebrow: "Attendees",
     title: "Join the weekend",
-    body: "Ticket types and prices are posted. Online checkout is being finalized — or join updates so you hear when purchase goes live.",
+    body: "Ticket types and prices are posted. Online checkout is being finalized. Join the list so you hear when purchase goes live.",
     primary: "tickets" as const,
     secondary: { href: "/#updates", label: "Join Updates", variant: "secondary" as const },
   },
@@ -28,7 +28,7 @@ const paths = [
   },
   {
     eyebrow: "Creators / Guests",
-    title: "Appear at Pixel Fest",
+    title: "Appear at Midwest Pixel Fest",
     body: "For creators, streamers, artists, performers, and community talent. Submission is not a booking.",
     primary: { href: "/guests/inquiry", label: "Guest Inquiry" },
     secondary: { href: "/guests", label: "Guests", variant: "secondary" as const },
@@ -68,13 +68,14 @@ export function InvolveSection() {
                 {item.primary === "tickets" ? (
                   <TicketCta intent={salesOpen ? "purchase" : "nav"} />
                 ) : (
-                  <EventCta href={item.primary.href} label={item.primary.label} />
+                  <Button href={item.primary.href}>{item.primary.label}</Button>
                 )}
-                <EventCta
+                <Button
                   href={item.secondary.href}
-                  label={item.secondary.label}
                   variant={item.secondary.variant}
-                />
+                >
+                  {item.secondary.label}
+                </Button>
               </div>
             </li>
           ))}

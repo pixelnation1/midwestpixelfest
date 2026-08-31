@@ -54,7 +54,7 @@ export function InnerPage({
         <div className="pointer-events-none absolute inset-0 pixel-grid opacity-70" />
         <Container className="relative py-16 sm:py-20">
           <nav aria-label="Breadcrumb" className="mb-5">
-            <ol className="flex flex-wrap items-center gap-2 font-pixel text-[10px] uppercase tracking-[0.2em] text-muted">
+            <ol className="flex flex-wrap items-center gap-2 font-pixel text-[11px] uppercase tracking-[0.2em] text-muted">
               {breadcrumbs.map((crumb, index) => {
                 const isLast = index === breadcrumbs.length - 1;
                 return (
@@ -79,7 +79,7 @@ export function InnerPage({
             </ol>
           </nav>
           {eyebrow ? <Badge tone="cyan">{eyebrow}</Badge> : null}
-          <h1 className="mt-5 max-w-4xl font-display text-4xl uppercase leading-[0.9] tracking-wide text-paper sm:text-6xl lg:text-7xl">
+          <h1 className="mt-5 max-w-4xl break-words font-display text-[clamp(1.85rem,7vw,4.5rem)] uppercase leading-[0.9] tracking-wide text-paper">
             {title}
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{intro}</p>

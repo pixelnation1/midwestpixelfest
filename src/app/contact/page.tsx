@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/forms/ContactForm";
-import { EventCta } from "@/components/cta/EventCta";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { Button } from "@/components/ui/Button";
 import { ContentSection } from "@/components/ui/ContentSection";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { createPageMetadata } from "@/lib/seo";
@@ -71,7 +71,9 @@ export default function ContactPage() {
             </h2>
             <p className="mt-3 flex-1 text-muted">{item.note}</p>
             <div className="mt-6">
-              <EventCta href={item.href} label={item.title} variant="secondary" />
+              <Button href={item.href} variant="secondary">
+                {item.title}
+              </Button>
             </div>
           </li>
         ))}

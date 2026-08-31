@@ -68,7 +68,7 @@ export default function PressPage() {
             href: "/press/inquiry",
             label: "Press Inquiry",
           },
-          { href: "/about", label: "About the fest", variant: "secondary" },
+          { href: "/about", label: "About Midwest Pixel Fest", variant: "secondary" },
           { href: "/sponsors", label: "Sponsors", variant: "secondary" },
         ]}
       >

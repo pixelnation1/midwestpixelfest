@@ -82,7 +82,7 @@ export default function SchedulePage() {
               {item.title}
             </h2>
             <p className="mt-3 font-pixel text-[11px] uppercase tracking-[0.18em] text-gold">
-              Details later
+              Programming announcements coming later
             </p>
             <p className="mt-3 text-muted">{item.note}</p>
           </li>
@@ -95,7 +95,7 @@ export default function SchedulePage() {
           { href: "/cosplay", label: "Cosplay" },
           { href: "/guests", label: "Guests" },
           { href: "/tickets", label: "Tickets" },
-          { href: "/news", label: "News" },
+          { href: "/travel", label: "Travel" },
         ]}
       />
     </InnerPage>

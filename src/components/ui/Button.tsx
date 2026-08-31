@@ -46,7 +46,7 @@ export function Button({
   ...props
 }: ButtonAsButton | ButtonAsLink) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 font-display uppercase tracking-[0.14em] transition-all duration-150 disabled:pointer-events-none disabled:opacity-50",
+    "inline-flex min-h-11 items-center justify-center gap-2 font-display uppercase tracking-[0.14em] transition-all duration-150 disabled:pointer-events-none disabled:opacity-50",
     variants[variant],
     sizes[size],
     className,

@@ -40,7 +40,7 @@ export function TextArea({
         maxLength={maxLength}
         aria-invalid={fieldError ? true : undefined}
         aria-describedby={describedBy}
-        className={`${inputBorder(fieldError)} py-3`}
+        className={`${inputBorder(fieldError)} max-h-80 resize-y py-3`}
       />
     </FormField>
   );

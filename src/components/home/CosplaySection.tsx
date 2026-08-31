@@ -47,7 +47,7 @@ export function CosplaySection() {
           </ul>
           <div className="mt-10">
             <Button href="/cosplay" size="lg">
-              Cosplay at Pixel Fest
+              Cosplay at Midwest Pixel Fest
             </Button>
           </div>
         </div>

@@ -14,7 +14,7 @@ export function FeaturedGuests() {
           <SectionHeading
             eyebrow="Featured guests"
             title="Guest announcements are coming."
-            description="Creators, artists, streamers, authors, performers, and community personalities will be posted here when they are confirmed — not as placeholders."
+            description="Creators, artists, streamers, authors, performers, and community personalities will be posted here when they are confirmed."
             tone="magenta"
           />
           <Button href="/guests" variant="secondary">

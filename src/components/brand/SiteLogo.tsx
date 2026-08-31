@@ -1,10 +1,15 @@
 import Image from "next/image";
+import officialLogoImage from "../../../public/logo.jpg";
 import { cn } from "@/lib/cn";
 
+/**
+ * Official mark lives at /public/logo.jpg (square JPEG on a white ground).
+ * Do not crop or key out that background in code — it will look worse.
+ * Transparent official logo recommended when a PNG/WebP with alpha exists.
+ */
+
 export const officialLogo = {
-  src: "/logo.jpg",
-  width: 1254,
-  height: 1254,
+  src: officialLogoImage,
   alt: "Midwest Pixel Fest",
 } as const;
 
@@ -12,20 +17,14 @@ const variants = {
   header: {
     className: "h-[44px] w-[44px] lg:h-[52px] lg:w-[52px]",
     sizes: "(min-width: 1024px) 52px, 44px",
-    width: 104,
-    height: 104,
   },
   footer: {
     className: "h-14 w-14",
     sizes: "56px",
-    width: 112,
-    height: 112,
   },
   hero: {
     className: "h-20 w-20 sm:h-24 sm:w-24 lg:h-28 lg:w-28",
     sizes: "(min-width: 1024px) 112px, (min-width: 640px) 96px, 80px",
-    width: 224,
-    height: 224,
   },
 } as const;
 
@@ -48,8 +47,6 @@ export function SiteLogo({
     <Image
       src={officialLogo.src}
       alt={decorative ? "" : officialLogo.alt}
-      width={spec.width}
-      height={spec.height}
       priority={priority}
       sizes={spec.sizes}
       className={cn("shrink-0 object-contain", spec.className, className)}

@@ -14,7 +14,7 @@ export function EmailSignup({
   description = "Dates, guests, tickets, and applications will hit this list first. No spam — just the drops that matter.",
 }: EmailSignupProps) {
   return (
-    <section id="updates" className="relative overflow-hidden py-20 sm:py-28">
+    <section id="updates" className="relative scroll-mt-24 overflow-hidden py-20 sm:py-28">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,45,149,0.16),transparent_60%)]" />
       <Container className="relative">
         <div className="border border-magenta/40 bg-panel px-6 py-12 sm:px-12">

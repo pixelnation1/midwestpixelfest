@@ -117,7 +117,7 @@ export default function SponsorsPage() {
         title="Request sponsorship information"
         actions={[
           { href: inquiryHref, label: inquiryLabel },
-          { href: "/about", label: "About the fest", variant: "secondary" },
+          { href: "/about", label: "About Midwest Pixel Fest", variant: "secondary" },
           { href: "/press", label: "Press", variant: "secondary" },
         ]}
       >

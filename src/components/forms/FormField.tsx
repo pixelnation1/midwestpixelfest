@@ -25,10 +25,13 @@ export function FormField({
       <label htmlFor={id} className="font-display text-sm uppercase tracking-[0.14em]">
         {label}
         {required ? (
-          <span className="text-magenta" aria-hidden="true">
-            {" "}
-            *
-          </span>
+          <>
+            <span className="text-magenta" aria-hidden="true">
+              {" "}
+              *
+            </span>
+            <span className="sr-only"> (required)</span>
+          </>
         ) : (
           <span className="ml-2 font-sans text-xs normal-case tracking-normal text-muted">
             optional

@@ -19,6 +19,9 @@ export default function NotFound() {
         <Button href="/tickets" variant="secondary">
           Tickets
         </Button>
+        <Button href="/schedule" variant="ghost">
+          Schedule
+        </Button>
       </div>
     </Container>
   );

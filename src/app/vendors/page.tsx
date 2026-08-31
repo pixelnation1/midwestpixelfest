@@ -44,20 +44,6 @@ export default function VendorsPage() {
       title="Vendors & Artist Alley"
       intro="Vendor hall and artist alley are part of the show, not an afterthought. Applications are not open yet. Register interest if you want to be notified when they are — that is not an application."
     >
-      <CtaStrip
-        className="mb-8"
-        title="Vendor Interest"
-        actions={[
-          { href: "/vendors/interest", label: "Register Vendor Interest" },
-          { href: "/contact", label: "Contact", variant: "secondary" },
-        ]}
-      >
-        <p>
-          Official vendor applications are not open. This is interest only — not
-          an application, not payment, and not a booth offer.
-        </p>
-      </CtaStrip>
-
       <ContentSection title="Sell at Midwest Pixel Fest">
         <p>
           Midwest Pixel Fest is building space for shops, collectible sellers,
@@ -91,7 +77,7 @@ export default function VendorsPage() {
 
       <div className="grid gap-4 md:grid-cols-2">
         <article className="border border-line bg-panel p-8">
-          <Badge tone="gold">Coming soon</Badge>
+            <Badge tone="gold">Applications not open</Badge>
           <h2 className="mt-5 font-display text-3xl uppercase tracking-wide">
             Vendor applications
           </h2>
@@ -102,7 +88,7 @@ export default function VendorsPage() {
           </p>
         </article>
         <article id="artists" className="border border-line bg-panel p-8">
-          <Badge tone="gold">Coming soon</Badge>
+            <Badge tone="gold">Applications not open</Badge>
           <h2 className="mt-5 font-display text-3xl uppercase tracking-wide">
             Artist applications
           </h2>
@@ -134,8 +120,7 @@ export default function VendorsPage() {
       <ContentSection title="Vendor directory">
         <p>
           Confirmed vendors and artists will be listed here after applications
-          close and booths are assigned. There are no names to publish yet —
-          and we will not fill this section with placeholders.
+          close and booths are assigned. There are no names to publish yet.
         </p>
       </ContentSection>
 

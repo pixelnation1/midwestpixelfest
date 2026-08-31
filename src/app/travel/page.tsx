@@ -105,18 +105,18 @@ export default function TravelPage() {
       <CtaStrip
         title="More from the fest"
         actions={[
-          { href: "/faq", label: "FAQ" },
+          { href: "/tickets", label: "Tickets" },
+          { href: "/faq", label: "FAQ", variant: "secondary" },
           { href: "/schedule", label: "Schedule", variant: "secondary" },
-          { href: "/news", label: "News", variant: "secondary" },
         ]}
       />
 
       <RelatedLinks
         links={[
+          { href: "/tickets", label: "Tickets" },
           { href: "/faq", label: "FAQ" },
           { href: "/schedule", label: "Schedule" },
           { href: "/news", label: "News" },
-          { href: "/vendors", label: "Vendors" },
           { href: "/about", label: "About" },
         ]}
       />

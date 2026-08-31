@@ -28,8 +28,8 @@ export default function FaqPage() {
       <div className="divide-y divide-line border border-line bg-panel">
         {faqs.map((item) => (
           <details key={item.question} className="group p-6 open:bg-panel-2">
-            <summary className="cursor-pointer list-none marker:text-magenta">
-              <h2 className="inline font-display text-2xl uppercase tracking-wide">
+            <summary className="cursor-pointer list-none py-1 marker:text-magenta">
+              <h2 className="inline min-h-11 font-display text-xl uppercase tracking-wide sm:text-2xl">
                 {item.question}
               </h2>
             </summary>

@@ -15,7 +15,7 @@ export function Checkbox({ id, name, label, error, required }: CheckboxProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="flex items-start gap-3 text-sm leading-relaxed text-muted">
+      <label htmlFor={id} className="flex min-h-11 items-start gap-3 text-sm leading-relaxed text-muted">
         <input
           id={id}
           name={name}
@@ -24,7 +24,7 @@ export function Checkbox({ id, name, label, error, required }: CheckboxProps) {
           required={required}
           aria-invalid={fieldError ? true : undefined}
           aria-describedby={fieldError ? `${id}-error` : undefined}
-          className="mt-1 h-4 min-h-4 w-4 min-w-4 shrink-0 accent-magenta"
+          className="mt-1 h-5 min-h-5 w-5 min-w-5 shrink-0 accent-magenta"
         />
         <span>{label}</span>
       </label>
@@ -64,7 +64,7 @@ export function CheckboxGroup({ legend, name, options, error }: CheckboxGroupPro
               type="checkbox"
               name={name}
               value={option}
-              className="h-4 min-h-4 w-4 min-w-4 shrink-0 accent-magenta"
+              className="h-5 min-h-5 w-5 min-w-5 shrink-0 accent-magenta"
             />
             {option}
           </label>
