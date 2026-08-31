@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EmailSignup } from "@/components/home/EmailSignup";
 import { ContentSection } from "@/components/ui/ContentSection";
 import { CtaStrip } from "@/components/ui/CtaStrip";
 import { InfoCard } from "@/components/ui/InfoCard";
@@ -49,6 +50,7 @@ export default function TravelPage() {
       eyebrow="Getting here"
       title="Travel to Midwest Pixel Fest"
       intro={`${site.name} is based in ${site.location}, on the I-35 corridor. Hotel blocks, parking maps, and venue addresses will publish with the official dates.`}
+      after={<EmailSignup />}
     >
       <ContentSection title="Why Emporia">
         <p>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ContentSection } from "@/components/ui/ContentSection";
-import { EmailSignup } from "@/components/home/EmailSignup";
+import { CtaStrip } from "@/components/ui/CtaStrip";
 import { InnerPage } from "@/components/pages/InnerPage";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { createPageMetadata } from "@/lib/seo";
@@ -31,14 +31,7 @@ export default function VolunteerPage() {
       breadcrumbLabel="Volunteer"
       eyebrow="Crew"
       title="Volunteer at Midwest Pixel Fest"
-      intro="Volunteer opportunities will be announced as planning progresses. There is no application form yet — and we will not collect names we cannot place."
-      after={
-        <EmailSignup
-          eyebrow="Volunteer updates"
-          title="Join volunteer updates"
-          description="When roles, shifts, and a signup window exist, they will be posted here and sent to this list."
-        />
-      }
+      intro="Volunteer opportunities will be announced as planning progresses. You can register interest now — that is not a shift assignment, and selection is not guaranteed."
     >
       <ContentSection title="What we will need">
         <p>
@@ -62,10 +55,23 @@ export default function VolunteerPage() {
       <ContentSection title="Applications are not open">
         <p>
           Perks, shift lengths, and age requirements will be published with the
-          volunteer call. Until that post exists, there is no unofficial signup
-          by email or social DM.
+          official volunteer call. Interest registration is not a promise of
+          selection. If minors may need guardian approval later, those rules
+          will be posted before official applications open.
         </p>
       </ContentSection>
+
+      <CtaStrip
+        title="Register volunteer interest"
+        actions={[
+          { href: "/volunteer/interest", label: "Volunteer Interest" },
+          { href: "/contact", label: "Contact", variant: "secondary" },
+        ]}
+      >
+        <p>
+          This is pre-registration only. Official shift signup is not live.
+        </p>
+      </CtaStrip>
 
       <RelatedLinks
         links={[

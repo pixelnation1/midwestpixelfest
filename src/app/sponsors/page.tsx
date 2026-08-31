@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ContentSection } from "@/components/ui/ContentSection";
 import { CtaStrip } from "@/components/ui/CtaStrip";
-import { EmailSignup } from "@/components/home/EmailSignup";
 import { InfoCard } from "@/components/ui/InfoCard";
 import { InnerPage } from "@/components/pages/InnerPage";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
@@ -50,13 +49,8 @@ const opportunities = [
   },
 ];
 
-const inquiryHref = site.contactEmail
-  ? `mailto:${site.contactEmail}?subject=${encodeURIComponent("Midwest Pixel Fest sponsorship")}`
-  : "/news";
-
-const inquiryLabel = site.contactEmail
-  ? "Request sponsorship information"
-  : "Get sponsor updates";
+const inquiryHref = "/sponsors/inquiry";
+const inquiryLabel = "Sponsor Inquiry";
 
 export default function SponsorsPage() {
   return (
@@ -66,15 +60,6 @@ export default function SponsorsPage() {
       eyebrow="Partners"
       title="Sponsor Midwest Pixel Fest"
       intro={`${site.name} is looking for brands, venues, hotels, and local organizations that want to help launch a serious regional convention in ${site.location}. Official packages and pricing are not published yet.`}
-      after={
-        site.contactEmail ? undefined : (
-          <EmailSignup
-            eyebrow="Sponsor updates"
-            title="Request sponsorship information"
-            description="A public inquiry address and prospectus are not live yet. Join the list and this page will be the first place packages appear."
-          />
-        )
-      }
     >
       <ContentSection title="Why sponsor">
         <p>
@@ -133,9 +118,9 @@ export default function SponsorsPage() {
         ]}
       >
         <p>
-          {site.contactEmail
-            ? "Use the inquiry button to reach the public partnership inbox. A full prospectus will follow."
-            : "A public partnership inbox is not posted yet. Use the update list, then return here when the prospectus is live."}
+          Use the sponsor inquiry form to introduce your organization.
+          Submitting it does not create a sponsorship agreement. A prospectus
+          will be posted here when it exists.
         </p>
       </CtaStrip>
 

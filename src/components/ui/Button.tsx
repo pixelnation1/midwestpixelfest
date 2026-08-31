@@ -35,6 +35,7 @@ type ButtonAsLink = Shared & {
   href: string;
   disabled?: boolean;
   onClick?: () => void;
+  external?: boolean;
 };
 
 export function Button({
@@ -52,7 +53,7 @@ export function Button({
   );
 
   if ("href" in props && props.href) {
-    const { href, disabled, onClick } = props;
+    const { href, disabled, onClick, external } = props;
     if (disabled) {
       return (
         <span className={cn(classes, "pointer-events-none opacity-60")} aria-disabled="true">
@@ -60,10 +61,24 @@ export function Button({
         </span>
       );
     }
-    if (href.startsWith("mailto:") || href.startsWith("http://") || href.startsWith("https://")) {
+    const isRemote =
+      Boolean(external) ||
+      href.startsWith("http://") ||
+      href.startsWith("https://");
+    if (href.startsWith("mailto:") || isRemote) {
       return (
-        <a href={href} className={classes} onClick={onClick}>
+        <a
+          href={href}
+          className={classes}
+          onClick={onClick}
+          {...(isRemote
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
+        >
           {children}
+          {isRemote ? (
+            <span className="sr-only"> (opens in a new tab)</span>
+          ) : null}
         </a>
       );
     }

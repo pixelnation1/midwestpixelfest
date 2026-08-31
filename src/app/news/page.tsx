@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EmailSignup } from "@/components/home/EmailSignup";
 import { InnerPage } from "@/components/pages/InnerPage";
 import { NewsCard } from "@/components/news/NewsCard";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
@@ -22,6 +23,7 @@ export default function NewsPage() {
       eyebrow="Updates"
       title="News"
       intro="This is the permanent home for Midwest Pixel Fest announcements. If it matters — dates, applications, guests, travel — it will be posted here."
+      after={<EmailSignup />}
     >
       <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {articles.map((article) => (

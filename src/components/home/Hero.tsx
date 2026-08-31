@@ -1,5 +1,6 @@
+import { TicketCta } from "@/components/cta/TicketCta";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
+import { EventCta } from "@/components/cta/EventCta";
 import { Container } from "@/components/ui/Container";
 import { site } from "@/lib/site";
 
@@ -53,12 +54,8 @@ export function Hero() {
         </p>
 
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <Button href="/tickets" size="lg">
-            Get Tickets
-          </Button>
-          <Button href="/vendors" variant="secondary" size="lg">
-            Become a Vendor
-          </Button>
+          <TicketCta intent="nav" size="lg" />
+          <EventCta href="/vendors" label="Become a Vendor" variant="secondary" size="lg" />
         </div>
       </Container>
     </section>

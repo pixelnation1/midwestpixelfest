@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { GuestCardGrid } from "@/components/home/FeaturedGuests";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { CtaStrip } from "@/components/ui/CtaStrip";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
@@ -23,6 +24,20 @@ export default function GuestsPage() {
         Guest announcements coming soon
       </h2>
       <GuestCardGrid />
+      <CtaStrip
+        className="mt-10"
+        title="Creators and talent"
+        actions={[
+          { href: "/guests/inquiry", label: "Guest Inquiry" },
+          { href: "/press", label: "Press", variant: "secondary" },
+        ]}
+      >
+        <p>
+          If you are a creator, streamer, artist, performer, or community guest
+          interested in Midwest Pixel Fest, you can send an inquiry. Submission
+          does not guarantee an invitation or appearance.
+        </p>
+      </CtaStrip>
     </InnerPage>
   );
 }

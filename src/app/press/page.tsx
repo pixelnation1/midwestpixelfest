@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { ContentSection } from "@/components/ui/ContentSection";
 import { CtaStrip } from "@/components/ui/CtaStrip";
-import { EmailSignup } from "@/components/home/EmailSignup";
 import { InfoCard } from "@/components/ui/InfoCard";
 import { InnerPage } from "@/components/pages/InnerPage";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { createPageMetadata } from "@/lib/seo";
-import { site } from "@/lib/site";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Press & Media | Midwest Pixel Fest",
@@ -15,10 +13,6 @@ export const metadata: Metadata = createPageMetadata({
   path: "/press",
 });
 
-const inquiryHref = site.contactEmail
-  ? `mailto:${site.contactEmail}?subject=${encodeURIComponent("Midwest Pixel Fest press inquiry")}`
-  : "/news";
-
 export default function PressPage() {
   return (
     <InnerPage
@@ -26,21 +20,12 @@ export default function PressPage() {
       breadcrumbLabel="Press"
       eyebrow="Media"
       title="Press & Media"
-      intro="Coverage is welcome. Credential applications, interview desks, and official assets will be released closer to the event — not as a half-built kit."
-      after={
-        site.contactEmail ? undefined : (
-          <EmailSignup
-            eyebrow="Press list"
-            title="Press updates"
-            description="When a public media inbox and credential form exist, they will be posted here first."
-          />
-        )
-      }
+      intro="Coverage is welcome. Credential applications, interview desks, and official assets will be released closer to the event — not as a half-built kit. Official media credentials are not open yet."
     >
       <ContentSection title="Press inquiries">
         <p>
-          For general media questions, use the inquiry path below when a public
-          address is posted. We will not publish a personal inbox on this page.
+          For coverage questions, use the press inquiry form. We will not
+          publish a personal inbox on this page.
         </p>
       </ContentSection>
 
@@ -80,17 +65,16 @@ export default function PressPage() {
         title="Get in touch"
         actions={[
           {
-            href: inquiryHref,
-            label: site.contactEmail ? "Press inquiries" : "Read news",
+            href: "/press/inquiry",
+            label: "Press Inquiry",
           },
           { href: "/about", label: "About the fest", variant: "secondary" },
           { href: "/sponsors", label: "Sponsors", variant: "secondary" },
         ]}
       >
         <p>
-          {site.contactEmail
-            ? "Use the public inquiry address. A credential form will be a separate process closer to the weekend."
-            : "A public press email is not posted yet. Use the update list, then return here when credentials and assets go live."}
+          Use the press inquiry form for coverage questions. A credential form
+          will be a separate process closer to the weekend, if we run one.
         </p>
       </CtaStrip>
 

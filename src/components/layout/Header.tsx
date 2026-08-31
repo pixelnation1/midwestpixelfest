@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PixelLogo } from "@/components/brand/PixelLogo";
-import { Button } from "@/components/ui/Button";
+import { TicketCta } from "@/components/cta/TicketCta";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
 import { navItems, site } from "@/lib/site";
@@ -91,12 +91,8 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button href="/tickets" size="md" className="hidden sm:inline-flex">
-            Get Tickets
-          </Button>
-          <Button href="/tickets" size="md" className="px-3 text-xs sm:hidden">
-            Get Tickets
-          </Button>
+          <TicketCta intent="nav" className="hidden sm:inline-flex" />
+          <TicketCta intent="nav" size="md" className="px-3 text-xs sm:hidden" />
           <button
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center border border-paper/20 text-paper xl:hidden"
@@ -141,6 +137,19 @@ export function Header() {
           <Container className="flex max-h-[calc(100dvh-4rem)] flex-col overflow-y-auto py-6">
             <nav aria-label="Mobile">
               <ul className="flex flex-col">
+                <li className="border-b border-line">
+                  <Link
+                    href="/tickets"
+                    className="flex items-center justify-between py-4 font-display text-2xl uppercase tracking-[0.12em] text-magenta"
+                    aria-current={pathname === "/tickets" ? "page" : undefined}
+                    onClick={() => setOpen(false)}
+                  >
+                    Tickets
+                    <span aria-hidden="true" className="text-cyan">
+                      ▸
+                    </span>
+                  </Link>
+                </li>
                 {navItems.map((item) => {
                   const active =
                     item.href === "/"
@@ -169,14 +178,12 @@ export function Header() {
               </ul>
             </nav>
             <div className="mt-6">
-              <Button
-                href="/tickets"
+              <TicketCta
+                intent="nav"
                 size="lg"
                 className="w-full"
                 onClick={() => setOpen(false)}
-              >
-                Get Tickets
-              </Button>
+              />
             </div>
           </Container>
         </div>

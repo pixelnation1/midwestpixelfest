@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EmailSignup } from "@/components/home/EmailSignup";
 import { InnerPage } from "@/components/pages/InnerPage";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
@@ -21,6 +22,7 @@ export default function FaqPage() {
       eyebrow="Questions"
       title="FAQ"
       intro="Dates, venue, and a lot of policy are still to be announced. These are the questions we hear most — answered with what we can actually stand behind today."
+      after={<EmailSignup />}
     >
       <JsonLd data={buildFaqPageJsonLd()} />
       <div className="divide-y divide-line border border-line bg-panel">

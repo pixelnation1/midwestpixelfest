@@ -1,5 +1,5 @@
+import { EventCta } from "@/components/cta/EventCta";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -25,7 +25,7 @@ export function VendorsSection() {
               assignments and rates will be published when applications go live.
             </p>
             <div className="mt-8">
-              <Button href="/vendors">Vendor Application</Button>
+              <EventCta href="/vendors/interest" label="Join Vendor Updates" />
             </div>
           </article>
 
@@ -39,9 +39,11 @@ export function VendorsSection() {
               part of the show, not an afterthought.
             </p>
             <div className="mt-8">
-              <Button href="/vendors#artists" variant="secondary">
-                Artist Application
-              </Button>
+              <EventCta
+                href="/vendors/interest"
+                label="Register Vendor Interest"
+                variant="secondary"
+              />
             </div>
           </article>
         </div>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PixelLogo } from "@/components/brand/PixelLogo";
 import { Container } from "@/components/ui/Container";
-import { footerSecondaryLinks, navItems, site, socialLinks } from "@/lib/site";
+import { footerSecondaryLinks, footerUtilityLinks, navItems, site, socialLinks } from "@/lib/site";
 
 export function Footer() {
   const copyrightYear = new Date().getFullYear();
@@ -49,6 +49,14 @@ export function Footer() {
                 Tickets
               </Link>
             </li>
+            <li>
+              <Link
+                href="/contact"
+                className="text-muted transition-colors hover:text-magenta"
+              >
+                Contact
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -85,10 +93,22 @@ export function Footer() {
       </Container>
 
       <div className="border-t border-line">
-        <Container className="flex flex-col gap-2 py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+        <Container className="flex flex-col gap-3 py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {copyrightYear} {site.name}. All rights reserved.
           </p>
+          <ul className="flex flex-wrap gap-x-4 gap-y-2">
+            {footerUtilityLinks.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="transition-colors hover:text-cyan"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
           <p className="font-display uppercase tracking-[0.16em] text-paper/80">
             Presented by {site.organizer}
           </p>

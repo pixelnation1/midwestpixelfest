@@ -13,6 +13,9 @@ export type Venue = {
  * Event facts used by metadata and JSON-LD.
  * Keep startDate, endDate, and venue null until they are officially announced.
  * Event schema will not render until all three are present.
+ *
+ * ticketUrl: set once to the public Ticketleap (or other) checkout URL.
+ * All ticket CTAs read this value — do not hard-code checkout links in components.
  */
 export const event = {
   status: "tba" as const,
@@ -208,6 +211,12 @@ export const footerSecondaryLinks = [
   { href: "/press", label: "Press" },
 ] as const;
 
+export const footerUtilityLinks = [
+  { href: "/tickets", label: "Tickets" },
+  { href: "/contact", label: "Contact" },
+  { href: "/privacy", label: "Privacy" },
+] as const;
+
 export const faqs = [
   {
     question: "When is Midwest Pixel Fest?",
@@ -247,7 +256,7 @@ export const faqs = [
   {
     question: "Can I apply as a vendor?",
     answer:
-      "Not yet. Vendor applications are not open. When they are, the Vendors page will be the official place to apply. Applications are not being accepted by email.",
+      "Not yet. Official vendor applications are not open. You can register vendor interest on the Vendors page so we can notify you when the application window exists. That form is not an application, and it is not a booth offer.",
   },
   {
     question: "Can I apply as an artist?",
@@ -257,12 +266,12 @@ export const faqs = [
   {
     question: "Can I become a sponsor?",
     answer:
-      "Sponsorship packages are in progress. Categories are outlined on the Sponsors page. A prospectus and inquiry process will be posted when they are ready. Do not assume a dollar amount or benefit until that document is public.",
+      "Sponsorship packages are in progress. Categories are outlined on the Sponsors page. Use the sponsor inquiry form to introduce your organization. Submitting that form does not create a sponsorship agreement, and dollar amounts are not published yet.",
   },
   {
     question: "Can I volunteer?",
     answer:
-      "Volunteer opportunities will be announced as operations planning moves forward. Roles and a signup window will be posted on the Volunteer page. Applications are not open yet.",
+      "Official volunteer applications are not open yet. You can register interest on the Volunteer page. That is not a shift assignment, and selection is not guaranteed. Final requirements — including any guardian notes for minors — will be published before official applications open.",
   },
   {
     question: "How do guest announcements work?",

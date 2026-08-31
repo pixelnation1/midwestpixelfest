@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Badge } from "@/components/ui/Badge";
 import { ContentSection } from "@/components/ui/ContentSection";
-import { EmailSignup } from "@/components/home/EmailSignup";
+import { CtaStrip } from "@/components/ui/CtaStrip";
 import { InnerPage } from "@/components/pages/InnerPage";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { createPageMetadata } from "@/lib/seo";
@@ -42,14 +42,7 @@ export default function VendorsPage() {
       breadcrumbLabel="Vendors"
       eyebrow="Sell at the fest"
       title="Vendors & Artist Alley"
-      intro="Vendor hall and artist alley are part of the show, not an afterthought. Applications are not open yet. When they are, this page is the official place to apply."
-      after={
-        <EmailSignup
-          eyebrow="Vendor updates"
-          title="Get vendor updates"
-          description="Application windows, booth details, and artist alley notes will hit this list when they are real — not as a fake waitlist."
-        />
-      }
+      intro="Vendor hall and artist alley are part of the show, not an afterthought. Applications are not open yet. Register interest if you want to be notified when they are — that is not an application."
     >
       <ContentSection title="Sell at Midwest Pixel Fest">
         <p>
@@ -90,7 +83,8 @@ export default function VendorsPage() {
           </h2>
           <p className="mt-4 text-muted">
             Applications are not currently open. There is no live application
-            URL. When the form launches, it will be linked from this page.
+            URL. Join vendor updates or register interest so we can notify you
+            when the official form exists.
           </p>
         </article>
         <article id="artists" className="border border-line bg-panel p-8">
@@ -130,6 +124,21 @@ export default function VendorsPage() {
           and we will not fill this section with placeholders.
         </p>
       </ContentSection>
+
+      <CtaStrip
+        className="mt-10"
+        title="Join vendor updates"
+        actions={[
+          { href: "/vendors/interest", label: "Register Vendor Interest" },
+          { href: "/contact", label: "Contact", variant: "secondary" },
+        ]}
+      >
+        <p>
+          Official applications are not open, so there is no Apply Now path.
+          Registering interest does not imply acceptance and does not request
+          payment.
+        </p>
+      </CtaStrip>
 
       <RelatedLinks
         links={[
