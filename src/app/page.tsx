@@ -6,6 +6,7 @@ import { ExploreTheFest } from "@/components/home/ExploreTheFest";
 import { FeaturedGuests } from "@/components/home/FeaturedGuests";
 import { GamingPreview } from "@/components/home/GamingPreview";
 import { Hero } from "@/components/home/Hero";
+import { LatestNews } from "@/components/home/LatestNews";
 import { VendorsSection } from "@/components/home/VendorsSection";
 import { createPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -27,6 +28,7 @@ export default function HomePage() {
       <GamingPreview />
       <CosplaySection />
       <VendorsSection />
+      <LatestNews />
       <EmailSignup />
     </>
   );

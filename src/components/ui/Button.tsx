@@ -60,6 +60,13 @@ export function Button({
         </span>
       );
     }
+    if (href.startsWith("mailto:") || href.startsWith("http://") || href.startsWith("https://")) {
+      return (
+        <a href={href} className={classes} onClick={onClick}>
+          {children}
+        </a>
+      );
+    }
     return (
       <Link href={href} className={classes} onClick={onClick}>
         {children}

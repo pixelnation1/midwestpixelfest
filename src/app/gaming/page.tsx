@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Button } from "@/components/ui/Button";
+import { ContentSection } from "@/components/ui/ContentSection";
+import { CtaStrip } from "@/components/ui/CtaStrip";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { createPageMetadata } from "@/lib/seo";
-import { gamingPillars } from "@/lib/site";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Gaming at Midwest Pixel Fest | Tournaments, Retro Gaming & TCGs",
+  title: "Gaming at Midwest Pixel Fest | Kansas Gaming Convention",
   description:
-    "Retro gaming, console tournaments, tabletop, trading card games, and free play at Midwest Pixel Fest in Emporia, Kansas.",
+    "Gaming at Midwest Pixel Fest in Emporia, Kansas: retro play, console events, trading card games, tabletop, tournaments, and free play. Event lists will be posted as they are confirmed.",
   path: "/gaming",
 });
 
@@ -17,32 +18,97 @@ export default function GamingPage() {
       path="/gaming"
       breadcrumbLabel="Gaming"
       eyebrow="Press start"
-      title="Gaming"
-      intro="Midwest Pixel Fest is being built as a play-first convention. Expect dedicated space for retro hardware, console competition, tabletop, trading card games, and open free play."
+      title="Gaming at Midwest Pixel Fest"
+      intro="Midwest Pixel Fest is being built as a play-first convention in Emporia, Kansas. Dedicated space is planned for retro hardware, console play, tabletop, trading cards, tournaments, and open free play."
     >
-      <ul className="grid gap-4 md:grid-cols-2">
-        {gamingPillars.map((pillar) => (
-          <li
-            key={pillar.title}
-            className="scroll-mt-24 border border-line bg-panel p-8"
-            id={pillar.slug}
-          >
-            <h2 className="font-display text-3xl uppercase tracking-wide">
-              {pillar.title}
-            </h2>
-            <p className="mt-4 text-muted">{pillar.description}</p>
-            <p className="mt-4 text-sm text-gold">
-              Event lists, game titles, and signup rules will be posted with the schedule.
-            </p>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-12 flex flex-wrap gap-4">
-        <Button href="/tickets">Get Tickets</Button>
-        <Button href="/schedule" variant="secondary">
-          View Schedule
-        </Button>
-      </div>
+      <ContentSection id="retro-gaming" title="Retro gaming">
+        <p>
+          Classic consoles, arcade-style setups, and the games that started it
+          are part of the floor we are building. Expect room for free play and
+          a retro community that actually sits down with the hardware — not a
+          glass case of machines nobody can touch.
+        </p>
+        <p>
+          Specific cabinets, consoles, and any retro competitions will be listed
+          once they are confirmed. Watch the Schedule and News pages for those
+          drops.
+        </p>
+      </ContentSection>
+
+      <ContentSection id="console-gaming" title="Console gaming">
+        <p>
+          Modern and classic console play will share the weekend: free play,
+          multiplayer, and competitive brackets as partners lock in. The goal
+          is a hall you can walk with a friend, pick up a controller, or sit
+          for a side event.
+        </p>
+        <p id="console-tournaments">
+          Tournament formats, title lists, and signup rules will be published
+          when they are final — not as a teaser sheet of games we cannot run.
+        </p>
+      </ContentSection>
+
+      <ContentSection id="tcg" title="Trading card games">
+        <p>
+          Trading card space is planned for constructed play, casual tables,
+          and community hangouts. Planned areas may include Pokémon, Magic: The
+          Gathering, One Piece, and other supported TCG communities as the
+          floor is built out.
+        </p>
+        <p>
+          That is a direction, not a locked vendor or event list. Exact games,
+          prize support, and scheduled events will be posted when they are
+          confirmed.
+        </p>
+      </ContentSection>
+
+      <ContentSection id="tabletop" title="Tabletop gaming">
+        <p>
+          Board games, RPGs, demos, and community tables belong on this floor.
+          We are planning open play space — not a single sponsored title standing
+          in for an entire library.
+        </p>
+        <p>
+          Demo schedules and any hosted RPG slots will appear with the
+          programming grid.
+        </p>
+      </ContentSection>
+
+      <ContentSection id="tournaments" title="Tournaments">
+        <p>
+          Official tournament schedules, rules, and formats will be published
+          as they are finalized. Until then, treat competitive play as planned —
+          not as a promise of a specific game on a specific day.
+        </p>
+      </ContentSection>
+
+      <ContentSection id="free-play" title="Free play">
+        <p>
+          Not everything needs a bracket. Free play is the casual side of the
+          convention: grab a controller, sit at a table, stay as long as the
+          floor is open. Signup details, if any, will be posted with the event
+          guide.
+        </p>
+      </ContentSection>
+
+      <CtaStrip
+        title="Keep watching the grid"
+        actions={[
+          { href: "/schedule", label: "View Schedule" },
+          { href: "/tickets", label: "Get Tickets", variant: "secondary" },
+          { href: "/news", label: "News", variant: "secondary" },
+        ]}
+      />
+
+      <RelatedLinks
+        links={[
+          { href: "/schedule", label: "Schedule" },
+          { href: "/tickets", label: "Tickets" },
+          { href: "/faq", label: "FAQ" },
+          { href: "/news", label: "News" },
+          { href: "/about", label: "About" },
+        ]}
+      />
     </InnerPage>
   );
 }

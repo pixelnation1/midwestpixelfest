@@ -131,3 +131,30 @@ export function buildFaqPageJsonLd(): JsonLd {
     })),
   };
 }
+
+export function buildArticleJsonLd(article: {
+  title: string;
+  excerpt: string;
+  slug: string;
+  publishedAt: string;
+}): JsonLd {
+  const url = absoluteUrl(`/news/${article.slug}`);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt,
+    datePublished: article.publishedAt,
+    dateModified: article.publishedAt,
+    mainEntityOfPage: url,
+    url,
+    image: [absoluteUrl(site.ogImagePath)],
+    author: {
+      "@id": organizationId,
+    },
+    publisher: {
+      "@id": organizationId,
+    },
+  };
+}

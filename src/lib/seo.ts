@@ -5,12 +5,16 @@ type PageMetadataInput = {
   title: string;
   description: string;
   path: string;
+  ogType?: "website" | "article";
+  publishedTime?: string;
 };
 
 export function createPageMetadata({
   title,
   description,
   path,
+  ogType = "website",
+  publishedTime,
 }: PageMetadataInput): Metadata {
   const url = absoluteUrl(path);
 
@@ -21,12 +25,13 @@ export function createPageMetadata({
       canonical: url,
     },
     openGraph: {
-      type: "website",
+      type: ogType,
       locale: "en_US",
       siteName: site.name,
       title,
       description,
       url,
+      ...(publishedTime ? { publishedTime } : {}),
     },
     twitter: {
       card: "summary_large_image",

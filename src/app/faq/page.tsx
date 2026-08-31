@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { InnerPage } from "@/components/pages/InnerPage";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { createPageMetadata } from "@/lib/seo";
 import { faqs } from "@/lib/site";
 import { buildFaqPageJsonLd } from "@/lib/structured-data";
@@ -9,18 +9,9 @@ import { buildFaqPageJsonLd } from "@/lib/structured-data";
 export const metadata: Metadata = createPageMetadata({
   title: "Midwest Pixel Fest FAQ | Tickets, Cosplay, Vendors & More",
   description:
-    "Answers about Midwest Pixel Fest tickets, dates, cosplay, vendors, travel, and who is organizing the Emporia, Kansas convention.",
+    "FAQ for Midwest Pixel Fest in Emporia, Kansas: dates, tickets, family policy, tournaments, TCGs, cosplay, vendors, sponsors, volunteers, hotels, parking, and accessibility.",
   path: "/faq",
 });
-
-const relatedPages = [
-  { href: "/tickets", label: "Tickets" },
-  { href: "/vendors", label: "Vendors" },
-  { href: "/cosplay", label: "Cosplay" },
-  { href: "/travel", label: "Travel" },
-  { href: "/schedule", label: "Schedule" },
-  { href: "/guests", label: "Guests" },
-];
 
 export default function FaqPage() {
   return (
@@ -29,7 +20,7 @@ export default function FaqPage() {
       breadcrumbLabel="FAQ"
       eyebrow="Questions"
       title="FAQ"
-      intro="Dates are still to be announced, but these are the questions we hear most. Check back as tickets, venue, and programming lock in."
+      intro="Dates, venue, and a lot of policy are still to be announced. These are the questions we hear most — answered with what we can actually stand behind today."
     >
       <JsonLd data={buildFaqPageJsonLd()} />
       <div className="divide-y divide-line border border-line bg-panel">
@@ -44,21 +35,18 @@ export default function FaqPage() {
           </details>
         ))}
       </div>
-      <nav aria-label="Related pages" className="mt-12">
-        <h2 className="font-display text-xl uppercase tracking-wide">Related pages</h2>
-        <ul className="mt-4 flex flex-wrap gap-3">
-          {relatedPages.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className="border border-line px-3 py-2 font-display text-sm uppercase tracking-[0.14em] text-muted transition-colors hover:border-cyan hover:text-cyan"
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <RelatedLinks
+        links={[
+          { href: "/tickets", label: "Tickets" },
+          { href: "/vendors", label: "Vendors" },
+          { href: "/cosplay", label: "Cosplay" },
+          { href: "/travel", label: "Travel" },
+          { href: "/volunteer", label: "Volunteer" },
+          { href: "/sponsors", label: "Sponsors" },
+          { href: "/about", label: "About" },
+          { href: "/news", label: "News" },
+        ]}
+      />
     </InnerPage>
   );
 }

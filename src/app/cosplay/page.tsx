@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { Button } from "@/components/ui/Button";
+import { ContentSection } from "@/components/ui/ContentSection";
+import { CtaStrip } from "@/components/ui/CtaStrip";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Cosplay at Midwest Pixel Fest | Contests, Meetups & Community",
   description:
-    "Cosplay contests, meetups, and community programming at Midwest Pixel Fest in Emporia, Kansas.",
+    "Cosplay at Midwest Pixel Fest in Emporia, Kansas: a planned contest, meetups, photo space, and high-level safety notes. Full rules will be posted once the venue is confirmed.",
   path: "/cosplay",
 });
 
@@ -16,36 +18,93 @@ export default function CosplayPage() {
       path="/cosplay"
       breadcrumbLabel="Cosplay"
       eyebrow="Costume & character"
-      title="Cosplay takes center stage"
-      intro="Cosplay is not a side stage at Midwest Pixel Fest. Contests, creator meetups, and a floor that welcomes first-timers and veterans are part of the inaugural weekend."
+      title="Cosplay at Midwest Pixel Fest"
+      intro="Cosplay is not a side stage at Midwest Pixel Fest. The weekend is being built for first costumes and veteran work alike — with a contest, meetups, and a floor that treats getting into character as part of the show."
     >
-      <div className="grid gap-4 md:grid-cols-2">
-        <article className="border border-line bg-panel p-8">
-          <h2 className="font-display text-3xl uppercase tracking-wide">
-            Contests
-          </h2>
-          <p className="mt-4 text-muted">
-            Craftsmanship and performance categories are planned. Rules, props
-            policy, and registration windows will be published before badges go
-            on sale.
-          </p>
-        </article>
-        <article className="border border-line bg-panel p-8">
-          <h2 className="font-display text-3xl uppercase tracking-wide">
-            Meetups & photos
-          </h2>
-          <p className="mt-4 text-muted">
-            Group meetups, photographer-friendly spaces, and community hangouts
-            will be on the schedule. Original characters and fandom looks are
-            both welcome — just keep it convention-appropriate.
-          </p>
-        </article>
-      </div>
-      <div className="mt-12">
-        <Button href="/tickets" size="lg">
-          Cosplay at Pixel Fest
-        </Button>
-      </div>
+      <ContentSection title="Cosplay community">
+        <p>
+          If this is your first con in costume or your fiftieth, the floor is
+          supposed to have room for you. Original characters and fandom looks
+          are both welcome. Keep it convention-appropriate; detailed costume
+          and coverage rules will be published with the event guide.
+        </p>
+      </ContentSection>
+
+      <ContentSection id="contest" title="Cosplay contest">
+        <p>
+          A cosplay contest is planned. Divisions, judging standards,
+          registration, and prizes will be posted once they are finalized —
+          before badges go on sale, not the week of the show.
+        </p>
+        <p>
+          Until that packet is public, there is no unofficial signup and no
+          prize list to cite.
+        </p>
+      </ContentSection>
+
+      <ContentSection id="meetups" title="Meetups">
+        <p>
+          Themed and community meetups are planned as programming comes
+          together. We will not invent fandom-specific timeslots until groups
+          and space are confirmed. Watch the Schedule and this page.
+        </p>
+      </ContentSection>
+
+      <ContentSection title="Photography">
+        <p>
+          Photo opportunities and designated photo-friendly areas may be part
+          of the weekend. Hallway shots happen at every con; designated space
+          is about giving people a better backdrop and a clearer yes-or-no
+          about being photographed.
+        </p>
+      </ContentSection>
+
+      <ContentSection id="rules" title="Cosplay safety">
+        <p>
+          Full prop and replica rules depend on the venue and will be posted
+          here when that building is confirmed. In the meantime, plan around
+          these high-level expectations:
+        </p>
+      </ContentSection>
+
+      <ul className="mb-10 grid gap-3 md:grid-cols-2">
+        {[
+          "Props may be inspected at entry or on the floor.",
+          "Functional weapons are not allowed.",
+          "Respect personal boundaries — costume is not consent.",
+          "Ask before photographing someone.",
+          "Follow venue rules once they are published.",
+        ].map((item) => (
+          <li
+            key={item}
+            className="flex gap-3 border border-line bg-panel px-4 py-3 text-muted"
+          >
+            <span className="text-magenta" aria-hidden="true">
+              ▸
+            </span>
+            {item}
+          </li>
+        ))}
+      </ul>
+
+      <CtaStrip
+        title="Show up in character"
+        actions={[
+          { href: "/tickets", label: "Get Tickets" },
+          { href: "/schedule", label: "View Schedule", variant: "secondary" },
+          { href: "/faq", label: "FAQ", variant: "secondary" },
+        ]}
+      />
+
+      <RelatedLinks
+        links={[
+          { href: "/schedule", label: "Schedule" },
+          { href: "/faq", label: "FAQ" },
+          { href: "/tickets", label: "Tickets" },
+          { href: "/news", label: "News" },
+          { href: "/about", label: "About" },
+        ]}
+      />
     </InnerPage>
   );
 }

@@ -4,12 +4,18 @@ import { Container } from "@/components/ui/Container";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildBreadcrumbJsonLd } from "@/lib/structured-data";
 
+export type BreadcrumbItem = {
+  name: string;
+  path?: string;
+};
+
 type InnerPageProps = {
   eyebrow?: string;
   title: string;
   intro: string;
   path: string;
   breadcrumbLabel?: string;
+  crumbs?: BreadcrumbItem[];
   children: React.ReactNode;
   after?: React.ReactNode;
   className?: string;
@@ -21,35 +27,55 @@ export function InnerPage({
   intro,
   path,
   breadcrumbLabel,
+  crumbs,
   children,
   after,
   className,
 }: InnerPageProps) {
   const crumbLabel = breadcrumbLabel ?? title;
-  const breadcrumbs = [
-    { name: "Home", path: "/" },
-    { name: crumbLabel, path },
-  ];
+  const breadcrumbs =
+    crumbs ??
+    [
+      { name: "Home", path: "/" },
+      { name: crumbLabel, path },
+    ];
 
   return (
     <div className={className}>
-      <JsonLd data={buildBreadcrumbJsonLd(breadcrumbs)} />
+      <JsonLd
+        data={buildBreadcrumbJsonLd(
+          breadcrumbs.map((crumb) => ({
+            name: crumb.name,
+            path: crumb.path ?? path,
+          })),
+        )}
+      />
       <header className="relative overflow-hidden border-b border-line hero-atmosphere">
         <div className="pointer-events-none absolute inset-0 pixel-grid opacity-70" />
         <Container className="relative py-16 sm:py-20">
           <nav aria-label="Breadcrumb" className="mb-5">
             <ol className="flex flex-wrap items-center gap-2 font-pixel text-[10px] uppercase tracking-[0.2em] text-muted">
-              <li>
-                <Link href="/" className="transition-colors hover:text-cyan">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden="true" className="text-magenta">
-                /
-              </li>
-              <li className="text-cyan" aria-current="page">
-                {crumbLabel}
-              </li>
+              {breadcrumbs.map((crumb, index) => {
+                const isLast = index === breadcrumbs.length - 1;
+                return (
+                  <li key={`${crumb.name}-${index}`} className="flex items-center gap-2">
+                    {index > 0 ? (
+                      <span aria-hidden="true" className="text-magenta">
+                        /
+                      </span>
+                    ) : null}
+                    {isLast || !crumb.path ? (
+                      <span className="text-cyan" aria-current={isLast ? "page" : undefined}>
+                        {crumb.name}
+                      </span>
+                    ) : (
+                      <Link href={crumb.path} className="transition-colors hover:text-cyan">
+                        {crumb.name}
+                      </Link>
+                    )}
+                  </li>
+                );
+              })}
             </ol>
           </nav>
           {eyebrow ? <Badge tone="cyan">{eyebrow}</Badge> : null}

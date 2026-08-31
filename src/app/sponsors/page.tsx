@@ -1,31 +1,62 @@
 import type { Metadata } from "next";
-import { Badge } from "@/components/ui/Badge";
+import { ContentSection } from "@/components/ui/ContentSection";
+import { CtaStrip } from "@/components/ui/CtaStrip";
 import { EmailSignup } from "@/components/home/EmailSignup";
+import { InfoCard } from "@/components/ui/InfoCard";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { createPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Sponsor Midwest Pixel Fest | Partnership Opportunities",
   description:
-    "Sponsorship and partnership opportunities for Midwest Pixel Fest, presented by PixelNation in Emporia, Kansas. Official packages are in progress.",
+    "Sponsor Midwest Pixel Fest in Emporia, Kansas. Regional visibility with gamers, cosplayers, collectors, families, students, and creators. Packages and pricing are not published yet.",
   path: "/sponsors",
 });
 
-const tiers = [
+const opportunities = [
   {
-    name: "Title",
-    note: "Lead partner for the inaugural weekend.",
+    name: "Presenting Partner",
+    note: "Lead visibility across the inaugural weekend.",
   },
   {
-    name: "Presenting",
-    note: "High-visibility floor, stage, and digital placement.",
+    name: "Gaming Area Partner",
+    note: "Association with free play, retro, or competitive space.",
   },
   {
-    name: "Community",
-    note: "Local businesses, hotels, and regional brands.",
+    name: "Cosplay Partner",
+    note: "Support for contest, meetup, or photo programming.",
+  },
+  {
+    name: "Tournament Partner",
+    note: "Brackets and side events once formats are locked.",
+  },
+  {
+    name: "Stage / Panel Partner",
+    note: "Stages, screens, and featured conversations.",
+  },
+  {
+    name: "Community Partner",
+    note: "Local and regional brands that want a floor presence.",
+  },
+  {
+    name: "Hotel / Travel Partner",
+    note: "Room blocks and visitor support after the venue is public.",
+  },
+  {
+    name: "Local Business Partner",
+    note: "Emporia and surrounding businesses that want in on the weekend.",
   },
 ];
+
+const inquiryHref = site.contactEmail
+  ? `mailto:${site.contactEmail}?subject=${encodeURIComponent("Midwest Pixel Fest sponsorship")}`
+  : "/news";
+
+const inquiryLabel = site.contactEmail
+  ? "Request sponsorship information"
+  : "Get sponsor updates";
 
 export default function SponsorsPage() {
   return (
@@ -33,28 +64,89 @@ export default function SponsorsPage() {
       path="/sponsors"
       breadcrumbLabel="Sponsors"
       eyebrow="Partners"
-      title="Sponsors"
-      intro={`${site.name} is looking for brands, venues, hotels, and local organizations that want to help launch a serious regional convention in ${site.location}. Official packages are in progress.`}
-      after={<EmailSignup />}
+      title="Sponsor Midwest Pixel Fest"
+      intro={`${site.name} is looking for brands, venues, hotels, and local organizations that want to help launch a serious regional convention in ${site.location}. Official packages and pricing are not published yet.`}
+      after={
+        site.contactEmail ? undefined : (
+          <EmailSignup
+            eyebrow="Sponsor updates"
+            title="Request sponsorship information"
+            description="A public inquiry address and prospectus are not live yet. Join the list and this page will be the first place packages appear."
+          />
+        )
+      }
     >
-      <div className="mb-8">
-        <Badge tone="gold">Packages coming soon</Badge>
+      <ContentSection title="Why sponsor">
+        <p>
+          Sponsorship is about showing up where the Midwest already gathers for
+          games, costumes, and collectibles — and helping a new regional
+          weekend get on its feet in Emporia.
+        </p>
+        <p>
+          The audience we are building toward includes gamers, cosplayers,
+          collectors, families, students, creators, and local-to-regional
+          businesses. We will not invent attendance numbers to sell a deck.
+        </p>
+      </ContentSection>
+
+      <ContentSection title="Who we want to work with">
+        <p>
+          Game shops, collectible brands, hospitality, civic partners, campuses,
+          media, and companies that already talk to this crowd. Custom
+          partnerships are on the table once the weekend shape is locked.
+        </p>
+      </ContentSection>
+
+      <div className="py-8">
+        <h2 className="font-display text-3xl uppercase tracking-wide sm:text-4xl">
+          Sponsorship opportunities
+        </h2>
+        <p className="mt-4 max-w-3xl text-muted">
+          These are categories, not priced tiers. Dollar amounts, inclusions,
+          and a downloadable deck will be posted when they are real.
+        </p>
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+          {opportunities.map((item) => (
+            <li key={item.name}>
+              <InfoCard title={item.name}>
+                <p>{item.note}</p>
+              </InfoCard>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul className="grid gap-4 md:grid-cols-3">
-        {tiers.map((tier) => (
-          <li key={tier.name} className="border border-line bg-panel p-8">
-            <h2 className="font-display text-3xl uppercase tracking-wide">
-              {tier.name}
-            </h2>
-            <p className="mt-4 text-muted">{tier.note}</p>
-          </li>
-        ))}
-      </ul>
-      <p className="mt-10 max-w-2xl text-muted">
-        If you represent a sponsor, hotel, or city partner, join the list and
-        watch this page. A dedicated prospectus will be available as dates and
-        venue are announced.
-      </p>
+
+      <ContentSection title="Custom partnerships">
+        <p>
+          If a category above is close but not right, say so when inquiry opens.
+          Activations will be built around the actual floor, not a generic
+          sponsor grid copied from another show.
+        </p>
+      </ContentSection>
+
+      <CtaStrip
+        title="Request sponsorship information"
+        actions={[
+          { href: inquiryHref, label: inquiryLabel },
+          { href: "/about", label: "About the fest", variant: "secondary" },
+          { href: "/press", label: "Press", variant: "secondary" },
+        ]}
+      >
+        <p>
+          {site.contactEmail
+            ? "Use the inquiry button to reach the public partnership inbox. A full prospectus will follow."
+            : "A public partnership inbox is not posted yet. Use the update list, then return here when the prospectus is live."}
+        </p>
+      </CtaStrip>
+
+      <RelatedLinks
+        links={[
+          { href: "/about", label: "About" },
+          { href: "/press", label: "Press" },
+          { href: "/vendors", label: "Vendors" },
+          { href: "/news", label: "News" },
+        ]}
+      />
     </InnerPage>
   );
 }

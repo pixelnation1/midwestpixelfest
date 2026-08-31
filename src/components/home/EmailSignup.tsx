@@ -1,13 +1,24 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useId, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-export function EmailSignup() {
+type EmailSignupProps = {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+};
+
+export function EmailSignup({
+  eyebrow = "Stay in the loop",
+  title = "Don't miss the next announcement",
+  description = "Dates, guests, tickets, and applications will hit this list first. No spam — just the drops that matter.",
+}: EmailSignupProps) {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const fieldId = useId();
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -21,9 +32,9 @@ export function EmailSignup() {
         <div className="border border-magenta/40 bg-panel px-6 py-12 sm:px-12">
           <SectionHeading
             align="center"
-            eyebrow="Stay in the loop"
-            title="Don't miss the next announcement"
-            description="Dates, guests, tickets, and applications will hit this list first. No spam — just the drops that matter."
+            eyebrow={eyebrow}
+            title={title}
+            description={description}
             tone="magenta"
           />
 
@@ -39,11 +50,11 @@ export function EmailSignup() {
               onSubmit={onSubmit}
               className="mx-auto mt-10 flex w-full max-w-xl flex-col gap-3 sm:flex-row"
             >
-              <label htmlFor="email" className="sr-only">
+              <label htmlFor={fieldId} className="sr-only">
                 Email Address
               </label>
               <input
-                id="email"
+                id={fieldId}
                 name="email"
                 type="email"
                 required

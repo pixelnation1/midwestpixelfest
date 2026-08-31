@@ -42,6 +42,7 @@ export const site = {
   siteUrl,
   ogImagePath: "/opengraph-image",
   twitterImagePath: "/twitter-image",
+  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? null,
 } as const;
 
 export function absoluteUrl(path = "/"): string {
@@ -200,45 +201,112 @@ export const tickerItems = [
   "Community",
 ] as const;
 
+export const footerSecondaryLinks = [
+  { href: "/about", label: "About" },
+  { href: "/news", label: "News" },
+  { href: "/volunteer", label: "Volunteer" },
+  { href: "/press", label: "Press" },
+] as const;
+
 export const faqs = [
   {
     question: "When is Midwest Pixel Fest?",
     answer:
-      "The inaugural Midwest Pixel Fest is planned for 2027 in Emporia, Kansas. The official dates will be announced here and through our email list as soon as they are locked.",
+      "The inaugural Midwest Pixel Fest is planned for 2027 in Emporia, Kansas. Official dates will be announced on this site and through the email list as soon as they are locked.",
   },
   {
-    question: "Where will the convention be held?",
+    question: "Where is Midwest Pixel Fest?",
     answer:
-      "Midwest Pixel Fest is based in Emporia, Kansas. Venue details will be published with the official date announcement so attendees, vendors, and hotels can plan with confidence.",
+      "Midwest Pixel Fest is based in Emporia, Kansas. The exact venue will be published with the official date announcement so attendees, vendors, and hotels can plan with confidence.",
   },
   {
-    question: "Are tickets on sale yet?",
+    question: "Are tickets available?",
     answer:
-      "Not yet. Badge types, pricing, and on-sale dates will be posted on the tickets page. Join the list so you hear about it when sales open.",
-  },
-  {
-    question: "Can I apply to be a vendor or artist?",
-    answer:
-      "Vendor and artist applications are coming soon. When they open, you will be able to apply from the Vendors page. Applications are not being accepted by email yet.",
-  },
-  {
-    question: "Will there be a cosplay contest?",
-    answer:
-      "Yes. Cosplay is a core part of the weekend — contests, meetups, and photo opportunities are planned. Rules, categories, and registration will be posted on the Cosplay page.",
+      "Not yet. Badge types, pricing, and on-sale dates will be posted on the Tickets page. Join the list so you hear about it when sales open.",
   },
   {
     question: "Is Midwest Pixel Fest family-friendly?",
     answer:
-      "The convention is being built as an all-ages pop culture weekend. Specific policies for children, strollers, and after-dark programming will be published with the full event guide.",
+      "The convention is being built as an all-ages pop culture weekend. Specific policies for children, strollers, and any after-dark programming will be published with the full event guide.",
+  },
+  {
+    question: "Will there be gaming tournaments?",
+    answer:
+      "Competitive programming is planned, including console brackets and other events as partners lock in. Official formats, game lists, and signup rules will be posted on the Gaming and Schedule pages once finalized.",
+  },
+  {
+    question: "Will there be trading card events?",
+    answer:
+      "Trading card space is part of the floor plan. Planned areas may include communities such as Pokémon, Magic: The Gathering, One Piece, and other supported TCG groups. Exact games, vendors, and event types will be announced when they are confirmed.",
+  },
+  {
+    question: "Is there a cosplay contest?",
+    answer:
+      "Yes. A cosplay contest is planned, along with meetups and photo-friendly space. Rules, divisions, judging, registration, and prizes will be posted on the Cosplay page before the event.",
+  },
+  {
+    question: "Can I apply as a vendor?",
+    answer:
+      "Not yet. Vendor applications are not open. When they are, the Vendors page will be the official place to apply. Applications are not being accepted by email.",
+  },
+  {
+    question: "Can I apply as an artist?",
+    answer:
+      "Artist alley applications are not open yet. When they are, they will live on the Vendors page next to vendor hall applications.",
+  },
+  {
+    question: "Can I become a sponsor?",
+    answer:
+      "Sponsorship packages are in progress. Categories are outlined on the Sponsors page. A prospectus and inquiry process will be posted when they are ready. Do not assume a dollar amount or benefit until that document is public.",
+  },
+  {
+    question: "Can I volunteer?",
+    answer:
+      "Volunteer opportunities will be announced as operations planning moves forward. Roles and a signup window will be posted on the Volunteer page. Applications are not open yet.",
+  },
+  {
+    question: "How do guest announcements work?",
+    answer:
+      "Confirmed guests will be posted on the Guests page and in News. Until a name is published there, it is not official. Appearance schedules will follow once the programming grid is built.",
+  },
+  {
+    question: "Where should I stay?",
+    answer:
+      "Official hotel partners and room blocks are not live yet. They will be listed on the Travel page after the venue and dates are confirmed. We are not endorsing specific hotels until those partnerships exist.",
+  },
+  {
+    question: "Is parking available?",
+    answer:
+      "Venue-specific parking, lots, and any shuttle notes will be posted on the Travel page after the venue is confirmed.",
+  },
+  {
+    question: "Are refunds available?",
+    answer:
+      "A ticket refund and transfer policy will be published with badge sales. There is no policy to cite yet because tickets are not on sale.",
+  },
+  {
+    question: "Can I bring cosplay props?",
+    answer:
+      "Props will likely be inspected, and functional weapons will not be allowed. Full prop and replica rules depend on the venue and will be posted on the Cosplay page. Until then, plan on peace-bonded, non-functional props and respect for other attendees.",
+  },
+  {
+    question: "Will there be food?",
+    answer:
+      "Food options depend on the venue and any on-site or nearby partners. Details will be added to Travel and the event guide once the building is confirmed.",
+  },
+  {
+    question: "Is the event accessible?",
+    answer:
+      "Accessibility information — including entry, seating, and service details we can commit to — will be published after the venue is confirmed. If you have a question before that, use the update list so you are notified when the guide goes live.",
   },
   {
     question: "Who is organizing the event?",
     answer:
-      "Midwest Pixel Fest is presented by PixelNation, an organizer building a new regional convention for the Midwest gaming, cosplay, and collectibles community.",
+      "Midwest Pixel Fest is presented by PixelNation, building a regional convention for the Midwest gaming, cosplay, and collectibles community.",
   },
   {
     question: "How do I get to Emporia?",
     answer:
-      "Emporia sits on the I-35 corridor between the Kansas City metro, Topeka, and Wichita. Most attendees will drive. Airport, hotel, and parking details will live on the Travel page.",
+      "Emporia sits on the I-35 corridor and is a meeting point for Kansas City, Wichita, Topeka, Lawrence, Manhattan, and surrounding Midwest communities. Most attendees will drive. Airport, parking, and hotel details live on the Travel page as they are confirmed.",
   },
 ] as const;

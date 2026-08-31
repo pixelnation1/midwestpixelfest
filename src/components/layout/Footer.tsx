@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { PixelLogo } from "@/components/brand/PixelLogo";
 import { Container } from "@/components/ui/Container";
-import { navItems, site, socialLinks } from "@/lib/site";
+import { footerSecondaryLinks, navItems, site, socialLinks } from "@/lib/site";
 
 export function Footer() {
+  const copyrightYear = new Date().getFullYear();
+
   return (
     <footer className="mt-auto border-t border-line bg-ink-2">
       <Container className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
@@ -52,6 +54,21 @@ export function Footer() {
 
         <div>
           <p className="font-display text-sm uppercase tracking-[0.2em] text-paper">
+            The fest
+          </p>
+          <ul className="mt-4 space-y-2">
+            {footerSecondaryLinks.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="text-muted transition-colors hover:text-magenta"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-8 font-display text-sm uppercase tracking-[0.2em] text-paper">
             Follow
           </p>
           <ul className="mt-4 space-y-2">
@@ -70,7 +87,7 @@ export function Footer() {
       <div className="border-t border-line">
         <Container className="flex flex-col gap-2 py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {site.year} {site.name}. All rights reserved.
+            © {copyrightYear} {site.name}. All rights reserved.
           </p>
           <p className="font-display uppercase tracking-[0.16em] text-paper/80">
             Presented by {site.organizer}

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { site } from "@/lib/site";
@@ -15,6 +16,10 @@ export function EventIntro() {
         </div>
         <div className="space-y-5 text-lg leading-relaxed text-muted lg:col-span-5">
           <p>
+            Midwest Pixel Fest is a gaming, cosplay and pop-culture convention
+            coming to Emporia, Kansas in 2027.
+          </p>
+          <p>
             {site.name} brings gaming, cosplay, creators, collectors, artists,
             vendors, tournaments, and community together for a weekend-long
             celebration in {site.location}.
@@ -25,8 +30,13 @@ export function EventIntro() {
             good con — and for the locals who have been waiting for one of
             their own.
           </p>
-          <p className="font-display text-sm uppercase tracking-[0.2em] text-gold">
-            Play. Dress up. Hunt rares. Meet the makers. Stay late.
+          <p>
+            <Link
+              href="/about"
+              className="font-display text-sm uppercase tracking-[0.2em] text-cyan transition-colors hover:text-magenta"
+            >
+              About Midwest Pixel Fest ▸
+            </Link>
           </p>
         </div>
       </Container>
