@@ -16,7 +16,7 @@ const SUCCESS_COPY: Record<string, string> = {
   vendor_interest:
     "Your vendor interest has been received. We'll share official application details when they open — this is not an application or a booth offer.",
   sponsor_inquiry:
-    "Thanks for your interest in partnering with Midwest Pixel Fest. Our team will review your information and follow up using the contact information you provided.",
+    "Thanks for your interest in partnering with Midwest Pixel Fest. We'll review your sponsorship inquiry and contact you using the information you provided.",
   volunteer_interest:
     "Your volunteer interest has been received. This is not a shift assignment, and selection is not guaranteed.",
   guest_inquiry:

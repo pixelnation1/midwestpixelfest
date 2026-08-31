@@ -13,6 +13,7 @@ type SelectProps = {
   error?: string;
   hint?: string;
   defaultValue?: string;
+  onValueChange?: (value: string) => void;
 };
 
 export function Select({
@@ -25,6 +26,7 @@ export function Select({
   error,
   hint,
   defaultValue,
+  onValueChange,
 }: SelectProps) {
   const fieldError = useFieldError(name, error);
   const describedBy =
@@ -41,6 +43,7 @@ export function Select({
         name={name}
         required={required}
         defaultValue={selected}
+        onChange={onValueChange ? (event) => onValueChange(event.target.value) : undefined}
         aria-invalid={fieldError ? true : undefined}
         aria-describedby={describedBy}
         className={inputBorder(fieldError)}

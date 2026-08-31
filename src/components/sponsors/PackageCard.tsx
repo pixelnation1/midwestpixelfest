@@ -5,7 +5,6 @@ import { ANALYTICS_EVENTS } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 import {
   availabilityLabel,
-  benefitCatalogLabel,
   inquiryHrefForPackage,
   packagePriceDisplay,
   type SponsorshipPackage,
@@ -46,28 +45,10 @@ export function PackageCard({ pkg }: PackageCardProps) {
       <h3 className="mt-4 font-display text-2xl uppercase tracking-wide text-paper sm:text-3xl">
         {pkg.name}
       </h3>
-      <p className="mt-3 font-display text-xl uppercase tracking-[0.12em] text-cyan">
+      <p className="mt-3 font-display text-2xl uppercase tracking-[0.12em] text-cyan sm:text-3xl">
         {price}
       </p>
       <p className="mt-4 flex-1 text-muted">{pkg.shortDescription}</p>
-      <ul className="mt-6 space-y-2 text-sm text-muted">
-        {pkg.benefits
-          .filter((item) => item.included !== false)
-          .slice(0, 5)
-          .map((item) => (
-            <li key={item.benefitId} className="flex gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-cyan" aria-hidden="true" />
-              <span>
-                {benefitCatalogLabel(item.benefitId)}
-                {item.included === "custom"
-                  ? " — Custom / contact us"
-                  : item.detail
-                    ? ` — ${item.detail}`
-                    : ""}
-              </span>
-            </li>
-          ))}
-      </ul>
       <div className="mt-8">
         {soldOut ? (
           <Button disabled className="w-full sm:w-auto" aria-disabled="true">

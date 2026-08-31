@@ -13,9 +13,9 @@ export function SponsorOpportunities() {
     >
       <SectionHeading
         id="opportunities-heading"
-        eyebrow="Custom"
-        title="Sponsorship opportunities"
-        description="These are conversation starters, not guaranteed packages. If you want to be associated with a part of the weekend — gaming, cosplay, stage, or a local welcome — tell us. Custom partnerships are discussed with the event team."
+        eyebrow="Areas"
+        title="Sponsorship interests"
+        description="Some businesses want to support the whole weekend. Others want to talk about a specific area. These are interest categories, not guaranteed packages. Custom / event sponsorships are reviewed with the event team."
         tone="gold"
       />
       <ul className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -29,7 +29,7 @@ export function SponsorOpportunities() {
       </ul>
       <div className="mt-8">
         <EventCta
-          href="/sponsors/inquiry?interest=Custom%20Partnership"
+          href="/sponsors/inquiry?level=custom"
           label="Discuss a Custom Partnership"
           eventName={ANALYTICS_EVENTS.sponsor_custom_partnership_click}
         />

@@ -7,24 +7,24 @@ import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { ANALYTICS_EVENTS } from "@/lib/analytics";
 import { createPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
-import { interestFromQuery } from "@/lib/sponsorships";
+import { levelFromQuery } from "@/lib/sponsorships";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Become a Midwest Pixel Fest Sponsor | Partnership Inquiry",
   description:
-    "Inquire about sponsoring Midwest Pixel Fest 2027 in Emporia, Kansas. Tell us about your business and how you want to be involved. Submitting this form does not create a sponsorship agreement or collect payment.",
+    "Inquire about sponsoring Midwest Pixel Fest 2027 in Emporia, Kansas. Listed levels start at $250. Submitting this form does not create a sponsorship agreement, reserve a level, or collect payment.",
   path: "/sponsors/inquiry",
 });
 
 type SponsorInquiryPageProps = {
-  searchParams: Promise<{ interest?: string }>;
+  searchParams: Promise<{ level?: string; interest?: string }>;
 };
 
 export default async function SponsorInquiryPage({
   searchParams,
 }: SponsorInquiryPageProps) {
   const params = await searchParams;
-  const interest = interestFromQuery(params.interest);
+  const level = levelFromQuery(params.level) ?? levelFromQuery(params.interest);
 
   return (
     <InnerPage
@@ -37,21 +37,20 @@ export default async function SponsorInquiryPage({
       ]}
       eyebrow="Partnership inquiry"
       title="Become a Midwest Pixel Fest Sponsor"
-      intro={`Tell us about your business and how you want to be involved with ${site.name} in ${site.location}. We review inquiries and follow up using the contact information you provide. This form does not create an agreement, reserve a package, or take payment.`}
+      intro={`Tell us about your business and how you want to be involved with ${site.name} in ${site.location}. We review inquiries and follow up using the contact information you provide. Submitting this form expresses interest and does not by itself create a sponsorship agreement.`}
     >
       <TrackPageEvent name={ANALYTICS_EVENTS.sponsor_inquiry_start} />
 
-      <ContentSection title="Before you send">
+      <ContentSection title="This is an inquiry, not a commitment">
         <p>
-          Share enough that we can have a real conversation. Package names are
-          working labels until prices and final inclusions are confirmed in
-          writing. If you are not sure which package fits, choose “Not Sure Yet”
-          or “Custom Partnership.”
+          The legally operative sponsorship paperwork is sent after Midwest
+          Pixel Fest accepts a partnership. We do not collect signatures,
+          card numbers, or bank details on this page.
         </p>
       </ContentSection>
 
       <div className="border border-line bg-panel p-6 sm:p-8">
-        <SponsorInquiryForm defaultInterest={interest} />
+        <SponsorInquiryForm defaultLevel={level} />
       </div>
 
       <RelatedLinks

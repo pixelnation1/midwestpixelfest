@@ -15,6 +15,8 @@ import {
   idleFormState,
   isHoneypotTriggered,
   optionalText,
+  optionalEmail,
+  optionalProposedAmount,
   optionalUrl,
   readString,
   readStrings,
@@ -23,7 +25,10 @@ import {
   stripControlChars,
   validateEmail,
 } from "@/lib/forms/validate";
-import { getSponsorshipInterestOptions } from "@/lib/sponsorships";
+import {
+  getSponsorshipLevelOptions,
+  sponsorshipInterestAreas,
+} from "@/lib/sponsorships";
 
 function clean(value: string): string {
   return stripControlChars(value).trim();
@@ -118,38 +123,66 @@ export function parseAndValidate(
   if (kind === "sponsor_inquiry") {
     const company = clean(readString(formData, "company"));
     const contactName = clean(readString(formData, "contactName"));
+    const title = clean(readString(formData, "title"));
     const email = clean(readString(formData, "email"));
     const phone = clean(readString(formData, "phone"));
     const website = clean(readString(formData, "website"));
-    const location = clean(readString(formData, "location"));
+    const address = clean(readString(formData, "address"));
+    const city = clean(readString(formData, "city"));
+    const state = clean(readString(formData, "state"));
+    const zip = clean(readString(formData, "zip"));
     const partnership = clean(readString(formData, "partnership"));
-    const interest = clean(readString(formData, "interest"));
-    const involvement = clean(readString(formData, "involvement"));
+    const proposedAmount = clean(readString(formData, "proposedAmount"));
+    const areas = readStrings(formData, "areas").filter((area) =>
+      (sponsorshipInterestAreas as readonly string[]).includes(area),
+    );
+    const otherInterest = clean(readString(formData, "otherInterest"));
+    const displayName = clean(readString(formData, "displayName"));
+    const displayLink = clean(readString(formData, "displayLink"));
+    const marketingContact = clean(readString(formData, "marketingContact"));
+    const marketingEmail = clean(readString(formData, "marketingEmail"));
     const notes = clean(readString(formData, "notes"));
     addError(errors, "company", requiredText(company, "a business or organization name", FIELD_LIMITS.medium));
     addError(errors, "contactName", requiredText(contactName, "a contact name"));
+    addError(errors, "title", optionalText(title, "Title / position"));
     addError(errors, "email", validateEmail(email));
     addError(errors, "phone", optionalText(phone, "Phone", FIELD_LIMITS.phone));
     addError(errors, "website", optionalUrl(website));
-    addError(errors, "location", optionalText(location, "Business location"));
+    addError(errors, "address", optionalText(address, "Business address"));
+    addError(errors, "city", optionalText(city, "City"));
+    addError(errors, "state", optionalText(state, "State"));
+    addError(errors, "zip", optionalText(zip, "ZIP", 20));
     addError(
       errors,
       "partnership",
-      requireOneOf(partnership, getSponsorshipInterestOptions(), "a sponsorship interest"),
+      requireOneOf(partnership, getSponsorshipLevelOptions(), "a sponsorship level"),
     );
-    addError(errors, "interest", optionalText(interest, "Partnership interest", FIELD_LIMITS.message));
-    addError(errors, "involvement", optionalText(involvement, "Desired involvement", FIELD_LIMITS.message));
+    addError(errors, "proposedAmount", optionalProposedAmount(proposedAmount));
+    addError(errors, "otherInterest", optionalText(otherInterest, "Other interest"));
+    addError(errors, "displayName", optionalText(displayName, "Display name"));
+    addError(errors, "displayLink", optionalUrl(displayLink));
+    addError(errors, "marketingContact", optionalText(marketingContact, "Marketing contact name"));
+    addError(errors, "marketingEmail", optionalEmail(marketingEmail));
     addError(errors, "notes", optionalText(notes, "Notes", FIELD_LIMITS.message));
     Object.assign(fields, {
       company,
       contactName,
+      title,
       email,
       phone,
       website,
-      location,
+      address,
+      city,
+      state,
+      zip,
       partnership,
-      interest,
-      involvement,
+      proposedAmount,
+      areas,
+      otherInterest,
+      displayName,
+      displayLink,
+      marketingContact,
+      marketingEmail,
       notes,
     });
   }

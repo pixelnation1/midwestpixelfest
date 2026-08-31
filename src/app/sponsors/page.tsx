@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { PackageGrid } from "@/components/sponsors/PackageGrid";
 import { SponsorFaq } from "@/components/sponsors/SponsorFaq";
+import { SponsorLocalFit } from "@/components/sponsors/SponsorLocalFit";
 import { SponsorOpportunities } from "@/components/sponsors/SponsorOpportunities";
+import { SponsorPayment } from "@/components/sponsors/SponsorPayment";
+import { SponsorProcess } from "@/components/sponsors/SponsorProcess";
 import { SponsorshipComparison } from "@/components/sponsors/SponsorshipComparison";
 import { InnerPage } from "@/components/pages/InnerPage";
 import { TrackPageEvent } from "@/components/seo/TrackPageEvent";
@@ -12,13 +15,13 @@ import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { ANALYTICS_EVENTS } from "@/lib/analytics";
 import { createPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
-import { sponsorshipFaqs, sponsorshipPaymentUrl } from "@/lib/sponsorships";
+import { sponsorshipFaqs } from "@/lib/sponsorships";
 import { buildFaqPageJsonLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Sponsor Midwest Pixel Fest 2027 | Kansas Convention Partnerships",
   description:
-    "Sponsorship opportunities for Midwest Pixel Fest 2027 in Emporia, Kansas. Partner with a gaming, cosplay, collectibles, and community convention. Inquire about packages or a custom partnership — an inquiry is not an agreement.",
+    "Official sponsorship levels for Midwest Pixel Fest 2027 in Emporia, Kansas — Community $250, Bronze $500, Silver $1,000, Gold $2,500, Presenting $5,000+, and custom partnerships. An inquiry is not an agreement.",
   path: "/sponsors",
 });
 
@@ -29,23 +32,15 @@ const whyPoints = [
   },
   {
     title: "Help launch a new regional weekend",
-    body: "This is the inaugural year. Partners who show up now are part of standing up a Midwest convention — not buying a leftover logo on a finished poster.",
+    body: "This is the inaugural year. Partners who show up now are part of standing up a Midwest convention — not buying leftover space on a finished poster.",
   },
   {
-    title: "Visibility tied to real programming",
-    body: "Recognition can live on the website, in sponsor listings, and on-site as the floor plan allows. Higher packages can discuss activations. Nothing here invents impression counts.",
+    title: "Participate in a play-first convention",
+    body: "Gaming, cosplay, collectibles, creators, and community programming are the reason people travel. Partnerships sit next to that mix, not apart from it.",
   },
   {
-    title: "Room to participate, not only to logo",
-    body: "Some partners want a listing. Others want to talk about gaming, cosplay, tournaments, or attendee experience. Those conversations start with an inquiry.",
-  },
-  {
-    title: "Local and regional businesses belong here",
-    body: "Emporia sits on a corridor that already moves people between Kansas City, Wichita, Topeka, Lawrence, and the rest of the region. Nearby shops, hospitality, and brands are part of the weekend we want.",
-  },
-  {
-    title: "Digital and on-site recognition, package by package",
-    body: "What you get is whatever the package — and later the written agreement — actually includes. We will not promise placements we have not scoped.",
+    title: "Choose a listed level or a custom conversation",
+    body: "Community through Presenting are published price points. Custom / event sponsorship is for a specific area or an amount that is not on that list. Benefits are confirmed after acceptance.",
   },
 ];
 
@@ -89,26 +84,12 @@ export default function SponsorsPage() {
         ))}
       </ul>
 
+      <SponsorLocalFit />
       <PackageGrid />
       <SponsorshipComparison />
       <SponsorOpportunities />
-
-      <ContentSection title="How sponsorship works">
-        <p>
-          Inquiry, then review, then approval, then a written agreement, then
-          payment. This website does not collect card information and does not
-          reserve a package when you submit the form.
-        </p>
-        {sponsorshipPaymentUrl ? (
-          <p>Payment instructions are shared after an agreement is in place.</p>
-        ) : (
-          <p>
-            Payment terms are provided after a sponsorship is approved and
-            finalized.
-          </p>
-        )}
-      </ContentSection>
-
+      <SponsorProcess />
+      <SponsorPayment />
       <SponsorFaq />
 
       <CtaStrip
@@ -120,9 +101,8 @@ export default function SponsorsPage() {
         ]}
       >
         <p>
-          Introduce your business on the inquiry form. We will follow up using
-          the contact information you provide. Submitting the form does not
-          create a sponsorship agreement.
+          Submitting this form expresses your interest in sponsoring Midwest
+          Pixel Fest and does not by itself create a sponsorship agreement.
         </p>
       </CtaStrip>
 

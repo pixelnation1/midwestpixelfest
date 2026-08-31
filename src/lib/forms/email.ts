@@ -19,7 +19,7 @@ type OperationalKind = (typeof OPERATIONAL_KINDS)[number];
 const SUBJECTS: Record<OperationalKind, string> = {
   contact: "[Midwest Pixel Fest] General Contact",
   vendor_interest: "[Midwest Pixel Fest] Vendor Interest",
-  sponsor_inquiry: "[Midwest Pixel Fest] New Sponsorship Inquiry",
+  sponsor_inquiry: "[Midwest Pixel Fest] Sponsorship Inquiry",
   volunteer_interest: "[Midwest Pixel Fest] Volunteer Interest",
   guest_inquiry: "[Midwest Pixel Fest] Guest Inquiry",
   press_inquiry: "[Midwest Pixel Fest] Press Inquiry",
@@ -32,7 +32,7 @@ function emailSubject(payload: DeliveryPayload, kind: OperationalKind): string {
         ? payload.fields.company.replace(/[\r\n]+/g, " ").trim().slice(0, 80)
         : "";
     return company
-      ? `[Midwest Pixel Fest] New Sponsorship Inquiry — ${company}`
+      ? `[Midwest Pixel Fest] Sponsorship Inquiry — ${company}`
       : SUBJECTS.sponsor_inquiry;
   }
   return SUBJECTS[kind];
@@ -41,7 +41,7 @@ function emailSubject(payload: DeliveryPayload, kind: OperationalKind): string {
 const KIND_LABELS: Record<OperationalKind, string> = {
   contact: "General Contact",
   vendor_interest: "Vendor Interest",
-  sponsor_inquiry: "New Sponsorship Inquiry",
+  sponsor_inquiry: "Sponsorship Inquiry",
   volunteer_interest: "Volunteer Interest",
   guest_inquiry: "Guest Inquiry",
   press_inquiry: "Press Inquiry",
@@ -61,13 +61,21 @@ const FIELD_LABELS: Record<string, string> = {
   notifyApplications: "Notify when applications open",
   company: "Business / organization",
   phone: "Phone",
-  location: "Business location",
-  partnership: "Package interest",
-  interest: "Partnership interest",
-  involvement: "Desired involvement",
-  notes: "Notes",
-  ageRange: "Age range",
+  title: "Title",
+  address: "Address",
+  city: "City",
+  state: "State",
+  zip: "ZIP",
+  partnership: "Selected level",
+  proposedAmount: "Proposed custom amount",
   areas: "Areas of interest",
+  otherInterest: "Other interest",
+  displayName: "Preferred display name",
+  displayLink: "Website / social link",
+  marketingContact: "Marketing contact",
+  marketingEmail: "Marketing contact email",
+  notes: "Additional comments",
+  ageRange: "Age range",
   availability: "Availability",
   experience: "Experience",
   stageName: "Professional name",
@@ -132,6 +140,113 @@ function formatSubmittedAt(iso: string): string {
     timeStyle: "short",
   });
   return `${central} CT (${iso})`;
+}
+
+const SPONSOR_SECTIONS: Array<{ heading: string; keys: string[] }> = [
+  {
+    heading: "BUSINESS",
+    keys: [
+      "company",
+      "contactName",
+      "title",
+      "email",
+      "phone",
+      "website",
+      "address",
+      "city",
+      "state",
+      "zip",
+    ],
+  },
+  {
+    heading: "SPONSORSHIP",
+    keys: ["partnership", "proposedAmount", "areas", "otherInterest"],
+  },
+  {
+    heading: "DISPLAY / MARKETING",
+    keys: ["displayName", "displayLink", "marketingContact", "marketingEmail"],
+  },
+  {
+    heading: "NOTES",
+    keys: ["notes"],
+  },
+];
+
+function fieldValue(
+  fields: Record<string, string | string[]>,
+  key: string,
+): string {
+  const value = fields[key];
+  if (value == null) return "";
+  return formatFieldValue(value);
+}
+
+function sponsorRows(
+  fields: Record<string, string | string[]>,
+): Array<{ heading: string; rows: { label: string; value: string }[] }> {
+  return SPONSOR_SECTIONS.map((section) => ({
+    heading: section.heading,
+    rows: section.keys
+      .map((key) => ({
+        label: FIELD_LABELS[key] ?? key,
+        value: fieldValue(fields, key),
+      }))
+      .filter((row) => row.value.length > 0),
+  })).filter((section) => section.rows.length > 0);
+}
+
+function buildSponsorText(payload: DeliveryPayload): string {
+  const sections = sponsorRows(payload.fields);
+  const lines = [
+    "Midwest Pixel Fest — Sponsorship Inquiry",
+    "",
+    `Submitted: ${formatSubmittedAt(payload.submittedAt)}`,
+    "",
+  ];
+  for (const section of sections) {
+    lines.push(section.heading);
+    for (const row of section.rows) {
+      lines.push(`${row.label}: ${row.value}`);
+    }
+    lines.push("");
+  }
+  lines.push("SYSTEM");
+  lines.push(`Submission timestamp: ${formatSubmittedAt(payload.submittedAt)}`);
+  return lines.join("\n");
+}
+
+function buildSponsorHtml(payload: DeliveryPayload): string {
+  const sections = sponsorRows(payload.fields);
+  const sectionsHtml = sections
+    .map((section) => {
+      const rows = section.rows
+        .map(
+          (row) =>
+            `<tr>
+              <th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e5e5e5;font-size:13px;color:#555;white-space:nowrap;">${escapeHtml(row.label)}</th>
+              <td valign="top" style="padding:8px 0;border-bottom:1px solid #e5e5e5;font-size:14px;color:#111;white-space:pre-wrap;">${escapeHtml(row.value)}</td>
+            </tr>`,
+        )
+        .join("");
+      return `<h2 style="margin:24px 0 8px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#666;">${escapeHtml(section.heading)}</h2>
+        <table width="100%" cellpadding="0" cellspacing="0" role="presentation">${rows}</table>`;
+    })
+    .join("");
+
+  return `<!DOCTYPE html>
+<html>
+<body style="margin:0;padding:24px;background:#f4f4f5;font-family:Georgia,'Times New Roman',serif;color:#111;">
+  <div style="max-width:640px;margin:0 auto;background:#fff;padding:24px 28px;border:1px solid #e5e5e5;">
+    <p style="margin:0 0 4px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#666;">Midwest Pixel Fest</p>
+    <h1 style="margin:0 0 16px;font-size:22px;font-weight:700;">Sponsorship Inquiry</h1>
+    <p style="margin:0 0 20px;font-size:13px;color:#555;">
+      <strong>SYSTEM</strong><br />
+      <strong>Submitted:</strong> ${escapeHtml(formatSubmittedAt(payload.submittedAt))}
+    </p>
+    ${sectionsHtml}
+  </div>
+</body>
+</html>`;
 }
 
 function buildText(payload: DeliveryPayload, kind: OperationalKind): string {
@@ -221,8 +336,8 @@ export async function sendOperationalEmail(
       from,
       to,
       subject: emailSubject(payload, kind),
-      html: buildHtml(payload, kind),
-      text: buildText(payload, kind),
+      html: kind === "sponsor_inquiry" ? buildSponsorHtml(payload) : buildHtml(payload, kind),
+      text: kind === "sponsor_inquiry" ? buildSponsorText(payload) : buildText(payload, kind),
       ...(replyTo ? { replyTo } : {}),
     });
 

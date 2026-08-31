@@ -3,6 +3,7 @@ import {
   getComparisonBenefits,
   getPackageBenefit,
   packagePriceDisplay,
+  showBenefitComparison,
   sponsorshipPackages,
 } from "@/lib/sponsorships";
 
@@ -21,8 +22,13 @@ function CellCopy({
   );
 }
 
+/**
+ * Public comparison stays hidden until showBenefitComparison is true and
+ * packages have real benefit rows. Do not invent a matrix.
+ */
 export function SponsorshipComparison() {
   const benefits = getComparisonBenefits();
+  if (!showBenefitComparison || benefits.length === 0) return null;
 
   return (
     <section
@@ -34,7 +40,7 @@ export function SponsorshipComparison() {
         id="compare-heading"
         eyebrow="Compare"
         title="Package comparison"
-        description="Included means it is part of that working package. Custom / contact us means it can be discussed. Not included means it is not part of that package unless we agree otherwise in writing."
+        description="Included means it is part of that package. Custom / contact us means it can be discussed. Not included means it is not part of that package unless we agree otherwise in writing."
         tone="cyan"
       />
 

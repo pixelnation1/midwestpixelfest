@@ -352,7 +352,7 @@ export function getFaqs() {
     {
       question: "Can my business sponsor?",
       answer:
-        "Yes. Sponsorship packages and custom partnership conversations live on the Sponsors page. Start with the inquiry form. Submitting that form does not create a sponsorship agreement, reserve a package, or collect payment. Prices are confirmed in writing after review.",
+        "Yes. Official levels are Community Sponsor ($250), Bronze ($500), Silver ($1,000), Gold ($2,500), Presenting Sponsor ($5,000+), and custom / event sponsorship. Start with the inquiry on the Sponsors page. That form does not create a sponsorship agreement, reserve a level, or collect payment.",
     },
     {
       question: "Can I volunteer?",

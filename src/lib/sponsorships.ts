@@ -1,11 +1,12 @@
 /**
  * Central sponsorship configuration for Midwest Pixel Fest.
  *
- * Change package names, prices, benefits, availability, and featured status
- * here. Cards, comparison, inquiry options, and CTAs all read this file.
+ * Package names, prices, availability, and featured status live here.
+ * Cards, inquiry options, and CTAs all read this file.
  *
- * Prices stay null until the owner supplies them. Do not invent dollar amounts,
- * attendee counts, impressions, or confirmed partners.
+ * Exact benefit matrix is NOT finalized. Keep package `benefits` empty until
+ * the owner supplies inclusions. Do not invent booth space, naming rights,
+ * social posts, signage, tickets, exclusivity, or logo-level promises.
  */
 
 export type PackageAvailability = "available" | "limited" | "sold_out" | "contact";
@@ -58,6 +59,8 @@ export type SponsorshipPackage = {
   benefits: PackageBenefit[];
   ctaLabel: string;
   accent: AccentTone;
+  /** When true, inquiry can include an optional proposed amount. */
+  customAmount: boolean;
 };
 
 export type ConfirmedSponsor = {
@@ -82,7 +85,13 @@ export type SponsorshipFaq = {
   answer: string;
 };
 
-export const EXTRA_INQUIRY_OPTIONS = ["Custom Partnership", "Not Sure Yet"] as const;
+export type SponsorshipProcessStep = {
+  step: number;
+  title: string;
+  body: string;
+};
+
+export const NOT_SURE_LEVEL = "Not Sure Yet";
 
 export const BENEFIT_CATALOG: readonly BenefitDefinition[] = [
   { id: "website_recognition", label: "Website Recognition" },
@@ -104,323 +113,274 @@ export const BENEFIT_CATALOG: readonly BenefitDefinition[] = [
 ] as const;
 
 /**
- * Working package structure. Flip `featured` to show the featuredLabel badge.
- * Set `price` / `priceLabel` when the owner supplies amounts.
+ * Official levels and prices. Leave `benefits` empty until the owner supplies
+ * the matrix. Flip `featured` only when a package should show featuredLabel.
  */
 export const sponsorshipPackages: SponsorshipPackage[] = [
   {
     id: "community",
-    slug: "community-partner",
-    name: "Community Partner",
-    price: null,
+    slug: "community-sponsor",
+    name: "Community Sponsor",
+    price: 250,
     priceLabel: null,
     shortDescription:
-      "A starting place for local and regional businesses that want to help launch the inaugural weekend.",
+      "A starting place for local and regional businesses that want to support the inaugural Midwest Pixel Fest.",
     description:
-      "Community Partner is for shops, studios, and organizations that want to be associated with Midwest Pixel Fest without a large activation. Recognition details are confirmed in the sponsorship agreement.",
+      "Community Sponsor is for shops, studios, and organizations that want to be associated with the weekend. Exact recognition is confirmed after a sponsorship is accepted and finalized.",
     featured: false,
     featuredLabel: "Most Popular",
     availability: "available",
-    ctaLabel: "Inquire about this package",
+    ctaLabel: "I'm Interested",
     accent: "lime",
-    benefits: [
-      {
-        benefitId: "website_recognition",
-        included: true,
-        detail: "Listing on the Sponsors page once confirmed",
-      },
-      {
-        benefitId: "directory_listing",
-        included: true,
-        detail: "Included when the partner directory is published",
-      },
-      {
-        benefitId: "social_recognition",
-        included: true,
-        detail: "Grouped sponsor thank-you when partners are announced",
-      },
-    ],
+    customAmount: false,
+    benefits: [],
   },
   {
-    id: "supporting",
-    slug: "supporting-sponsor",
-    name: "Supporting Sponsor",
-    price: null,
+    id: "bronze",
+    slug: "bronze-sponsor",
+    name: "Bronze Sponsor",
+    price: 500,
     priceLabel: null,
     shortDescription:
-      "On-site and digital recognition for businesses that want a clear presence across the weekend.",
+      "A partnership level for businesses that want a clear association with Midwest Pixel Fest.",
     description:
-      "Supporting Sponsor adds logo placement and event materials on top of directory listing. Exact placements depend on the floor plan and printed or digital materials we actually produce.",
+      "Bronze Sponsor is a listed partnership level. What is included is determined by the selected package after acceptance — not by this inquiry.",
     featured: false,
     featuredLabel: "Most Popular",
     availability: "available",
-    ctaLabel: "Inquire about this package",
+    ctaLabel: "I'm Interested",
     accent: "cyan",
-    benefits: [
-      {
-        benefitId: "website_recognition",
-        included: true,
-        detail: "Sponsors page listing once confirmed",
-      },
-      {
-        benefitId: "directory_listing",
-        included: true,
-        detail: "Included when the partner directory is published",
-      },
-      {
-        benefitId: "logo_placement",
-        included: true,
-        detail: "Website sponsor section",
-      },
-      {
-        benefitId: "social_recognition",
-        included: true,
-        detail: "Sponsor thank-you when partners are announced",
-      },
-      {
-        benefitId: "event_signage",
-        included: true,
-        detail: "On-site recognition as the floor plan allows",
-      },
-      {
-        benefitId: "program_recognition",
-        included: true,
-        detail: "Listed in event materials when those are published",
-      },
-    ],
+    customAmount: false,
+    benefits: [],
   },
   {
-    id: "featured",
-    slug: "featured-sponsor",
-    name: "Featured Sponsor",
-    price: null,
+    id: "silver",
+    slug: "silver-sponsor",
+    name: "Silver Sponsor",
+    price: 1000,
     priceLabel: null,
     shortDescription:
-      "Higher visibility plus room to discuss activations tied to the actual event floor.",
+      "A stronger partnership for businesses ready to stand with the inaugural weekend.",
     description:
-      "Featured Sponsor is for partners who want stronger recognition and a conversation about on-site presence. Area-specific sponsorships (gaming, cosplay, stage) are discussed separately and are not automatic.",
+      "Silver Sponsor is a listed partnership level. Benefits begin after the sponsorship is accepted, payment is received, and required marketing materials are provided.",
     featured: false,
     featuredLabel: "Most Popular",
     availability: "available",
-    ctaLabel: "Inquire about this package",
+    ctaLabel: "I'm Interested",
     accent: "magenta",
-    benefits: [
-      {
-        benefitId: "website_recognition",
-        included: true,
-        detail: "Prominent Sponsors page listing once confirmed",
-      },
-      {
-        benefitId: "directory_listing",
-        included: true,
-        detail: "Included when the partner directory is published",
-      },
-      {
-        benefitId: "logo_placement",
-        included: true,
-        detail: "Website sponsor section",
-      },
-      {
-        benefitId: "social_recognition",
-        included: true,
-        detail: "Sponsor announcement when partners are announced",
-      },
-      {
-        benefitId: "event_signage",
-        included: true,
-        detail: "On-site recognition as the floor plan allows",
-      },
-      {
-        benefitId: "program_recognition",
-        included: true,
-        detail: "Listed in event materials when those are published",
-      },
-      {
-        benefitId: "on_site_activation",
-        included: "custom",
-        detail: "Discussed with the event team",
-      },
-      {
-        benefitId: "promotional_materials",
-        included: "custom",
-        detail: "Discussed based on event needs",
-      },
-      {
-        benefitId: "custom_partnership",
-        included: "custom",
-      },
-    ],
+    customAmount: false,
+    benefits: [],
+  },
+  {
+    id: "gold",
+    slug: "gold-sponsor",
+    name: "Gold Sponsor",
+    price: 2500,
+    priceLabel: null,
+    shortDescription:
+      "A higher partnership level for businesses making a more visible commitment to the event.",
+    description:
+      "Gold Sponsor is a listed partnership level. Package details are confirmed in writing after Midwest Pixel Fest accepts the sponsorship.",
+    featured: false,
+    featuredLabel: "Most Popular",
+    availability: "available",
+    ctaLabel: "I'm Interested",
+    accent: "gold",
+    customAmount: false,
+    benefits: [],
   },
   {
     id: "presenting",
     slug: "presenting-sponsor",
     name: "Presenting Sponsor",
-    price: null,
-    priceLabel: null,
+    price: 5000,
+    priceLabel: "$5,000+",
     shortDescription:
-      "The lead partnership for the inaugural Midwest Pixel Fest weekend. Built around a conversation, not a menu.",
+      "The lead partnership level for Midwest Pixel Fest. Built around a conversation after we review your inquiry.",
     description:
-      "Presenting Sponsor is a custom lead partnership. Naming, activations, and area association are negotiated in an agreement after review. Submitting an inquiry does not reserve this role.",
+      "Presenting Sponsor starts at $5,000+. Specifics are confirmed after review and acceptance. Submitting an inquiry does not reserve this role or create an agreement.",
     featured: false,
     featuredLabel: "Most Popular",
-    availability: "contact",
-    ctaLabel: "Discuss presenting partnership",
-    accent: "gold",
-    benefits: [
-      {
-        benefitId: "website_recognition",
-        included: true,
-        detail: "Lead recognition on the Sponsors page once confirmed",
-      },
-      {
-        benefitId: "directory_listing",
-        included: true,
-        detail: "Lead listing when the partner directory is published",
-      },
-      {
-        benefitId: "logo_placement",
-        included: true,
-        detail: "Prominent website placement; on-site details in the agreement",
-      },
-      {
-        benefitId: "social_recognition",
-        included: true,
-        detail: "Dedicated sponsor announcement when partners are announced",
-      },
-      {
-        benefitId: "event_signage",
-        included: true,
-        detail: "Priority on-site recognition as the floor plan allows",
-      },
-      {
-        benefitId: "program_recognition",
-        included: true,
-        detail: "Lead listing in event materials when those are published",
-      },
-      {
-        benefitId: "naming_rights",
-        included: "custom",
-        detail: "Discussed in the sponsorship agreement",
-      },
-      {
-        benefitId: "on_site_activation",
-        included: "custom",
-        detail: "Discussed with the event team",
-      },
-      {
-        benefitId: "vendor_activation",
-        included: "custom",
-      },
-      {
-        benefitId: "custom_partnership",
-        included: "custom",
-      },
-    ],
+    availability: "available",
+    ctaLabel: "I'm Interested",
+    accent: "magenta",
+    customAmount: false,
+    benefits: [],
+  },
+  {
+    id: "custom",
+    slug: "custom-event-sponsorship",
+    name: "Custom / Event Sponsorship",
+    price: null,
+    priceLabel: "Let's Talk",
+    shortDescription:
+      "For businesses that want to sponsor a specific part of the weekend or propose an amount that is not one of the listed levels.",
+    description:
+      "Custom and event-area sponsorships are reviewed individually. Tell us what you have in mind. An inquiry is interest only.",
+    featured: false,
+    featuredLabel: "Most Popular",
+    availability: "available",
+    ctaLabel: "I'm Interested",
+    accent: "cyan",
+    customAmount: true,
+    benefits: [],
   },
 ];
 
-/** Opportunity categories — not priced packages and not guaranteed inventory. */
+/**
+ * Hide the public comparison table until the owner supplies real benefits.
+ * The comparison component still reads from package benefits when this is true.
+ */
+export const showBenefitComparison = false;
+
+/** Opportunity / interest categories — not priced packages. */
+export const sponsorshipInterestAreas = [
+  "General Event Sponsorship",
+  "Cosplay",
+  "Gaming / Tournaments",
+  "Trading Card Games",
+  "Kids / Family Activities",
+  "Guests / Creators",
+  "Other",
+] as const;
+
+export type SponsorshipInterestArea = (typeof sponsorshipInterestAreas)[number];
+
+export const OTHER_INTEREST_VALUE: SponsorshipInterestArea = "Other";
+
 export const sponsorshipOpportunities: SponsorshipOpportunity[] = [
   {
-    id: "gaming",
-    name: "Gaming",
+    id: "general",
+    name: "General Event Sponsorship",
     description:
-      "Association with retro play, console space, tabletop, or free play — shaped around the floor we actually build.",
+      "Support the weekend as a whole rather than one programming area.",
   },
   {
     id: "cosplay",
     name: "Cosplay",
     description:
-      "Support for contest, meetup, or photo-friendly programming once those details are published.",
+      "For businesses interested in being associated with cosplay programming as those details are published.",
   },
   {
-    id: "tournament",
-    name: "Tournament / Organized Play",
+    id: "gaming",
+    name: "Gaming / Tournaments",
     description:
-      "Brackets and organized play once formats, titles, and signup rules are locked.",
+      "For businesses interested in play spaces, tournaments, or organized play as formats are locked.",
   },
   {
-    id: "stage",
-    name: "Stage & Panels",
+    id: "tcg",
+    name: "Trading Card Games",
     description:
-      "Stages, screens, and featured conversations as the programming grid comes together.",
+      "For businesses interested in trading-card play and community tables as those programs take shape.",
   },
   {
-    id: "community",
-    name: "Community Activities",
+    id: "kids",
+    name: "Kids / Family Activities",
     description:
-      "Meetups, community tables, and weekend moments that are not a retail booth.",
+      "For businesses interested in family-friendly activities once those offerings are confirmed.",
   },
   {
-    id: "attendee",
-    name: "Attendee Experiences",
+    id: "guests",
+    name: "Guests / Creators",
     description:
-      "Wayfinding, comfort, and on-site moments that make the weekend easier to attend.",
-  },
-  {
-    id: "areas",
-    name: "Event Areas",
-    description:
-      "Named association with a hall, lounge, or feature area after the venue and floor plan exist.",
-  },
-  {
-    id: "local",
-    name: "Local Partnerships",
-    description:
-      "Emporia and surrounding businesses that want to welcome visitors during the weekend.",
+      "For businesses interested in being associated with guest and creator programming as announcements land.",
   },
 ];
 
+export const sponsorshipProcessSteps: SponsorshipProcessStep[] = [
+  {
+    step: 1,
+    title: "Choose an opportunity.",
+    body: "Review the available sponsorship levels or tell us about a custom partnership.",
+  },
+  {
+    step: 2,
+    title: "Submit your interest.",
+    body: "Tell us about your business and how you'd like to be involved. The website form is an inquiry, not a sponsorship agreement.",
+  },
+  {
+    step: 3,
+    title: "We review the partnership.",
+    body: "Sponsorships are subject to acceptance by Midwest Pixel Fest. Submitting the form does not reserve a level.",
+  },
+  {
+    step: 4,
+    title: "Finalize sponsorship.",
+    body: "Approved sponsors receive sponsorship confirmation and payment instructions. The organizer can send the formal Sponsorship Commitment Form at that stage.",
+  },
+  {
+    step: 5,
+    title: "Send marketing materials.",
+    body: "Approved sponsors provide their logo and any required promotional materials. Sponsorship benefits begin after the sponsorship is finalized, payment is received, and required materials are provided.",
+  },
+];
+
+export const sponsorshipPaymentMethods = [
+  "Square Invoice — Credit / Debit Card",
+  "Square Invoice — ACH / Bank Transfer",
+  "Business Check",
+  "Other approved arrangements",
+] as const;
+
+export const localBusinessExamples = [
+  "locally owned businesses",
+  "restaurants",
+  "hotels",
+  "banks / financial institutions",
+  "automotive businesses",
+  "technology companies",
+  "professional services",
+  "retailers",
+  "entertainment businesses",
+  "regional brands",
+  "community organizations",
+] as const;
+
 export const sponsorshipFaqs: SponsorshipFaq[] = [
   {
-    question: "How do I become a Midwest Pixel Fest sponsor?",
+    question: "How much does it cost to sponsor Midwest Pixel Fest?",
     answer:
-      "Start with the sponsor inquiry form. The event team reviews interest, follows up using the contact information you provide, and only then moves to an agreement if both sides want to proceed. Submitting the form does not create a sponsorship.",
+      "Listed levels are Community Sponsor — $250, Bronze Sponsor — $500, Silver Sponsor — $1,000, Gold Sponsor — $2,500, and Presenting Sponsor — $5,000+. Custom / event sponsorship opportunities are also available.",
   },
   {
-    question: "What sponsorship opportunities are available?",
+    question: "How do I become a sponsor?",
     answer:
-      "Working package names are Community Partner, Supporting Sponsor, Featured Sponsor, and Presenting Sponsor. We also discuss custom associations with parts of the weekend such as gaming, cosplay, or stage programming. Final inclusions and prices are confirmed in writing after review.",
+      "Start with the website inquiry. Midwest Pixel Fest reviews your interest, then — if the partnership is accepted — you receive confirmation and payment instructions. After payment and required marketing materials are received, sponsorship benefits begin. The online form is not the legally operative sponsorship commitment.",
   },
   {
-    question: "Can my business sponsor a specific area or activity?",
+    question: "How can sponsorship be paid?",
     answer:
-      "Yes — that is a conversation, not an automatic add-on. Tell us what you want to be associated with on the inquiry form. Area sponsorships depend on the venue, floor plan, and programming that actually exist.",
+      "Approved sponsorships may be invoiced through Square for credit/debit card or ACH / bank transfer, or handled by business check or another approved arrangement. This website does not collect card or bank details.",
+  },
+  {
+    question: "Can I sponsor a particular activity?",
+    answer:
+      "Yes. You can note interest in Cosplay, Gaming / Tournaments, Trading Card Games, Kids / Family Activities, Guests / Creators, general event sponsorship, or another area. Area association is discussed during review and is not automatic.",
+  },
+  {
+    question: "Does submitting the online form guarantee my sponsorship?",
+    answer:
+      "No. Submitting a sponsorship inquiry does not guarantee acceptance or reserve a sponsorship opportunity. It does not create a sponsorship agreement.",
+  },
+  {
+    question: "Can I create a custom sponsorship?",
+    answer:
+      "Yes. Choose Custom / Event Sponsorship on the inquiry form and describe what you have in mind. Custom inquiries are reviewed; they are not automatically accepted.",
+  },
+  {
+    question: "When do sponsorship benefits begin?",
+    answer:
+      "After the sponsorship is accepted and finalized, payment is received, and required marketing materials have been provided. The selected package determines benefits once those are confirmed in writing.",
   },
   {
     question: "Can local businesses participate?",
     answer:
-      "Yes. Midwest Pixel Fest is being built in Emporia for a regional audience. Local and regional businesses are a core part of who we want to work with.",
-  },
-  {
-    question: "Are custom sponsorships available?",
-    answer:
-      "Yes. If a listed package is close but not right, choose Custom Partnership on the inquiry form and describe what you have in mind.",
-  },
-  {
-    question: "Does submitting an inquiry guarantee sponsorship?",
-    answer:
-      "No. An inquiry is interest only. It does not reserve a package, lock a price, or create an agreement.",
-  },
-  {
-    question: "When is payment due?",
-    answer:
-      "Payment terms are provided after a sponsorship is approved and finalized. This website does not collect sponsorship payments.",
+      "Yes. Locally owned businesses, restaurants, hotels, banks, shops, professional services, and community organizations in Emporia and the surrounding region are a core part of who this weekend is for.",
   },
   {
     question: "Can sponsors also become vendors?",
     answer:
-      "Possibly, but those are separate processes. Vendor and artist applications will run through the Vendors page. A sponsorship inquiry is not a booth application.",
-  },
-  {
-    question: "Can businesses provide products or services instead of cash sponsorship?",
-    answer:
-      "Product, service, or promotional partnerships may be considered depending on event needs. Describe what you can offer on the inquiry form. In-kind details are confirmed only in an agreement.",
-  },
-  {
-    question: "Can sponsors provide giveaway items?",
-    answer:
-      "Giveaway and promotional items may be considered depending on event needs, venue rules, and logistics. Nothing is automatic. Mention it on the inquiry form if that is part of how you want to participate.",
+      "Possibly, but those are separate processes. Vendor and artist applications run through the Vendors page. A sponsorship inquiry is not a booth application.",
   },
 ];
 
@@ -430,11 +390,21 @@ export const confirmedSponsors: ConfirmedSponsor[] = [];
 /** Set to a real PDF path or URL when the prospectus exists. */
 export const sponsorshipGuideUrl: string | null = null;
 
+/**
+ * Public URL for the official Sponsorship Commitment Form.
+ * Keep null unless a real file exists in /public or another confirmed location.
+ */
+export const sponsorshipCommitmentFormUrl: string | null = null;
+
 /** Future invoice or payment URL. Do not collect cards on this site. */
 export const sponsorshipPaymentUrl: string | null = null;
 
 export function getPublishedSponsors() {
   return confirmedSponsors.filter((sponsor) => sponsor.published);
+}
+
+export function getPackageById(id: string): SponsorshipPackage | undefined {
+  return sponsorshipPackages.find((item) => item.id === id);
 }
 
 export function getPackageBySlug(slug: string): SponsorshipPackage | undefined {
@@ -448,21 +418,40 @@ export function isPackageSelectable(pkg: SponsorshipPackage): boolean {
 export function packagePriceDisplay(pkg: SponsorshipPackage): string {
   if (pkg.priceLabel) return pkg.priceLabel;
   if (pkg.price == null) return "Contact Us";
-  return `$${pkg.price}`;
+  return `$${pkg.price.toLocaleString("en-US")}`;
+}
+
+/** Label used in the inquiry select. Prices come from the same package config. */
+export function packageInquiryLabel(pkg: SponsorshipPackage): string {
+  if (pkg.customAmount) return pkg.name;
+  return `${pkg.name} — ${packagePriceDisplay(pkg)}`;
 }
 
 export function availabilityLabel(status: PackageAvailability): string | null {
   if (status === "sold_out") return "Sold Out";
   if (status === "limited") return "Limited Availability";
-  if (status === "contact") return "By Inquiry";
+  if (status === "contact") return "Custom";
   return null;
 }
 
-export function getSponsorshipInterestOptions(): string[] {
+export function getSponsorshipLevelOptions(): string[] {
   return [
-    ...sponsorshipPackages.filter(isPackageSelectable).map((item) => item.name),
-    ...EXTRA_INQUIRY_OPTIONS,
+    ...sponsorshipPackages.filter(isPackageSelectable).map(packageInquiryLabel),
+    NOT_SURE_LEVEL,
   ];
+}
+
+/** @deprecated Use getSponsorshipLevelOptions */
+export function getSponsorshipInterestOptions(): string[] {
+  return getSponsorshipLevelOptions();
+}
+
+export function findPackageByInquiryLabel(label: string): SponsorshipPackage | undefined {
+  return sponsorshipPackages.find((item) => packageInquiryLabel(item) === label);
+}
+
+export function isCustomSponsorshipSelection(value: string): boolean {
+  return findPackageByInquiryLabel(value)?.customAmount === true;
 }
 
 export type ComparisonStatus = "included" | "not_included" | "custom";
@@ -504,15 +493,23 @@ export function getComparisonBenefits(): BenefitDefinition[] {
 }
 
 export function inquiryHrefForPackage(pkg: SponsorshipPackage): string {
-  return `/sponsors/inquiry?interest=${encodeURIComponent(pkg.slug)}`;
+  return `/sponsors/inquiry?level=${encodeURIComponent(pkg.id)}`;
 }
 
-export function interestFromQuery(value: string | undefined): string | undefined {
+/**
+ * Accepts package id, slug, or a known inquiry label.
+ * Never returns untrusted query values.
+ */
+export function levelFromQuery(value: string | undefined): string | undefined {
   if (!value) return undefined;
-  const bySlug = getPackageBySlug(value);
-  if (bySlug && isPackageSelectable(bySlug)) return bySlug.name;
-  const options = getSponsorshipInterestOptions();
-  if (options.includes(value)) return value;
+  const trimmed = value.trim();
+  const lowered = trimmed.toLowerCase();
+  const pkg = sponsorshipPackages.find(
+    (item) => item.id === lowered || item.slug === lowered || item.id === trimmed || item.slug === trimmed,
+  );
+  if (pkg && isPackageSelectable(pkg)) return packageInquiryLabel(pkg);
+  const options = getSponsorshipLevelOptions();
+  if (options.includes(trimmed)) return trimmed;
   return undefined;
 }
 

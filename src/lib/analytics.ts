@@ -11,6 +11,7 @@ export const ANALYTICS_EVENTS = {
   sponsor_package_select: "sponsor_package_select",
   sponsor_inquiry_start: "sponsor_inquiry_start",
   sponsor_custom_partnership_click: "sponsor_custom_partnership_click",
+  sponsor_interest_area_select: "sponsor_interest_area_select",
 } as const;
 
 export type AnalyticsEventName =
@@ -24,9 +25,37 @@ export const gaMeasurementId =
     ? process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
     : null;
 
+const PII_PAYLOAD_KEYS = new Set([
+  "name",
+  "email",
+  "phone",
+  "address",
+  "company",
+  "contact",
+  "contactName",
+  "firstName",
+  "marketingEmail",
+  "marketingContact",
+  "displayName",
+]);
+
+function sanitizeEventPayload(
+  payload?: Record<string, string | number | boolean>,
+): Record<string, string | number | boolean> | undefined {
+  if (!payload) return undefined;
+  const next: Record<string, string | number | boolean> = {};
+  for (const [key, value] of Object.entries(payload)) {
+    if (PII_PAYLOAD_KEYS.has(key)) continue;
+    if (typeof value === "string" && value.includes("@")) continue;
+    next[key] = value;
+  }
+  return Object.keys(next).length > 0 ? next : undefined;
+}
+
 /**
  * No-op unless GA4 is configured and gtag is on the page.
  * Never throws. Safe to call from client click handlers.
+ * Never sends names, emails, phones, addresses, or business contact details.
  */
 export function trackEvent(
   name: AnalyticsEventName,
@@ -38,5 +67,5 @@ export function trackEvent(
     window as Window & { gtag?: (...args: unknown[]) => void }
   ).gtag;
   if (typeof gtag !== "function") return;
-  gtag("event", name, payload);
+  gtag("event", name, sanitizeEventPayload(payload));
 }

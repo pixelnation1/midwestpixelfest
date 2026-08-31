@@ -97,6 +97,23 @@ export function optionalUrl(value: string): string | null {
   return null;
 }
 
+export function optionalEmail(value: string): string | null {
+  if (!value) return null;
+  return validateEmail(value);
+}
+
+/** Reject pasted card/account numbers. Proposed amounts stay short. */
+export function optionalProposedAmount(value: string): string | null {
+  if (!value) return null;
+  const lengthError = optionalText(value, "Proposed sponsorship amount", FIELD_LIMITS.short);
+  if (lengthError) return lengthError;
+  const digits = value.replace(/\D/g, "");
+  if (digits.length >= 12) {
+    return "Enter a proposed amount, not payment details.";
+  }
+  return null;
+}
+
 export function requireOneOf(
   value: string,
   options: readonly string[],
