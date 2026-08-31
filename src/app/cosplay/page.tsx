@@ -8,7 +8,7 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = createPageMetadata({
   title: "Cosplay at Midwest Pixel Fest | Contests, Meetups & Community",
   description:
-    "Cosplay at Midwest Pixel Fest in Emporia, Kansas: a planned contest, meetups, photo space, and high-level safety notes. Full rules will be posted once the venue is confirmed.",
+    "Cosplay at Midwest Pixel Fest 2027 in Emporia, Kansas: a planned contest, meetups, photo space, and community floor. Full rules will be posted once the venue is confirmed.",
   path: "/cosplay",
 });
 
@@ -19,7 +19,7 @@ export default function CosplayPage() {
       breadcrumbLabel="Cosplay"
       eyebrow="Costume & character"
       title="Cosplay at Midwest Pixel Fest"
-      intro="Cosplay is not a side stage at Midwest Pixel Fest. The weekend is being built for first costumes and veteran work alike — with a contest, meetups, and a floor that treats getting into character as part of the show."
+      intro="Cosplay is a major part of Midwest Pixel Fest. Attendees are encouraged to participate. A contest is planned, along with community meetups. Contest details and rules will be announced — we will not invent prizes or judging criteria here."
     >
       <ContentSection title="Cosplay community">
         <p>
@@ -33,8 +33,7 @@ export default function CosplayPage() {
       <ContentSection id="contest" title="Cosplay contest">
         <p>
           A cosplay contest is planned. Divisions, judging standards,
-          registration, and prizes will be posted once they are finalized —
-          before badges go on sale, not the week of the show.
+          registration, and prizes will be posted once they are finalized.
         </p>
         <p>
           Until that packet is public, there is no unofficial signup and no

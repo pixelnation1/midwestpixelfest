@@ -17,7 +17,7 @@ export function EventIntro() {
         <div className="space-y-5 text-lg leading-relaxed text-muted lg:col-span-5">
           <p>
             Midwest Pixel Fest is a gaming, cosplay and pop-culture convention
-            coming to Emporia, Kansas in 2027.
+            coming to Emporia, Kansas on {site.dateLabel}.
           </p>
           <p>
             {site.name} brings gaming, cosplay, creators, collectors, artists,

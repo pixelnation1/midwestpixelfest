@@ -10,38 +10,79 @@ export type Venue = {
 };
 
 /**
- * Event facts used by metadata and JSON-LD.
- * Keep startDate, endDate, and venue null until they are officially announced.
- * Event schema will not render until all three are present.
+ * Confirmed public event facts.
  *
- * ticketUrl: set once to the public Ticketleap (or other) checkout URL.
- * All ticket CTAs read this value — do not hard-code checkout links in components.
+ * venue: still TBA — do not invent a building name or street address.
+ * ticketUrl: set once to the public Ticketleap checkout URL. Leave null until
+ * the real URL is supplied. All ticket CTAs read this value.
  */
 export const event = {
-  status: "tba" as const,
+  status: "scheduled" as const,
   year: 2027,
-  startDate: null as string | null,
-  endDate: null as string | null,
+  name: "Midwest Pixel Fest 2027",
+  startDate: "2027-10-16T10:00:00-05:00",
+  endDate: "2027-10-17T17:00:00-05:00",
+  doorsLabel: "Saturday at 10:00 AM",
+  closeLabel: "Sunday at 5:00 PM",
   venue: null as Venue | null,
   ticketUrl: null as string | null,
 };
 
+export const organizer = {
+  name: "PixelNation",
+  url: "https://pixelnation.co",
+} as const;
+
+export const ticketProducts = [
+  {
+    id: "weekend",
+    name: "Weekend General Admission",
+    price: 30,
+    priceLabel: "$30",
+    description: "Access to Saturday and Sunday.",
+  },
+  {
+    id: "saturday",
+    name: "Saturday General Admission",
+    price: 20,
+    priceLabel: "$20",
+    description: "Saturday access only.",
+  },
+  {
+    id: "sunday",
+    name: "Sunday General Admission",
+    price: 15,
+    priceLabel: "$15",
+    description: "Sunday access only.",
+  },
+  {
+    id: "kids",
+    name: "Kids 12 & Under",
+    price: 0,
+    priceLabel: "Free",
+    description: "Free with a paid adult.",
+  },
+] as const;
+
 export const site = {
   name: "Midwest Pixel Fest",
   shortName: "Pixel Fest",
-  organizer: "PixelNation",
+  organizer: organizer.name,
+  organizerUrl: organizer.url,
   location: "Emporia, Kansas",
   city: "Emporia",
   region: "Kansas",
   regionCode: "KS",
   country: "US",
   year: event.year,
-  dateLabel: "2027 — Date To Be Announced",
+  dateLabel: "October 16–17, 2027",
+  dateLongLabel: "Saturday, October 16 – Sunday, October 17, 2027",
+  venueLabel: "Emporia, Kansas — venue details coming soon",
   tagline: "Gaming • Cosplay • Collectibles • Community",
   description:
-    "Midwest Pixel Fest brings gaming, cosplay, collectibles, creators, vendors and community together in Emporia, Kansas.",
+    "Midwest Pixel Fest is a gaming, cosplay, collectibles, and pop-culture convention in Emporia, Kansas on October 16–17, 2027.",
   defaultTitle:
-    "Midwest Pixel Fest | Gaming, Cosplay & Pop Culture Convention in Kansas",
+    "Midwest Pixel Fest 2027 | Gaming, Cosplay & Pop Culture Convention in Kansas",
   siteUrl,
   ogImagePath: "/opengraph-image",
   twitterImagePath: "/twitter-image",
@@ -55,37 +96,85 @@ export function absoluteUrl(path = "/"): string {
   return `${site.siteUrl}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
-export function isEventSchemaReady(
-  value = event,
-): value is typeof event & { startDate: string; endDate: string; venue: Venue } {
-  return Boolean(value.startDate && value.endDate && value.venue?.name);
+/** Event schema can render with city-level location until a venue is named. */
+export function isEventSchemaReady(value = event): boolean {
+  return Boolean(value.startDate && value.endDate);
 }
 
+/** Attendee-facing desktop nav. Tickets is a separate CTA. Home is the logo. */
 export const navItems = [
-  { href: "/", label: "Home" },
   { href: "/guests", label: "Guests" },
-  { href: "/schedule", label: "Schedule" },
   { href: "/gaming", label: "Gaming" },
   { href: "/cosplay", label: "Cosplay" },
   { href: "/vendors", label: "Vendors" },
-  { href: "/sponsors", label: "Sponsors" },
+  { href: "/schedule", label: "Schedule" },
   { href: "/travel", label: "Travel" },
   { href: "/faq", label: "FAQ" },
 ] as const;
 
-export const socialLinks = [
-  { name: "Facebook", href: null as string | null, comingSoon: true },
-  { name: "Instagram", href: null as string | null, comingSoon: true },
-  { name: "YouTube", href: null as string | null, comingSoon: true },
-  { name: "TikTok", href: null as string | null, comingSoon: true },
+export const mobileMoreLinks = [
+  { href: "/about", label: "About" },
+  { href: "/news", label: "News" },
+  { href: "/sponsors", label: "Sponsors" },
+  { href: "/volunteer", label: "Volunteer" },
+  { href: "/press", label: "Press" },
+  { href: "/contact", label: "Contact" },
 ] as const;
+
+export const socialLinks = [
+  { name: "Facebook", href: null as string | null },
+  { name: "Instagram", href: null as string | null },
+  { name: "YouTube", href: null as string | null },
+  { name: "TikTok", href: null as string | null },
+] as const;
+
+export function getPublishedSocialLinks() {
+  return socialLinks.filter(
+    (item): item is typeof item & { href: string } => Boolean(item.href),
+  );
+}
+
+export const footerGroups = [
+  {
+    heading: "Event",
+    links: [
+      { href: "/tickets", label: "Tickets" },
+      { href: "/schedule", label: "Schedule" },
+      { href: "/guests", label: "Guests" },
+      { href: "/gaming", label: "Gaming" },
+      { href: "/cosplay", label: "Cosplay" },
+    ],
+  },
+  {
+    heading: "Get involved",
+    links: [
+      { href: "/vendors", label: "Vendors" },
+      { href: "/sponsors", label: "Sponsors" },
+      { href: "/volunteer", label: "Volunteer" },
+      { href: "/guests/inquiry", label: "Guest Inquiry" },
+      { href: "/press", label: "Press" },
+    ],
+  },
+  {
+    heading: "Plan",
+    links: [
+      { href: "/travel", label: "Travel" },
+      { href: "/faq", label: "FAQ" },
+      { href: "/news", label: "News" },
+      { href: "/contact", label: "Contact" },
+      { href: "/about", label: "About" },
+    ],
+  },
+] as const;
+
+export const footerLegalLinks = [{ href: "/privacy", label: "Privacy" }] as const;
 
 export const exploreCards = [
   {
     href: "/gaming",
     title: "Gaming",
     description:
-      "Retro cabinets, console brackets, tabletop nights, and free play all weekend.",
+      "Retro cabinets, console play, tabletop, trading cards, and free play all weekend.",
     accent: "cyan",
     icon: "gaming",
   },
@@ -101,7 +190,7 @@ export const exploreCards = [
     href: "/gaming#tcg",
     title: "TCGs",
     description:
-      "Shuffle up, trade, and compete. Tables, brackets, and casual play.",
+      "Shuffle up, trade, and play. Tables and organized events as they are confirmed.",
     accent: "gold",
     icon: "tcg",
   },
@@ -128,30 +217,6 @@ export const exploreCards = [
       "Stages, screens, tournaments, and a schedule built for a full weekend.",
     accent: "cyan",
     icon: "panels",
-  },
-] as const;
-
-export const guestPlaceholders = [
-  {
-    id: "guest-01",
-    name: "Guest TBA",
-    role: "Special Guest",
-    note: "Announcement coming soon",
-    accent: "magenta",
-  },
-  {
-    id: "guest-02",
-    name: "Guest TBA",
-    role: "Creator / Talent",
-    note: "Announcement coming soon",
-    accent: "cyan",
-  },
-  {
-    id: "guest-03",
-    name: "Guest TBA",
-    role: "Industry Guest",
-    note: "Announcement coming soon",
-    accent: "gold",
   },
 ] as const;
 
@@ -204,118 +269,137 @@ export const tickerItems = [
   "Community",
 ] as const;
 
-export const footerSecondaryLinks = [
-  { href: "/about", label: "About" },
-  { href: "/news", label: "News" },
-  { href: "/volunteer", label: "Volunteer" },
-  { href: "/press", label: "Press" },
-] as const;
+function ticketPriceLine() {
+  return ticketProducts
+    .map((item) => `${item.name} ${item.priceLabel}`)
+    .join(". ");
+}
 
-export const footerUtilityLinks = [
-  { href: "/tickets", label: "Tickets" },
-  { href: "/contact", label: "Contact" },
-  { href: "/privacy", label: "Privacy" },
-] as const;
+export function getFaqs() {
+  const ticketsLive = Boolean(event.ticketUrl);
 
-export const faqs = [
-  {
-    question: "When is Midwest Pixel Fest?",
-    answer:
-      "The inaugural Midwest Pixel Fest is planned for 2027 in Emporia, Kansas. Official dates will be announced on this site and through the email list as soon as they are locked.",
-  },
-  {
-    question: "Where is Midwest Pixel Fest?",
-    answer:
-      "Midwest Pixel Fest is based in Emporia, Kansas. The exact venue will be published with the official date announcement so attendees, vendors, and hotels can plan with confidence.",
-  },
-  {
-    question: "Are tickets available?",
-    answer:
-      "Not yet. Badge types, pricing, and on-sale dates will be posted on the Tickets page. Join the list so you hear about it when sales open.",
-  },
-  {
-    question: "Is Midwest Pixel Fest family-friendly?",
-    answer:
-      "The convention is being built as an all-ages pop culture weekend. Specific policies for children, strollers, and any after-dark programming will be published with the full event guide.",
-  },
-  {
-    question: "Will there be gaming tournaments?",
-    answer:
-      "Competitive programming is planned, including console brackets and other events as partners lock in. Official formats, game lists, and signup rules will be posted on the Gaming and Schedule pages once finalized.",
-  },
-  {
-    question: "Will there be trading card events?",
-    answer:
-      "Trading card space is part of the floor plan. Planned areas may include communities such as Pokémon, Magic: The Gathering, One Piece, and other supported TCG groups. Exact games, vendors, and event types will be announced when they are confirmed.",
-  },
-  {
-    question: "Is there a cosplay contest?",
-    answer:
-      "Yes. A cosplay contest is planned, along with meetups and photo-friendly space. Rules, divisions, judging, registration, and prizes will be posted on the Cosplay page before the event.",
-  },
-  {
-    question: "Can I apply as a vendor?",
-    answer:
-      "Not yet. Official vendor applications are not open. You can register vendor interest on the Vendors page so we can notify you when the application window exists. That form is not an application, and it is not a booth offer.",
-  },
-  {
-    question: "Can I apply as an artist?",
-    answer:
-      "Artist alley applications are not open yet. When they are, they will live on the Vendors page next to vendor hall applications.",
-  },
-  {
-    question: "Can I become a sponsor?",
-    answer:
-      "Sponsorship packages are in progress. Categories are outlined on the Sponsors page. Use the sponsor inquiry form to introduce your organization. Submitting that form does not create a sponsorship agreement, and dollar amounts are not published yet.",
-  },
-  {
-    question: "Can I volunteer?",
-    answer:
-      "Official volunteer applications are not open yet. You can register interest on the Volunteer page. That is not a shift assignment, and selection is not guaranteed. Final requirements — including any guardian notes for minors — will be published before official applications open.",
-  },
-  {
-    question: "How do guest announcements work?",
-    answer:
-      "Confirmed guests will be posted on the Guests page and in News. Until a name is published there, it is not official. Appearance schedules will follow once the programming grid is built.",
-  },
-  {
-    question: "Where should I stay?",
-    answer:
-      "Official hotel partners and room blocks are not live yet. They will be listed on the Travel page after the venue and dates are confirmed. We are not endorsing specific hotels until those partnerships exist.",
-  },
-  {
-    question: "Is parking available?",
-    answer:
-      "Venue-specific parking, lots, and any shuttle notes will be posted on the Travel page after the venue is confirmed.",
-  },
-  {
-    question: "Are refunds available?",
-    answer:
-      "A ticket refund and transfer policy will be published with badge sales. There is no policy to cite yet because tickets are not on sale.",
-  },
-  {
-    question: "Can I bring cosplay props?",
-    answer:
-      "Props will likely be inspected, and functional weapons will not be allowed. Full prop and replica rules depend on the venue and will be posted on the Cosplay page. Until then, plan on peace-bonded, non-functional props and respect for other attendees.",
-  },
-  {
-    question: "Will there be food?",
-    answer:
-      "Food options depend on the venue and any on-site or nearby partners. Details will be added to Travel and the event guide once the building is confirmed.",
-  },
-  {
-    question: "Is the event accessible?",
-    answer:
-      "Accessibility information — including entry, seating, and service details we can commit to — will be published after the venue is confirmed. If you have a question before that, use the update list so you are notified when the guide goes live.",
-  },
-  {
-    question: "Who is organizing the event?",
-    answer:
-      "Midwest Pixel Fest is presented by PixelNation, building a regional convention for the Midwest gaming, cosplay, and collectibles community.",
-  },
-  {
-    question: "How do I get to Emporia?",
-    answer:
-      "Emporia sits on the I-35 corridor and is a meeting point for Kansas City, Wichita, Topeka, Lawrence, Manhattan, and surrounding Midwest communities. Most attendees will drive. Airport, parking, and hotel details live on the Travel page as they are confirmed.",
-  },
-] as const;
+  return [
+    {
+      question: "When is Midwest Pixel Fest 2027?",
+      answer:
+        "Midwest Pixel Fest 2027 is Saturday, October 16 and Sunday, October 17, 2027 in Emporia, Kansas. Public opening is currently planned for Saturday at 10:00 AM, with Sunday currently planned through 5:00 PM.",
+    },
+    {
+      question: "Where is Midwest Pixel Fest?",
+      answer:
+        "Midwest Pixel Fest is in Emporia, Kansas. The exact venue will be announced. Venue details are coming soon.",
+    },
+    {
+      question: "How much are tickets?",
+      answer: `${ticketPriceLine()}. Ticket availability and event capacity are subject to venue limits.`,
+    },
+    {
+      question: "Are tickets available yet?",
+      answer: ticketsLive
+        ? "Yes. Purchase tickets from the Tickets page. Checkout opens in a new tab."
+        : "Ticket types and prices are posted on the Tickets page. Online checkout is being finalized. Join the update list so you hear when purchase goes live.",
+    },
+    {
+      question: "Is Midwest Pixel Fest family-friendly?",
+      answer:
+        "The convention is being built as an all-ages pop culture weekend. Kids 12 and under are free with a paid adult. Specific policies for strollers, quiet space, and any after-dark programming will be published with the full event guide.",
+    },
+    {
+      question: "Will there be gaming?",
+      answer:
+        "Yes. Gaming is a core event area, including video games, retro play, tabletop, trading card games, organized play, and casual community play. Specific schedules, titles, and tournament formats will be announced on the Gaming and Schedule pages.",
+    },
+    {
+      question: "Will there be gaming tournaments?",
+      answer:
+        "Competitive programming is planned, including console brackets and other events as partners lock in. Official formats, game lists, and signup rules will be posted on the Gaming and Schedule pages once finalized.",
+    },
+    {
+      question: "Will there be trading card events?",
+      answer:
+        "Trading card space is part of the floor plan. Planned areas may include communities such as Pokémon, Magic: The Gathering, One Piece, and other supported TCG groups. Exact games, vendors, and event types will be announced when they are confirmed.",
+    },
+    {
+      question: "Will there be cosplay?",
+      answer:
+        "Yes. Cosplay is a core event area. A contest and community meetups are planned. Rules, divisions, judging, registration, and prizes will be posted on the Cosplay page before the event.",
+    },
+    {
+      question: "Is there a cosplay contest?",
+      answer:
+        "Yes. A cosplay contest is planned, along with meetups and photo-friendly space. Rules, divisions, judging, registration, and prizes will be posted on the Cosplay page before the event.",
+    },
+    {
+      question: "Can I become a vendor?",
+      answer:
+        "Official vendor applications are not open. Register vendor interest on the Vendors page so we can notify you when the application window exists. That form is not an application, and it is not a booth offer.",
+    },
+    {
+      question: "Can I apply as an artist?",
+      answer:
+        "Artist alley applications are not open yet. Register interest on the Vendors page. When official applications open, they will live there next to vendor hall applications.",
+    },
+    {
+      question: "Can my business sponsor?",
+      answer:
+        "Yes — introduce your organization on the sponsor inquiry form. Categories are outlined on the Sponsors page. Submitting that form does not create a sponsorship agreement, and dollar amounts are not published yet.",
+    },
+    {
+      question: "Can I volunteer?",
+      answer:
+        "Official volunteer applications are not open yet. Register interest on the Volunteer page. That is not a shift assignment, and selection is not guaranteed. Final requirements — including any guardian notes for minors — will be published before official applications open.",
+    },
+    {
+      question: "How can I become a guest?",
+      answer:
+        "Creators, streamers, artists, performers, and community personalities can send a guest inquiry. Submission does not guarantee an invitation. Confirmed guests will be posted on the Guests page and in News.",
+    },
+    {
+      question: "How do guest announcements work?",
+      answer:
+        "Confirmed guests will be posted on the Guests page and in News. Until a name is published there, it is not official. Appearance schedules will follow once the programming grid is built.",
+    },
+    {
+      question: "Where should I stay?",
+      answer:
+        "Official hotel partners and room blocks are not live yet. They will be listed on the Travel page after the venue is confirmed. We are not endorsing specific hotels until those partnerships exist.",
+    },
+    {
+      question: "Is parking available?",
+      answer:
+        "Venue-specific parking, lots, and any shuttle notes will be posted on the Travel page after the venue is confirmed.",
+    },
+    {
+      question: "Are refunds available?",
+      answer:
+        "A ticket refund and transfer policy will be published with online checkout. There is no policy to cite yet because public checkout is still being finalized.",
+    },
+    {
+      question: "Can I bring cosplay props?",
+      answer:
+        "Props will likely be inspected, and functional weapons will not be allowed. Full prop and replica rules depend on the venue and will be posted on the Cosplay page. Until then, plan on peace-bonded, non-functional props and respect for other attendees.",
+    },
+    {
+      question: "Will there be food?",
+      answer:
+        "Food options depend on the venue and any on-site or nearby partners. Details will be added to Travel and the event guide once the building is confirmed.",
+    },
+    {
+      question: "Is the event accessible?",
+      answer:
+        "Accessibility information — including entry, seating, and service details we can commit to — will be published after the venue is confirmed. If you have a question before that, use the Contact page or the update list.",
+    },
+    {
+      question: "Who is organizing the event?",
+      answer:
+        "Midwest Pixel Fest is presented by PixelNation, building a regional convention for the Midwest gaming, cosplay, and collectibles community.",
+    },
+    {
+      question: "How do I get to Emporia?",
+      answer:
+        "Emporia sits on the I-35 corridor and is a meeting point for Kansas City, Wichita, Topeka, Lawrence, Manhattan, and surrounding Midwest communities. Most attendees will drive. Airport, parking, and hotel details live on the Travel page as they are confirmed.",
+    },
+  ] as const;
+}
+
+export const faqs = getFaqs();

@@ -8,6 +8,7 @@ export type NewsArticle = {
   title: string;
   excerpt: string;
   publishedAt: string;
+  updatedAt?: string;
   category: string;
   image?: string;
   seoTitle: string;
@@ -18,15 +19,54 @@ export type NewsArticle = {
 
 export const newsArticles: NewsArticle[] = [
   {
+    slug: "midwest-pixel-fest-2027-dates-announced",
+    title: "Midwest Pixel Fest 2027 Dates Announced: October 16–17",
+    excerpt:
+      "Midwest Pixel Fest will be Saturday, October 16 and Sunday, October 17, 2027 in Emporia, Kansas. Venue details will follow.",
+    publishedAt: "2026-08-31",
+    category: "Announcement",
+    seoTitle: "Midwest Pixel Fest 2027 Dates Announced: October 16–17",
+    seoDescription:
+      "Midwest Pixel Fest 2027 is October 16–17 in Emporia, Kansas. Venue announcement coming later. Tickets, gaming, cosplay, and vendor details continue to roll out.",
+    related: [
+      { href: "/tickets", label: "Tickets" },
+      { href: "/travel", label: "Travel" },
+      { href: "/schedule", label: "Schedule" },
+      { href: "/faq", label: "FAQ" },
+    ],
+    body: [
+      {
+        paragraphs: [
+          "Midwest Pixel Fest 2027 will take place Saturday, October 16 and Sunday, October 17, 2027 in Emporia, Kansas.",
+          "Public opening is currently planned for Saturday at 10:00 AM, with Sunday currently planned through 5:00 PM. Those hours can still shift with the venue.",
+        ],
+      },
+      {
+        heading: "Venue comes next",
+        paragraphs: [
+          "The city is Emporia. The exact venue is not finalized. Venue details will be announced here and on the Travel page when they are confirmed. We are not naming a building until that is official.",
+        ],
+      },
+      {
+        heading: "What rolls out from here",
+        paragraphs: [
+          "Ticket types and prices are posted on the Tickets page. Online checkout is being finalized. Gaming, cosplay, collectibles, creators, vendors, and community programming continue to take shape for the weekend.",
+          "Join the update list so you hear about the venue, checkout, guests, and application windows in one place.",
+        ],
+      },
+    ],
+  },
+  {
     slug: "midwest-pixel-fest-coming-to-emporia-kansas-2027",
     title: "Midwest Pixel Fest Is Coming to Emporia, Kansas in 2027",
     excerpt:
-      "A new regional convention for gaming, cosplay, collectibles, and community is being built in Emporia — with dates still to be announced.",
+      "A new regional convention for gaming, cosplay, collectibles, and community is being built in Emporia for October 16–17, 2027.",
     publishedAt: "2026-08-31",
+    updatedAt: "2026-08-31",
     category: "Announcement",
     seoTitle: "Midwest Pixel Fest Coming to Emporia, Kansas in 2027",
     seoDescription:
-      "Midwest Pixel Fest is a gaming, cosplay, and pop culture convention coming to Emporia, Kansas in 2027. Dates and venue will be announced here first.",
+      "Midwest Pixel Fest is a gaming, cosplay, and pop culture convention in Emporia, Kansas on October 16–17, 2027. Venue details will be announced here first.",
     related: [
       { href: "/about", label: "About" },
       { href: "/travel", label: "Travel" },
@@ -36,21 +76,21 @@ export const newsArticles: NewsArticle[] = [
     body: [
       {
         paragraphs: [
-          "Midwest Pixel Fest is a new regional convention being built in Emporia, Kansas for 2027. The weekend is meant for people who play games, wear costumes, hunt collectibles, sell their work, and show up for a packed convention floor.",
-          "This is the official site for dates, guests, tickets, vendor applications, and travel information. None of those are locked yet. When they are, they will be published here before they disappear into a social feed.",
+          "Midwest Pixel Fest is a new regional convention being built in Emporia, Kansas for October 16–17, 2027. The weekend is meant for people who play games, wear costumes, hunt collectibles, sell their work, and show up for a packed convention floor.",
+          "This is the official site for tickets, guests, vendor applications, and travel information. The venue is still to be announced. When it is confirmed, it will be published here first.",
         ],
       },
       {
         heading: "What we can say now",
         paragraphs: [
-          "The inaugural year is 2027. The city is Emporia. The organizer is PixelNation. Exact dates and the venue will be announced once they are confirmed — not before.",
+          "The inaugural weekend is October 16–17, 2027. The city is Emporia. The organizer is PixelNation. The exact venue will be announced once it is confirmed — not before.",
           "If you are planning a trip from Kansas City, Wichita, Topeka, Lawrence, Manhattan, or farther into the Midwest, bookmark the Travel page. Hotel blocks and parking notes will land there after the venue is public.",
         ],
       },
       {
         heading: "What happens next",
         paragraphs: [
-          "Guest names, badge types, and application windows will be posted on this News page and on the matching topic pages. Until then, the most useful thing you can do is join the update list so you hear about the date drop, ticket on-sale, and vendor window in one place.",
+          "Guest names, checkout, and application windows will be posted on this News page and on the matching topic pages. The most useful thing you can do is join the update list so you hear about the venue, ticket purchase, and vendor window in one place.",
         ],
       },
     ],
@@ -89,8 +129,8 @@ export const newsArticles: NewsArticle[] = [
       {
         heading: "Cosplay, vendors, and the rest of the weekend",
         paragraphs: [
-          "A cosplay contest is planned, along with meetups and photo-friendly space. Rules, divisions, and registration will be published on the Cosplay page before badges go on sale.",
-          "Vendor hall and artist alley applications are not open yet. When they are, the Vendors page is the official place to apply. Guest names will appear on the Guests page — no placeholders dressed up as confirmations.",
+          "A cosplay contest is planned, along with meetups and photo-friendly space. Rules, divisions, and registration will be published on the Cosplay page.",
+          "Vendor hall and artist alley applications are not open yet. Register interest on the Vendors page. Guest names will appear on the Guests page — no placeholders dressed up as confirmations.",
         ],
       },
     ],
@@ -122,14 +162,14 @@ export const newsArticles: NewsArticle[] = [
         heading: "Vendors and artists",
         paragraphs: [
           "Vendor hall and artist alley applications will open on the Vendors page. Rates, booth sizes, power, load-in, and deadlines will be included with the form — not guessed in advance.",
-          "Until that form is live, there is no unofficial waitlist by email.",
+          "Until that form is live, register vendor interest on the Vendors page. That is not an application.",
         ],
       },
       {
         heading: "Sponsors and guests",
         paragraphs: [
           "Sponsorship categories are outlined on the Sponsors page. Packages, pricing, and a prospectus will follow. Guest announcements will be posted on the Guests page and in News, with appearance details when we have them.",
-          "If you are press or a creator covering the show, the Press page is the placeholder for credentials and assets. Those processes are not open yet either.",
+          "If you are press or a creator covering the show, the Press page is where credentials and assets will be posted. Those processes are not open yet either.",
         ],
       },
     ],

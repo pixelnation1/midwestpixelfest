@@ -3,6 +3,7 @@ import {
   event,
   faqs,
   isEventSchemaReady,
+  organizer,
   site,
 } from "@/lib/site";
 
@@ -29,7 +30,8 @@ export function buildOrganizationJsonLd(): JsonLd {
     },
     parentOrganization: {
       "@type": "Organization",
-      name: site.organizer,
+      name: organizer.name,
+      url: organizer.url,
     },
   };
 }
@@ -62,19 +64,44 @@ export function buildSiteGraphJsonLd(): JsonLd {
 }
 
 /**
- * Event JSON-LD is gated on real startDate, endDate, and venue.name.
- * Set those in `src/lib/site.ts` when they are announced — this will
- * start rendering automatically. Do not invent placeholder dates.
+ * Event JSON-LD uses city-level location until a venue is named.
+ * When the venue is finalized, set event.venue in src/lib/site.ts
+ * (name + streetAddress + locality) so this node can become a named Place.
+ * Do not add fake offers, performers, or attendance numbers.
  */
 export function buildEventJsonLd(): JsonLd | null {
   if (!isEventSchemaReady(event)) {
     return null;
   }
 
+  const location = event.venue
+    ? {
+        "@type": "Place",
+        name: event.venue.name,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: event.venue.streetAddress ?? undefined,
+          addressLocality: event.venue.addressLocality,
+          addressRegion: event.venue.addressRegion,
+          postalCode: event.venue.postalCode ?? undefined,
+          addressCountry: event.venue.addressCountry,
+        },
+      }
+    : {
+        "@type": "Place",
+        name: site.location,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: site.city,
+          addressRegion: site.regionCode,
+          addressCountry: site.country,
+        },
+      };
+
   return {
     "@type": "Event",
     "@id": eventId,
-    name: site.name,
+    name: event.name,
     description: site.description,
     url: site.siteUrl,
     startDate: event.startDate,
@@ -84,21 +111,19 @@ export function buildEventJsonLd(): JsonLd | null {
     image: [absoluteUrl(site.ogImagePath)],
     organizer: {
       "@type": "Organization",
-      name: site.organizer,
+      name: organizer.name,
+      url: organizer.url,
     },
-    location: {
-      "@type": "Place",
-      name: event.venue.name,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: event.venue.streetAddress ?? undefined,
-        addressLocality: event.venue.addressLocality,
-        addressRegion: event.venue.addressRegion,
-        postalCode: event.venue.postalCode ?? undefined,
-        addressCountry: event.venue.addressCountry,
-      },
-    },
-    ...(event.ticketUrl ? { offers: { "@type": "Offer", url: event.ticketUrl } } : {}),
+    location,
+    ...(event.ticketUrl
+      ? {
+          offers: {
+            "@type": "Offer",
+            url: event.ticketUrl,
+            availability: "https://schema.org/InStock",
+          },
+        }
+      : {}),
   };
 }
 
@@ -137,6 +162,7 @@ export function buildArticleJsonLd(article: {
   excerpt: string;
   slug: string;
   publishedAt: string;
+  updatedAt?: string;
 }): JsonLd {
   const url = absoluteUrl(`/news/${article.slug}`);
 
@@ -146,7 +172,7 @@ export function buildArticleJsonLd(article: {
     headline: article.title,
     description: article.excerpt,
     datePublished: article.publishedAt,
-    dateModified: article.publishedAt,
+    dateModified: article.updatedAt ?? article.publishedAt,
     mainEntityOfPage: url,
     url,
     image: [absoluteUrl(site.ogImagePath)],

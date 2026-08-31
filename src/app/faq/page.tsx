@@ -10,7 +10,7 @@ import { buildFaqPageJsonLd } from "@/lib/structured-data";
 export const metadata: Metadata = createPageMetadata({
   title: "Midwest Pixel Fest FAQ | Tickets, Cosplay, Vendors & More",
   description:
-    "FAQ for Midwest Pixel Fest in Emporia, Kansas: dates, tickets, family policy, tournaments, TCGs, cosplay, vendors, sponsors, volunteers, hotels, parking, and accessibility.",
+    "FAQ for Midwest Pixel Fest 2027 in Emporia, Kansas: October 16–17 dates, ticket prices, family policy, gaming, cosplay, vendors, sponsors, volunteers, hotels, and accessibility.",
   path: "/faq",
 });
 
@@ -21,7 +21,7 @@ export default function FaqPage() {
       breadcrumbLabel="FAQ"
       eyebrow="Questions"
       title="FAQ"
-      intro="Dates, venue, and a lot of policy are still to be announced. These are the questions we hear most — answered with what we can actually stand behind today."
+      intro="Ticket prices, dates, and the city are locked. The venue and a lot of policy are still to be announced. These are the questions we hear most — answered with what we can actually stand behind today."
       after={<EmailSignup />}
     >
       <JsonLd data={buildFaqPageJsonLd()} />

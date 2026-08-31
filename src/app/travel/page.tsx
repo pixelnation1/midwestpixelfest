@@ -11,7 +11,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = createPageMetadata({
   title: "Travel to Midwest Pixel Fest | Emporia, Kansas",
   description:
-    "Travel to Midwest Pixel Fest in Emporia, Kansas on the I-35 corridor. Guidance for Kansas City, Wichita, Topeka, Lawrence, Manhattan, and the surrounding Midwest. Hotels and parking TBA.",
+    "Travel to Midwest Pixel Fest 2027 in Emporia, Kansas on October 16–17. Guidance for Kansas City, Wichita, Topeka, Lawrence, Manhattan, and the surrounding Midwest. Hotels and parking after venue confirmation.",
   path: "/travel",
 });
 
@@ -49,7 +49,7 @@ export default function TravelPage() {
       breadcrumbLabel="Travel"
       eyebrow="Getting here"
       title="Travel to Midwest Pixel Fest"
-      intro={`${site.name} is based in ${site.location}, on the I-35 corridor. Hotel blocks, parking maps, and venue addresses will publish with the official dates.`}
+      intro={`${site.dateLongLabel} in ${site.location}. Hotel blocks, parking maps, and the venue address will publish when they are confirmed.`}
       after={<EmailSignup />}
     >
       <ContentSection title="Why Emporia">
@@ -60,7 +60,7 @@ export default function TravelPage() {
         </p>
       </ContentSection>
 
-      <ContentSection title="Getting to Emporia">
+      <ContentSection id="getting-to-emporia" title="Getting to Emporia">
         <p>
           Most people will arrive by car. We are not listing unverified mileage
           or drive times. Use the notes below as a planning sketch, then come
@@ -80,13 +80,12 @@ export default function TravelPage() {
 
       <ContentSection id="hotels" title="Hotels">
         <p>
-          Official hotel partners and room blocks will be published once dates
-          and venue are finalized. Until then, we are not naming properties or
-          rates.
+          Official hotel partners and room blocks will be published once the
+          venue is confirmed. Until then, we are not naming properties or rates.
         </p>
       </ContentSection>
 
-      <ContentSection title="Parking">
+      <ContentSection id="parking" title="Parking">
         <p>
           Venue-specific parking, lots, and any shuttle notes will be posted
           after the venue is confirmed. Do not assume downtown vs. campus vs.

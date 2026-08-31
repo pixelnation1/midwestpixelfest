@@ -7,7 +7,7 @@ import { PixelLogo } from "@/components/brand/PixelLogo";
 import { TicketCta } from "@/components/cta/TicketCta";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
-import { navItems, site } from "@/lib/site";
+import { mobileMoreLinks, navItems, site } from "@/lib/site";
 
 export function Header() {
   const pathname = usePathname();
@@ -47,10 +47,10 @@ export function Header() {
           : "border-transparent bg-ink/40 backdrop-blur-sm",
       )}
     >
-      <Container className="flex h-16 items-center justify-between gap-4 lg:h-[4.25rem]">
+      <Container className="flex h-16 items-center justify-between gap-3 lg:h-[4.25rem] lg:gap-4">
         <Link
           href="/"
-          className="flex min-w-0 items-center gap-2.5 text-paper no-underline"
+          className="flex min-w-0 shrink-0 items-center gap-2.5 text-paper no-underline"
           aria-label={`${site.name} home`}
         >
           <PixelLogo size={36} />
@@ -62,20 +62,18 @@ export function Header() {
           </span>
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center xl:flex">
-          <ul className="flex items-center gap-0.5">
+        <nav aria-label="Primary" className="hidden min-w-0 items-center lg:flex">
+          <ul className="flex items-center">
             {navItems.map((item) => {
               const active =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                pathname === item.href || pathname.startsWith(`${item.href}/`);
 
               return (
                 <li key={item.href}>
                   <Link
                     href={item.href}
                     className={cn(
-                      "px-2.5 py-2 font-display text-[13px] uppercase tracking-[0.14em] transition-colors",
+                      "px-2 py-2 font-display text-[12px] uppercase tracking-[0.12em] transition-colors xl:px-2.5 xl:text-[13px] xl:tracking-[0.14em]",
                       active
                         ? "text-magenta"
                         : "text-paper/80 hover:text-cyan",
@@ -90,12 +88,12 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <TicketCta intent="nav" className="hidden sm:inline-flex" />
           <TicketCta intent="nav" size="md" className="px-3 text-xs sm:hidden" />
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center border border-paper/20 text-paper xl:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center border border-paper/20 text-paper lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -132,15 +130,24 @@ export function Header() {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
-          className="border-t border-line bg-ink xl:hidden"
+          className="border-t border-line bg-ink lg:hidden"
         >
           <Container className="flex max-h-[calc(100dvh-4rem)] flex-col overflow-y-auto py-6">
+            <div className="mb-4 flex justify-end">
+              <button
+                type="button"
+                className="min-h-11 px-3 font-display text-sm uppercase tracking-[0.16em] text-cyan"
+                onClick={() => setOpen(false)}
+              >
+                Close
+              </button>
+            </div>
             <nav aria-label="Mobile">
               <ul className="flex flex-col">
                 <li className="border-b border-line">
                   <Link
                     href="/tickets"
-                    className="flex items-center justify-between py-4 font-display text-2xl uppercase tracking-[0.12em] text-magenta"
+                    className="flex min-h-12 items-center justify-between py-3 font-display text-2xl uppercase tracking-[0.12em] text-magenta"
                     aria-current={pathname === "/tickets" ? "page" : undefined}
                     onClick={() => setOpen(false)}
                   >
@@ -152,16 +159,14 @@ export function Header() {
                 </li>
                 {navItems.map((item) => {
                   const active =
-                    item.href === "/"
-                      ? pathname === "/"
-                      : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                    pathname === item.href || pathname.startsWith(`${item.href}/`);
 
                   return (
                     <li key={item.href} className="border-b border-line">
                       <Link
                         href={item.href}
                         className={cn(
-                          "flex items-center justify-between py-4 font-display text-2xl uppercase tracking-[0.12em]",
+                          "flex min-h-12 items-center justify-between py-3 font-display text-2xl uppercase tracking-[0.12em]",
                           active ? "text-magenta" : "text-paper",
                         )}
                         aria-current={active ? "page" : undefined}
@@ -175,6 +180,22 @@ export function Header() {
                     </li>
                   );
                 })}
+              </ul>
+              <p className="mt-8 font-pixel text-[11px] uppercase tracking-[0.2em] text-gold">
+                More
+              </p>
+              <ul className="mt-3 flex flex-col">
+                {mobileMoreLinks.map((item) => (
+                  <li key={item.href} className="border-b border-line">
+                    <Link
+                      href={item.href}
+                      className="flex min-h-11 items-center py-3 font-display text-lg uppercase tracking-[0.12em] text-muted"
+                      onClick={() => setOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </nav>
             <div className="mt-6">

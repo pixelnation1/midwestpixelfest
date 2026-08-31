@@ -28,7 +28,7 @@ export function Hero() {
 
       <Container className="relative flex min-h-[calc(100dvh-4rem)] flex-col justify-center py-16 sm:py-24">
         <div className="flex flex-wrap items-center gap-3">
-          <Badge tone="cyan">Emporia, Kansas</Badge>
+          <Badge tone="cyan">{site.location}</Badge>
           <Badge tone="gold">{site.dateLabel}</Badge>
         </div>
 
@@ -38,7 +38,7 @@ export function Hero() {
 
         <h1
           id="hero-heading"
-          className="mt-4 max-w-5xl font-display text-[clamp(3rem,12vw,8.75rem)] uppercase leading-[0.82] tracking-[0.04em] text-paper glow-pulse"
+          className="mt-4 max-w-5xl font-display text-[clamp(2.6rem,11vw,8.75rem)] uppercase leading-[0.82] tracking-[0.04em] text-paper glow-pulse"
         >
           Midwest
           <span className="block text-magenta">Pixel Fest</span>
@@ -49,13 +49,15 @@ export function Hero() {
         </p>
 
         <p className="mt-4 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
-          A new kind of Midwest convention — built for players, cosplayers,
-          collectors, artists, and the people who keep the floor loud.
+          A Midwest gaming, cosplay, and pop-culture convention in Emporia,
+          Kansas — built for players, cosplayers, collectors, artists, and the
+          people who keep the floor loud.
         </p>
+        <p className="mt-2 text-sm text-muted">{site.venueLabel}</p>
 
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
           <TicketCta intent="nav" size="lg" />
-          <EventCta href="/vendors" label="Become a Vendor" variant="secondary" size="lg" />
+          <EventCta href="#explore" label="Explore the Fest" variant="secondary" size="lg" />
         </div>
       </Container>
     </section>

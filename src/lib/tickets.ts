@@ -12,7 +12,7 @@ export type TicketAction = {
 
 /**
  * Nav / hero: always a working click target.
- * Purchase: "Buy Tickets" when ticketUrl is set, otherwise "Tickets Coming Soon".
+ * Purchase: "Buy Tickets" when ticketUrl is set, otherwise checkout-finalizing copy.
  */
 export function getTicketAction(intent: "nav" | "purchase" = "nav"): TicketAction {
   if (event.ticketUrl) {
@@ -25,7 +25,7 @@ export function getTicketAction(intent: "nav" | "purchase" = "nav"): TicketActio
 
   return {
     href: "/tickets",
-    label: intent === "purchase" ? "Tickets Coming Soon" : "Get Tickets",
+    label: intent === "purchase" ? "Checkout Being Finalized" : "Tickets",
     external: false,
   };
 }

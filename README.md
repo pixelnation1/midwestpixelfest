@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Midwest Pixel Fest
 
-## Getting Started
+Official website for **Midwest Pixel Fest**, a gaming, cosplay, collectibles, and pop-culture convention in Emporia, Kansas.
 
-First, run the development server:
+- Production: https://midwestpixelfest.com
+- Dates: October 16–17, 2027
+- Presented by [PixelNation](https://pixelnation.co)
+
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run lint
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment variables
 
-## Learn More
+Copy `.env.example`. None are required for a local preview. Forms will not accept submissions until `FORM_WEBHOOK_URL` is set. See `docs/forms-and-email.md`.
 
-To learn more about Next.js, take a look at the following resources:
+### Google Search Console
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. In Search Console, choose **HTML tag** verification.
+2. Copy only the `content` value from the meta tag (not the full tag).
+3. In Vercel: **Project → Settings → Environment Variables**.
+4. Add `GOOGLE_SITE_VERIFICATION` for Production (and Preview if you want).
+5. Redeploy.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Sitemap: https://midwestpixelfest.com/sitemap.xml  
+Robots: https://midwestpixelfest.com/robots.txt
 
-## Deploy on Vercel
+### Analytics (optional)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Set `NEXT_PUBLIC_GA_MEASUREMENT_ID` to a `G-` measurement ID. GA4 scripts load only when that value is present.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Tickets
+
+Set `event.ticketUrl` in `src/lib/site.ts` to the public Ticketleap URL when it is ready. Leave it `null` until then. Do not invent a checkout link.
+
+### Contact inbox
+
+`NEXT_PUBLIC_CONTACT_EMAIL` is the public business address shown on Contact and Privacy. Do not put a personal address there.

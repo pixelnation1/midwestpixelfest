@@ -79,7 +79,7 @@ export function InnerPage({
             </ol>
           </nav>
           {eyebrow ? <Badge tone="cyan">{eyebrow}</Badge> : null}
-          <h1 className="mt-5 max-w-4xl font-display text-5xl uppercase leading-[0.9] tracking-wide text-paper sm:text-6xl lg:text-7xl">
+          <h1 className="mt-5 max-w-4xl font-display text-4xl uppercase leading-[0.9] tracking-wide text-paper sm:text-6xl lg:text-7xl">
             {title}
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{intro}</p>

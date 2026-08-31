@@ -40,6 +40,10 @@ const opportunities = [
     note: "Local and regional brands that want a floor presence.",
   },
   {
+    name: "Attendee experience",
+    note: "Wayfinding, comfort, and on-site moments that make the weekend easier to attend.",
+  },
+  {
     name: "Hotel / Travel Partner",
     note: "Room blocks and visitor support after the venue is public.",
   },
@@ -59,7 +63,7 @@ export default function SponsorsPage() {
       breadcrumbLabel="Sponsors"
       eyebrow="Partners"
       title="Sponsor Midwest Pixel Fest"
-      intro={`${site.name} is looking for brands, venues, hotels, and local organizations that want to help launch a serious regional convention in ${site.location}. Official packages and pricing are not published yet.`}
+      intro={`${site.name} is looking for brands, hotels, and local organizations that want to help launch a regional convention in ${site.location} on ${site.dateLabel}. Official packages and pricing are not published yet.`}
     >
       <ContentSection title="Why sponsor">
         <p>

@@ -30,7 +30,7 @@ export function CosplaySection() {
               <span className="text-magenta" aria-hidden="true">
                 ▸
               </span>
-              Cosplay contests with categories for craftsmanship and performance
+              Cosplay contest details will be announced
             </li>
             <li className="flex gap-3">
               <span className="text-magenta" aria-hidden="true">

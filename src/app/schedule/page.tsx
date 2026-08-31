@@ -1,33 +1,47 @@
 import type { Metadata } from "next";
-import { Badge } from "@/components/ui/Badge";
+import { EmailSignup } from "@/components/home/EmailSignup";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { Badge } from "@/components/ui/Badge";
+import { ContentSection } from "@/components/ui/ContentSection";
+import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { createPageMetadata } from "@/lib/seo";
-import { site } from "@/lib/site";
+import { event, site } from "@/lib/site";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Midwest Pixel Fest Schedule | Panels, Gaming & Events",
+  title: "Schedule | Midwest Pixel Fest 2027",
   description:
-    "The Midwest Pixel Fest schedule for panels, gaming, cosplay, and events in Emporia, Kansas. Times will be posted as the 2027 weekend is locked.",
+    "Midwest Pixel Fest 2027 schedule for October 16–17 in Emporia, Kansas. Gaming, tournaments, cosplay, panels, guests, and vendor hall details will be posted as they are confirmed.",
   path: "/schedule",
 });
 
-const blocks = [
+const categories = [
   {
-    day: "Friday",
-    items: ["Doors & badge pickup", "Vendor hall preview", "Opening programming", "Evening socials"],
+    title: "Gaming",
+    note: "Video games, retro play, tabletop, trading cards, and free play.",
   },
   {
-    day: "Saturday",
-    items: [
-      "Main programming day",
-      "Cosplay contest",
-      "Tournaments & TCG events",
-      "Panels, meetups, and concerts TBA",
-    ],
+    title: "Tournaments",
+    note: "Organized play and brackets as partners and formats lock in.",
   },
   {
-    day: "Sunday",
-    items: ["Final brackets", "Autographs & photos (when guests are announced)", "Last-chance vendor hours", "Close"],
+    title: "Cosplay",
+    note: "Contest, meetups, and photo-friendly space — times later.",
+  },
+  {
+    title: "Panels",
+    note: "Stages and conversations once the programming grid is built.",
+  },
+  {
+    title: "Guests",
+    note: "Appearance hours post with confirmed names. None are announced yet.",
+  },
+  {
+    title: "Community activities",
+    note: "Meetups and floor programming for the people who show up to play.",
+  },
+  {
+    title: "Vendor hall",
+    note: "Hours for shops, artists, and the tables worth walking twice.",
   },
 ];
 
@@ -38,33 +52,52 @@ export default function SchedulePage() {
       breadcrumbLabel="Schedule"
       eyebrow="Programming"
       title="Schedule"
-      intro={`${site.dateLabel}. The official hour-by-hour grid will publish closer to the event. Here is the weekend shape we are building toward.`}
+      intro={`${site.dateLongLabel} in ${site.location}. The official hour-by-hour grid will publish as programming is confirmed. Detailed times below are not announced yet.`}
+      after={
+        <EmailSignup
+          eyebrow="Programming"
+          title="Get schedule announcements"
+          description="Hour-by-hour grids, tournament signups, and guest appearance times will hit this list when they are real."
+        />
+      }
     >
-      <div className="mb-8">
+      <div className="mb-8 flex flex-wrap gap-3">
         <Badge tone="gold">Times to be announced</Badge>
+        <Badge tone="cyan">{site.venueLabel}</Badge>
       </div>
-      <ol className="grid gap-4 lg:grid-cols-3">
-        {blocks.map((block, index) => (
-          <li key={block.day} className="border border-line bg-panel p-6">
-            <p className="font-pixel text-[11px] uppercase tracking-[0.2em] text-cyan">
-              Day 0{index + 1}
-            </p>
-            <h2 className="mt-3 font-display text-4xl uppercase tracking-wide">
-              {block.day}
+
+      <ContentSection title="Planned public hours">
+        <p>
+          Public opening is currently planned for {event.doorsLabel} on
+          Saturday, October 16. Sunday is currently planned through{" "}
+          {event.closeLabel.replace("Sunday at ", "")} on October 17. Those
+          hours can shift with the venue. They are not a locked door schedule.
+        </p>
+      </ContentSection>
+
+      <ul className="grid gap-4 sm:grid-cols-2">
+        {categories.map((item) => (
+          <li key={item.title} className="border border-line bg-panel p-6">
+            <h2 className="font-display text-2xl uppercase tracking-wide">
+              {item.title}
             </h2>
-            <ul className="mt-6 space-y-3 text-muted">
-              {block.items.map((item) => (
-                <li key={item} className="flex gap-3">
-                  <span className="text-magenta" aria-hidden="true">
-                    ▸
-                  </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <p className="mt-3 font-pixel text-[11px] uppercase tracking-[0.18em] text-gold">
+              Details later
+            </p>
+            <p className="mt-3 text-muted">{item.note}</p>
           </li>
         ))}
-      </ol>
+      </ul>
+
+      <RelatedLinks
+        links={[
+          { href: "/gaming", label: "Gaming" },
+          { href: "/cosplay", label: "Cosplay" },
+          { href: "/guests", label: "Guests" },
+          { href: "/tickets", label: "Tickets" },
+          { href: "/news", label: "News" },
+        ]}
+      />
     </InnerPage>
   );
 }

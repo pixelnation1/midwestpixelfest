@@ -37,6 +37,7 @@ export async function generateMetadata({
     path: `/news/${article.slug}`,
     ogType: "article",
     publishedTime: article.publishedAt,
+    modifiedTime: article.updatedAt,
   });
 }
 
@@ -73,6 +74,7 @@ export default async function NewsArticlePage({ params }: NewsArticlePageProps) 
           excerpt: article.excerpt,
           slug: article.slug,
           publishedAt: article.publishedAt,
+          updatedAt: article.updatedAt,
         })}
       />
       <p className="mb-10 font-pixel text-[11px] uppercase tracking-[0.2em] text-gold">

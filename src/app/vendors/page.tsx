@@ -14,14 +14,14 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 const whoShouldApply = [
-  "Collectible sellers",
-  "Trading card vendors",
-  "Retro gaming sellers",
-  "Artists and illustrators",
-  "Makers and crafts",
-  "Apparel and merch",
-  "Gaming accessories",
-  "Independent creators",
+  "Collectibles",
+  "Gaming and retro",
+  "Tabletop",
+  "Trading card games",
+  "Art and prints",
+  "Creators and handmade goods",
+  "Pop culture merchandise",
+  "Independent makers",
 ];
 
 const upcomingDetails = [
@@ -44,6 +44,20 @@ export default function VendorsPage() {
       title="Vendors & Artist Alley"
       intro="Vendor hall and artist alley are part of the show, not an afterthought. Applications are not open yet. Register interest if you want to be notified when they are — that is not an application."
     >
+      <CtaStrip
+        className="mb-8"
+        title="Vendor Interest"
+        actions={[
+          { href: "/vendors/interest", label: "Register Vendor Interest" },
+          { href: "/contact", label: "Contact", variant: "secondary" },
+        ]}
+      >
+        <p>
+          Official vendor applications are not open. This is interest only — not
+          an application, not payment, and not a booth offer.
+        </p>
+      </CtaStrip>
+
       <ContentSection title="Sell at Midwest Pixel Fest">
         <p>
           Midwest Pixel Fest is building space for shops, collectible sellers,
@@ -58,7 +72,7 @@ export default function VendorsPage() {
 
       <div className="py-8">
         <h2 className="font-display text-3xl uppercase tracking-wide sm:text-4xl">
-          Who should apply
+          Who this floor is for
         </h2>
         <ul className="mt-6 grid gap-3 sm:grid-cols-2">
           {whoShouldApply.map((item) => (

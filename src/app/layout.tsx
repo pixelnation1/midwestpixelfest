@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Barlow, Oswald, Pixelify_Sans } from "next/font/google";
+import { Analytics } from "@/components/seo/Analytics";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SkipLink } from "@/components/layout/SkipLink";
@@ -13,18 +14,21 @@ const oswald = Oswald({
   subsets: ["latin"],
   variable: "--font-oswald",
   weight: ["500", "600", "700"],
+  display: "swap",
 });
 
 const barlow = Barlow({
   subsets: ["latin"],
   variable: "--font-barlow",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 const pixelify = Pixelify_Sans({
   subsets: ["latin"],
   variable: "--font-pixel",
   weight: ["500", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -80,6 +84,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <Footer />
         <JsonLd data={buildSiteGraphJsonLd()} />
+        <Analytics />
       </body>
     </html>
   );

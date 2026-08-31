@@ -7,6 +7,7 @@ type PageMetadataInput = {
   path: string;
   ogType?: "website" | "article";
   publishedTime?: string;
+  modifiedTime?: string;
 };
 
 export function createPageMetadata({
@@ -15,6 +16,7 @@ export function createPageMetadata({
   path,
   ogType = "website",
   publishedTime,
+  modifiedTime,
 }: PageMetadataInput): Metadata {
   const url = absoluteUrl(path);
 
@@ -32,6 +34,7 @@ export function createPageMetadata({
       description,
       url,
       ...(publishedTime ? { publishedTime } : {}),
+      ...(modifiedTime ? { modifiedTime } : {}),
     },
     twitter: {
       card: "summary_large_image",

@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = createPageMetadata({
   title: "About Midwest Pixel Fest | Emporia, Kansas Convention",
   description:
-    "Midwest Pixel Fest is a gaming, cosplay, collectibles, and pop culture convention being built in Emporia, Kansas for 2027. Presented by PixelNation.",
+    "About Midwest Pixel Fest, a gaming, cosplay, collectibles, and pop-culture convention in Emporia, Kansas on October 16–17, 2027. Presented by PixelNation.",
   path: "/about",
 });
 
@@ -29,7 +29,7 @@ export default function AboutPage() {
       breadcrumbLabel="About"
       eyebrow="The fest"
       title="About Midwest Pixel Fest"
-      intro={`${site.name} is a gaming, cosplay, and pop-culture convention coming to ${site.location} in ${site.year}. Dates and venue are still to be announced.`}
+      intro={`${site.name} is a gaming, cosplay, collectibles, and pop-culture convention coming to ${site.location} in October 2027 — ${site.dateLabel}. The venue is still to be announced.`}
     >
       <ContentSection title="What is Midwest Pixel Fest?">
         <p>
@@ -40,9 +40,9 @@ export default function AboutPage() {
           scaled-down copy of a coastal mega-con.
         </p>
         <p>
-          The official home for dates, tickets, guests, applications, and travel
-          is this website. Until those details are locked, we will not invent
-          them.
+          The official home for tickets, guests, applications, and travel is
+          this website. The venue is still to be announced. Until it is locked,
+          we will not invent it.
         </p>
       </ContentSection>
 
@@ -90,9 +90,18 @@ export default function AboutPage() {
 
       <ContentSection title="Presented by PixelNation">
         <p>
-          Midwest Pixel Fest is presented by {site.organizer}. PixelNation is
-          building this event as a regional convention for the Midwest gaming,
-          cosplay, and collectibles community — with Emporia as the home base.
+          Midwest Pixel Fest is presented by{" "}
+          <a
+            href={site.organizerUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-cyan"
+          >
+            {site.organizer}
+          </a>
+          . PixelNation is building this event as a regional convention for the
+          Midwest gaming, cosplay, and collectibles community — with Emporia as
+          the home base.
         </p>
       </ContentSection>
 

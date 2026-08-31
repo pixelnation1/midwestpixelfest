@@ -8,7 +8,7 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = createPageMetadata({
   title: "Gaming at Midwest Pixel Fest | Kansas Gaming Convention",
   description:
-    "Gaming at Midwest Pixel Fest in Emporia, Kansas: retro play, console events, trading card games, tabletop, tournaments, and free play. Event lists will be posted as they are confirmed.",
+    "Gaming at Midwest Pixel Fest, a Midwest gaming convention in Emporia, Kansas: retro play, console events, trading card games, tabletop, tournaments, and free play. October 16–17, 2027.",
   path: "/gaming",
 });
 
@@ -19,7 +19,7 @@ export default function GamingPage() {
       breadcrumbLabel="Gaming"
       eyebrow="Press start"
       title="Gaming at Midwest Pixel Fest"
-      intro="Midwest Pixel Fest is being built as a play-first convention in Emporia, Kansas. Dedicated space is planned for retro hardware, console play, tabletop, trading cards, tournaments, and open free play."
+      intro="Midwest Pixel Fest is being built as a play-first gaming convention in Emporia, Kansas. Dedicated space is planned for video games, retro hardware, console play, tabletop, trading cards, tournaments, and open free play."
     >
       <ContentSection id="retro-gaming" title="Retro gaming">
         <p>

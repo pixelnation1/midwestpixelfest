@@ -12,14 +12,24 @@ export const ANALYTICS_EVENTS = {
 export type AnalyticsEventName =
   (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS];
 
+const GA_PATTERN = /^G-[A-Z0-9]+$/;
+
+export const gaMeasurementId =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID &&
+  GA_PATTERN.test(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID)
+    ? process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+    : null;
+
 /**
- * No-op until a real analytics provider is wired.
- * Call this from CTAs and form success handlers.
+ * No-op unless GA4 is configured and gtag is on the page.
  */
 export function trackEvent(
   name: AnalyticsEventName,
   payload?: Record<string, string | number | boolean>,
 ): void {
-  void name;
-  void payload;
+  if (typeof window === "undefined") return;
+  const gtag = (
+    window as Window & { gtag?: (...args: unknown[]) => void }
+  ).gtag;
+  gtag?.("event", name, payload);
 }

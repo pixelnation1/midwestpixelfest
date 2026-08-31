@@ -53,7 +53,7 @@ export function InquiryForm({
         <HoneypotField />
         <FormStatus status={state.status} message={state.message} />
         {children}
-        <Button type="submit" size="lg" disabled={pending}>
+        <Button type="submit" size="lg" disabled={pending} className="w-full sm:w-auto">
           {pending ? "Sending…" : submitLabel}
         </Button>
       </form>

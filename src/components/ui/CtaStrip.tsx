@@ -25,9 +25,14 @@ export function CtaStrip({ title, children, actions, className }: CtaStripProps)
       {children ? (
         <div className={cn("max-w-2xl text-muted", title ? "mt-3" : undefined)}>{children}</div>
       ) : null}
-      <div className={cn("flex flex-wrap gap-4", Boolean(title || children) && "mt-6")}>
+      <div className={cn("flex flex-col gap-4 sm:flex-row sm:flex-wrap", Boolean(title || children) && "mt-6")}>
         {actions.map((action) => (
-          <Button key={action.href + action.label} href={action.href} variant={action.variant}>
+          <Button
+            key={action.href + action.label}
+            href={action.href}
+            variant={action.variant}
+            className="w-full sm:w-auto"
+          >
             {action.label}
           </Button>
         ))}

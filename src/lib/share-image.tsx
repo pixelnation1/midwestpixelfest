@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const shareImageAlt =
-  "Midwest Pixel Fest — Emporia, Kansas — Gaming, Cosplay, Collectibles, Community — 2027";
+  "Midwest Pixel Fest — October 16–17, 2027 — Emporia, Kansas — Gaming, Cosplay, Collectibles, Community";
 export const shareImageSize = { width: 1200, height: 630 };
 export const shareImageContentType = "image/png";
 
@@ -45,7 +45,7 @@ export function generateShareImage() {
                 color: "#ffd84d",
               }}
             >
-              2027
+              OCT 16–17, 2027
             </div>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>

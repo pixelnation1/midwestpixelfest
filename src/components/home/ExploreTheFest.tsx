@@ -21,7 +21,7 @@ const iconTone = {
 
 export function ExploreTheFest() {
   return (
-    <section className="border-b border-line py-20 sm:py-28">
+    <section id="explore" className="border-b border-line py-20 sm:py-28">
       <Container>
         <SectionHeading
           eyebrow="Explore the fest"

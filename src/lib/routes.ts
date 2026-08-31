@@ -1,4 +1,5 @@
 import { getAllNews } from "@/content/news";
+import { getAllGuests } from "@/content/guests";
 import { absoluteUrl } from "@/lib/site";
 
 /**
@@ -67,10 +68,18 @@ export type SitemapEntry = {
 };
 
 export async function getDynamicSitemapEntries(): Promise<SitemapEntry[]> {
-  return getAllNews().map((article) => ({
+  const news = getAllNews().map((article) => ({
     url: absoluteUrl(`/news/${article.slug}`),
-    lastModified: article.publishedAt,
-    changeFrequency: "monthly",
+    lastModified: article.updatedAt ?? article.publishedAt,
+    changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
+
+  const guestProfiles = getAllGuests().map((guest) => ({
+    url: absoluteUrl(`/guests/${guest.slug}`),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
+  return [...news, ...guestProfiles];
 }

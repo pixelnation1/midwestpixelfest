@@ -8,7 +8,7 @@ const paths = [
   {
     eyebrow: "Attendees",
     title: "Join the weekend",
-    body: "Badges are not on sale yet. Get tickets when they open, or join updates so you hear first.",
+    body: "Ticket types and prices are posted. Online checkout is being finalized — or join updates so you hear when purchase goes live.",
     primary: "tickets" as const,
     secondary: { href: "/#updates", label: "Join Updates", variant: "secondary" as const },
   },
@@ -51,7 +51,7 @@ export function InvolveSection() {
         <SectionHeading
           eyebrow="Get involved"
           title="Pick a path."
-          description="Attendees, vendors, sponsors, guests, and volunteers each have a dedicated next step. Nothing here invents a date, a price, or a confirmed booking."
+          description="Attendees, vendors, sponsors, guests, and volunteers each have a dedicated next step."
           tone="cyan"
         />
         <ul className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
