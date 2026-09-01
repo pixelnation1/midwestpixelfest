@@ -1,3 +1,7 @@
+import type { OfficialApplicationType } from "@/lib/vendor-application";
+
+export type { OfficialApplicationType };
+
 /**
  * Central vendor / Artist Alley configuration for Midwest Pixel Fest.
  *
@@ -12,6 +16,11 @@ export const artistApplicationsOpen = false;
 export const vendorApplicationUrl: string | null = null;
 export const artistApplicationUrl: string | null = null;
 export const vendorPricingPublished = true;
+
+/** Official application routes. Public CTAs must not use these while applications are closed. */
+export const officialApplyHubPath = "/vendors/apply";
+export const officialVendorApplyPath = "/vendors/apply/vendor";
+export const officialArtistApplyPath = "/vendors/apply/artist";
 
 /** Informational Founding Vendor deadline. Do not auto-open applications or payments from this date. */
 export const foundingVendorDeadline = "2027-04-30";
@@ -62,16 +71,11 @@ export type VendorPrimaryCta = {
   external: boolean;
 };
 
-export function getVendorPrimaryCta(): VendorPrimaryCta {
-  if (vendorApplicationsOpen && vendorApplicationUrl) {
-    return {
-      href: vendorApplicationUrl,
-      label: "Apply Now",
-      mode: "apply",
-      external: /^https?:/i.test(vendorApplicationUrl),
-    };
-  }
+function isExternalHref(href: string): boolean {
+  return /^https?:/i.test(href);
+}
 
+function interestCta(): VendorPrimaryCta {
   return {
     href: "/vendors/interest",
     label: "Register Vendor Interest",
@@ -80,8 +84,70 @@ export function getVendorPrimaryCta(): VendorPrimaryCta {
   };
 }
 
+export function getVendorHallApplyCta(): VendorPrimaryCta {
+  if (!vendorApplicationsOpen) return interestCta();
+  const href = vendorApplicationUrl ?? officialVendorApplyPath;
+  return {
+    href,
+    label: "Apply for Vendor Hall",
+    mode: "apply",
+    external: isExternalHref(href),
+  };
+}
+
+export function getArtistAlleyApplyCta(): VendorPrimaryCta {
+  if (!artistApplicationsOpen) return interestCta();
+  const href = artistApplicationUrl ?? officialArtistApplyPath;
+  return {
+    href,
+    label: "Apply for Artist Alley",
+    mode: "apply",
+    external: isExternalHref(href),
+  };
+}
+
+/**
+ * Page-level CTA. While both flags are false this stays Register Vendor Interest.
+ * When a flag is turned on, the matching official apply route is used unless an
+ * external URL override is set.
+ */
+export function getVendorPrimaryCta(): VendorPrimaryCta {
+  const vendor = getVendorHallApplyCta();
+  const artist = getArtistAlleyApplyCta();
+  if (vendor.mode === "apply" && artist.mode === "apply") {
+    return {
+      href: officialApplyHubPath,
+      label: "Apply for Vendor Hall or Artist Alley",
+      mode: "apply",
+      external: false,
+    };
+  }
+  if (vendor.mode === "apply") return vendor;
+  if (artist.mode === "apply") return artist;
+  return interestCta();
+}
+
+/** CTAs for recruitment surfaces. Closed: interest only. Open: hall and/or alley apply. */
+export function getVendorRecruitmentCtas(): VendorPrimaryCta[] {
+  if (!vendorApplicationsOpen && !artistApplicationsOpen) {
+    return [interestCta()];
+  }
+  const ctas: VendorPrimaryCta[] = [];
+  if (vendorApplicationsOpen) ctas.push(getVendorHallApplyCta());
+  if (artistApplicationsOpen) ctas.push(getArtistAlleyApplyCta());
+  return ctas;
+}
+
 export function vendorApplicationsAreOpen(): boolean {
-  return vendorApplicationsOpen && Boolean(vendorApplicationUrl);
+  return vendorApplicationsOpen || artistApplicationsOpen;
+}
+
+export function vendorHallApplicationsAreOpen(): boolean {
+  return vendorApplicationsOpen;
+}
+
+export function artistAlleyApplicationsAreOpen(): boolean {
+  return artistApplicationsOpen;
 }
 
 export function vendorApplicationStatusLabel(): string {
@@ -196,6 +262,28 @@ export const vendorSpaces: readonly VendorSpace[] = [
     ],
   },
 ];
+
+export function spacesForApplicationType(
+  type: OfficialApplicationType,
+): readonly VendorSpace[] {
+  if (type === "Artist Alley") {
+    return vendorSpaces.filter((space) => space.id === "artistAlley");
+  }
+  return vendorSpaces.filter((space) => space.id !== "artistAlley");
+}
+
+export function formatSpacePriceLine(space: VendorSpace): string {
+  if (space.founding != null) {
+    return `${formatVendorPrice(space.founding)} Founding Vendor Rate / ${formatVendorPrice(space.regular)} regular`;
+  }
+  return `${formatVendorPrice(space.regular)} regular`;
+}
+
+export function ctaForVendorSpace(space: VendorSpace): VendorPrimaryCta {
+  return space.id === "artistAlley"
+    ? getArtistAlleyApplyCta()
+    : getVendorHallApplyCta();
+}
 
 export type VendorAddOn = {
   id: "extraBadge" | "extraTable" | "electricity";

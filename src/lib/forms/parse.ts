@@ -1,3 +1,4 @@
+import { parseVendorApplication } from "@/lib/forms/vendor-application";
 import {
   AGE_RANGES,
   CONTACT_TYPES,
@@ -289,12 +290,20 @@ export function parseAndValidate(
     });
   }
 
+  if (kind === "vendor_application") {
+    const parsed = parseVendorApplication(formData);
+    Object.assign(errors, parsed.errors);
+    Object.assign(fields, parsed.fields);
+  }
+
   const consent = readString(formData, "contactConsent");
   if (kind !== "newsletter" && consent !== "on") {
     errors.contactConsent =
       kind === "sponsor_inquiry"
         ? "Confirm that this inquiry does not create a sponsorship agreement."
-        : "Confirm that we may contact you about this inquiry.";
+        : kind === "vendor_application"
+          ? "Confirm that we may contact you about this application."
+          : "Confirm that we may contact you about this inquiry.";
   }
 
   if (Object.keys(errors).length > 0) {
@@ -306,7 +315,8 @@ export function parseAndValidate(
   }
 
   const serialized = JSON.stringify(fields);
-  if (serialized.length > 20_000) {
+  const maxJson = kind === "vendor_application" ? 100_000 : 20_000;
+  if (serialized.length > maxJson) {
     return {
       ok: false,
       fieldErrors: {},

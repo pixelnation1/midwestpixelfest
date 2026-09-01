@@ -1,5 +1,6 @@
 "use server";
 
+import { createApplicationReference } from "@/lib/forms/vendor-application";
 import { deliverSubmission, isFormDeliveryConfigured } from "@/lib/forms/deliver";
 import {
   errorState,
@@ -15,6 +16,8 @@ const SUCCESS_COPY: Record<string, string> = {
   contact: "Your message has been received. We'll reply as planning allows.",
   vendor_interest:
     "Your vendor interest has been received. We'll share official application details when they open — this is not an application or a booth offer.",
+  vendor_application:
+    "Thank you for applying to Midwest Pixel Fest 2027. Your application has been received for review. Submission does not guarantee acceptance. If approved, you'll receive next-step and payment information separately.",
   sponsor_inquiry:
     "Thanks for your interest in partnering with Midwest Pixel Fest. We'll review your sponsorship inquiry and contact you using the information you provided.",
   volunteer_interest:
@@ -55,6 +58,12 @@ export async function submitForm(
 
   const kind = parsed.data.kind;
 
+  if (kind === "vendor_application") {
+    const reference = createApplicationReference();
+    parsed.data.fields.applicationReference = reference;
+    parsed.data.fields.applicationStatus = "submitted";
+  }
+
   if (!isFormDeliveryConfigured(kind)) {
     return errorState(NOT_CONFIGURED_MESSAGE);
   }
@@ -70,6 +79,15 @@ export async function submitForm(
       return errorState(NOT_CONFIGURED_MESSAGE);
     }
     return errorState(DELIVERY_FAILED_MESSAGE);
+  }
+
+  if (kind === "vendor_application") {
+    const reference = parsed.data.fields.applicationReference;
+    const referenceText =
+      typeof reference === "string" && reference
+        ? ` Application reference: ${reference}.`
+        : "";
+    return successState(`${SUCCESS_COPY.vendor_application}${referenceText}`);
   }
 
   return successState(SUCCESS_COPY[kind] ?? SUCCESS_COPY.contact);

@@ -2,6 +2,7 @@ export const FORM_KINDS = [
   "newsletter",
   "contact",
   "vendor_interest",
+  "vendor_application",
   "sponsor_inquiry",
   "volunteer_interest",
   "guest_inquiry",
@@ -121,6 +122,41 @@ export function requireOneOf(
 ): string | null {
   if (!value) return `Choose ${label}.`;
   if (!options.includes(value)) return `Choose a valid ${label}.`;
+  return null;
+}
+
+export function requireChecked(value: string, message: string): string | null {
+  if (value !== "on") return message;
+  return null;
+}
+
+export function requiredInteger(
+  value: string,
+  label: string,
+  min: number,
+  max: number,
+): string | null {
+  if (!value) return `Enter ${label}.`;
+  if (!/^\d+$/.test(value)) return `Enter ${label} as a whole number.`;
+  const n = Number(value);
+  if (n < min || n > max) return `${label} must be between ${min} and ${max}.`;
+  return null;
+}
+
+export function requiredDate(value: string, label: string): string | null {
+  if (!value) return `Enter ${label}.`;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return `Enter a valid ${label}.`;
+  const [year, month, day] = value.split("-").map(Number);
+  if (!year || !month || !day) return `Enter a valid ${label}.`;
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (
+    Number.isNaN(date.getTime()) ||
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() + 1 !== month ||
+    date.getUTCDate() !== day
+  ) {
+    return `Enter a valid ${label}.`;
+  }
   return null;
 }
 

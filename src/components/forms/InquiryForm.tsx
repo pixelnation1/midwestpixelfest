@@ -15,6 +15,7 @@ const EVENT_BY_KIND: Record<FormKind, AnalyticsEventName> = {
   newsletter: ANALYTICS_EVENTS.newsletter_signup,
   contact: ANALYTICS_EVENTS.contact_submit,
   vendor_interest: ANALYTICS_EVENTS.vendor_interest_submit,
+  vendor_application: ANALYTICS_EVENTS.vendor_application_submit,
   sponsor_inquiry: ANALYTICS_EVENTS.sponsor_inquiry_submit,
   volunteer_interest: ANALYTICS_EVENTS.volunteer_interest_submit,
   guest_inquiry: ANALYTICS_EVENTS.guest_inquiry_submit,
@@ -31,6 +32,7 @@ type InquiryFormProps = {
   getAnalyticsPayload?: () =>
     | Record<string, string | number | boolean>
     | undefined;
+  submitEventName?: AnalyticsEventName;
 };
 
 export function InquiryForm({
@@ -41,14 +43,15 @@ export function InquiryForm({
   successLinks,
   children,
   getAnalyticsPayload,
+  submitEventName,
 }: InquiryFormProps) {
   const [state, action, pending] = useActionState(submitForm, idleFormState);
 
   useEffect(() => {
     if (state.status === "success") {
-      trackEvent(EVENT_BY_KIND[kind], getAnalyticsPayload?.());
+      trackEvent(submitEventName ?? EVENT_BY_KIND[kind], getAnalyticsPayload?.());
     }
-  }, [kind, state.status, getAnalyticsPayload]);
+  }, [kind, state.status, getAnalyticsPayload, submitEventName]);
 
   if (state.status === "success") {
     return (

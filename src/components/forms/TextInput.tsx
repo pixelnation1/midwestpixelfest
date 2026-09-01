@@ -7,13 +7,17 @@ type TextInputProps = {
   id: string;
   name: string;
   label: string;
-  type?: "text" | "email" | "tel" | "url";
+  type?: "text" | "email" | "tel" | "url" | "number" | "date";
   required?: boolean;
   autoComplete?: string;
   error?: string;
   hint?: string;
   defaultValue?: string;
   maxLength?: number;
+  min?: number | string;
+  max?: number | string;
+  step?: number | string;
+  inputMode?: "text" | "email" | "tel" | "url" | "numeric" | "decimal";
 };
 
 export function TextInput({
@@ -27,6 +31,10 @@ export function TextInput({
   hint,
   defaultValue,
   maxLength,
+  min,
+  max,
+  step,
+  inputMode,
 }: TextInputProps) {
   const fieldError = useFieldError(name, error);
   const describedBy =
@@ -44,6 +52,10 @@ export function TextInput({
         autoComplete={autoComplete}
         defaultValue={defaultValue}
         maxLength={maxLength}
+        min={min}
+        max={max}
+        step={step}
+        inputMode={inputMode}
         aria-invalid={fieldError ? true : undefined}
         aria-describedby={describedBy}
         className={inputBorder(fieldError)}

@@ -8,6 +8,7 @@ import { validateEmail } from "@/lib/forms/validate";
 const OPERATIONAL_KINDS = [
   "contact",
   "vendor_interest",
+  "vendor_application",
   "sponsor_inquiry",
   "volunteer_interest",
   "guest_inquiry",
@@ -19,21 +20,39 @@ type OperationalKind = (typeof OPERATIONAL_KINDS)[number];
 const SUBJECTS: Record<OperationalKind, string> = {
   contact: "[Midwest Pixel Fest] General Contact",
   vendor_interest: "[Midwest Pixel Fest] Vendor Interest",
+  vendor_application: "[MPF 2027 Vendor Application]",
   sponsor_inquiry: "[Midwest Pixel Fest] Sponsorship Inquiry",
   volunteer_interest: "[Midwest Pixel Fest] Volunteer Interest",
   guest_inquiry: "[Midwest Pixel Fest] Guest Inquiry",
   press_inquiry: "[Midwest Pixel Fest] Press Inquiry",
 };
 
+function headerSafe(value: string, max = 80): string {
+  return value.replace(/[\r\n]+/g, " ").trim().slice(0, max);
+}
+
 function emailSubject(payload: DeliveryPayload, kind: OperationalKind): string {
   if (kind === "sponsor_inquiry") {
     const company =
       typeof payload.fields.company === "string"
-        ? payload.fields.company.replace(/[\r\n]+/g, " ").trim().slice(0, 80)
+        ? headerSafe(payload.fields.company)
         : "";
     return company
       ? `[Midwest Pixel Fest] Sponsorship Inquiry — ${company}`
       : SUBJECTS.sponsor_inquiry;
+  }
+  if (kind === "vendor_application") {
+    const business =
+      typeof payload.fields.businessName === "string"
+        ? headerSafe(payload.fields.businessName)
+        : "";
+    const type =
+      payload.fields.applicationType === "Artist Alley" ? "Artist Alley" : "Vendor Hall";
+    const prefix =
+      type === "Artist Alley"
+        ? "[MPF 2027 Artist Application]"
+        : "[MPF 2027 Vendor Application]";
+    return business ? `${prefix} ${business} — ${type}` : `${prefix} ${type}`;
   }
   return SUBJECTS[kind];
 }
@@ -41,6 +60,7 @@ function emailSubject(payload: DeliveryPayload, kind: OperationalKind): string {
 const KIND_LABELS: Record<OperationalKind, string> = {
   contact: "General Contact",
   vendor_interest: "Vendor Interest",
+  vendor_application: "Vendor / Artist Application",
   sponsor_inquiry: "Sponsorship Inquiry",
   volunteer_interest: "Volunteer Interest",
   guest_inquiry: "Guest Inquiry",
@@ -90,6 +110,73 @@ const FIELD_LABELS: Record<string, string> = {
   coverageType: "Coverage type",
   audience: "Audience / reach",
   updatesConsent: "Updates consent",
+  applicationType: "Application type",
+  socialPrimary: "Primary social media",
+  socialAdditional: "Additional social media",
+  street: "Street address",
+  country: "Country",
+  businessDescription: "Business / artist description",
+  yearsActive: "Years in business / creating",
+  vendedBefore: "Vended at conventions before",
+  priorEvents: "Previous events",
+  primaryCategory: "Primary category",
+  secondaryCategories: "Secondary categories",
+  mixOriginal: "Original / self-created merchandise",
+  mixLicensed: "Licensed retail merchandise",
+  mixSecondhand: "Secondhand / vintage / collectible",
+  mixOther: "Other merchandise mix",
+  ownWorkMajority: "Majority of work created or designed by applicant",
+  ownWorkPercent: "Original work on table",
+  offersCommissions: "Offers commissions",
+  productionMethod: "How products are created",
+  inventoryTypes: "Inventory types",
+  mysteryMerchandise: "Mystery / randomized merchandise",
+  mysteryDescription: "Mystery merchandise description",
+  spaceRequest: "Preferred space",
+  spaceRequestLabel: "Preferred space name",
+  additionalSpace: "Additional space requested",
+  additionalSpaceDetails: "Additional space details",
+  extraBadges: "Extra vendor badges requested",
+  extraTables: "Extra tables requested",
+  electricityRequested: "Electricity requested",
+  primaryRepName: "Primary booth representative",
+  additionalRepNames: "Additional representatives",
+  tallDisplays: "Displays taller than 8 feet",
+  tallDisplayDescription: "Tall display description",
+  displayElements: "Booth display elements",
+  boothSetupNotes: "Planned booth setup",
+  merchandisePolicy: "Merchandise policy agreement",
+  aiGenerated: "Primarily AI-generated imagery",
+  aiDescription: "AI-generated imagery explanation",
+  sellsFood: "Intends to sell food or beverages",
+  taxAcknowledgment: "Tax / licensing acknowledgment",
+  insuranceStatus: "Business / general liability insurance",
+  boothSharing: "Booth sharing",
+  shareBusinessName: "Shared booth business / artist",
+  shareContactName: "Shared booth contact",
+  shareEmail: "Shared booth email",
+  shareDescription: "Shared booth merchandise",
+  hoursCommitment: "Can operate both event days",
+  hoursExplanation: "Hours limitation explanation",
+  cancellationAck: "Cancellation / refund terms acknowledgment",
+  noPaymentAck: "No payment / no reservation acknowledgment",
+  paymentIfApprovedAck: "Payment-after-approval acknowledgment",
+  ackAccurate: "Information is accurate",
+  ackNoGuarantee: "Acceptance not guaranteed",
+  ackSpaceAssignment: "Space assignment by Midwest Pixel Fest",
+  ackEventRules: "Agrees to event and venue rules",
+  ackProhibitedRemoval: "Prohibited merchandise may be removed",
+  ackLegal: "Legal / licensing / tax responsibility",
+  ackBoothShare: "Booth sharing requires approval",
+  ackLaterDetails: "Final operational details later",
+  legalName: "Applicant full legal name",
+  signatureBusinessName: "Signature business / artist name",
+  electronicSignature: "Electronic signature",
+  signatureDate: "Signature date",
+  signatureAuthAck: "Authorized to submit",
+  applicationReference: "Application reference",
+  applicationStatus: "Review status",
+  contactConsent: "Contact consent",
 };
 
 function escapeHtml(value: string): string {
@@ -144,6 +231,126 @@ function formatSubmittedAt(iso: string): string {
   return `${central} CT (${iso})`;
 }
 
+const VENDOR_APPLICATION_SECTIONS: Array<{ heading: string; keys: string[] }> = [
+  {
+    heading: "SYSTEM",
+    keys: ["applicationReference", "applicationStatus", "applicationType"],
+  },
+  {
+    heading: "CONTACT",
+    keys: [
+      "contactName",
+      "businessName",
+      "email",
+      "phone",
+      "website",
+      "socialPrimary",
+      "socialAdditional",
+      "street",
+      "city",
+      "state",
+      "zip",
+      "country",
+    ],
+  },
+  {
+    heading: "BUSINESS",
+    keys: ["businessDescription", "yearsActive", "vendedBefore", "priorEvents"],
+  },
+  {
+    heading: "MERCHANDISE",
+    keys: [
+      "primaryCategory",
+      "secondaryCategories",
+      "whatYouSell",
+      "mixOriginal",
+      "mixLicensed",
+      "mixSecondhand",
+      "mixOther",
+      "ownWorkMajority",
+      "ownWorkPercent",
+      "offersCommissions",
+      "productionMethod",
+      "inventoryTypes",
+      "mysteryMerchandise",
+      "mysteryDescription",
+    ],
+  },
+  {
+    heading: "SPACE / ADD-ONS",
+    keys: [
+      "spaceRequestLabel",
+      "spaceRequest",
+      "additionalSpace",
+      "additionalSpaceDetails",
+      "extraBadges",
+      "extraTables",
+      "electricityRequested",
+    ],
+  },
+  {
+    heading: "STAFF / SETUP",
+    keys: [
+      "primaryRepName",
+      "additionalRepNames",
+      "tallDisplays",
+      "tallDisplayDescription",
+      "displayElements",
+      "boothSetupNotes",
+    ],
+  },
+  {
+    heading: "COMPLIANCE",
+    keys: [
+      "merchandisePolicy",
+      "aiGenerated",
+      "aiDescription",
+      "sellsFood",
+      "taxAcknowledgment",
+      "insuranceStatus",
+      "hoursCommitment",
+      "hoursExplanation",
+    ],
+  },
+  {
+    heading: "BOOTH SHARING",
+    keys: [
+      "boothSharing",
+      "shareBusinessName",
+      "shareContactName",
+      "shareEmail",
+      "shareDescription",
+    ],
+  },
+  {
+    heading: "ACKNOWLEDGMENTS",
+    keys: [
+      "cancellationAck",
+      "noPaymentAck",
+      "paymentIfApprovedAck",
+      "ackAccurate",
+      "ackNoGuarantee",
+      "ackSpaceAssignment",
+      "ackEventRules",
+      "ackProhibitedRemoval",
+      "ackLegal",
+      "ackBoothShare",
+      "ackLaterDetails",
+      "contactConsent",
+    ],
+  },
+  {
+    heading: "SIGNATURE",
+    keys: [
+      "legalName",
+      "signatureBusinessName",
+      "electronicSignature",
+      "signatureDate",
+      "signatureAuthAck",
+    ],
+  },
+];
+
 const SPONSOR_SECTIONS: Array<{ heading: string; keys: string[] }> = [
   {
     heading: "BUSINESS",
@@ -183,24 +390,42 @@ function fieldValue(
   return formatFieldValue(value);
 }
 
+function sectionRows(
+  fields: Record<string, string | string[]>,
+  sections: Array<{ heading: string; keys: string[] }>,
+): Array<{ heading: string; rows: { label: string; value: string }[] }> {
+  return sections
+    .map((section) => ({
+      heading: section.heading,
+      rows: section.keys
+        .map((key) => ({
+          label: FIELD_LABELS[key] ?? key,
+          value: fieldValue(fields, key),
+        }))
+        .filter((row) => row.value.length > 0),
+    }))
+    .filter((section) => section.rows.length > 0);
+}
+
 function sponsorRows(
   fields: Record<string, string | string[]>,
 ): Array<{ heading: string; rows: { label: string; value: string }[] }> {
-  return SPONSOR_SECTIONS.map((section) => ({
-    heading: section.heading,
-    rows: section.keys
-      .map((key) => ({
-        label: FIELD_LABELS[key] ?? key,
-        value: fieldValue(fields, key),
-      }))
-      .filter((row) => row.value.length > 0),
-  })).filter((section) => section.rows.length > 0);
+  return sectionRows(fields, SPONSOR_SECTIONS);
 }
 
-function buildSponsorText(payload: DeliveryPayload): string {
-  const sections = sponsorRows(payload.fields);
+function vendorApplicationRows(
+  fields: Record<string, string | string[]>,
+): Array<{ heading: string; rows: { label: string; value: string }[] }> {
+  return sectionRows(fields, VENDOR_APPLICATION_SECTIONS);
+}
+
+function buildSectionedText(
+  payload: DeliveryPayload,
+  title: string,
+  sections: Array<{ heading: string; rows: { label: string; value: string }[] }>,
+): string {
   const lines = [
-    "Midwest Pixel Fest — Sponsorship Inquiry",
+    `Midwest Pixel Fest — ${title}`,
     "",
     `Submitted: ${formatSubmittedAt(payload.submittedAt)}`,
     "",
@@ -217,8 +442,11 @@ function buildSponsorText(payload: DeliveryPayload): string {
   return lines.join("\n");
 }
 
-function buildSponsorHtml(payload: DeliveryPayload): string {
-  const sections = sponsorRows(payload.fields);
+function buildSectionedHtml(
+  payload: DeliveryPayload,
+  title: string,
+  sections: Array<{ heading: string; rows: { label: string; value: string }[] }>,
+): string {
   const sectionsHtml = sections
     .map((section) => {
       const rows = section.rows
@@ -240,7 +468,7 @@ function buildSponsorHtml(payload: DeliveryPayload): string {
 <body style="margin:0;padding:24px;background:#f4f4f5;font-family:Georgia,'Times New Roman',serif;color:#111;">
   <div style="max-width:640px;margin:0 auto;background:#fff;padding:24px 28px;border:1px solid #e5e5e5;">
     <p style="margin:0 0 4px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#666;">Midwest Pixel Fest</p>
-    <h1 style="margin:0 0 16px;font-size:22px;font-weight:700;">Sponsorship Inquiry</h1>
+    <h1 style="margin:0 0 16px;font-size:22px;font-weight:700;">${escapeHtml(title)}</h1>
     <p style="margin:0 0 20px;font-size:13px;color:#555;">
       <strong>SYSTEM</strong><br />
       <strong>Submitted:</strong> ${escapeHtml(formatSubmittedAt(payload.submittedAt))}
@@ -249,6 +477,36 @@ function buildSponsorHtml(payload: DeliveryPayload): string {
   </div>
 </body>
 </html>`;
+}
+
+function buildSponsorText(payload: DeliveryPayload): string {
+  return buildSectionedText(payload, "Sponsorship Inquiry", sponsorRows(payload.fields));
+}
+
+function buildSponsorHtml(payload: DeliveryPayload): string {
+  return buildSectionedHtml(payload, "Sponsorship Inquiry", sponsorRows(payload.fields));
+}
+
+function vendorApplicationTitle(payload: DeliveryPayload): string {
+  return payload.fields.applicationType === "Artist Alley"
+    ? "Artist Alley Application"
+    : "Vendor Hall Application";
+}
+
+function buildVendorApplicationText(payload: DeliveryPayload): string {
+  return buildSectionedText(
+    payload,
+    vendorApplicationTitle(payload),
+    vendorApplicationRows(payload.fields),
+  );
+}
+
+function buildVendorApplicationHtml(payload: DeliveryPayload): string {
+  return buildSectionedHtml(
+    payload,
+    vendorApplicationTitle(payload),
+    vendorApplicationRows(payload.fields),
+  );
 }
 
 function buildText(payload: DeliveryPayload, kind: OperationalKind): string {
@@ -338,8 +596,18 @@ export async function sendOperationalEmail(
       from,
       to,
       subject: emailSubject(payload, kind),
-      html: kind === "sponsor_inquiry" ? buildSponsorHtml(payload) : buildHtml(payload, kind),
-      text: kind === "sponsor_inquiry" ? buildSponsorText(payload) : buildText(payload, kind),
+      html:
+        kind === "sponsor_inquiry"
+          ? buildSponsorHtml(payload)
+          : kind === "vendor_application"
+            ? buildVendorApplicationHtml(payload)
+            : buildHtml(payload, kind),
+      text:
+        kind === "sponsor_inquiry"
+          ? buildSponsorText(payload)
+          : kind === "vendor_application"
+            ? buildVendorApplicationText(payload)
+            : buildText(payload, kind),
       ...(replyTo ? { replyTo } : {}),
     });
 

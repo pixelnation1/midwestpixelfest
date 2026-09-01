@@ -3,9 +3,9 @@ import { Badge } from "@/components/ui/Badge";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { cn } from "@/lib/cn";
 import {
+  ctaForVendorSpace,
   formatVendorPrice,
   foundingVendorDeadlineLabel,
-  getVendorPrimaryCta,
   vendorApplicationStatusLabel,
   vendorPacketNote,
   vendorSpaces,
@@ -45,7 +45,7 @@ function SpacePrice({ space }: { space: VendorSpace }) {
 }
 
 function SpaceCard({ space }: { space: VendorSpace }) {
-  const cta = getVendorPrimaryCta();
+  const cta = ctaForVendorSpace(space);
   const status = vendorApplicationStatusLabel();
   const founding = space.founding != null;
 

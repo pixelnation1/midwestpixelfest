@@ -17,7 +17,7 @@ import { WhyVend } from "@/components/vendors/WhyVend";
 import { createPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { buildFaqPageJsonLd } from "@/lib/structured-data";
-import { getVendorPrimaryCta, vendorFaqs } from "@/lib/vendors";
+import { getVendorPrimaryCta, getVendorRecruitmentCtas, vendorFaqs } from "@/lib/vendors";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Vendors & Artist Alley | Midwest Pixel Fest 2027",
@@ -28,6 +28,7 @@ export const metadata: Metadata = createPageMetadata({
 
 export default function VendorsPage() {
   const vendorCta = getVendorPrimaryCta();
+  const recruitmentCtas = getVendorRecruitmentCtas();
 
   return (
     <InnerPage
@@ -38,14 +39,14 @@ export default function VendorsPage() {
       intro="Bring your shop, collection, creations, or brand to Midwest Pixel Fest 2027. We're building a marketplace around gaming, collectibles, original art, tabletop, TCGs, retro culture, and the creators who make convention floors worth exploring. Vendor and Artist Alley applications are not open yet. Register your interest now and we'll let you know when applications launch."
       meta={`${site.dateLabel} · ${site.location}`}
       actions={[
-        {
-          href: vendorCta.href,
-          label: vendorCta.label,
-        },
+        ...recruitmentCtas.map((cta) => ({
+          href: cta.href,
+          label: cta.label,
+        })),
         {
           href: "#vendor-info",
           label: "Explore Vendor Info",
-          variant: "secondary",
+          variant: "secondary" as const,
         },
       ]}
     >
@@ -80,7 +81,10 @@ export default function VendorsPage() {
             : "Get notified when applications open"
         }
         actions={[
-          { href: vendorCta.href, label: vendorCta.label },
+          ...recruitmentCtas.map((cta) => ({
+            href: cta.href,
+            label: cta.label,
+          })),
           { href: "/contact", label: "Contact", variant: "secondary" },
         ]}
       >
@@ -104,7 +108,10 @@ export default function VendorsPage() {
             : "Register vendor interest"
         }
         actions={[
-          { href: vendorCta.href, label: vendorCta.label },
+          ...recruitmentCtas.map((cta) => ({
+            href: cta.href,
+            label: cta.label,
+          })),
           { href: "/contact", label: "Contact", variant: "secondary" },
         ]}
       >

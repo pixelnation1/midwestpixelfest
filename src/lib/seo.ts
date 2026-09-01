@@ -8,6 +8,10 @@ type PageMetadataInput = {
   ogType?: "website" | "article";
   publishedTime?: string;
   modifiedTime?: string;
+  robots?: {
+    index?: boolean;
+    follow?: boolean;
+  };
 };
 
 export function createPageMetadata({
@@ -17,8 +21,11 @@ export function createPageMetadata({
   ogType = "website",
   publishedTime,
   modifiedTime,
+  robots,
 }: PageMetadataInput): Metadata {
   const url = absoluteUrl(path);
+  const index = robots?.index ?? true;
+  const follow = robots?.follow ?? index;
 
   return {
     title: { absolute: title },
@@ -42,8 +49,8 @@ export function createPageMetadata({
       description,
     },
     robots: {
-      index: true,
-      follow: true,
+      index,
+      follow,
     },
   };
 }
