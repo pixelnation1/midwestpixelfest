@@ -22,8 +22,8 @@ export type Venue = {
  * Confirmed public event facts.
  *
  * venue: still TBA — do not invent a building name or street address.
- * ticketUrl: set once to the public Ticketleap checkout URL. Leave null until
- * the real URL is supplied. All ticket CTAs read this value.
+ * ticketUrl: official public Ticketleap checkout. All ticket CTAs read this
+ * value through src/lib/tickets.ts. Leave null only to take checkout offline.
  */
 export const event = {
   status: "scheduled" as const,
@@ -34,7 +34,8 @@ export const event = {
   doorsLabel: "Saturday at 10:00 AM",
   closeLabel: "Sunday at 5:00 PM",
   venue: null as Venue | null,
-  ticketUrl: null as string | null,
+  ticketUrl:
+    "https://events.ticketleap.com/tickets/midwestpixelfest/midwest-pixel-fest-2027",
 };
 
 export const organizer = {
@@ -335,7 +336,7 @@ export function getFaqs() {
     {
       question: "Are tickets available yet?",
       answer: ticketsLive
-        ? "Yes. Purchase tickets from the Tickets page. Checkout opens in a new tab."
+        ? "Yes. Get tickets from the Tickets page. Checkout opens in a new tab on Ticketleap."
         : "Ticket types and prices are posted on the Tickets page. Online checkout is being finalized. Join the update list so you hear when purchase goes live.",
     },
     {
@@ -411,7 +412,7 @@ export function getFaqs() {
     {
       question: "Are refunds available?",
       answer:
-        "A ticket refund and transfer policy will be published with online checkout. There is no policy to cite yet because public checkout is still being finalized.",
+        "Refund and transfer terms are shown during Ticketleap checkout. Midwest Pixel Fest will publish any additional ticket policy on the Tickets page if one is confirmed.",
     },
     {
       question: "Can I bring cosplay props?",

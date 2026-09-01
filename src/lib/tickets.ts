@@ -7,7 +7,7 @@ function publicTicketUrl(): string | null {
   return parsed ? parsed.toString() : null;
 }
 
-/** Validated public checkout URL, or null until a real http(s) Ticketleap URL is set. */
+/** Validated public checkout URL, or null if ticketUrl is unset or not a safe http(s) URL. */
 export function getPublicTicketUrl(): string | null {
   return publicTicketUrl();
 }
@@ -22,16 +22,19 @@ export type TicketAction = {
   external: boolean;
 };
 
+export type TicketCtaIntent = "nav" | "purchase";
+
 /**
- * Nav / hero: always a working click target.
- * Purchase: "Buy Tickets" when ticketUrl is set, otherwise checkout-finalizing copy.
+ * Nav / hero: label stays "Tickets".
+ * Purchase: "Get Tickets" when checkout is live, otherwise fallback copy.
+ * All live purchase/nav destinations read event.ticketUrl through getPublicTicketUrl().
  */
-export function getTicketAction(intent: "nav" | "purchase" = "nav"): TicketAction {
+export function getTicketAction(intent: TicketCtaIntent = "nav"): TicketAction {
   const checkout = publicTicketUrl();
   if (checkout) {
     return {
       href: checkout,
-      label: "Buy Tickets",
+      label: intent === "purchase" ? "Get Tickets" : "Tickets",
       external: true,
     };
   }

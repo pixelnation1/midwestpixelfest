@@ -65,7 +65,7 @@ Set `NEXT_PUBLIC_GA_MEASUREMENT_ID` to a real `G-` measurement ID. GA4 loads wit
 
 ### Tickets
 
-Set `event.ticketUrl` in `src/lib/site.ts` to the public Ticketleap checkout URL when it is ready. Leave it `null` until then. Do not invent a checkout link.
+Official checkout is `event.ticketUrl` in `src/lib/site.ts` (Ticketleap). All ticket CTAs read that value through `src/lib/tickets.ts`. Do not hardcode the Ticketleap URL in components. Leave `ticketUrl` null only to take public checkout offline.
 
 ### Contact inbox
 
@@ -79,8 +79,8 @@ Do this after credentials are in Vercel. There is no public admin dashboard.
 - [ ] Submit a vendor inquiry and confirm the notification
 - [ ] Submit the newsletter form and confirm the webhook/list provider received it
 - [ ] Confirm inquiry email subject, fields, and Reply-To
-- [ ] Confirm GA4 events (`contact_submit`, `vendor_interest_submit`, `newsletter_signup`, and `ticket_click` once tickets are live)
+- [ ] Confirm GA4 events (`contact_submit`, `vendor_interest_submit`, `newsletter_signup`, `ticket_click`)
 - [ ] Open https://midwestpixelfest.com/sitemap.xml
 - [ ] Open https://midwestpixelfest.com/robots.txt
 - [ ] Verify the domain in Google Search Console and submit the sitemap
-- [ ] Confirm the ticket CTA once the real Ticketleap URL is set
+- [ ] Confirm header and homepage Tickets CTAs open the official Ticketleap checkout URL

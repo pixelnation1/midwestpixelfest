@@ -1,10 +1,15 @@
+import { EventCta } from "@/components/cta/EventCta";
 import { Button } from "@/components/ui/Button";
+import type { AnalyticsEventName } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 
 type Cta = {
   href: string;
   label: string;
   variant?: "primary" | "secondary" | "ghost";
+  eventName?: AnalyticsEventName;
+  eventPayload?: Record<string, string | number | boolean>;
+  external?: boolean;
 };
 
 type CtaStripProps = {
@@ -26,16 +31,30 @@ export function CtaStrip({ title, children, actions, className }: CtaStripProps)
         <div className={cn("max-w-2xl text-muted", title ? "mt-3" : undefined)}>{children}</div>
       ) : null}
       <div className={cn("flex flex-col gap-4 sm:flex-row sm:flex-wrap", Boolean(title || children) && "mt-6")}>
-        {actions.map((action) => (
-          <Button
-            key={action.href + action.label}
-            href={action.href}
-            variant={action.variant}
-            className="w-full sm:w-auto"
-          >
-            {action.label}
-          </Button>
-        ))}
+        {actions.map((action) =>
+          action.eventName ? (
+            <EventCta
+              key={action.href + action.label}
+              href={action.href}
+              label={action.label}
+              variant={action.variant}
+              className="w-full sm:w-auto"
+              eventName={action.eventName}
+              eventPayload={action.eventPayload}
+              external={action.external}
+            />
+          ) : (
+            <Button
+              key={action.href + action.label}
+              href={action.href}
+              variant={action.variant}
+              className="w-full sm:w-auto"
+              external={action.external}
+            >
+              {action.label}
+            </Button>
+          ),
+        )}
       </div>
     </div>
   );

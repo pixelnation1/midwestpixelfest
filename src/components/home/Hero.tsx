@@ -94,7 +94,7 @@ export function Hero() {
           </p>
 
           <div className="mt-7 flex flex-col gap-4 sm:mt-8 sm:flex-row">
-            <TicketCta intent="nav" size="lg" />
+            <TicketCta intent="nav" size="lg" source="homepage" />
             <Button href="#explore" variant="secondary" size="lg">
               Explore the Fest
             </Button>

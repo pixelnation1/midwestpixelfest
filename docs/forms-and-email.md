@@ -125,6 +125,6 @@ Unconfigured forms show a clear error instead of a fake thank-you. GA does not l
 
 ## Tickets
 
-Set `event.ticketUrl` once in `src/lib/site.ts` when the public Ticketleap checkout URL exists. Leave it `null` until then. Do not use the Ticketleap homepage, a dashboard URL, or a guessed slug.
+Official checkout is `event.ticketUrl` in `src/lib/site.ts`. All ticket CTAs read that value through `src/lib/tickets.ts`. Do not hardcode the Ticketleap URL in components, and do not use the Ticketleap homepage, a dashboard URL, or a guessed slug.
 
-When it is a valid `https` URL, ticket CTAs track `ticket_click` and open checkout in a new tab (`rel="noopener noreferrer"`).
+When `ticketUrl` is a valid `https` URL, ticket CTAs track `ticket_click` and open checkout in a new tab (`rel="noopener noreferrer"`). Leave it `null` only to take public checkout offline.

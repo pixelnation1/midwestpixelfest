@@ -86,10 +86,10 @@ export function Header() {
 
         <div className="flex shrink-0 items-center gap-2">
           <span className="hidden sm:inline-flex">
-            <TicketCta intent="nav" />
+            <TicketCta intent="nav" source="header" />
           </span>
           <span className="inline-flex sm:hidden">
-            <TicketCta intent="nav" size="md" className="px-3 text-xs" />
+            <TicketCta intent="nav" size="md" className="px-3 text-xs" source="header" />
           </span>
           <button
             type="button"
@@ -205,6 +205,7 @@ export function Header() {
                 intent="nav"
                 size="lg"
                 className="w-full"
+                source="header"
                 onClick={() => setOpen(false)}
               />
             </div>

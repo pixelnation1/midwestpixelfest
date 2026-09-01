@@ -8,9 +8,9 @@ const paths = [
   {
     eyebrow: "Attendees",
     title: "Join the weekend",
-    body: "Ticket types and prices are posted. Online checkout is being finalized. Join the list so you hear when purchase goes live.",
+    body: "Tickets are on sale. Weekend $30, Saturday $20, Sunday $15. Kids 12 and under are free with a paid adult.",
     primary: "tickets" as const,
-    secondary: { href: "/#updates", label: "Join Updates", variant: "secondary" as const },
+    secondary: { href: "/tickets", label: "Ticket Types", variant: "secondary" as const },
   },
   {
     eyebrow: "Vendors",
@@ -63,18 +63,31 @@ export function InvolveSection() {
               <h2 className="mt-3 font-display text-2xl uppercase tracking-wide">
                 {item.title}
               </h2>
-              <p className="mt-3 flex-1 text-muted">{item.body}</p>
+              <p className="mt-3 flex-1 text-muted">
+                {item.primary === "tickets" && !salesOpen
+                  ? "Ticket types and prices are posted. Online checkout is being finalized. Join the list so you hear when purchase goes live."
+                  : item.body}
+              </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 {item.primary === "tickets" ? (
-                  <TicketCta intent={salesOpen ? "purchase" : "nav"} />
+                  <TicketCta
+                    intent={salesOpen ? "purchase" : "nav"}
+                    source="homepage"
+                  />
                 ) : (
                   <Button href={item.primary.href}>{item.primary.label}</Button>
                 )}
                 <Button
-                  href={item.secondary.href}
+                  href={
+                    item.primary === "tickets" && !salesOpen
+                      ? "/#updates"
+                      : item.secondary.href
+                  }
                   variant={item.secondary.variant}
                 >
-                  {item.secondary.label}
+                  {item.primary === "tickets" && !salesOpen
+                    ? "Join Updates"
+                    : item.secondary.label}
                 </Button>
               </div>
             </li>

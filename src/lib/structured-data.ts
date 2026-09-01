@@ -5,6 +5,7 @@ import {
   isEventSchemaReady,
   organizer,
   site,
+  ticketProducts,
 } from "@/lib/site";
 import { getPublicTicketUrl } from "@/lib/tickets";
 
@@ -68,7 +69,9 @@ export function buildSiteGraphJsonLd(): JsonLd {
  * Event JSON-LD uses city-level location until a venue is named.
  * When the venue is finalized, set event.venue in src/lib/site.ts
  * (name + streetAddress + locality) so this node can become a named Place.
- * Do not add fake offers, performers, or attendance numbers.
+ * Ticket offers are included only when a public checkout URL exists, and only
+ * for confirmed products in ticketProducts. Do not invent availability,
+ * validFrom, inventory, fees, or quantities.
  */
 export function buildEventJsonLd(): JsonLd | null {
   if (!isEventSchemaReady(event)) {
@@ -118,16 +121,23 @@ export function buildEventJsonLd(): JsonLd | null {
       url: organizer.url,
     },
     location,
-    ...(ticketOfferUrl
-      ? {
-          offers: {
-            "@type": "Offer",
-            url: ticketOfferUrl,
-            availability: "https://schema.org/InStock",
-          },
-        }
-      : {}),
+    ...(ticketOfferUrl ? { offers: buildTicketOffers(ticketOfferUrl) } : {}),
   };
+}
+
+function buildTicketOffers(ticketOfferUrl: string): JsonLd[] {
+  return ticketProducts.map((item) => ({
+    "@type": "Offer",
+    name:
+      item.id === "kids"
+        ? "Kids 12 & Under — Free with Paid Adult"
+        : item.name,
+    description:
+      item.id === "kids" ? "Free with a paid adult." : item.description,
+    price: String(item.price),
+    priceCurrency: "USD",
+    url: ticketOfferUrl,
+  }));
 }
 
 export function buildBreadcrumbJsonLd(

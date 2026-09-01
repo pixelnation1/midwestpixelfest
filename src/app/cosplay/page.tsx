@@ -4,7 +4,9 @@ import { ContentSection } from "@/components/ui/ContentSection";
 import { CtaStrip } from "@/components/ui/CtaStrip";
 import { InnerPage } from "@/components/pages/InnerPage";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
+import { ANALYTICS_EVENTS } from "@/lib/analytics";
 import { createPageMetadata } from "@/lib/seo";
+import { getTicketAction } from "@/lib/tickets";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Cosplay at Midwest Pixel Fest | Contests, Meetups & Community",
@@ -14,6 +16,7 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function CosplayPage() {
+  const tickets = getTicketAction("purchase");
   return (
     <InnerPage
       path="/cosplay"
@@ -105,7 +108,13 @@ export default function CosplayPage() {
       <CtaStrip
         title="Show up in character"
         actions={[
-          { href: "/tickets", label: "Get Tickets" },
+          {
+            href: tickets.href,
+            label: tickets.label,
+            external: tickets.external,
+            eventName: ANALYTICS_EVENTS.ticket_click,
+            eventPayload: { source: "cosplay", outbound: tickets.external },
+          },
           { href: "/schedule", label: "View Schedule", variant: "secondary" },
           { href: "/faq", label: "FAQ", variant: "secondary" },
         ]}

@@ -24,6 +24,7 @@ export const newsArticles: NewsArticle[] = [
     excerpt:
       "Midwest Pixel Fest will be Saturday, October 16 and Sunday, October 17, 2027 in Emporia, Kansas. Venue details will follow.",
     publishedAt: "2026-08-31",
+    updatedAt: "2026-09-01",
     category: "Announcement",
     seoTitle: "Midwest Pixel Fest 2027 Dates Announced: October 16–17",
     seoDescription:
@@ -50,8 +51,8 @@ export const newsArticles: NewsArticle[] = [
       {
         heading: "What rolls out from here",
         paragraphs: [
-          "Ticket types and prices are posted on the Tickets page. Online checkout is being finalized. Gaming, cosplay, collectibles, creators, vendors, and community programming continue to take shape for the weekend.",
-          "Join the update list so you hear about the venue, checkout, guests, and application windows in one place.",
+          "Tickets are on sale from the Tickets page. Gaming, cosplay, collectibles, creators, vendors, and community programming continue to take shape for the weekend.",
+          "Join the update list so you hear about the venue, guests, and application windows in one place.",
         ],
       },
     ],
@@ -90,7 +91,7 @@ export const newsArticles: NewsArticle[] = [
       {
         heading: "What happens next",
         paragraphs: [
-          "Guest names, checkout, and application windows will be posted on this News page and on the matching topic pages. The most useful thing you can do is join the update list so you hear about the venue, ticket purchase, and vendor window in one place.",
+          "Tickets are on sale from the Tickets page. Guest names and application windows will be posted on this News page and on the matching topic pages. Join the update list for venue, guests, and vendor news.",
         ],
       },
     ],

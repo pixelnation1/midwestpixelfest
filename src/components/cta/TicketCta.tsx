@@ -4,6 +4,15 @@ import { EventCta } from "@/components/cta/EventCta";
 import { ANALYTICS_EVENTS } from "@/lib/analytics";
 import { getTicketAction, type TicketAction } from "@/lib/tickets";
 
+export type TicketClickSource =
+  | "header"
+  | "homepage"
+  | "tickets_page"
+  | "gaming"
+  | "cosplay";
+
+export type TicketClickType = "weekend" | "saturday" | "sunday" | "kids";
+
 type TicketCtaProps = {
   intent?: "nav" | "purchase";
   size?: "md" | "lg";
@@ -11,6 +20,8 @@ type TicketCtaProps = {
   variant?: "primary" | "secondary" | "ghost";
   onClick?: () => void;
   action?: TicketAction;
+  source?: TicketClickSource;
+  ticketType?: TicketClickType;
 };
 
 export function TicketCta({
@@ -20,6 +31,8 @@ export function TicketCta({
   variant = "primary",
   onClick,
   action,
+  source,
+  ticketType,
 }: TicketCtaProps) {
   const ticket = action ?? getTicketAction(intent);
 
@@ -32,6 +45,11 @@ export function TicketCta({
       className={className}
       external={ticket.external}
       eventName={ANALYTICS_EVENTS.ticket_click}
+      eventPayload={{
+        outbound: ticket.external,
+        ...(source ? { source } : {}),
+        ...(ticketType ? { ticket_type: ticketType } : {}),
+      }}
       onClick={onClick}
     />
   );

@@ -5,8 +5,10 @@ import { ContentSection } from "@/components/ui/ContentSection";
 import { CtaStrip } from "@/components/ui/CtaStrip";
 import { InnerPage } from "@/components/pages/InnerPage";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
+import { ANALYTICS_EVENTS } from "@/lib/analytics";
 import { createPageMetadata } from "@/lib/seo";
 import { gamingPillars } from "@/lib/site";
+import { getTicketAction } from "@/lib/tickets";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Gaming at Midwest Pixel Fest | Kansas Gaming Convention",
@@ -16,6 +18,7 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function GamingPage() {
+  const tickets = getTicketAction("purchase");
   return (
     <InnerPage
       path="/gaming"
@@ -134,7 +137,14 @@ export default function GamingPage() {
         title="Keep watching the grid"
         actions={[
           { href: "/schedule", label: "View Schedule" },
-          { href: "/tickets", label: "Get Tickets", variant: "secondary" },
+          {
+            href: tickets.href,
+            label: tickets.label,
+            variant: "secondary",
+            external: tickets.external,
+            eventName: ANALYTICS_EVENTS.ticket_click,
+            eventPayload: { source: "gaming", outbound: tickets.external },
+          },
           { href: "/news", label: "News", variant: "secondary" },
         ]}
       />
