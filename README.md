@@ -32,16 +32,17 @@ Copy `.env.example` to `.env.local`. Never commit `.env.local` or real secrets.
 | --- | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Public | Optional locally. Set in production. | Canonical origin. Defaults to `https://midwestpixelfest.com`. |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | Public | Optional | Public business inbox shown on Contact and Privacy. Not used to send mail. |
-| `RESEND_API_KEY` | Server-only | Required for live inquiry email | Resend API key. |
-| `FORM_FROM_EMAIL` | Server-only | Required with Resend | Verified From address. |
-| `CONTACT_NOTIFICATION_EMAIL` | Server-only | Required with Resend | Inbox that receives inquiry notifications. |
+| `RESEND_API_KEY` | Server-only | Required for live inquiry email | Resend API key. Never use `NEXT_PUBLIC_`. |
+| `FORM_FROM_EMAIL` | Server-only | Optional | From override. Default: `Midwest Pixel Fest <website@midwestpixelfest.com>`. |
+| `CONTACT_NOTIFICATION_EMAIL` | Server-only | Optional | Inbox that receives inquiry notifications. Default: `hello@midwestpixelfest.com`. |
 | `NEWSLETTER_WEBHOOK_URL` | Server-only | Required for live newsletter signup | JSON POST endpoint for list signup. |
-| `FORM_WEBHOOK_URL` | Server-only | Optional | Legacy/extra JSON webhook for inquiry forms (not newsletter). |
+| `FORM_WEBHOOK_URL` | Server-only | Optional | Fallback JSON webhook when Resend is not configured. |
+| `FORM_WEBHOOK_WITH_RESEND` | Server-only | Optional | Set to `true` only to also POST the webhook when Resend is configured. |
 | `EMAIL_PROVIDER_API_KEY` | Server-only | Optional | Bearer token for `FORM_WEBHOOK_URL`. |
 | `GOOGLE_SITE_VERIFICATION` | Server-only | Optional until Search Console is connected | HTML-tag `content` value only. |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Public | Optional | GA4 ID (`G-…`). Scripts load only when set. |
 
-Live inquiry forms need Resend (`RESEND_API_KEY` + `FORM_FROM_EMAIL` + `CONTACT_NOTIFICATION_EMAIL`) and/or `FORM_WEBHOOK_URL`.
+Live inquiry forms need `RESEND_API_KEY` (preferred) and/or `FORM_WEBHOOK_URL`. From and destination default to the verified midwestpixelfest.com website sender and `hello@midwestpixelfest.com`. Do not put the Resend API key in `.env.example`, source, or git.
 
 Live newsletter signup needs `NEWSLETTER_WEBHOOK_URL`. Newsletter leads are **not** emailed to the operational inbox.
 

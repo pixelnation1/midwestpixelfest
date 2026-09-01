@@ -2,6 +2,7 @@
 
 import { createApplicationReference } from "@/lib/forms/vendor-application";
 import { deliverSubmission, isFormDeliveryConfigured } from "@/lib/forms/deliver";
+import { DEFAULT_NOTIFICATION_EMAIL } from "@/lib/forms/mail-addresses";
 import {
   errorState,
   parseAndValidate,
@@ -31,7 +32,8 @@ const SUCCESS_COPY: Record<string, string> = {
 const NOT_CONFIGURED_MESSAGE =
   "This form is not connected to a delivery provider yet, so we did not record your submission. Try again after the inquiry inbox is live, or check News for updates.";
 
-const DELIVERY_FAILED_MESSAGE = "We couldn't send your submission. Please try again.";
+const DELIVERY_FAILED_MESSAGE =
+  `We couldn't send your submission right now. Please try again or contact ${DEFAULT_NOTIFICATION_EMAIL}.`;
 
 const RATE_LIMITED_MESSAGE =
   "Too many submissions. Please wait a few minutes and try again.";

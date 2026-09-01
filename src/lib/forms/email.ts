@@ -1,64 +1,29 @@
 import "server-only";
 
 import { Resend } from "resend";
+import {
+  getFormFromAddress,
+  getNotificationToAddress,
+  getResendApiKey,
+  isOperationalResendConfigured,
+  isResendConfigured,
+  isSafeReplyTo,
+} from "@/lib/forms/mail-config";
+import {
+  isOperationalFormKind,
+  operationalEmailSubject,
+  operationalSourcePath,
+  type OperationalFormKind,
+} from "@/lib/forms/notification-copy";
 import type { DeliveryPayload, DeliveryResult } from "@/lib/forms/types";
 import type { FormKind } from "@/lib/forms/validate";
-import { validateEmail } from "@/lib/forms/validate";
 
-const OPERATIONAL_KINDS = [
-  "contact",
-  "vendor_interest",
-  "vendor_application",
-  "sponsor_inquiry",
-  "volunteer_interest",
-  "guest_inquiry",
-  "press_inquiry",
-] as const satisfies readonly FormKind[];
+export { isResendConfigured, isOperationalResendConfigured };
 
-type OperationalKind = (typeof OPERATIONAL_KINDS)[number];
-
-const SUBJECTS: Record<OperationalKind, string> = {
-  contact: "[Midwest Pixel Fest] General Contact",
-  vendor_interest: "[Midwest Pixel Fest] Vendor Interest",
-  vendor_application: "[MPF 2027 Vendor Application]",
-  sponsor_inquiry: "[Midwest Pixel Fest] Sponsorship Inquiry",
-  volunteer_interest: "[Midwest Pixel Fest] Volunteer Interest",
-  guest_inquiry: "[Midwest Pixel Fest] Guest Inquiry",
-  press_inquiry: "[Midwest Pixel Fest] Press Inquiry",
-};
-
-function headerSafe(value: string, max = 80): string {
-  return value.replace(/[\r\n]+/g, " ").trim().slice(0, max);
-}
-
-function emailSubject(payload: DeliveryPayload, kind: OperationalKind): string {
-  if (kind === "sponsor_inquiry") {
-    const company =
-      typeof payload.fields.company === "string"
-        ? headerSafe(payload.fields.company)
-        : "";
-    return company
-      ? `[Midwest Pixel Fest] Sponsorship Inquiry — ${company}`
-      : SUBJECTS.sponsor_inquiry;
-  }
-  if (kind === "vendor_application") {
-    const business =
-      typeof payload.fields.businessName === "string"
-        ? headerSafe(payload.fields.businessName)
-        : "";
-    const type =
-      payload.fields.applicationType === "Artist Alley" ? "Artist Alley" : "Vendor Hall";
-    const prefix =
-      type === "Artist Alley"
-        ? "[MPF 2027 Artist Application]"
-        : "[MPF 2027 Vendor Application]";
-    return business ? `${prefix} ${business} — ${type}` : `${prefix} ${type}`;
-  }
-  return SUBJECTS[kind];
-}
+type OperationalKind = OperationalFormKind;
 
 const KIND_LABELS: Record<OperationalKind, string> = {
-  contact: "General Contact",
+  contact: "Contact",
   vendor_interest: "Vendor Interest",
   vendor_application: "Vendor / Artist Application",
   sponsor_inquiry: "Sponsorship Inquiry",
@@ -186,24 +151,6 @@ function escapeHtml(value: string): string {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
-}
-
-function hasHeaderBreak(value: string): boolean {
-  return /[\r\n]/.test(value);
-}
-
-/** Accepts a bare address or `Name <address@domain>`. */
-function isValidFromAddress(value: string): boolean {
-  if (hasHeaderBreak(value)) return false;
-  const trimmed = value.trim();
-  const named = trimmed.match(/^(.+?)\s*<([^>]+)>$/);
-  const address = named ? named[2].trim() : trimmed;
-  return validateEmail(address) === null;
-}
-
-function isSafeReplyTo(value: string): boolean {
-  if (hasHeaderBreak(value)) return false;
-  return validateEmail(value) === null;
 }
 
 function formatFieldValue(value: string | string[]): string {
@@ -419,15 +366,34 @@ function vendorApplicationRows(
   return sectionRows(fields, VENDOR_APPLICATION_SECTIONS);
 }
 
+function sourcePathFor(payload: DeliveryPayload, kind: OperationalKind): string {
+  return operationalSourcePath(kind, payload.fields);
+}
+
+function submissionMetaText(payload: DeliveryPayload, kind: OperationalKind): string[] {
+  return [
+    `Form type: ${KIND_LABELS[kind]}`,
+    `Submitted: ${formatSubmittedAt(payload.submittedAt)}`,
+    `Source page: ${sourcePathFor(payload, kind)}`,
+  ];
+}
+
+function submissionMetaHtml(payload: DeliveryPayload, kind: OperationalKind): string {
+  return `<strong>Form type:</strong> ${escapeHtml(KIND_LABELS[kind])}<br />
+      <strong>Submitted:</strong> ${escapeHtml(formatSubmittedAt(payload.submittedAt))}<br />
+      <strong>Source page:</strong> ${escapeHtml(sourcePathFor(payload, kind))}`;
+}
+
 function buildSectionedText(
   payload: DeliveryPayload,
+  kind: OperationalKind,
   title: string,
   sections: Array<{ heading: string; rows: { label: string; value: string }[] }>,
 ): string {
   const lines = [
     `Midwest Pixel Fest — ${title}`,
     "",
-    `Submitted: ${formatSubmittedAt(payload.submittedAt)}`,
+    ...submissionMetaText(payload, kind),
     "",
   ];
   for (const section of sections) {
@@ -437,13 +403,12 @@ function buildSectionedText(
     }
     lines.push("");
   }
-  lines.push("SYSTEM");
-  lines.push(`Submission timestamp: ${formatSubmittedAt(payload.submittedAt)}`);
   return lines.join("\n");
 }
 
 function buildSectionedHtml(
   payload: DeliveryPayload,
+  kind: OperationalKind,
   title: string,
   sections: Array<{ heading: string; rows: { label: string; value: string }[] }>,
 ): string {
@@ -470,8 +435,7 @@ function buildSectionedHtml(
     <p style="margin:0 0 4px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#666;">Midwest Pixel Fest</p>
     <h1 style="margin:0 0 16px;font-size:22px;font-weight:700;">${escapeHtml(title)}</h1>
     <p style="margin:0 0 20px;font-size:13px;color:#555;">
-      <strong>SYSTEM</strong><br />
-      <strong>Submitted:</strong> ${escapeHtml(formatSubmittedAt(payload.submittedAt))}
+      ${submissionMetaHtml(payload, kind)}
     </p>
     ${sectionsHtml}
   </div>
@@ -480,11 +444,21 @@ function buildSectionedHtml(
 }
 
 function buildSponsorText(payload: DeliveryPayload): string {
-  return buildSectionedText(payload, "Sponsorship Inquiry", sponsorRows(payload.fields));
+  return buildSectionedText(
+    payload,
+    "sponsor_inquiry",
+    "Sponsorship Inquiry",
+    sponsorRows(payload.fields),
+  );
 }
 
 function buildSponsorHtml(payload: DeliveryPayload): string {
-  return buildSectionedHtml(payload, "Sponsorship Inquiry", sponsorRows(payload.fields));
+  return buildSectionedHtml(
+    payload,
+    "sponsor_inquiry",
+    "Sponsorship Inquiry",
+    sponsorRows(payload.fields),
+  );
 }
 
 function vendorApplicationTitle(payload: DeliveryPayload): string {
@@ -496,6 +470,7 @@ function vendorApplicationTitle(payload: DeliveryPayload): string {
 function buildVendorApplicationText(payload: DeliveryPayload): string {
   return buildSectionedText(
     payload,
+    "vendor_application",
     vendorApplicationTitle(payload),
     vendorApplicationRows(payload.fields),
   );
@@ -504,6 +479,7 @@ function buildVendorApplicationText(payload: DeliveryPayload): string {
 function buildVendorApplicationHtml(payload: DeliveryPayload): string {
   return buildSectionedHtml(
     payload,
+    "vendor_application",
     vendorApplicationTitle(payload),
     vendorApplicationRows(payload.fields),
   );
@@ -514,8 +490,7 @@ function buildText(payload: DeliveryPayload, kind: OperationalKind): string {
   const lines = [
     `Midwest Pixel Fest — ${KIND_LABELS[kind]}`,
     "",
-    `Type: ${kind}`,
-    `Submitted: ${formatSubmittedAt(payload.submittedAt)}`,
+    ...submissionMetaText(payload, kind),
     "",
     ...rows.map((row) => `${row.label}: ${row.value}`),
   ];
@@ -542,8 +517,7 @@ function buildHtml(payload: DeliveryPayload, kind: OperationalKind): string {
     <h1 style="margin:0 0 16px;font-size:22px;font-weight:700;">${escapeHtml(KIND_LABELS[kind])}</h1>
     <p style="margin:0 0 8px;font-size:14px;color:#333;">A new form submission was received.</p>
     <p style="margin:0 0 20px;font-size:13px;color:#555;">
-      <strong>Type:</strong> ${escapeHtml(kind)}<br />
-      <strong>Submitted:</strong> ${escapeHtml(formatSubmittedAt(payload.submittedAt))}
+      ${submissionMetaHtml(payload, kind)}
     </p>
     <table width="100%" cellpadding="0" cellspacing="0" role="presentation">${rowHtml}</table>
   </div>
@@ -552,22 +526,13 @@ function buildHtml(payload: DeliveryPayload, kind: OperationalKind): string {
 }
 
 export function isOperationalKind(kind: FormKind): kind is OperationalKind {
-  return (OPERATIONAL_KINDS as readonly string[]).includes(kind);
-}
-
-export function isResendConfigured(): boolean {
-  const apiKey = process.env.RESEND_API_KEY?.trim();
-  const from = process.env.FORM_FROM_EMAIL?.trim();
-  const to = process.env.CONTACT_NOTIFICATION_EMAIL?.trim();
-  if (!apiKey || !from || !to) return false;
-  if (!isValidFromAddress(from)) return false;
-  if (validateEmail(to) !== null || hasHeaderBreak(to)) return false;
-  return true;
+  return isOperationalFormKind(kind);
 }
 
 /**
  * Sends an operational notification via Resend.
  * Does not log field contents. Does not handle newsletter signups.
+ * From is never taken from user input. Reply-To may be the validated submitter email.
  */
 export async function sendOperationalEmail(
   payload: DeliveryPayload,
@@ -577,12 +542,11 @@ export async function sendOperationalEmail(
   }
 
   const kind = payload.kind;
+  const apiKey = getResendApiKey();
+  const from = getFormFromAddress();
+  const to = getNotificationToAddress();
 
-  const apiKey = process.env.RESEND_API_KEY?.trim();
-  const from = process.env.FORM_FROM_EMAIL?.trim();
-  const to = process.env.CONTACT_NOTIFICATION_EMAIL?.trim();
-
-  if (!apiKey || !from || !to || !isResendConfigured()) {
+  if (!apiKey || !from || !to || !isOperationalResendConfigured()) {
     return { ok: false, code: "not_configured" };
   }
 
@@ -595,7 +559,7 @@ export async function sendOperationalEmail(
     const { error } = await resend.emails.send({
       from,
       to,
-      subject: emailSubject(payload, kind),
+      subject: operationalEmailSubject(kind, payload.fields),
       html:
         kind === "sponsor_inquiry"
           ? buildSponsorHtml(payload)
@@ -616,10 +580,18 @@ export async function sendOperationalEmail(
         typeof error === "object" && error && "name" in error && typeof error.name === "string"
           ? error.name
           : "unknown";
+      const statusCode =
+        typeof error === "object" &&
+        error &&
+        "statusCode" in error &&
+        typeof error.statusCode === "number"
+          ? error.statusCode
+          : undefined;
       console.error("form_email_failed", {
         provider: "resend",
         kind,
         name: errorName,
+        ...(statusCode != null ? { statusCode } : {}),
       });
       return { ok: false, code: "delivery_failed" };
     }

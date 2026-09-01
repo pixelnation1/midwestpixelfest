@@ -1,18 +1,17 @@
 import "server-only";
 
 import { Resend } from "resend";
-import { isResendConfigured } from "@/lib/forms/email";
+import {
+  getFormFromAddress,
+  getResendApiKey,
+  isResendConfigured,
+  isSafeReplyTo,
+} from "@/lib/forms/mail-config";
 import type { DeliveryResult } from "@/lib/forms/types";
-import { validateEmail } from "@/lib/forms/validate";
 import type { VendorLifecycleEmail } from "@/lib/vendor-ops/emails";
 
 function hasHeaderBreak(value: string): boolean {
   return /[\r\n]/.test(value);
-}
-
-function isSafeRecipient(value: string): boolean {
-  if (hasHeaderBreak(value)) return false;
-  return validateEmail(value) === null;
 }
 
 export function isVendorLifecycleEmailConfigured(): boolean {
@@ -23,6 +22,7 @@ export function isVendorLifecycleEmailConfigured(): boolean {
  * Sends a vendor lifecycle email to the applicant.
  * Does not log the recipient address or email body.
  * Does not pretend success when Resend is not configured.
+ * From is never taken from user input.
  */
 export async function sendVendorLifecycleEmail(input: {
   to: string;
@@ -32,11 +32,16 @@ export async function sendVendorLifecycleEmail(input: {
     return { ok: false, code: "not_configured" };
   }
 
-  const apiKey = process.env.RESEND_API_KEY?.trim();
-  const from = process.env.FORM_FROM_EMAIL?.trim();
+  const apiKey = getResendApiKey();
+  const from = getFormFromAddress();
   const to = input.to.trim();
 
-  if (!apiKey || !from || !isSafeRecipient(to) || hasHeaderBreak(input.email.subject)) {
+  if (
+    !apiKey ||
+    !from ||
+    !isSafeReplyTo(to) ||
+    hasHeaderBreak(input.email.subject)
+  ) {
     return { ok: false, code: "not_configured" };
   }
 
