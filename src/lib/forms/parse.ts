@@ -3,6 +3,7 @@ import {
   CONTACT_TYPES,
   COVERAGE_TYPES,
   GUEST_CATEGORIES,
+  VENDOR_CATEGORIES,
   VENDOR_TYPES,
   VOLUNTEER_AREAS,
 } from "@/lib/forms/options";
@@ -98,25 +99,40 @@ export function parseAndValidate(
     const businessName = clean(readString(formData, "businessName"));
     const contactName = clean(readString(formData, "contactName"));
     const email = clean(readString(formData, "email"));
+    const phone = clean(readString(formData, "phone"));
     const website = clean(readString(formData, "website"));
+    const socialMedia = clean(readString(formData, "socialMedia"));
     const vendorType = clean(readString(formData, "vendorType"));
+    const vendorCategory = clean(readString(formData, "vendorCategory"));
     const whatYouSell = clean(readString(formData, "whatYouSell"));
+    const city = clean(readString(formData, "city"));
+    const state = clean(readString(formData, "state"));
     const notify = readString(formData, "notifyApplications");
-    addError(errors, "businessName", requiredText(businessName, "a business or artist name", FIELD_LIMITS.medium));
     addError(errors, "contactName", requiredText(contactName, "a contact name"));
+    addError(errors, "businessName", requiredText(businessName, "a business or artist name", FIELD_LIMITS.medium));
     addError(errors, "email", validateEmail(email));
+    addError(errors, "phone", optionalText(phone, "Phone", FIELD_LIMITS.phone));
     addError(errors, "website", optionalUrl(website));
-    addError(errors, "vendorType", requireOneOf(vendorType, VENDOR_TYPES, "a vendor type"));
-    addError(errors, "whatYouSell", optionalText(whatYouSell, "What you sell", FIELD_LIMITS.message));
+    addError(errors, "socialMedia", optionalText(socialMedia, "Social media", FIELD_LIMITS.url));
+    addError(errors, "vendorType", requireOneOf(vendorType, VENDOR_TYPES, "an applicant type"));
+    addError(errors, "vendorCategory", requireOneOf(vendorCategory, VENDOR_CATEGORIES, "a primary category"));
+    addError(errors, "whatYouSell", requiredText(whatYouSell, "what you sell or create", FIELD_LIMITS.message));
+    addError(errors, "city", optionalText(city, "City"));
+    addError(errors, "state", optionalText(state, "State"));
     if (notify !== "on") {
       errors.notifyApplications = "Confirm you want to be notified when applications open.";
     }
-    fields.businessName = businessName;
     fields.contactName = contactName;
+    fields.businessName = businessName;
     fields.email = email;
+    fields.phone = phone;
     fields.website = website;
+    fields.socialMedia = socialMedia;
     fields.vendorType = vendorType;
+    fields.vendorCategory = vendorCategory;
     fields.whatYouSell = whatYouSell;
+    fields.city = city;
+    fields.state = state;
     fields.notifyApplications = "yes";
   }
 

@@ -283,15 +283,7 @@ export const gamingPillars = [
   },
 ] as const;
 
-export const vendorBrowseCategories = [
-  { title: "Games", icon: "joystick" as const },
-  { title: "Cards", icon: "cards" as const },
-  { title: "Collectibles", icon: "star" as const },
-  { title: "Art", icon: "mask" as const },
-  { title: "Apparel", icon: "booth" as const },
-  { title: "Makers", icon: "cartridge" as const },
-  { title: "Pop culture merchandise", icon: "cabinet" as const },
-] as const;
+export { vendorBrowseCategories } from "@/lib/vendors";
 
 export const tickerItems = [
   "Video Games",

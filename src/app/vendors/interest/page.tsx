@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import { VendorInterestForm } from "@/components/forms/VendorInterestForm";
 import { InnerPage } from "@/components/pages/InnerPage";
+import { TrackPageEvent } from "@/components/seo/TrackPageEvent";
 import { ContentSection } from "@/components/ui/ContentSection";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
+import { ANALYTICS_EVENTS } from "@/lib/analytics";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Vendor Interest | Midwest Pixel Fest",
+  title: "Register Vendor Interest | Midwest Pixel Fest 2027",
   description:
-    "Register vendor or artist interest for Midwest Pixel Fest in Emporia, Kansas. This is not an official application and does not offer a booth.",
+    "Register vendor or Artist Alley interest for Midwest Pixel Fest 2027 in Emporia, Kansas. This is not an official application and does not reserve a booth.",
   path: "/vendors/interest",
 });
 
@@ -22,15 +24,19 @@ export default function VendorInterestPage() {
         { name: "Vendors", path: "/vendors" },
         { name: "Vendor Interest" },
       ]}
-      eyebrow="Not an application"
-      title="Vendor Interest Form"
-      intro="Tell us you want to hear when official vendor and artist applications open. This is not an application, not a payment, and not a booth assignment."
+      eyebrow="Register interest"
+      title="Register Vendor Interest"
+      intro="Tell us about your shop, collection, or creative work so we can notify you when official vendor and Artist Alley applications launch. This form is not an application, does not reserve a booth, and does not collect payment."
+      mood="business"
     >
-      <ContentSection title="What this form is for">
+      <TrackPageEvent name={ANALYTICS_EVENTS.vendor_interest_start} />
+
+      <ContentSection title="What happens next">
         <p>
-          Official applications are not open. Registering interest lets Midwest
-          Pixel Fest notify potential vendors and artists when the real form
-          exists. Submitting does not imply acceptance.
+          We use this form to build the notification list for official
+          applications. Submitting does not guarantee acceptance or create a
+          contract. Full booth details will be released with official
+          applications.
         </p>
       </ContentSection>
 

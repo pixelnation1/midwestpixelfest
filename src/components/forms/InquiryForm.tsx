@@ -28,6 +28,9 @@ type InquiryFormProps = {
   successNote?: string | null;
   successLinks?: Array<{ href: string; label: string }>;
   children: React.ReactNode;
+  getAnalyticsPayload?: () =>
+    | Record<string, string | number | boolean>
+    | undefined;
 };
 
 export function InquiryForm({
@@ -37,14 +40,15 @@ export function InquiryForm({
   successNote,
   successLinks,
   children,
+  getAnalyticsPayload,
 }: InquiryFormProps) {
   const [state, action, pending] = useActionState(submitForm, idleFormState);
 
   useEffect(() => {
     if (state.status === "success") {
-      trackEvent(EVENT_BY_KIND[kind]);
+      trackEvent(EVENT_BY_KIND[kind], getAnalyticsPayload?.());
     }
-  }, [kind, state.status]);
+  }, [kind, state.status, getAnalyticsPayload]);
 
   if (state.status === "success") {
     return (

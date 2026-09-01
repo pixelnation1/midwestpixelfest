@@ -1,6 +1,7 @@
 export const ANALYTICS_EVENTS = {
   ticket_click: "ticket_click",
   newsletter_signup: "newsletter_signup",
+  vendor_interest_start: "vendor_interest_start",
   vendor_interest_submit: "vendor_interest_submit",
   sponsor_inquiry_submit: "sponsor_inquiry_submit",
   volunteer_interest_submit: "volunteer_interest_submit",
@@ -37,6 +38,12 @@ const PII_PAYLOAD_KEYS = new Set([
   "marketingEmail",
   "marketingContact",
   "displayName",
+  "businessName",
+  "website",
+  "social",
+  "socialMedia",
+  "whatYouSell",
+  "description",
 ]);
 
 function sanitizeEventPayload(

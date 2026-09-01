@@ -1,3 +1,8 @@
+import {
+  VENDOR_APPLICANT_TYPES,
+  VENDOR_PRIMARY_CATEGORIES,
+} from "@/lib/vendors";
+
 export const CONTACT_TYPES = [
   "General",
   "Vendor / Artist",
@@ -8,15 +13,8 @@ export const CONTACT_TYPES = [
   "Other",
 ] as const;
 
-export const VENDOR_TYPES = [
-  "Vendor",
-  "Artist",
-  "Maker",
-  "Creator",
-  "TCG / Collectibles",
-  "Gaming",
-  "Other",
-] as const;
+export const VENDOR_TYPES = VENDOR_APPLICANT_TYPES;
+export const VENDOR_CATEGORIES = VENDOR_PRIMARY_CATEGORIES;
 
 export const PARTNERSHIP_TYPES = [
   "Presenting",
@@ -69,6 +67,7 @@ export const COVERAGE_TYPES = [
 export const formOptionLists = {
   contactTypes: CONTACT_TYPES,
   vendorTypes: VENDOR_TYPES,
+  vendorCategories: VENDOR_CATEGORIES,
   partnershipTypes: PARTNERSHIP_TYPES,
   ageRanges: AGE_RANGES,
   volunteerAreas: VOLUNTEER_AREAS,
