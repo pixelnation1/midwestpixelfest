@@ -70,6 +70,9 @@ export default function TicketsPage() {
       </ul>
 
       <p className="mt-8 max-w-2xl text-sm text-muted">
+        Ticketleap service and transaction fees may apply at checkout.
+      </p>
+      <p className="mt-3 max-w-2xl text-sm text-muted">
         Ticket availability and event capacity are subject to venue limits.
       </p>
 

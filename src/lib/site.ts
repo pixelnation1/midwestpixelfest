@@ -331,7 +331,7 @@ export function getFaqs() {
     },
     {
       question: "How much are tickets?",
-      answer: `${ticketPriceLine()}. Ticket availability and event capacity are subject to venue limits.`,
+      answer: `${ticketPriceLine()}. Ticketleap service and transaction fees may apply at checkout. Ticket availability and event capacity are subject to venue limits.`,
     },
     {
       question: "Are tickets available yet?",
