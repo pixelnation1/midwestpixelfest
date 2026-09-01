@@ -34,9 +34,10 @@ export default function VendorInterestPage() {
       <ContentSection title="What happens next">
         <p>
           We use this form to build the notification list for official
-          applications. Submitting does not guarantee acceptance or create a
-          contract. Full booth details will be released with official
-          applications.
+          applications. Submitting does not guarantee acceptance, reserve a
+          space, or create a contract. Published Vendor Hall and Artist Alley
+          prices are listed on the Vendors page. This form does not collect
+          payment.
         </p>
       </ContentSection>
 

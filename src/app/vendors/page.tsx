@@ -4,11 +4,13 @@ import { InnerPage } from "@/components/pages/InnerPage";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { CtaStrip } from "@/components/ui/CtaStrip";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
+import { VendorAddOns } from "@/components/vendors/VendorAddOns";
 import { VendorCategories } from "@/components/vendors/VendorCategories";
 import { VendorDetailsComing } from "@/components/vendors/VendorDetailsComing";
 import { VendorDirectory } from "@/components/vendors/VendorDirectory";
 import { VendorFaq } from "@/components/vendors/VendorFaq";
 import { VendorHallVsAlley } from "@/components/vendors/VendorHallVsAlley";
+import { VendorPricing } from "@/components/vendors/VendorPricing";
 import { VendorProcess } from "@/components/vendors/VendorProcess";
 import { VendorStatusPanel } from "@/components/vendors/VendorStatusPanel";
 import { WhyVend } from "@/components/vendors/WhyVend";
@@ -20,7 +22,7 @@ import { getVendorPrimaryCta, vendorFaqs } from "@/lib/vendors";
 export const metadata: Metadata = createPageMetadata({
   title: "Vendors & Artist Alley | Midwest Pixel Fest 2027",
   description:
-    "Interested in vending at Midwest Pixel Fest 2027 in Emporia, Kansas? Learn about Vendor Hall and Artist Alley opportunities and register for application updates.",
+    "Interested in vending at Midwest Pixel Fest 2027 in Emporia, Kansas, October 16–17? See Vendor Hall and Artist Alley pricing and register for application updates.",
   path: "/vendors",
 });
 
@@ -67,6 +69,8 @@ export default function VendorsPage() {
       <WhyVend />
       <VendorCategories />
       <VendorHallVsAlley />
+      <VendorPricing />
+      <VendorAddOns />
 
       <CtaStrip
         className="mt-6"

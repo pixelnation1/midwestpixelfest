@@ -56,6 +56,10 @@ export function VendorHallVsAlley() {
               </li>
             ))}
           </ul>
+          <p className="mt-4 text-sm text-muted">
+            Artist Alley is intended for original creative work. Resale-heavy
+            retail is not an automatic fit for this category.
+          </p>
         </article>
       </div>
       <p className="mt-6 max-w-3xl text-muted">

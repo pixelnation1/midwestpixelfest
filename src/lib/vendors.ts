@@ -1,16 +1,57 @@
 /**
  * Central vendor / Artist Alley configuration for Midwest Pixel Fest.
  *
- * Application-open flags, CTAs, category copy, FAQs, and the future
- * vendor directory all read this file. Do not duplicate those flags in
- * components. Do not invent booth prices, attendance, or food-vendor
- * opportunities here.
+ * Application-open flags, CTAs, pricing, FAQs, and the future vendor
+ * directory all read this file. Do not duplicate prices or flags in
+ * components. Do not invent electricity prices, attendance, or
+ * food-vendor opportunities. Do not add vendor fees to Event ticket schema.
  */
 
 export const vendorApplicationsOpen = false;
 export const artistApplicationsOpen = false;
 export const vendorApplicationUrl: string | null = null;
-export const vendorPricingPublished = false;
+export const artistApplicationUrl: string | null = null;
+export const vendorPricingPublished = true;
+
+/** Informational Founding Vendor deadline. Do not auto-open applications or payments from this date. */
+export const foundingVendorDeadline = "2027-04-30";
+
+/**
+ * Future payment is organizer-issued after acceptance.
+ * Do not enable public self-service booth checkout from this config.
+ */
+export const vendorPayment = {
+  checkoutOpen: false,
+  publicSelfService: false,
+  /** Unset until an organizer-approved method is chosen. */
+  method: null as "invoice" | "payment_link" | null,
+};
+
+export const vendorPricing = {
+  artistAlley: {
+    regular: 100,
+    founding: 75,
+  },
+  standard10x10: {
+    regular: 200,
+    founding: 175,
+  },
+  corner10x10: {
+    regular: 250,
+    founding: 225,
+  },
+  double10x20: {
+    regular: 375,
+    founding: 350,
+  },
+  premiumDoubleCorner10x20: {
+    regular: 450,
+    founding: null,
+  },
+  extraBadge: 20,
+  extraTable: 20,
+  electricity: null,
+} as const;
 
 export type VendorCtaMode = "interest" | "apply";
 
@@ -42,6 +83,150 @@ export function getVendorPrimaryCta(): VendorPrimaryCta {
 export function vendorApplicationsAreOpen(): boolean {
   return vendorApplicationsOpen && Boolean(vendorApplicationUrl);
 }
+
+export function vendorApplicationStatusLabel(): string {
+  return vendorApplicationsAreOpen()
+    ? "Applications open"
+    : "Applications opening later";
+}
+
+export function formatVendorPrice(amount: number): string {
+  return `$${amount.toLocaleString("en-US")}`;
+}
+
+export function formatVendorPriceOrTba(amount: number | null): string {
+  return amount == null ? "Pricing TBA" : formatVendorPrice(amount);
+}
+
+/** Display-only label for the configured deadline. Does not change pricing or CTAs. */
+export function foundingVendorDeadlineLabel(): string {
+  const [year, month, day] = foundingVendorDeadline.split("-").map(Number);
+  if (!year || !month || !day) return foundingVendorDeadline;
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(Date.UTC(year, month - 1, day)));
+}
+
+export type VendorSpaceId =
+  | "artistAlley"
+  | "standard10x10"
+  | "corner10x10"
+  | "double10x20"
+  | "premiumDoubleCorner10x20";
+
+export type VendorSpace = {
+  id: VendorSpaceId;
+  name: string;
+  dimensions: string | null;
+  regular: number;
+  founding: number | null;
+  description: string;
+  inclusions: readonly string[];
+};
+
+export const vendorSpaces: readonly VendorSpace[] = [
+  {
+    id: "artistAlley",
+    name: "Artist Alley Table",
+    dimensions: null,
+    regular: vendorPricing.artistAlley.regular,
+    founding: vendorPricing.artistAlley.founding,
+    description:
+      "For artists and creators primarily selling their own original work, such as artwork, prints, comics, zines, handmade goods, crafts, commissions, and creator merchandise. Resale-heavy retail is not an automatic fit for Artist Alley.",
+    inclusions: [
+      "Weekend space for Midwest Pixel Fest 2027",
+      "Up to 2 vendor/artist credentials",
+    ],
+  },
+  {
+    id: "standard10x10",
+    name: "Standard Vendor Booth",
+    dimensions: "10×10",
+    regular: vendorPricing.standard10x10.regular,
+    founding: vendorPricing.standard10x10.founding,
+    description:
+      "For game retailers, TCG sellers, collectibles dealers, tabletop vendors, merchandise sellers, and similar businesses.",
+    inclusions: [
+      "10×10 vendor space",
+      "Up to 2 vendor credentials",
+    ],
+  },
+  {
+    id: "corner10x10",
+    name: "Corner Vendor Booth",
+    dimensions: "10×10",
+    regular: vendorPricing.corner10x10.regular,
+    founding: vendorPricing.corner10x10.founding,
+    description:
+      "10×10 Vendor Hall space with corner or end placement, subject to availability during application review.",
+    inclusions: [
+      "10×10 vendor space",
+      "Corner/end placement",
+      "Up to 2 vendor credentials",
+    ],
+  },
+  {
+    id: "double10x20",
+    name: "Double Vendor Booth",
+    dimensions: "10×20",
+    regular: vendorPricing.double10x20.regular,
+    founding: vendorPricing.double10x20.founding,
+    description:
+      "Larger Vendor Hall footprint for businesses that need more display or inventory space.",
+    inclusions: [
+      "10×20 vendor space",
+      "Up to 4 vendor credentials",
+    ],
+  },
+  {
+    id: "premiumDoubleCorner10x20",
+    name: "Premium Double Corner",
+    dimensions: "10×20",
+    regular: vendorPricing.premiumDoubleCorner10x20.regular,
+    founding: vendorPricing.premiumDoubleCorner10x20.founding,
+    description:
+      "10×20 Vendor Hall space with premium corner or end placement. No Founding Vendor Rate is assigned to this space.",
+    inclusions: [
+      "10×20 vendor space",
+      "Premium corner/end placement",
+      "Up to 4 vendor credentials",
+    ],
+  },
+];
+
+export type VendorAddOn = {
+  id: "extraBadge" | "extraTable" | "electricity";
+  name: string;
+  price: number | null;
+  note: string;
+};
+
+export const vendorAddOns: readonly VendorAddOn[] = [
+  {
+    id: "extraBadge",
+    name: "Extra Vendor Badge",
+    price: vendorPricing.extraBadge,
+    note: "Additional vendor/artist credential beyond the number included with the approved space.",
+  },
+  {
+    id: "extraTable",
+    name: "Extra Table",
+    price: vendorPricing.extraTable,
+    note: "Available only if furniture and floor-plan capacity allow. Final table policy is in the vendor packet.",
+  },
+  {
+    id: "electricity",
+    name: "Electricity",
+    price: vendorPricing.electricity,
+    note: "Electrical access and pricing will be announced after the venue and facility requirements are finalized.",
+  },
+];
+
+export const vendorPacketNote =
+  "Tables, chairs, electricity, setup requirements, and final floor-plan specifications will be published with the official vendor packet.";
 
 export const vendorBrowseCategories = [
   {
@@ -133,15 +318,19 @@ export const whyVendPoints = [
 ] as const;
 
 export const vendorHallFit = [
-  "Games",
-  "Cards",
+  "Video games",
+  "Retro games",
+  "Trading cards",
+  "TCG accessories",
   "Collectibles",
-  "Tabletop products",
+  "Tabletop",
+  "Board games",
+  "RPG products",
+  "Gaming accessories",
   "Apparel",
-  "Accessories",
-  "Gaming merchandise",
   "Pop-culture merchandise",
   "Retail inventory",
+  "Specialty convention merchandise",
 ] as const;
 
 export const artistAlleyFit = [
@@ -159,38 +348,36 @@ export const vendorApplicationSteps = [
   {
     step: "01",
     title: "Register interest",
-    body: "Tell us about your business or creative work now so we can reach you when official applications launch.",
+    body: "Tell us about your business or creative work now so we can reach you when official applications launch. There is no payment at this step.",
   },
   {
     step: "02",
     title: "Applications open",
-    body: "Interested vendors and artists are notified when the official application launches.",
+    body: "Interested vendors and artists are notified when the official application launches. Vendor and Artist Alley applications are free to submit.",
   },
   {
     step: "03",
     title: "Apply",
-    body: "Submit the full vendor or artist application and the information requested at that time.",
+    body: "Submit the full vendor or artist application and the information requested at that time. There is no application fee.",
   },
   {
     step: "04",
     title: "Review",
-    body: "Midwest Pixel Fest reviews applications for event fit and available space.",
+    body: "Midwest Pixel Fest reviews applications for event fit and available space. Applying does not automatically guarantee acceptance.",
   },
   {
     step: "05",
     title: "Acceptance",
-    body: "Approved applicants receive next-step information. Applying does not automatically guarantee acceptance.",
+    body: "Approved applicants receive next-step information, including payment instructions for the approved space.",
   },
   {
     step: "06",
-    title: "Payment & event details",
-    body: "Approved vendors receive payment instructions and applicable setup and event information.",
+    title: "Payment secures space",
+    body: "Payment after acceptance secures the approved space. There is no public self-service booth checkout, and registering interest does not collect payment.",
   },
 ] as const;
 
 export const vendorDetailsComing = [
-  "Booth and table sizes",
-  "Pricing",
   "Tables, chairs, and power",
   "Load-in and setup times",
   "Show rules",
@@ -198,9 +385,10 @@ export const vendorDetailsComing = [
   "Insurance requirements, if applicable",
   "Application deadlines",
   "Cancellation and refund policy",
-  "Badge and admission information",
+  "Badge pickup and credential logistics",
   "Booth sharing rules",
   "Display requirements",
+  "Floor-plan specifications",
 ] as const;
 
 export const VENDOR_APPLICANT_TYPES = [
@@ -258,11 +446,19 @@ export function getPublishedVendors(): ConfirmedVendor[] {
   return confirmedVendors.filter((vendor) => vendor.published);
 }
 
+const artistAlley = vendorPricing.artistAlley;
+const standard = vendorPricing.standard10x10;
+
 export const vendorFaqs = [
   {
     question: "When do vendor applications open?",
     answer:
-      "Applications for Midwest Pixel Fest 2027 are being prepared. Official dates will be announced when the application launches.",
+      "Official dates will be announced when the application launches. Applications are not open yet. Register interest to receive updates.",
+  },
+  {
+    question: "Are applications open yet?",
+    answer:
+      "No. Official applications are being prepared. Register vendor interest and we will notify you when applications launch.",
   },
   {
     question: "How do I know when applications open?",
@@ -270,34 +466,79 @@ export const vendorFaqs = [
       "Register vendor interest and we will notify you when official applications launch.",
   },
   {
+    question: "Is there an application fee?",
+    answer:
+      "No. Vendor and Artist Alley applications are free to submit.",
+  },
+  {
     question: "Does registering interest guarantee a booth?",
     answer:
       "No. Registering interest does not guarantee acceptance, reserve a booth, require payment, or create a contract.",
   },
   {
+    question: "Does applying guarantee a booth?",
+    answer:
+      "No. Midwest Pixel Fest reviews applications for event fit and available space. Acceptance is not automatic.",
+  },
+  {
+    question: "When do I pay?",
+    answer:
+      "Approved applicants will receive payment instructions after acceptance. Payment secures the approved space. We do not collect payment during interest registration, and there is no public booth checkout.",
+  },
+  {
     question: "What's the difference between Vendor Hall and Artist Alley?",
     answer:
-      "Vendor Hall is best suited for businesses selling products such as games, cards, collectibles, tabletop products, apparel, accessories, gaming merchandise, and pop-culture merchandise. Artist Alley is best suited for creators selling primarily their own work, such as original artwork, prints, comics, zines, crafts, handmade goods, commissions, and creator merchandise. If you are not sure which fits, register interest and choose the closest option. Final placement can be determined during the application process.",
+      "Vendor Hall is for businesses selling products such as video games, retro games, trading cards, TCG accessories, collectibles, tabletop, board games, RPG products, gaming accessories, apparel, pop-culture merchandise, retail inventory, and specialty convention merchandise. Artist Alley is intended primarily for creators selling their own work, such as original artwork, prints, comics, zines, crafts, handmade goods, commissions, and creator merchandise. Resale-heavy retailers are not an automatic fit for Artist Alley. If you are not sure which fits, register interest and choose the closest option. Final placement can be determined during the application process.",
+  },
+  {
+    question: "How much is an Artist Alley table?",
+    answer: `An Artist Alley table is ${formatVendorPrice(artistAlley.founding)} at the Founding Vendor Rate, and ${formatVendorPrice(artistAlley.regular)} regular. Founding Vendor pricing is planned through ${foundingVendorDeadlineLabel()}, subject to availability. Applications are not open yet.`,
+  },
+  {
+    question: "How much is a standard vendor booth?",
+    answer: `A standard 10×10 vendor booth is ${formatVendorPrice(standard.founding)} at the Founding Vendor Rate, and ${formatVendorPrice(standard.regular)} regular. Founding Vendor pricing is planned through ${foundingVendorDeadlineLabel()}, subject to availability. Applications are not open yet.`,
+  },
+  {
+    question: "What is the Founding Vendor Rate?",
+    answer: `Founding Vendor Rate is an introductory pricing tier for the inaugural Midwest Pixel Fest marketplace. It is not permanent status, exclusive rights, special placement, a marketing package, or a guaranteed renewal. Founding rates currently apply to Artist Alley, Standard 10×10, Corner 10×10, and Double 10×20 spaces.`,
+  },
+  {
+    question: "When does Founding Vendor pricing end?",
+    answer: `Founding Vendor pricing is planned through ${foundingVendorDeadlineLabel()}, subject to availability. The deadline is informational until official applications launch.`,
   },
   {
     question: "How much will booths cost?",
-    answer:
-      "Final pricing will be published with the official vendor application.",
+    answer: `Published Vendor Hall and Artist Alley prices are listed on this page. Artist Alley is ${formatVendorPrice(artistAlley.founding)} founding / ${formatVendorPrice(artistAlley.regular)} regular. A standard 10×10 booth is ${formatVendorPrice(standard.founding)} founding / ${formatVendorPrice(standard.regular)} regular. Corner, double, and premium double-corner options are also listed. Extra vendor badges and extra tables are ${formatVendorPrice(vendorPricing.extraBadge)} each. Electricity pricing is TBA.`,
   },
   {
     question: "What booth sizes will be available?",
     answer:
-      "Booth and table sizes will be published with the official vendor application.",
+      "Artist Alley is a table space. Vendor Hall options include 10×10 standard, 10×10 corner, 10×20 double, and 10×20 premium double corner. Final floor-plan placement is determined during application review and published with the vendor packet.",
+  },
+  {
+    question: "Can I purchase multiple booths?",
+    answer:
+      "Double booth options are planned. Additional configurations may be considered based on space and availability during the application process.",
+  },
+  {
+    question: "Can I purchase a corner?",
+    answer:
+      "Corner spaces are planned as a separate pricing category and will be subject to availability.",
   },
   {
     question: "Will tables and chairs be included?",
     answer:
-      "That policy is still being finalized and will be included in the vendor packet.",
+      "Final furniture and setup details will be published with the vendor packet.",
+  },
+  {
+    question: "How much is electricity?",
+    answer:
+      "Electrical availability and pricing have not been finalized and depend on the venue.",
   },
   {
     question: "Will electricity be available?",
     answer:
-      "Power details will be published with the official vendor application.",
+      "Electrical access and pricing will be announced after the venue and facility requirements are finalized.",
   },
   {
     question: "Can vendors sell trading cards?",
@@ -336,6 +577,6 @@ export const vendorFaqs = [
   {
     question: "Do vendor booths include admission?",
     answer:
-      "Badge and admission information for vendors will be published with official applications.",
+      "Each space includes vendor or artist credentials as listed with that option. Extra vendor badges are available as an add-on. Badge pickup details will be included in the vendor packet.",
   },
-] as const;
+];

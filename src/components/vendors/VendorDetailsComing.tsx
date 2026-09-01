@@ -11,10 +11,10 @@ export function VendorDetailsComing() {
       <SectionHeading
         id="vendor-details-heading"
         eyebrow="Vendor packet"
-        title="Vendor details coming with applications"
+        title="More vendor details coming with applications"
         description={
           vendorPricingPublished
-            ? "Booth details, pricing, and event policies are published with the official vendor application."
+            ? "Space sizes, published prices, and included credentials are listed above. Furniture, electricity, load-in, and other venue-dependent policies will be released with the official vendor packet."
             : "Full booth details, pricing, and event policies will be released with official applications."
         }
         tone="gold"

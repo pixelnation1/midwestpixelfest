@@ -364,12 +364,12 @@ export function getFaqs() {
     {
       question: "Can I become a vendor?",
       answer:
-        "Official vendor applications are not open. Register vendor interest on the Vendors page so we can notify you when the application window exists. That form is not an application, and it is not a booth offer.",
+        "Official vendor applications are not open. Vendor Hall and Artist Alley pricing is published on the Vendors page. Register vendor interest there to be notified when applications launch. That form is not an application, does not reserve a booth, and does not collect payment.",
     },
     {
       question: "Can I apply as an artist?",
       answer:
-        "Artist alley applications are not open yet. Register interest on the Vendors page. When official applications open, they will live there next to vendor hall applications.",
+        "Artist Alley applications are not open yet. Artist Alley pricing is listed on the Vendors page. Register interest there. When official applications open, they will live next to Vendor Hall applications.",
     },
     {
       question: "Can my business sponsor?",

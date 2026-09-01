@@ -12,7 +12,7 @@ export function VendorProcess() {
         id="vendor-process-heading"
         eyebrow="Process"
         title="How vendor applications will work"
-        description="Registering interest does not guarantee acceptance, reserve a booth, require payment, or create a contract. Official applications also do not automatically guarantee acceptance."
+        description="Vendor and Artist Alley applications are free to submit. Registering interest does not guarantee acceptance, reserve a booth, require payment, or create a contract. After applications open, payment is requested only after acceptance and secures the approved space."
         tone="magenta"
       />
       <ol className="mt-10 grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">
