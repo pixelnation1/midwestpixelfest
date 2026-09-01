@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CustomSponsorship } from "@/components/sponsors/CustomSponsorship";
 import { PackageGrid } from "@/components/sponsors/PackageGrid";
 import { SponsorFaq } from "@/components/sponsors/SponsorFaq";
 import { SponsorLocalFit } from "@/components/sponsors/SponsorLocalFit";
@@ -15,32 +16,32 @@ import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { ANALYTICS_EVENTS } from "@/lib/analytics";
 import { createPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
-import { sponsorshipFaqs } from "@/lib/sponsorships";
+import { sponsorshipFaqs, whySponsorPoints } from "@/lib/sponsorships";
 import { buildFaqPageJsonLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Sponsor Midwest Pixel Fest 2027 | Kansas Convention Partnerships",
+  title: "Midwest Pixel Fest Sponsorship | Kansas Convention Partnerships",
   description:
-    "Official sponsorship levels for Midwest Pixel Fest 2027 in Emporia, Kansas — Community $250, Bronze $500, Silver $1,000, Gold $2,500, Presenting $5,000+, and custom partnerships. An inquiry is not an agreement.",
+    "Sponsor Midwest Pixel Fest 2027 in Emporia, Kansas. Official gaming and pop-culture event partnership levels: Community $250, Bronze $500, Silver $1,000, Gold $2,500, Presenting $5,000+, and custom sponsorships. An inquiry is not an agreement.",
   path: "/sponsors",
 });
 
-const whyPoints = [
+const valueAreas = [
   {
-    title: "Meet the floor, not a generic audience slide",
-    body: "Midwest Pixel Fest is being built for people who play games, wear costumes, trade cards, and spend a weekend in a convention hall. Sponsorship puts your business next to that community in Emporia.",
+    title: "Digital Visibility",
+    body: "Sponsor-page recognition and digital materials that grow more prominent at higher levels.",
   },
   {
-    title: "Help launch a new regional weekend",
-    body: "This is the inaugural year. Partners who show up now are part of standing up a Midwest convention — not buying leftover space on a finished poster.",
+    title: "Social / Promotional Exposure",
+    body: "Collective thank-yous at Community, dedicated recognition from Silver, and stronger social opportunities at Gold and Presenting.",
   },
   {
-    title: "Participate in a play-first convention",
-    body: "Gaming, cosplay, collectibles, creators, and community programming are the reason people travel. Partnerships sit next to that mix, not apart from it.",
+    title: "On-Site Event Visibility",
+    body: "General sponsor signage begins at Bronze. Placement becomes more prominent as investment increases.",
   },
   {
-    title: "Choose a listed level or a custom conversation",
-    body: "Community through Presenting are published price points. Custom / event sponsorship is for a specific area or an amount that is not on that list. Benefits are confirmed after acceptance.",
+    title: "Activation / Partnership Opportunities",
+    body: "Giveaways, activity sponsorship, and on-site activations are eligible opportunities at higher levels — not automatic at $250 or $500.",
   },
 ];
 
@@ -49,9 +50,9 @@ export default function SponsorsPage() {
     <InnerPage
       path="/sponsors"
       breadcrumbLabel="Sponsors"
-      eyebrow="Partner with the fest"
-      title="Sponsor Midwest Pixel Fest 2027"
-      intro="Midwest Pixel Fest is bringing gaming, cosplay, collectibles, creators, vendors, and community experiences together in Emporia, Kansas. Sponsorship is how local, regional, and interested national businesses can be part of that weekend."
+      eyebrow="Partnerships"
+      title="Partner with Midwest Pixel Fest"
+      intro="Supporting gaming, cosplay, collectibles, and community in the heart of the Midwest. Sponsorship gives businesses an opportunity to support the event while connecting with attendees and the surrounding community."
       meta={`${site.dateLabel} · ${site.location}`}
       mood="business"
       actions={[
@@ -66,16 +67,17 @@ export default function SponsorsPage() {
       <TrackPageEvent name={ANALYTICS_EVENTS.sponsor_page_view} />
       <JsonLd data={buildFaqPageJsonLd(sponsorshipFaqs)} />
 
-      <ContentSection title="Why sponsor Midwest Pixel Fest">
+      <ContentSection title="Why sponsor">
         <p>
-          You are not buying a guaranteed crowd size. You are associating your
-          business with a play-first convention in Emporia — games, cosplay,
-          collectibles, and the people who travel for that mix.
+          Partnership helps stand up a new regional convention in Emporia and
+          places your business alongside gaming, cosplay, collectibles, and
+          community programming. We do not publish attendance, impression, or
+          demographic claims.
         </p>
       </ContentSection>
 
       <ul className="grid gap-4 md:grid-cols-2">
-        {whyPoints.map((item) => (
+        {whySponsorPoints.map((item) => (
           <li key={item.title} className="border border-line bg-panel p-6 sm:p-8">
             <h3 className="font-display text-xl uppercase tracking-wide text-paper sm:text-2xl">
               {item.title}
@@ -85,9 +87,21 @@ export default function SponsorsPage() {
         ))}
       </ul>
 
+      <ul className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {valueAreas.map((item) => (
+          <li key={item.title} className="border border-line bg-panel-2 p-5 sm:p-6">
+            <h3 className="font-display text-lg uppercase tracking-wide text-cyan">
+              {item.title}
+            </h3>
+            <p className="mt-3 text-sm text-muted">{item.body}</p>
+          </li>
+        ))}
+      </ul>
+
       <SponsorLocalFit />
       <PackageGrid />
       <SponsorshipComparison />
+      <CustomSponsorship />
       <SponsorOpportunities />
       <SponsorProcess />
       <SponsorPayment />

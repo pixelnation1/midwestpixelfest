@@ -1,3 +1,4 @@
+import { EventCta } from "@/components/cta/EventCta";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { localBusinessExamples } from "@/lib/sponsorships";
 
@@ -10,9 +11,9 @@ export function SponsorLocalFit() {
     >
       <SectionHeading
         id="local-fit-heading"
-        eyebrow="Emporia and the region"
-        title="Built for local and regional businesses"
-        description="Midwest Pixel Fest is being stood up in Emporia. Nearby businesses are not an afterthought — they are part of who this weekend is for. These are examples of businesses that may be a good fit, not a list of confirmed sponsors."
+        eyebrow="Local and regional"
+        title="Built in Emporia. Backed by the Midwest."
+        description="Sponsorship opportunities can work for local and regional businesses that want to support the inaugural weekend. These are examples of potential partners — not a list of confirmed sponsors."
         tone="lime"
       />
       <ul className="mt-8 flex flex-wrap gap-2">
@@ -25,6 +26,9 @@ export function SponsorLocalFit() {
           </li>
         ))}
       </ul>
+      <div className="mt-8">
+        <EventCta href="/sponsors/inquiry" label="Become a Sponsor" />
+      </div>
     </section>
   );
 }

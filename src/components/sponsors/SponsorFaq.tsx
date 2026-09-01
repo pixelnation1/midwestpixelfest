@@ -8,7 +8,7 @@ export function SponsorFaq() {
         id="sponsor-faq-heading"
         eyebrow="Questions"
         title="Sponsorship FAQ"
-        description="Honest answers for what is decided today. Policies that are not written yet are not invented here."
+        description="What each level includes, what stays eligible rather than guaranteed, and how an inquiry becomes a finalized sponsorship."
         tone="cyan"
       />
       <div className="mt-10 divide-y divide-line border border-line bg-panel">

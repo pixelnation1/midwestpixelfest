@@ -16,7 +16,7 @@ export function SponsorProcess() {
         id="process-heading"
         eyebrow="Process"
         title="How sponsorship works"
-        description="The website form expresses interest. It does not by itself create a sponsorship agreement. After an inquiry is approved, the organizer can send the formal Sponsorship Commitment Form."
+        description="The website form expresses interest. Clicking a sponsorship tier or submitting an inquiry does not create a contract. After an inquiry is approved, the organizer can send the formal Sponsorship Commitment Form."
         tone="cyan"
       />
       <ol className="mt-10 grid gap-4">
