@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SiteLogo } from "@/components/brand/SiteLogo";
 import { TicketCta } from "@/components/cta/TicketCta";
 import { CRTPanel } from "@/components/retro/CRTPanel";
@@ -10,16 +11,34 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative isolate overflow-hidden hero-atmosphere"
+      className="relative isolate overflow-hidden"
     >
-      <div className="pointer-events-none absolute inset-0 pixel-starfield" />
-      <div className="pointer-events-none absolute inset-0 pixel-grid opacity-80" />
+      <Image
+        src="/images/hero/retro-arcade-cabinets.jpg"
+        alt="Rows of illuminated retro arcade cabinets in a dim arcade"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+        style={{ objectPosition: "18% 50%" }}
+      />
       <div
-        className="neon-orb pointer-events-none absolute -left-24 top-8 h-56 w-56 rounded-full bg-magenta/35"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink via-ink/88 to-ink/50"
         aria-hidden="true"
       />
       <div
-        className="neon-orb pointer-events-none absolute -right-16 top-24 h-64 w-64 rounded-full bg-cyan/25"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-magenta/20 to-cyan/15"
+        aria-hidden="true"
+      />
+      <div className="pointer-events-none absolute inset-0 pixel-starfield" />
+      <div className="pointer-events-none absolute inset-0 pixel-grid opacity-70" />
+      <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-50" />
+      <div
+        className="neon-orb pointer-events-none absolute -left-24 top-8 h-56 w-56 rounded-full bg-magenta/25"
+        aria-hidden="true"
+      />
+      <div
+        className="neon-orb pointer-events-none absolute -right-16 top-24 h-64 w-64 rounded-full bg-cyan/20"
         aria-hidden="true"
         style={{ animationDelay: "1.4s" }}
       />
@@ -27,7 +46,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] overflow-hidden"
         aria-hidden="true"
       >
-        <div className="hero-floor hero-floor-drift h-[380px] w-full opacity-80" />
+        <div className="hero-floor hero-floor-drift h-[380px] w-full opacity-70" />
       </div>
 
       <Container className="relative grid items-center gap-8 py-10 sm:gap-10 sm:py-16 lg:grid-cols-12 lg:gap-12 lg:py-20">
@@ -58,7 +77,7 @@ export function Hero() {
 
           <h1
             id="hero-heading"
-            className="mt-3 max-w-4xl font-display text-[clamp(2.15rem,8vw,6.4rem)] uppercase leading-[0.86] tracking-[0.04em] text-paper"
+            className="mt-3 max-w-4xl font-display text-[clamp(2.15rem,8vw,6.4rem)] uppercase leading-[0.86] tracking-[0.04em] text-paper drop-shadow-[0_2px_18px_rgba(7,6,13,0.85)]"
           >
             Midwest Pixel Fest
             <span className="mt-1 block text-magenta">{event.year}</span>

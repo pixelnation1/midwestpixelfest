@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ScenePhoto } from "@/components/media/ScenePhoto";
 import { ContentSection } from "@/components/ui/ContentSection";
 import { CtaStrip } from "@/components/ui/CtaStrip";
 import { InnerPage } from "@/components/pages/InnerPage";
@@ -21,15 +22,17 @@ export default function CosplayPage() {
       title="Cosplay at Midwest Pixel Fest"
       intro="Cosplay is a major part of Midwest Pixel Fest. Attendees are encouraged to participate. A contest is planned, along with community meetups. Contest details and rules will be announced — we will not invent prizes or judging criteria here."
     >
-      <div
-        className="relative mb-10 overflow-hidden border border-magenta/40 pixel-frame cosplay-poster"
-        aria-hidden="true"
-      >
-        <div className="pointer-events-none absolute inset-0">
-          <div className="stage-light absolute left-1/3 top-0 h-40 w-16 bg-gradient-to-b from-magenta/50 to-transparent blur-xl" />
-          <div className="stage-light absolute left-2/3 top-0 h-40 w-16 bg-gradient-to-b from-cyan/40 to-transparent blur-xl" />
-        </div>
-        <p className="relative px-6 py-10 text-center font-display text-3xl uppercase tracking-wide text-paper sm:text-4xl">
+      <div className="relative mb-10">
+        <ScenePhoto
+          src="/images/cosplay/cosplay-convention-hall.jpg"
+          alt="Cosplayer in a handmade cardboard mask and trench coat standing in a convention hall"
+          caption="Cosplay"
+          objectPosition="center 28%"
+          overlay="stage"
+          sizes="(min-width: 1024px) 960px, 100vw"
+          className="aspect-[16/7] min-h-[200px] pixel-frame"
+        />
+        <p className="mt-4 text-center font-display text-3xl uppercase tracking-wide text-paper sm:text-4xl">
           Walk the floor. Hit the contest.
         </p>
       </div>

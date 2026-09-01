@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ScenePhoto } from "@/components/media/ScenePhoto";
 import { GameSelectCard } from "@/components/retro/GameSelectCard";
 import { ContentSection } from "@/components/ui/ContentSection";
 import { CtaStrip } from "@/components/ui/CtaStrip";
@@ -38,6 +39,16 @@ export default function GamingPage() {
           </li>
         ))}
       </ul>
+
+      <ScenePhoto
+        src="/images/gaming/arcade-cabinets-garage.jpg"
+        alt="Vintage arcade cabinets gathered outside a garage, including wood-grain and racing machines"
+        caption="Retro gaming"
+        objectPosition="center 35%"
+        overlay="crt"
+        sizes="(min-width: 1024px) 960px, 100vw"
+        className="mb-10 aspect-[16/8] min-h-[200px] pixel-frame"
+      />
 
       <ContentSection id="retro-gaming" title="Retro gaming">
         <p>
@@ -79,6 +90,16 @@ export default function GamingPage() {
           confirmed.
         </p>
       </ContentSection>
+
+      <ScenePhoto
+        src="/images/tabletop/tabletop-dice-session.jpg"
+        alt="Dice and tabletop gaming materials arranged on a table"
+        caption="Tabletop"
+        objectPosition="center"
+        overlay="dark"
+        sizes="(min-width: 1024px) 960px, 100vw"
+        className="my-6 aspect-[21/9] min-h-[180px] pixel-frame"
+      />
 
       <ContentSection id="tabletop" title="Tabletop gaming">
         <p>

@@ -105,6 +105,27 @@ export default function AboutPage() {
         </p>
       </ContentSection>
 
+      <ContentSection title="Photography on this site">
+        <p>
+          Midwest Pixel Fest is an inaugural 2027 event. Photographs on this
+          website are licensed, illustrative images of gaming, cosplay, and
+          convention-style environments. They are not photographs of Midwest
+          Pixel Fest attendees, vendors, or a previous Pixel Fest.
+        </p>
+        <p>
+          Arcade row photograph by Arcade Perfect, licensed under{" "}
+          <a
+            href="https://creativecommons.org/licenses/by/2.0/"
+            className="text-cyan"
+            rel="noopener noreferrer"
+          >
+            CC BY 2.0
+          </a>
+          , resized for the web. Other images are from Unsplash and Pexels as
+          documented in the project source list.
+        </p>
+      </ContentSection>
+
       <CtaStrip
         title="Keep planning"
         actions={[

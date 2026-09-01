@@ -1,10 +1,12 @@
 import { AnnouncementTicker } from "@/components/home/AnnouncementTicker";
+import { CommunitySection } from "@/components/home/CommunitySection";
 import { CosplaySection } from "@/components/home/CosplaySection";
 import { EmailSignup } from "@/components/home/EmailSignup";
 import { EventIntro } from "@/components/home/EventIntro";
 import { ExploreTheFest } from "@/components/home/ExploreTheFest";
 import { FeaturedGuests } from "@/components/home/FeaturedGuests";
 import { GamingPreview } from "@/components/home/GamingPreview";
+import { PlayTablesSection } from "@/components/home/PlayTablesSection";
 import { Hero } from "@/components/home/Hero";
 import { HomeSponsorBand } from "@/components/home/HomeSponsorBand";
 import { InvolveSection } from "@/components/home/InvolveSection";
@@ -44,9 +46,13 @@ export default function HomePage() {
       <PixelDivider />
       <GamingPreview />
       <PixelDivider />
+      <PlayTablesSection />
+      <PixelDivider />
       <CosplaySection />
       <PixelDivider />
       <VendorsSection />
+      <PixelDivider />
+      <CommunitySection />
       <HomeSponsorBand />
       <LatestNews />
       <InvolveSection />

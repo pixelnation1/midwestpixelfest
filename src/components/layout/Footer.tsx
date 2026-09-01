@@ -87,6 +87,18 @@ export function Footer() {
           <p>
             © {copyrightYear} {site.name}. All rights reserved.
           </p>
+          <p className="max-w-xl text-xs leading-relaxed">
+            Photos are illustrative licensed imagery, not Midwest Pixel Fest
+            event photography. Arcade row: Arcade Perfect,{" "}
+            <a
+              href="https://creativecommons.org/licenses/by/2.0/"
+              className="text-cyan transition-colors hover:text-magenta"
+              rel="noopener noreferrer"
+            >
+              CC BY 2.0
+            </a>
+            .
+          </p>
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
             {footerLegalLinks.map((item) => (
               <li key={item.href}>

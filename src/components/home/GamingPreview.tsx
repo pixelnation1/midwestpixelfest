@@ -1,3 +1,4 @@
+import { ScenePhoto } from "@/components/media/ScenePhoto";
 import { GameSelectCard } from "@/components/retro/GameSelectCard";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -14,6 +15,16 @@ export function GamingPreview() {
           title="The floor is built to play."
           description="Midwest Pixel Fest is a gaming convention first — retro to modern, casual to competitive, cards on the table and controllers in hand. Specific titles and formats will be posted once they are confirmed."
           tone="cyan"
+        />
+
+        <ScenePhoto
+          src="/images/gaming/arcade-cabinets-garage.jpg"
+          alt="Vintage arcade cabinets gathered outside a garage, including wood-grain and racing machines"
+          caption="Retro gaming"
+          objectPosition="center 35%"
+          overlay="crt"
+          sizes="(min-width: 1024px) 1100px, 100vw"
+          className="mt-10 aspect-[4/5] min-h-[240px] sm:aspect-[16/9] sm:min-h-[280px] pixel-frame"
         />
 
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">

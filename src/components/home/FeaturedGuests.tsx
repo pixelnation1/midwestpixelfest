@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { GuestAnnouncementCard, GuestCard } from "@/components/retro/GuestCard";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -31,17 +32,31 @@ export function FeaturedGuests() {
           </ul>
         ) : (
           <div className="mt-10 grid gap-4 lg:grid-cols-3">
-            <div className="overflow-hidden border border-magenta/40 bg-panel px-6 py-12 text-center pixel-frame lg:col-span-2 lg:flex lg:flex-col lg:justify-center">
-              <p className="font-pixel text-[11px] uppercase tracking-[0.28em] text-gold">
-                Now loading
-              </p>
-              <h3 className="mt-3 font-display text-3xl uppercase tracking-wide sm:text-5xl">
-                Guest announcements coming
-              </h3>
-              <p className="mx-auto mt-4 max-w-lg text-muted">
-                Confirmed names will appear here with photos and appearance
-                details. Until a name is official, it is not on this site.
-              </p>
+            <div className="relative overflow-hidden border border-magenta/40 bg-panel px-6 py-12 text-center pixel-frame lg:col-span-2 lg:flex lg:flex-col lg:justify-center">
+              <Image
+                src="/images/hero/retro-arcade-cabinets.jpg"
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 60vw, 100vw"
+                className="object-cover opacity-35"
+                style={{ objectPosition: "70% 50%" }}
+              />
+              <div
+                className="pointer-events-none absolute inset-0 bg-ink/75"
+                aria-hidden="true"
+              />
+              <div className="relative">
+                <p className="font-pixel text-[11px] uppercase tracking-[0.28em] text-gold">
+                  Now loading
+                </p>
+                <h3 className="mt-3 font-display text-3xl uppercase tracking-wide sm:text-5xl">
+                  Guest announcements coming
+                </h3>
+                <p className="mx-auto mt-4 max-w-lg text-muted">
+                  Confirmed names will appear here with photos and appearance
+                  details. Until a name is official, it is not on this site.
+                </p>
+              </div>
             </div>
             <GuestAnnouncementCard />
           </div>

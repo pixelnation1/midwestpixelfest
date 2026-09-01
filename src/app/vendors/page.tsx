@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ScenePhoto } from "@/components/media/ScenePhoto";
 import { ArcadeIcon } from "@/components/retro/ArcadeIcon";
 import { Badge } from "@/components/ui/Badge";
 import { ContentSection } from "@/components/ui/ContentSection";
@@ -46,6 +47,19 @@ export default function VendorsPage() {
       title="Vendors & Artist Alley"
       intro="Vendor hall and artist alley are part of the show, not an afterthought. Applications are not open yet. Register interest if you want to be notified when they are — that is not an application."
     >
+      <ScenePhoto
+        src="/images/vendors/collectible-figurines.jpg"
+        alt="Collectible figurines and pins arranged on a crowded vendor table"
+        caption="Collectibles"
+        objectPosition="center 40%"
+        overlay="dark"
+        sizes="(min-width: 1024px) 960px, 100vw"
+        className="mb-3 aspect-[16/10] min-h-[200px] sm:aspect-[21/9] pixel-frame"
+      />
+      <p className="mb-8 max-w-2xl text-sm text-muted">
+        Illustrative marketplace photography. Photographed tables are not
+        Midwest Pixel Fest vendors.
+      </p>
       <ul className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7">
         {vendorBrowseCategories.map((item) => (
           <li

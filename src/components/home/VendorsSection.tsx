@@ -1,3 +1,4 @@
+import { ScenePhoto } from "@/components/media/ScenePhoto";
 import { ArcadeIcon } from "@/components/retro/ArcadeIcon";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -15,6 +16,20 @@ export function VendorsSection() {
           description="Games, cards, collectibles, art, apparel, makers, and pop culture merchandise are the kind of tables this floor is being built for. Applications are not open, and no vendors are listed yet."
           tone="lime"
         />
+
+        <ScenePhoto
+          src="/images/vendors/collectible-figurines.jpg"
+          alt="Collectible figurines and pins arranged on a crowded vendor table"
+          caption="Collectibles"
+          objectPosition="center 40%"
+          overlay="dark"
+          sizes="(min-width: 1024px) 1100px, 100vw"
+          className="mt-10 aspect-[16/10] min-h-[220px] sm:aspect-[21/9] pixel-frame"
+        />
+        <p className="mt-3 max-w-2xl text-sm text-muted">
+          Illustrative marketplace photography. Photographed tables are not
+          Midwest Pixel Fest vendors.
+        </p>
 
         <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7">
           {vendorBrowseCategories.map((item) => (
