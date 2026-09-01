@@ -47,7 +47,7 @@ export function Header() {
           : "border-transparent bg-ink/40 backdrop-blur-sm",
       )}
     >
-      <Container className="flex h-[3.75rem] items-center justify-between gap-3 lg:h-[4.5rem] lg:gap-4">
+      <Container className="flex h-[3.75rem] items-center gap-3 lg:h-[4.5rem] lg:gap-4">
         <Link
           href="/"
           className="flex shrink-0 items-center text-paper no-underline"
@@ -56,8 +56,8 @@ export function Header() {
           <SiteLogo variant="header" priority />
         </Link>
 
-        <nav aria-label="Primary" className="hidden min-w-0 items-center lg:flex">
-          <ul className="flex items-center">
+        <nav aria-label="Primary" className="hidden items-center lg:flex">
+          <ul className="flex flex-nowrap items-center">
             {navItems.map((item) => {
               const isHash = item.href.includes("#");
               const active = isHash
@@ -84,7 +84,7 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="ml-auto flex shrink-0 items-center gap-2">
           <span className="hidden sm:inline-flex">
             <TicketCta intent="nav" source="header" />
           </span>
