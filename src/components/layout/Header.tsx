@@ -65,11 +65,11 @@ export function Header() {
                 : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
               return (
-                <li key={item.href}>
+                <li key={item.href} className="shrink-0">
                   <Link
                     href={item.href}
                     className={cn(
-                      "px-2 py-2 font-display text-[12px] uppercase tracking-[0.12em] transition-colors xl:px-2.5 xl:text-[13px] xl:tracking-[0.14em]",
+                      "inline-block whitespace-nowrap px-2 py-2 font-display text-[12px] uppercase tracking-[0.12em] transition-colors xl:px-2.5 xl:text-[13px] xl:tracking-[0.14em]",
                       active
                         ? "text-magenta"
                         : "text-paper/80 hover:text-cyan",

@@ -118,6 +118,7 @@ export const navItems = [
   { href: "/cosplay", label: "Cosplay" },
   { href: "/guests", label: "Guests" },
   { href: "/vendors", label: "Vendors" },
+  { href: "/sponsors", label: "Sponsors" },
   { href: "/schedule", label: "Schedule" },
   { href: "/travel", label: "Travel" },
 ] as const;
@@ -126,7 +127,6 @@ export const mobileMoreLinks = [
   { href: "/faq", label: "FAQ" },
   { href: "/about", label: "About" },
   { href: "/news", label: "News" },
-  { href: "/sponsors", label: "Sponsors" },
   { href: "/volunteer", label: "Volunteer" },
   { href: "/press", label: "Press" },
   { href: "/contact", label: "Contact" },
