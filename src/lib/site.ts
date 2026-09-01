@@ -364,7 +364,7 @@ export function getFaqs() {
     {
       question: "Can I become a vendor?",
       answer:
-        "Official vendor applications are not open. Vendor Hall and Artist Alley pricing is published on the Vendors page. Register vendor interest there to be notified when applications launch. That form is not an application, does not reserve a booth, and does not collect payment.",
+        "Official vendor applications are not open. Vendor Hall and Artist Alley pricing and vendor policies are published on the Vendors page. Register vendor interest there to be notified when applications launch. That form is not an application, does not reserve a booth, and does not collect payment.",
     },
     {
       question: "Can I apply as an artist?",

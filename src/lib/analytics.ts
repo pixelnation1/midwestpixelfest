@@ -7,6 +7,12 @@ export const ANALYTICS_EVENTS = {
   vendor_application_submit: "vendor_application_submit",
   artist_application_start: "artist_application_start",
   artist_application_submit: "artist_application_submit",
+  vendor_application_reviewed: "vendor_application_reviewed",
+  vendor_application_approved: "vendor_application_approved",
+  vendor_application_waitlisted: "vendor_application_waitlisted",
+  vendor_application_declined: "vendor_application_declined",
+  vendor_invoice_sent: "vendor_invoice_sent",
+  vendor_payment_confirmed: "vendor_payment_confirmed",
   sponsor_inquiry_submit: "sponsor_inquiry_submit",
   volunteer_interest_submit: "volunteer_interest_submit",
   guest_inquiry_submit: "guest_inquiry_submit",
@@ -73,6 +79,14 @@ const PII_PAYLOAD_KEYS = new Set([
   "boothSetupNotes",
   "additionalSpaceDetails",
   "hoursExplanation",
+  "invoiceUrl",
+  "squareInvoiceUrl",
+  "squareInvoiceId",
+  "internalNote",
+  "internalNotes",
+  "internalReason",
+  "paymentMethodOrReference",
+  "customPricingInternalNote",
 ]);
 
 function sanitizeEventPayload(

@@ -16,17 +16,10 @@ export const OFFICIAL_APPLICATION_TYPES = [
   "Artist Alley",
 ] as const satisfies readonly OfficialApplicationType[];
 
-export const VENDOR_APPLICATION_REVIEW_STATUSES = [
-  "submitted",
-  "under_review",
-  "approved",
-  "waitlisted",
-  "declined",
-  "withdrawn",
-] as const;
-
-export type VendorApplicationReviewStatus =
-  (typeof VENDOR_APPLICATION_REVIEW_STATUSES)[number];
+export {
+  VENDOR_APPLICATION_STATUSES as VENDOR_APPLICATION_REVIEW_STATUSES,
+  type VendorApplicationStatus as VendorApplicationReviewStatus,
+} from "@/lib/vendor-ops/status";
 
 export const YES_NO = ["Yes", "No"] as const;
 

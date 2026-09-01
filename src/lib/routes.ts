@@ -21,6 +21,7 @@ export const publicRoutes = [
   { path: "/about", changeFrequency: "monthly" as const, priority: 0.7 },
   { path: "/vendors", changeFrequency: "monthly" as const, priority: 0.7 },
   { path: "/vendors/interest", changeFrequency: "monthly" as const, priority: 0.5 },
+  { path: "/vendors/policies", changeFrequency: "monthly" as const, priority: 0.5 },
   { path: "/travel", changeFrequency: "monthly" as const, priority: 0.7 },
   { path: "/sponsors", changeFrequency: "monthly" as const, priority: 0.7 },
   { path: "/sponsors/inquiry", changeFrequency: "monthly" as const, priority: 0.6 },

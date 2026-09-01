@@ -12,6 +12,7 @@ import { VendorFaq } from "@/components/vendors/VendorFaq";
 import { VendorHallVsAlley } from "@/components/vendors/VendorHallVsAlley";
 import { VendorPricing } from "@/components/vendors/VendorPricing";
 import { VendorProcess } from "@/components/vendors/VendorProcess";
+import { VendorPoliciesSummary } from "@/components/vendors/VendorPolicies";
 import { VendorStatusPanel } from "@/components/vendors/VendorStatusPanel";
 import { WhyVend } from "@/components/vendors/WhyVend";
 import { createPageMetadata } from "@/lib/seo";
@@ -96,6 +97,7 @@ export default function VendorsPage() {
       </CtaStrip>
 
       <VendorProcess />
+      <VendorPoliciesSummary />
       <VendorDetailsComing />
       <VendorDirectory />
       <VendorFaq />
@@ -124,6 +126,7 @@ export default function VendorsPage() {
 
       <RelatedLinks
         links={[
+          { href: "/vendors/policies", label: "Vendor Policies" },
           { href: "/sponsors", label: "Sponsors" },
           { href: "/travel", label: "Travel" },
           { href: "/faq", label: "FAQ" },

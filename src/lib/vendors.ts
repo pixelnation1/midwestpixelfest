@@ -25,15 +25,47 @@ export const officialArtistApplyPath = "/vendors/apply/artist";
 /** Informational Founding Vendor deadline. Do not auto-open applications or payments from this date. */
 export const foundingVendorDeadline = "2027-04-30";
 
+/** Calendar days after an acceptance offer is issued for the vendor to pay. */
+export const vendorPaymentWindowDays = 7;
+
+/** Future reminder offsets. No scheduler is configured yet. */
+export const vendorPaymentReminderDaysBeforeDue = [3, 1] as const;
+
+export const vendorAgreementVersion = "2027-v1";
+
+export const vendorPoliciesPath = "/vendors/policies";
+
+/**
+ * Paid-space cancellation refund schedule.
+ * Eligibility uses the America/Chicago calendar date the request is received.
+ * Event-cancellation / postponement policy is not defined here.
+ */
+export const vendorRefundPolicy = {
+  timezone: "America/Chicago",
+  tier1End: "2027-07-31",
+  tier1Percent: 75,
+  tier2Start: "2027-08-01",
+  tier2End: "2027-09-15",
+  tier2Percent: 50,
+  afterPercent: 0,
+  processingFeeLanguage:
+    "Payment-processing fees that are not returned to Midwest Pixel Fest may be deducted from any applicable refund.",
+  eventCancellationPolicyStatus: "pending_review" as const,
+} as const;
+
+export const vendorCancellationSelfService = false;
+
 /**
  * Future payment is organizer-issued after acceptance.
  * Do not enable public self-service booth checkout from this config.
+ * Square Invoices are the planned method; the Square API is not integrated.
  */
 export const vendorPayment = {
   checkoutOpen: false,
   publicSelfService: false,
-  /** Unset until an organizer-approved method is chosen. */
-  method: null as "invoice" | "payment_link" | null,
+  method: "invoice" as "invoice" | "payment_link" | null,
+  provider: "square" as const,
+  automation: false,
 };
 
 export const vendorPricing = {
@@ -164,16 +196,20 @@ export function formatVendorPriceOrTba(amount: number | null): string {
   return amount == null ? "Pricing TBA" : formatVendorPrice(amount);
 }
 
-/** Display-only label for the configured deadline. Does not change pricing or CTAs. */
-export function foundingVendorDeadlineLabel(): string {
-  const [year, month, day] = foundingVendorDeadline.split("-").map(Number);
-  if (!year || !month || !day) return foundingVendorDeadline;
+export function formatVendorCalendarDate(date: string): string {
+  const [year, month, day] = date.split("-").map(Number);
+  if (!year || !month || !day) return date;
   return new Intl.DateTimeFormat("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(Date.UTC(year, month - 1, day)));
+}
+
+/** Display-only label for the configured deadline. Does not change pricing or CTAs. */
+export function foundingVendorDeadlineLabel(): string {
+  return formatVendorCalendarDate(foundingVendorDeadline);
 }
 
 export type VendorSpaceId =
@@ -456,12 +492,12 @@ export const vendorApplicationSteps = [
   {
     step: "05",
     title: "Acceptance",
-    body: "Approved applicants receive next-step information, including payment instructions for the approved space.",
+    body: "Approved applicants receive an acceptance offer and payment instructions. Payment is due within the published calendar-day window after the offer is issued. Approval is not the same as confirmation.",
   },
   {
     step: "06",
-    title: "Payment secures space",
-    body: "Payment after acceptance secures the approved space. There is no public self-service booth checkout, and registering interest does not collect payment.",
+    title: "Payment confirms space",
+    body: "A vendor is confirmed only after required payment is recorded as received. There is no public self-service booth checkout. Registering interest does not collect payment.",
   },
 ] as const;
 
@@ -472,7 +508,7 @@ export const vendorDetailsComing = [
   "Tax requirements",
   "Insurance requirements, if applicable",
   "Application deadlines",
-  "Cancellation and refund policy",
+  "Event cancellation / postponement policy (pending review)",
   "Badge pickup and credential logistics",
   "Booth sharing rules",
   "Display requirements",
@@ -530,6 +566,11 @@ export type ConfirmedVendor = {
 /** Confirmed, public lineup only. Do not add placeholder company names. */
 export const confirmedVendors: ConfirmedVendor[] = [];
 
+/**
+ * Public directory entries. Only organizer-published records appear.
+ * Future persistence should also require workflow status `confirmed`
+ * before `published` can take effect.
+ */
 export function getPublishedVendors(): ConfirmedVendor[] {
   return confirmedVendors.filter((vendor) => vendor.published);
 }
@@ -571,7 +612,7 @@ export const vendorFaqs = [
   {
     question: "When do I pay?",
     answer:
-      "Approved applicants will receive payment instructions after acceptance. Payment secures the approved space. We do not collect payment during interest registration, and there is no public booth checkout.",
+      `Approved applicants receive payment instructions after acceptance, typically by Square invoice. Payment is due within ${vendorPaymentWindowDays} calendar days of the offer. A vendor is confirmed only after payment is received. Approval is not confirmation. We do not collect payment during interest registration, and there is no public booth checkout.`,
   },
   {
     question: "What's the difference between Vendor Hall and Artist Alley?",
@@ -592,7 +633,7 @@ export const vendorFaqs = [
   },
   {
     question: "When does Founding Vendor pricing end?",
-    answer: `Founding Vendor pricing is planned through ${foundingVendorDeadlineLabel()}, subject to availability. The deadline is informational until official applications launch.`,
+    answer: `Founding Vendor pricing is planned through ${foundingVendorDeadlineLabel()}, subject to availability. If an acceptance offer is issued while Founding Vendor pricing is active, that offer keeps the Founding rate through its payment window even if the Founding deadline passes before payment is due. A later replacement offer uses the pricing in effect when that new offer is issued.`,
   },
   {
     question: "How much will booths cost?",
@@ -646,7 +687,7 @@ export const vendorFaqs = [
   {
     question: "Can vendors share booth space?",
     answer:
-      "Booth sharing rules will be published with official applications.",
+      "Booth sharing requires approval. Applicants should disclose a proposed sharing arrangement on the official application. Approved vendors may not silently sublet space.",
   },
   {
     question: "When will load-in information be available?",
@@ -666,5 +707,18 @@ export const vendorFaqs = [
     question: "Do vendor booths include admission?",
     answer:
       "Each space includes vendor or artist credentials as listed with that option. Extra vendor badges are available as an add-on. Badge pickup details will be included in the vendor packet.",
+  },
+  {
+    question: "What's the difference between approved and confirmed?",
+    answer:
+      "Applied means an application was submitted. Approved means Midwest Pixel Fest offered a space. Confirmed means the required payment has been received. Approved-but-unpaid vendors are not listed as confirmed and are not automatically published in the vendor directory.",
+  },
+  {
+    question: "How long do I have to pay after approval?",
+    answer: `Payment is due within ${vendorPaymentWindowDays} calendar days after the acceptance offer is issued, unless Midwest Pixel Fest provides a written deadline extension. Space is not confirmed until payment is received.`,
+  },
+  {
+    question: "What is the vendor cancellation and refund policy?",
+    answer: `Refund eligibility is based on the date Midwest Pixel Fest receives the cancellation request, using ${vendorRefundPolicy.timezone} calendar dates. Through ${formatVendorCalendarDate(vendorRefundPolicy.tier1End)}, cancellations of paid spaces are eligible for a ${vendorRefundPolicy.tier1Percent}% refund. From ${formatVendorCalendarDate(vendorRefundPolicy.tier2Start)} through ${formatVendorCalendarDate(vendorRefundPolicy.tier2End)}, paid cancellations are eligible for a ${vendorRefundPolicy.tier2Percent}% refund. After ${formatVendorCalendarDate(vendorRefundPolicy.tier2End)}, paid cancellations are not eligible for a refund. ${vendorRefundPolicy.processingFeeLanguage} Contact Midwest Pixel Fest to request cancellation; there is no anonymous self-service cancellation form. An event-cancellation or postponement refund policy has not been published and remains under review.`,
   },
 ];
