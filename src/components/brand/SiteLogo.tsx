@@ -23,8 +23,8 @@ const variants = {
     sizes: "56px",
   },
   hero: {
-    className: "h-20 w-20 sm:h-24 sm:w-24 lg:h-28 lg:w-28",
-    sizes: "(min-width: 1024px) 112px, (min-width: 640px) 96px, 80px",
+    className: "h-20 w-20 sm:h-32 sm:w-32 lg:h-44 lg:w-44",
+    sizes: "(min-width: 1024px) 176px, (min-width: 640px) 128px, 80px",
   },
 } as const;
 

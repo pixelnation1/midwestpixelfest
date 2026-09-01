@@ -2,6 +2,8 @@ export type GuestProfile = {
   slug: string;
   name: string;
   role: string;
+  /** Optional finer category label for guest cards. Falls back to role. */
+  category?: string;
   bio: string;
   image?: string;
   website?: string;

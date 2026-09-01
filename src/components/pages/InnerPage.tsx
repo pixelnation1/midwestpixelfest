@@ -28,6 +28,8 @@ type InnerPageProps = {
     variant?: "primary" | "secondary" | "ghost";
     eventName?: AnalyticsEventName;
   }>;
+  /** Festival atmosphere on attendee pages; quieter header for business forms. */
+  mood?: "festival" | "business";
 };
 
 export function InnerPage({
@@ -42,6 +44,7 @@ export function InnerPage({
   className,
   meta,
   actions,
+  mood = "festival",
 }: InnerPageProps) {
   const crumbLabel = breadcrumbLabel ?? title;
   const breadcrumbs =
@@ -61,8 +64,16 @@ export function InnerPage({
           })),
         )}
       />
-      <header className="relative overflow-hidden border-b border-line hero-atmosphere">
-        <div className="pointer-events-none absolute inset-0 pixel-grid opacity-70" />
+      <header
+        className={
+          mood === "business"
+            ? "relative overflow-hidden border-b border-line bg-ink-2"
+            : "relative overflow-hidden border-b border-line hero-atmosphere"
+        }
+      >
+        {mood === "festival" ? (
+          <div className="pointer-events-none absolute inset-0 pixel-grid opacity-70" />
+        ) : null}
         <Container className="relative py-16 sm:py-20">
           <nav aria-label="Breadcrumb" className="mb-5">
             <ol className="flex flex-wrap items-center gap-2 font-pixel text-[11px] uppercase tracking-[0.2em] text-muted">

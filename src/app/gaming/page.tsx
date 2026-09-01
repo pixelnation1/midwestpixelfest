@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { GameSelectCard } from "@/components/retro/GameSelectCard";
 import { ContentSection } from "@/components/ui/ContentSection";
 import { CtaStrip } from "@/components/ui/CtaStrip";
 import { InnerPage } from "@/components/pages/InnerPage";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { createPageMetadata } from "@/lib/seo";
+import { gamingPillars } from "@/lib/site";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Gaming at Midwest Pixel Fest | Kansas Gaming Convention",
@@ -17,10 +19,26 @@ export default function GamingPage() {
     <InnerPage
       path="/gaming"
       breadcrumbLabel="Gaming"
-      eyebrow="Press start"
+      eyebrow="Arcade select"
       title="Gaming at Midwest Pixel Fest"
       intro="Midwest Pixel Fest is being built as a play-first gaming convention in Emporia, Kansas. Dedicated space is planned for video games, retro hardware, console play, tabletop, trading cards, tournaments, and open free play."
     >
+      <ul className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {gamingPillars.map((pillar, index) => (
+          <li key={pillar.slug}>
+            <GameSelectCard
+              href={pillar.href}
+              title={pillar.title}
+              description={pillar.description}
+              icon={pillar.icon}
+              tone={pillar.tone}
+              index={index + 1}
+              cta="Open"
+            />
+          </li>
+        ))}
+      </ul>
+
       <ContentSection id="retro-gaming" title="Retro gaming">
         <p>
           Classic consoles, arcade-style setups, and the games that started it
@@ -35,7 +53,7 @@ export default function GamingPage() {
         </p>
       </ContentSection>
 
-      <ContentSection id="console-gaming" title="Console gaming">
+      <ContentSection id="console-gaming" title="Video gaming">
         <p>
           Modern and classic console play will share the weekend: free play,
           multiplayer, and competitive brackets as partners lock in. The goal
@@ -74,7 +92,7 @@ export default function GamingPage() {
         </p>
       </ContentSection>
 
-      <ContentSection id="tournaments" title="Tournaments">
+      <ContentSection id="tournaments" title="Tournaments / organized play">
         <p>
           Official tournament schedules, rules, and formats will be published
           as they are finalized. Until then, treat competitive play as planned —

@@ -1,20 +1,36 @@
+import { ArcadeIcon } from "@/components/retro/ArcadeIcon";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { vendorBrowseCategories } from "@/lib/site";
 
 export function VendorsSection() {
   return (
-    <section className="border-b border-line py-20 sm:py-28">
+    <section className="py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Artist alley & vendor hall"
-          title="Sell at Midwest Pixel Fest"
-          description="Vendor and artist applications are not open. Register interest if you want a heads-up when they are — that is not an application, and it is not a booth offer."
+          title="Walk the marketplace."
+          description="Games, cards, collectibles, art, apparel, makers, and pop culture merchandise are the kind of tables this floor is being built for. Applications are not open, and no vendors are listed yet."
           tone="lime"
         />
 
-        <div className="mt-12 grid gap-4 md:grid-cols-2">
+        <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7">
+          {vendorBrowseCategories.map((item) => (
+            <li
+              key={item.title}
+              className="flex flex-col items-center border border-line bg-panel vendor-shelf px-3 py-5 text-center"
+            >
+              <ArcadeIcon name={item.icon} className="h-10 w-10 text-gold" />
+              <p className="mt-3 font-pixel text-[10px] uppercase leading-tight tracking-[0.14em] text-paper">
+                {item.title}
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
           <article className="border border-line bg-panel p-8">
             <Badge tone="gold">Applications not open</Badge>
             <h3 className="mt-5 font-display text-4xl uppercase tracking-wide">

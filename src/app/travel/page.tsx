@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { EmailSignup } from "@/components/home/EmailSignup";
+import { EventInfoPanel } from "@/components/retro/EventInfoPanel";
 import { ContentSection } from "@/components/ui/ContentSection";
 import { CtaStrip } from "@/components/ui/CtaStrip";
 import { InfoCard } from "@/components/ui/InfoCard";
@@ -52,6 +53,8 @@ export default function TravelPage() {
       intro={`${site.dateLongLabel} in ${site.location}. Hotel blocks, parking maps, and the venue address will publish when they are confirmed.`}
       after={<EmailSignup />}
     >
+      <EventInfoPanel className="mb-10" compact />
+
       <ContentSection title="Why Emporia">
         <p>
           Emporia sits along I-35 and serves as a convenient meeting point for

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SiteLogo } from "@/components/brand/SiteLogo";
+import { PixelSkyline } from "@/components/retro/PixelSkyline";
 import { Container } from "@/components/ui/Container";
 import {
   footerGroups,
@@ -13,8 +14,17 @@ export function Footer() {
   const social = getPublishedSocialLinks();
 
   return (
-    <footer className="mt-auto border-t border-line bg-ink-2">
-      <Container className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="relative mt-auto overflow-hidden border-t border-line bg-ink-2">
+      <div className="pointer-events-none absolute inset-x-0 top-0">
+        <PixelSkyline />
+      </div>
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-24 opacity-40"
+        aria-hidden="true"
+      >
+        <div className="hero-floor h-full w-full" />
+      </div>
+      <Container className="relative grid gap-10 pt-16 pb-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Link
             href="/"
@@ -29,6 +39,9 @@ export function Footer() {
           <p className="mt-4 font-pixel text-xs text-gold">{site.dateLabel}</p>
           <p className="mt-1 font-display text-sm uppercase tracking-[0.2em] text-cyan">
             {site.location}
+          </p>
+          <p className="mt-1 font-pixel text-[10px] uppercase tracking-[0.18em] text-muted">
+            {site.tagline}
           </p>
           <p className="mt-2 text-sm text-muted">
             Presented by{" "}

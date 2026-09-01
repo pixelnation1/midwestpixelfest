@@ -59,8 +59,10 @@ export function Header() {
         <nav aria-label="Primary" className="hidden min-w-0 items-center lg:flex">
           <ul className="flex items-center">
             {navItems.map((item) => {
-              const active =
-                pathname === item.href || pathname.startsWith(`${item.href}/`);
+              const isHash = item.href.includes("#");
+              const active = isHash
+                ? false
+                : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
               return (
                 <li key={item.href}>
@@ -156,8 +158,10 @@ export function Header() {
                   </Link>
                 </li>
                 {navItems.map((item) => {
-                  const active =
-                    pathname === item.href || pathname.startsWith(`${item.href}/`);
+                  const isHash = item.href.includes("#");
+                  const active = isHash
+                    ? false
+                    : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
                   return (
                     <li key={item.href} className="border-b border-line">

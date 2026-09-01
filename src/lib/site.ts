@@ -112,16 +112,17 @@ export function isEventSchemaReady(value = event): boolean {
 
 /** Attendee-facing desktop nav. Tickets is a separate CTA. Home is the logo. */
 export const navItems = [
-  { href: "/guests", label: "Guests" },
+  { href: "/#explore", label: "Explore" },
   { href: "/gaming", label: "Gaming" },
   { href: "/cosplay", label: "Cosplay" },
+  { href: "/guests", label: "Guests" },
   { href: "/vendors", label: "Vendors" },
   { href: "/schedule", label: "Schedule" },
   { href: "/travel", label: "Travel" },
-  { href: "/faq", label: "FAQ" },
 ] as const;
 
 export const mobileMoreLinks = [
+  { href: "/faq", label: "FAQ" },
   { href: "/about", label: "About" },
   { href: "/news", label: "News" },
   { href: "/sponsors", label: "Sponsors" },
@@ -181,52 +182,52 @@ export const footerLegalLinks = [{ href: "/privacy", label: "Privacy" }] as cons
 
 export const exploreCards = [
   {
-    href: "/gaming",
-    title: "Gaming",
+    href: "/gaming#retro-gaming",
+    title: "Retro Gaming",
     description:
-      "Retro cabinets, console play, tabletop, trading cards, and free play all weekend.",
-    accent: "cyan",
-    icon: "gaming",
-  },
-  {
-    href: "/cosplay",
-    title: "Cosplay",
-    description:
-      "Contests, meetups, photos, and a floor that celebrates getting into character.",
-    accent: "magenta",
-    icon: "cosplay",
+      "Classic hardware and the games that started it — cabinets and consoles as they are confirmed.",
+    accent: "magenta" as const,
+    icon: "retro" as const,
   },
   {
     href: "/gaming#tcg",
     title: "TCGs",
     description:
       "Shuffle up, trade, and play. Tables and organized events as they are confirmed.",
-    accent: "gold",
-    icon: "tcg",
+    accent: "gold" as const,
+    icon: "tcg" as const,
+  },
+  {
+    href: "/gaming#tabletop",
+    title: "Tabletop Gaming",
+    description:
+      "Board games, RPGs, and open tables. Library and demo details post with the schedule.",
+    accent: "cyan" as const,
+    icon: "tabletop" as const,
+  },
+  {
+    href: "/cosplay",
+    title: "Cosplay",
+    description:
+      "A contest is planned, plus meetups and a floor that treats costumes as part of the show.",
+    accent: "magenta" as const,
+    icon: "cosplay" as const,
   },
   {
     href: "/vendors",
-    title: "Vendors & Artists",
+    title: "Vendors & Collectibles",
     description:
       "Artist alley, collectibles, handmade work, and a vendor hall worth walking twice.",
-    accent: "lime",
-    icon: "vendors",
+    accent: "lime" as const,
+    icon: "vendors" as const,
   },
   {
     href: "/guests",
-    title: "Special Guests",
+    title: "Guests & Creators",
     description:
       "Creators, talent, and community names — announcements drop here first.",
-    accent: "magenta",
-    icon: "guests",
-  },
-  {
-    href: "/schedule",
-    title: "Panels & Events",
-    description:
-      "Stages, screens, tournaments, and a schedule built for a full weekend.",
-    accent: "cyan",
-    icon: "panels",
+    accent: "cyan" as const,
+    icon: "guests" as const,
   },
 ] as const;
 
@@ -235,32 +236,60 @@ export const gamingPillars = [
     title: "Retro Gaming",
     slug: "retro-gaming",
     href: "/gaming#retro-gaming",
+    icon: "cabinet" as const,
+    tone: "magenta" as const,
     description: "Classic hardware, cabinets, and the games that started it.",
   },
   {
-    title: "Console Tournaments",
-    slug: "console-tournaments",
-    href: "/gaming#console-tournaments",
-    description: "Brackets, side events, and a crowd that actually watches.",
-  },
-  {
-    title: "Tabletop Gaming",
-    slug: "tabletop",
-    href: "/gaming#tabletop",
-    description: "Open tables, library games, and space to sit down and play.",
+    title: "Video Gaming",
+    slug: "console-gaming",
+    href: "/gaming#console-gaming",
+    icon: "joystick" as const,
+    tone: "cyan" as const,
+    description: "Modern and classic console play — free play, multiplayer, and brackets as they lock in.",
   },
   {
     title: "Trading Card Games",
     slug: "tcg",
     href: "/gaming#tcg",
-    description: "Casual trades, constructed events, and sealed when we can.",
+    icon: "cards" as const,
+    tone: "gold" as const,
+    description: "Casual trades, constructed events, and community tables as they are confirmed.",
+  },
+  {
+    title: "Tabletop",
+    slug: "tabletop",
+    href: "/gaming#tabletop",
+    icon: "dice" as const,
+    tone: "lime" as const,
+    description: "Open tables, library games, and space to sit down and play.",
+  },
+  {
+    title: "Tournaments / Organized Play",
+    slug: "tournaments",
+    href: "/gaming#tournaments",
+    icon: "trophy" as const,
+    tone: "magenta" as const,
+    description: "Competitive formats and signup rules will be posted once they are final.",
   },
   {
     title: "Free Play",
     slug: "free-play",
     href: "/gaming#free-play",
+    icon: "freeplay" as const,
+    tone: "cyan" as const,
     description: "Grab a controller. No signup required. Stay as long as you want.",
   },
+] as const;
+
+export const vendorBrowseCategories = [
+  { title: "Games", icon: "joystick" as const },
+  { title: "Cards", icon: "cards" as const },
+  { title: "Collectibles", icon: "star" as const },
+  { title: "Art", icon: "mask" as const },
+  { title: "Apparel", icon: "booth" as const },
+  { title: "Makers", icon: "cartridge" as const },
+  { title: "Pop culture merchandise", icon: "cabinet" as const },
 ] as const;
 
 export const tickerItems = [

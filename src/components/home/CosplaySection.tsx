@@ -4,15 +4,15 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 
 export function CosplaySection() {
   return (
-    <section className="relative overflow-hidden border-b border-line bg-ink-2 py-20 sm:py-28">
+    <section className="relative overflow-hidden bg-ink-2 py-16 sm:py-24">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div className="stage-light absolute left-1/4 top-0 h-72 w-32 -translate-x-1/2 bg-gradient-to-b from-magenta/35 to-transparent blur-2xl" />
+        <div className="stage-light absolute left-1/4 top-0 h-80 w-24 -translate-x-1/2 bg-gradient-to-b from-magenta/40 to-transparent blur-2xl" />
         <div
-          className="stage-light absolute left-1/2 top-0 h-80 w-40 -translate-x-1/2 bg-gradient-to-b from-cyan/30 to-transparent blur-2xl"
+          className="stage-light absolute left-1/2 top-0 h-96 w-32 -translate-x-1/2 bg-gradient-to-b from-cyan/28 to-transparent blur-2xl"
           style={{ animationDelay: "0.8s" }}
         />
         <div
-          className="stage-light absolute left-3/4 top-0 h-72 w-32 -translate-x-1/2 bg-gradient-to-b from-gold/25 to-transparent blur-2xl"
+          className="stage-light absolute left-3/4 top-0 h-80 w-24 -translate-x-1/2 bg-gradient-to-b from-gold/22 to-transparent blur-2xl"
           style={{ animationDelay: "1.6s" }}
         />
       </div>
@@ -52,11 +52,9 @@ export function CosplaySection() {
           </div>
         </div>
 
-        <div
-          aria-hidden="true"
-          className="relative mx-auto aspect-[4/5] w-full max-w-md border border-magenta/40 bg-panel"
-        >
-          <div className="absolute inset-4 border border-cyan/20" />
+        <div className="relative mx-auto aspect-[4/5] w-full max-w-md">
+          <div className="cosplay-poster absolute inset-0 border border-magenta/50 pixel-frame" />
+          <div className="absolute inset-3 border border-cyan/25" />
           <CosplayStageArt />
           <p className="absolute bottom-6 left-0 right-0 text-center font-pixel text-[11px] uppercase tracking-[0.24em] text-gold">
             Stage lights on · 2027
@@ -81,6 +79,8 @@ function CosplayStageArt() {
       <path d="M48 320c8-56 22-80 44-80s36 24 44 80H48z" className="text-magenta/30" />
       <circle cx="228" cy="150" r="22" className="text-cyan/50" />
       <path d="M184 320c8-56 22-80 44-80s36 24 44 80h-88z" className="text-cyan/30" />
+      <rect x="40" y="52" width="240" height="8" className="text-gold/40" />
+      <rect x="72" y="24" width="176" height="6" className="text-magenta/50" />
     </svg>
   );
 }

@@ -38,6 +38,7 @@ export default async function SponsorInquiryPage({
       eyebrow="Partnership inquiry"
       title="Become a Midwest Pixel Fest Sponsor"
       intro={`Tell us about your business and how you want to be involved with ${site.name} in ${site.location}. We review inquiries and follow up using the contact information you provide. Submitting this form expresses interest and does not by itself create a sponsorship agreement.`}
+      mood="business"
     >
       <TrackPageEvent name={ANALYTICS_EVENTS.sponsor_inquiry_start} />
 

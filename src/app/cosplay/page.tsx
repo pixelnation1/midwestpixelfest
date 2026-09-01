@@ -21,6 +21,19 @@ export default function CosplayPage() {
       title="Cosplay at Midwest Pixel Fest"
       intro="Cosplay is a major part of Midwest Pixel Fest. Attendees are encouraged to participate. A contest is planned, along with community meetups. Contest details and rules will be announced — we will not invent prizes or judging criteria here."
     >
+      <div
+        className="relative mb-10 overflow-hidden border border-magenta/40 pixel-frame cosplay-poster"
+        aria-hidden="true"
+      >
+        <div className="pointer-events-none absolute inset-0">
+          <div className="stage-light absolute left-1/3 top-0 h-40 w-16 bg-gradient-to-b from-magenta/50 to-transparent blur-xl" />
+          <div className="stage-light absolute left-2/3 top-0 h-40 w-16 bg-gradient-to-b from-cyan/40 to-transparent blur-xl" />
+        </div>
+        <p className="relative px-6 py-10 text-center font-display text-3xl uppercase tracking-wide text-paper sm:text-4xl">
+          Walk the floor. Hit the contest.
+        </p>
+      </div>
+
       <ContentSection title="Cosplay community">
         <p>
           If this is your first con in costume or your fiftieth, the floor is

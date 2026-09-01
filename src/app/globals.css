@@ -166,11 +166,164 @@ body {
   animation: stage-flicker 4.5s ease-in-out infinite;
 }
 
+/* --- Retro visual language (CSS-only, used by selected panels) --- */
+
+.pixel-starfield {
+  background-image:
+    radial-gradient(1.5px 1.5px at 8% 12%, rgba(246, 241, 232, 0.85), transparent),
+    radial-gradient(1.5px 1.5px at 22% 38%, rgba(45, 226, 255, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 41% 18%, rgba(255, 45, 149, 0.65), transparent),
+    radial-gradient(1.5px 1.5px at 63% 44%, rgba(246, 241, 232, 0.55), transparent),
+    radial-gradient(1.5px 1.5px at 78% 14%, rgba(255, 216, 77, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 91% 32%, rgba(45, 226, 255, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 14% 72%, rgba(255, 216, 77, 0.45), transparent),
+    radial-gradient(1.5px 1.5px at 34% 86%, rgba(255, 45, 149, 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 58% 78%, rgba(246, 241, 232, 0.55), transparent),
+    radial-gradient(1.5px 1.5px at 84% 68%, rgba(45, 226, 255, 0.45), transparent);
+  animation: pixel-twinkle 6s ease-in-out infinite;
+}
+
+.pixel-heading-rule {
+  height: 8px;
+  width: 5.5rem;
+  background-image: linear-gradient(
+    90deg,
+    var(--color-magenta) 0 8px,
+    transparent 8px 12px,
+    var(--color-cyan) 12px 20px,
+    transparent 20px 24px,
+    var(--color-gold) 24px 40px,
+    transparent 40px 44px,
+    var(--color-magenta) 44px 52px,
+    transparent 52px 56px,
+    var(--color-cyan) 56px 64px,
+    transparent 64px 68px,
+    var(--color-lime) 68px 88px
+  );
+  background-repeat: no-repeat;
+}
+
+.pixel-frame {
+  clip-path: polygon(
+    0 8px,
+    8px 8px,
+    8px 0,
+    calc(100% - 8px) 0,
+    calc(100% - 8px) 8px,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    8px calc(100% - 8px),
+    0 calc(100% - 8px)
+  );
+}
+
+.crt-bezel {
+  border-radius: 1.75rem 1.75rem 2.25rem 2.25rem;
+  box-shadow:
+    inset 0 0 0 3px rgba(246, 241, 232, 0.12),
+    inset 0 0 0 10px #120d1c,
+    0 0 0 2px rgba(45, 226, 255, 0.25),
+    0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+.crt-screen {
+  border-radius: 1.15rem 1.15rem 1.4rem 1.4rem;
+  background:
+    radial-gradient(ellipse at center, rgba(45, 226, 255, 0.08), transparent 62%),
+    linear-gradient(180deg, #1a1528 0%, #0c0a14 100%);
+  box-shadow:
+    inset 0 0 40px rgba(45, 226, 255, 0.12),
+    inset 0 0 80px rgba(255, 45, 149, 0.08);
+}
+
+.crt-scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    rgba(0, 0, 0, 0.16) 3px,
+    rgba(0, 0, 0, 0.16) 4px
+  );
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.arcade-select {
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.arcade-select:hover,
+.arcade-select:focus-visible {
+  transform: translateY(-2px);
+}
+
+.hud-glow {
+  box-shadow:
+    inset 0 0 0 1px rgba(45, 226, 255, 0.22),
+    0 0 24px rgba(255, 45, 149, 0.08);
+}
+
+.pass-notch {
+  background-image: radial-gradient(circle at 0 12px, transparent 7px, var(--color-panel) 8px);
+  background-size: 16px 24px;
+  background-repeat: repeat-y;
+}
+
+.vendor-shelf {
+  background-image:
+    linear-gradient(rgba(255, 216, 77, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 216, 77, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.cosplay-poster {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 45, 149, 0.28), transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(45, 226, 255, 0.12), transparent 50%),
+    #161221;
+}
+
+@keyframes pixel-twinkle {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes grid-drift {
+  from {
+    background-position: 0 0, 0 0;
+  }
+  to {
+    background-position: 56px 0, 0 56px;
+  }
+}
+
+.hero-floor-drift {
+  animation: grid-drift 28s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee-track,
   .neon-orb,
   .glow-pulse,
-  .stage-light {
+  .stage-light,
+  .pixel-starfield,
+  .hero-floor-drift,
+  .arcade-select,
+  .arcade-select:hover,
+  .arcade-select:focus-visible {
     animation: none;
+    transform: none;
   }
 }

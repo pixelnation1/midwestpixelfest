@@ -29,6 +29,7 @@ export default function SponsorPartnersPage() {
       eyebrow="Directory"
       title="Sponsorship partners"
       intro={`Confirmed partners for ${site.name} will appear here. Until a name is published on this page, it is not an official Midwest Pixel Fest sponsor.`}
+      mood="business"
     >
       <ContentSection title="Partner announcements are coming.">
         <p>

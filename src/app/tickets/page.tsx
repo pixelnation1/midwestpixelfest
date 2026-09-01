@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { TicketCta } from "@/components/cta/TicketCta";
 import { EmailSignup } from "@/components/home/EmailSignup";
+import { EventInfoPanel } from "@/components/retro/EventInfoPanel";
+import { PassCard } from "@/components/retro/PassCard";
 import { InnerPage } from "@/components/pages/InnerPage";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
-import { cn } from "@/lib/cn";
 import { createPageMetadata } from "@/lib/seo";
 import { site, ticketProducts } from "@/lib/site";
 import { isTicketSalesOpen } from "@/lib/tickets";
@@ -29,6 +30,8 @@ export default function TicketsPage() {
       intro={`${site.dateLongLabel}. ${site.venueLabel}.`}
       after={<EmailSignup />}
     >
+      <EventInfoPanel className="mb-8" compact />
+
       <div className="border border-gold/40 bg-panel p-6 sm:p-8">
         <Badge tone="gold">
           {salesOpen ? "On sale" : "Online checkout being finalized"}
@@ -53,37 +56,16 @@ export default function TicketsPage() {
       </div>
 
       <ul className="mt-10 grid gap-4 sm:grid-cols-2">
-        {ticketProducts.map((item) => {
-          const featured = item.id === "weekend";
-
-          return (
-            <li
-              key={item.id}
-              className={cn(
-                "flex h-full flex-col border bg-panel p-6 sm:p-8",
-                featured
-                  ? "border-gold/60 sm:col-span-2 lg:col-span-1"
-                  : "border-line",
-              )}
-            >
-              {featured ? (
-                <Badge tone="gold">Best for the full weekend</Badge>
-              ) : null}
-              <h2
-                className={cn(
-                  "font-display text-2xl uppercase tracking-wide",
-                  featured && "mt-4",
-                )}
-              >
-                {item.name}
-              </h2>
-              <p className="mt-3 font-pixel text-lg uppercase tracking-[0.14em] text-gold">
-                {item.priceLabel}
-              </p>
-              <p className="mt-3 flex-1 text-muted">{item.description}</p>
-            </li>
-          );
-        })}
+        {ticketProducts.map((item) => (
+          <li key={item.id} className={item.id === "weekend" ? "sm:col-span-2 lg:col-span-1" : undefined}>
+            <PassCard
+              name={item.name}
+              priceLabel={item.priceLabel}
+              description={item.description}
+              featured={item.id === "weekend"}
+            />
+          </li>
+        ))}
       </ul>
 
       <p className="mt-8 max-w-2xl text-sm text-muted">

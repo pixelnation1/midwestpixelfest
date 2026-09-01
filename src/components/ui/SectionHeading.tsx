@@ -39,6 +39,10 @@ export function SectionHeading({
       >
         {title}
       </h2>
+      <div
+        className={cn("pixel-heading-rule mt-4", align === "center" && "mx-auto")}
+        aria-hidden="true"
+      />
       {description ? (
         <p
           className={cn(

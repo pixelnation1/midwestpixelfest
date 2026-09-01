@@ -53,6 +53,7 @@ export default function SponsorsPage() {
       title="Sponsor Midwest Pixel Fest 2027"
       intro="Midwest Pixel Fest is bringing gaming, cosplay, collectibles, creators, vendors, and community experiences together in Emporia, Kansas. Sponsorship is how local, regional, and interested national businesses can be part of that weekend."
       meta={`${site.dateLabel} · ${site.location}`}
+      mood="business"
       actions={[
         { href: "#packages", label: "View Sponsorship Opportunities" },
         {
