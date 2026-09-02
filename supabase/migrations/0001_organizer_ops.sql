@@ -16,6 +16,23 @@ BEGIN
 END;
 $$;
 
+-- ---------------------------------------------------------------------------
+-- Admin authorization
+-- is_active_organizer() must be created after admin_users exists.
+-- PostgreSQL SQL functions resolve relation names at CREATE time.
+-- ---------------------------------------------------------------------------
+
+CREATE TABLE public.admin_users (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL UNIQUE REFERENCES auth.users (id) ON DELETE CASCADE,
+  role text NOT NULL CHECK (role IN ('owner', 'admin', 'staff')),
+  display_name text NOT NULL DEFAULT '',
+  created_at timestamptz NOT NULL DEFAULT now(),
+  active boolean NOT NULL DEFAULT true
+);
+
+CREATE INDEX admin_users_active_idx ON public.admin_users (active);
+
 CREATE OR REPLACE FUNCTION public.is_active_organizer()
 RETURNS boolean
 LANGUAGE sql
@@ -33,21 +50,6 @@ $$;
 
 REVOKE ALL ON FUNCTION public.is_active_organizer() FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION public.is_active_organizer() TO authenticated;
-
--- ---------------------------------------------------------------------------
--- Admin authorization
--- ---------------------------------------------------------------------------
-
-CREATE TABLE public.admin_users (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id uuid NOT NULL UNIQUE REFERENCES auth.users (id) ON DELETE CASCADE,
-  role text NOT NULL CHECK (role IN ('owner', 'admin', 'staff')),
-  display_name text NOT NULL DEFAULT '',
-  created_at timestamptz NOT NULL DEFAULT now(),
-  active boolean NOT NULL DEFAULT true
-);
-
-CREATE INDEX admin_users_active_idx ON public.admin_users (active);
 
 -- ---------------------------------------------------------------------------
 -- Vendor interest (not official applications)
