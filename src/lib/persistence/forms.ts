@@ -27,6 +27,33 @@ export function persistenceRequired(): boolean {
   return isSupabasePersistenceConfigured();
 }
 
+function sanitizePersistErrorMessage(message: string | undefined): string | null {
+  if (!message) return null;
+  return message
+    .replace(/eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9._-]+/g, "[redacted]")
+    .replace(/\b(?:sk_|sb_secret_|sb_publishable_)[A-Za-z0-9_-]+/gi, "[redacted]")
+    .slice(0, 500);
+}
+
+function logPersistFailure(input: {
+  kind: string;
+  table: string;
+  operation: string;
+  error?: { code?: string; message?: string } | null | unknown;
+}): void {
+  const error =
+    input.error && typeof input.error === "object"
+      ? (input.error as { code?: string; message?: string })
+      : null;
+  console.error("form_persist_failed", {
+    kind: input.kind,
+    table: input.table,
+    operation: input.operation,
+    code: error?.code ?? null,
+    message: sanitizePersistErrorMessage(error?.message ?? (input.error instanceof Error ? input.error.message : undefined)),
+  });
+}
+
 function interestReference(): string {
   return `MPF-VI-${randomBytes(3).toString("hex").toUpperCase()}`;
 }
@@ -59,8 +86,13 @@ export async function persistOperationalSubmission(
       return persistSponsorCommitment(payload);
     }
     return persistSponsorAssets(payload);
-  } catch {
-    console.error("form_persist_failed", { kind: payload.kind });
+  } catch (error) {
+    logPersistFailure({
+      kind: payload.kind,
+      table: "unknown",
+      operation: "persist",
+      error,
+    });
     return { ok: false, code: "persist_failed" };
   }
 }
@@ -100,7 +132,12 @@ async function persistVendorInterest(payload: DeliveryPayload): Promise<PersistR
     .maybeSingle();
 
   if (error) {
-    console.error("form_persist_failed", { kind: "vendor_interest" });
+    logPersistFailure({
+      kind: "vendor_interest",
+      table: "vendor_interests",
+      operation: "upsert",
+      error,
+    });
     return { ok: false, code: "persist_failed" };
   }
 
@@ -219,7 +256,12 @@ async function persistVendorApplication(payload: DeliveryPayload): Promise<Persi
     .maybeSingle();
 
   if (error) {
-    console.error("form_persist_failed", { kind: "vendor_application" });
+    logPersistFailure({
+      kind: "vendor_application",
+      table: "vendor_applications",
+      operation: "upsert",
+      error,
+    });
     return { ok: false, code: "persist_failed" };
   }
 
@@ -302,7 +344,12 @@ async function persistSponsorInquiry(payload: DeliveryPayload): Promise<PersistR
     .maybeSingle();
 
   if (error) {
-    console.error("form_persist_failed", { kind: "sponsor_inquiry" });
+    logPersistFailure({
+      kind: "sponsor_inquiry",
+      table: "sponsorships",
+      operation: "upsert",
+      error,
+    });
     return { ok: false, code: "persist_failed" };
   }
 
@@ -356,7 +403,12 @@ async function persistSponsorCommitment(payload: DeliveryPayload): Promise<Persi
       })
       .eq("id", existing.id);
     if (error) {
-      console.error("form_persist_failed", { kind: "sponsor_commitment" });
+      logPersistFailure({
+        kind: "sponsor_commitment",
+        table: "sponsorships",
+        operation: "update",
+        error,
+      });
       return { ok: false, code: "persist_failed" };
     }
     return { ok: true, created: false, reference };
@@ -380,7 +432,12 @@ async function persistSponsorCommitment(payload: DeliveryPayload): Promise<Persi
     source_page: operationalSourcePath("sponsor_commitment"),
   });
   if (error) {
-    console.error("form_persist_failed", { kind: "sponsor_commitment" });
+    logPersistFailure({
+      kind: "sponsor_commitment",
+      table: "sponsorships",
+      operation: "insert",
+      error,
+    });
     return { ok: false, code: "persist_failed" };
   }
   return { ok: true, created: true, reference };
@@ -419,7 +476,12 @@ async function persistSponsorAssets(payload: DeliveryPayload): Promise<PersistRe
     { onConflict: "sponsorship_id" },
   );
   if (error) {
-    console.error("form_persist_failed", { kind: "sponsor_assets" });
+    logPersistFailure({
+      kind: "sponsor_assets",
+      table: "sponsor_assets",
+      operation: "upsert",
+      error,
+    });
     return { ok: false, code: "persist_failed" };
   }
   return { ok: true, created: false, reference };

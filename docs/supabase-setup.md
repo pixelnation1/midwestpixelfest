@@ -28,9 +28,10 @@ Never commit `.env.local`. Never prefix the service role with `NEXT_PUBLIC_`. Th
 
 ## 3. Apply SQL migrations
 
-In the Supabase SQL editor, run:
+In the Supabase SQL editor, run in order:
 
-`supabase/migrations/0001_organizer_ops.sql`
+1. `supabase/migrations/0001_organizer_ops.sql`
+2. `supabase/migrations/0002_service_role_grants.sql`
 
 Or with the CLI from this repo:
 
@@ -38,7 +39,9 @@ Or with the CLI from this repo:
 supabase db push
 ```
 
-The migration enables Row Level Security on all private tables. Anonymous users cannot select vendor applications, sponsorship inquiries, notes, or payment fields.
+`0001` enables Row Level Security on all private tables. Anonymous users cannot select vendor applications, sponsorship inquiries, notes, or payment fields.
+
+`0002` restores `SELECT, INSERT, UPDATE, DELETE` for the PostgreSQL `service_role` on those operational tables. `0001` revokes DML from `PUBLIC`, which also strips service-role table grants. The service role stays server-only and is used by Next.js form persistence. This does not grant anon CRUD access.
 
 ## 4. Create the first organizer Auth user
 
