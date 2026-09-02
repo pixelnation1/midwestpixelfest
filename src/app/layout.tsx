@@ -1,13 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Barlow, Oswald, Pixelify_Sans } from "next/font/google";
-import { Analytics } from "@/components/seo/Analytics";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
-import { SkipLink } from "@/components/layout/SkipLink";
-import { JsonLd } from "@/components/seo/JsonLd";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { googleSiteVerification } from "@/lib/seo";
 import { site } from "@/lib/site";
-import { buildSiteGraphJsonLd } from "@/lib/structured-data";
 import "./globals.css";
 
 const oswald = Oswald({
@@ -77,14 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${oswald.variable} ${barlow.variable} ${pixelify.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-ink font-sans text-paper">
-        <SkipLink />
-        <Header />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <JsonLd data={buildSiteGraphJsonLd()} />
-        <Analytics />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

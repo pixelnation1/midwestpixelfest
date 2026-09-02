@@ -1,12 +1,12 @@
 import { EventCta } from "@/components/cta/EventCta";
 import { parseAllowedHttpUrl } from "@/lib/safe-url";
-import {
-  getPublicSponsorCards,
-  groupPublicSponsors,
-} from "@/lib/sponsor-ops/directory";
+import { getPublicSponsorCards, groupPublicSponsors } from "@/lib/sponsor-ops/directory";
+import { listPublishedSponsors } from "@/lib/persistence/directory";
 
-export function SponsorDirectory() {
-  const cards = getPublicSponsorCards();
+export async function SponsorDirectory() {
+  const fromConfig = getPublicSponsorCards();
+  const fromDatabase = await listPublishedSponsors();
+  const cards = fromDatabase.length > 0 ? fromDatabase : fromConfig;
   const groups = groupPublicSponsors(cards);
   const ungrouped =
     groups.length === 0

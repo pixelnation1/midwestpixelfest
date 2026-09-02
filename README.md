@@ -20,7 +20,7 @@ npm run lint
 npm run build
 ```
 
-No email, newsletter, or analytics provider is required to run the site locally. Forms fail safely until delivery is configured. See `docs/forms-and-email.md` and `docs/sponsorship-workflow.md`.
+No email, newsletter, analytics, or Supabase provider is required to run the public site locally. Forms fail safely until delivery is configured. Organizer persistence is documented in `docs/supabase-setup.md`. See also `docs/forms-and-email.md` and `docs/sponsorship-workflow.md`.
 
 ## Environment variables
 
@@ -41,6 +41,9 @@ Copy `.env.example` to `.env.local`. Never commit `.env.local` or real secrets.
 | `EMAIL_PROVIDER_API_KEY` | Server-only | Optional | Bearer token for `FORM_WEBHOOK_URL`. |
 | `GOOGLE_SITE_VERIFICATION` | Server-only | Optional until Search Console is connected | HTML-tag `content` value only. |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Public | Optional | GA4 ID (`G-…`). Scripts load only when set. |
+| `NEXT_PUBLIC_SUPABASE_URL` | Public | Required for admin + persistence | Supabase project URL. |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public | Required for admin + persistence | Supabase anon key. Not a secret. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server-only | Required to persist public form submissions | Bypasses RLS. Never use `NEXT_PUBLIC_`. |
 
 Live inquiry forms need `RESEND_API_KEY` (preferred) and/or `FORM_WEBHOOK_URL`. From and destination default to the verified midwestpixelfest.com website sender and `hello@midwestpixelfest.com`. Do not put the Resend API key in `.env.example`, source, or git.
 
@@ -74,7 +77,7 @@ Official checkout is `event.ticketUrl` in `src/lib/site.ts` (Ticketleap). All ti
 
 ## Production checklist (manual)
 
-Do this after credentials are in Vercel. There is no public admin dashboard.
+There is no public admin signup. Organizer access is `/admin/login` after a Supabase Auth user is added to `admin_users`. See `docs/supabase-setup.md`.
 
 - [ ] Submit the contact form and confirm a notification email arrives
 - [ ] Submit a vendor inquiry and confirm the notification
@@ -85,3 +88,6 @@ Do this after credentials are in Vercel. There is no public admin dashboard.
 - [ ] Open https://midwestpixelfest.com/robots.txt
 - [ ] Verify the domain in Google Search Console and submit the sitemap
 - [ ] Confirm header and homepage Tickets CTAs open the official Ticketleap checkout URL
+- [ ] Apply Supabase migrations and add the first organizer to `admin_users`
+- [ ] Confirm `/admin` is not publicly accessible
+- [ ] Submit Vendor Interest and confirm a private database row plus Resend notification

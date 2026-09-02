@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { submitForm } from "@/app/actions/forms";
 import { FormErrorProvider } from "@/components/forms/FormContext";
 import { FormSuccess } from "@/components/forms/FormSuccess";
@@ -48,6 +48,7 @@ export function InquiryForm({
   submitEventName,
 }: InquiryFormProps) {
   const [state, action, pending] = useActionState(submitForm, idleFormState);
+  const [submissionId] = useState(() => crypto.randomUUID());
 
   useEffect(() => {
     if (state.status === "success") {
@@ -70,6 +71,7 @@ export function InquiryForm({
     <FormErrorProvider errors={state.fieldErrors}>
       <form action={action} className="relative space-y-6">
         <input type="hidden" name="kind" value={kind} />
+        <input type="hidden" name="submissionId" value={submissionId} />
         <HoneypotField />
         <FormStatus status={state.status} message={state.message} />
         {children}

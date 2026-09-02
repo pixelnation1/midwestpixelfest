@@ -3,12 +3,13 @@ import type { SponsorAssetCollection, SponsorLogoFileMeta, SponsorLogoVariantId 
 export const SPONSOR_LOGO_ALLOWED_MIME_TYPES = [
   "image/svg+xml",
   "image/png",
+  "image/jpeg",
   "application/pdf",
 ] as const;
 
-export const SPONSOR_LOGO_ALLOWED_EXTENSIONS = ["svg", "png", "pdf"] as const;
+export const SPONSOR_LOGO_ALLOWED_EXTENSIONS = ["svg", "png", "jpg", "jpeg", "pdf"] as const;
 
-/** 8 MB. Storage is not connected; this is the planned validation ceiling. */
+/** 8 MB. Enforced in organizer uploads to the private sponsor-assets bucket. */
 export const SPONSOR_LOGO_MAX_BYTES = 8 * 1024 * 1024;
 
 export const SPONSOR_PUBLIC_DESCRIPTION_MAX = 500;
@@ -24,12 +25,9 @@ export const SPONSOR_LOGO_VARIANTS: readonly {
   { id: "monochrome", label: "Monochrome logo", required: false },
 ];
 
-/**
- * No object storage is configured. Do not persist files in git, localStorage,
- * or base64 application state.
- */
+/** True when a Supabase project URL is present. Uploads still require the server service role. */
 export function isSponsorLogoStorageConfigured(): boolean {
-  return false;
+  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL?.trim());
 }
 
 export function isAllowedLogoMimeType(mimeType: string): boolean {
@@ -47,7 +45,7 @@ export function isAllowedLogoSize(sizeBytes: number): boolean {
 
 export function validateLogoMeta(meta: Pick<SponsorLogoFileMeta, "fileName" | "mimeType" | "sizeBytes">): string | null {
   if (!isAllowedLogoFileName(meta.fileName)) {
-    return "Use an SVG, PNG, or PDF logo.";
+    return "Use an SVG, PNG, JPG, or PDF logo.";
   }
   if (!isAllowedLogoMimeType(meta.mimeType)) {
     return "That file type is not accepted.";

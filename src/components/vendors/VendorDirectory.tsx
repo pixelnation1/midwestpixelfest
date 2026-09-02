@@ -1,6 +1,7 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { parseAllowedHttpUrl } from "@/lib/safe-url";
 import { getPublishedVendors, type ConfirmedVendor } from "@/lib/vendors";
+import { listPublishedVendors } from "@/lib/persistence/directory";
 
 function VendorLinks({ vendor }: { vendor: ConfirmedVendor }) {
   const website = vendor.website ? parseAllowedHttpUrl(vendor.website) : null;
@@ -31,8 +32,22 @@ function VendorLinks({ vendor }: { vendor: ConfirmedVendor }) {
   );
 }
 
-export function VendorDirectory() {
-  const vendors = getPublishedVendors();
+export async function VendorDirectory() {
+  const published = await listPublishedVendors();
+  const vendors =
+    published.length > 0
+      ? published.map((vendor) => ({
+          slug: vendor.displayName,
+          name: vendor.displayName,
+          category: vendor.category,
+          description: vendor.shortDescription,
+          website: vendor.website,
+          social: vendor.socialUrl,
+          booth: vendor.boothLocation,
+          image: vendor.logo,
+          published: true,
+        }))
+      : getPublishedVendors();
 
   return (
     <section

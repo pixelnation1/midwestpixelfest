@@ -1,9 +1,16 @@
 # Forms and email delivery
 
 Midwest Pixel Fest forms use Next.js Server Actions (`src/app/actions/forms.ts`).
-Nothing is stored in a database. Delivery is environment-driven.
+Delivery is environment-driven. Operational vendor and sponsorship forms are also persisted to Supabase when `SUPABASE_SERVICE_ROLE_KEY` is configured. See `docs/supabase-setup.md`.
 
 If no provider is configured for that form type, the form **does not pretend to succeed**.
+
+When persistence is configured:
+
+1. Validate
+2. Persist to Supabase (failure fails the submission)
+3. Send the existing Resend notification
+4. If Resend fails after a successful insert, the visitor still sees success so they do not create a duplicate. Notification failure is logged server-side.
 
 ## What exists today
 
@@ -122,7 +129,7 @@ Webhook body:
 
 This stops obvious rapid repeats on a warm instance. It is **not** a reliable distributed limit on Vercel: each serverless isolate has its own memory. A determined client can retry across instances.
 
-Do not store form bodies. Missing IP headers fail open so real visitors are not blocked.
+Do not store complete private records in logs. Missing IP headers fail open so real visitors are not blocked.
 
 For production-grade distributed limits, add an external store (Upstash Redis, Vercel KV) later. Do not treat the in-memory Map as sufficient at scale.
 

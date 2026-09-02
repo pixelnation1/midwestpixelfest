@@ -47,7 +47,7 @@ Do not expose Square identifiers on public pages.
 
 Collect public name, website, description (max 500 characters), social URLs, marketing contact, and preferred public URL. Optional brand-guidelines URL. Logo variants: primary (required when storage exists), plus optional light / dark / monochrome.
 
-**Storage TODO:** no secure file store is connected. Do not fake uploads, base64-store logos, or commit sponsor files to git. Allowed types when storage exists: SVG, PNG, PDF; max 8 MB.
+Organizer uploads go to the private `sponsor-assets` Supabase Storage bucket. Allowed types: SVG, PNG, JPG/JPEG, PDF; max 8 MB. Public PNG/JPEG copies are published to `public-sponsor-logos` only after the sponsor is active and the organizer enables the public directory. There is no anonymous upload endpoint.
 
 Raw descriptions are not auto-published. Organizer may edit for length, formatting, and clarity without materially changing meaning.
 
@@ -77,7 +77,7 @@ Commitment copy: the form confirms the agreed package subject to the final spons
 
 ## Persistence
 
-No database in this project. Types, snapshots, workflow helpers, and email templates are ready for a later store. Do not use localStorage for sponsor PII or payment data. Do not add an unsecured admin dashboard.
+Vendor interest, official applications, sponsorship inquiries, commitments, assets, offers, notes, and public directory copies live in Supabase Postgres. Apply `supabase/migrations/0001_organizer_ops.sql`. Public forms insert through the Next.js service-role client after validation. Anonymous users cannot SELECT private tables. Do not use localStorage for sponsor PII or payment data. Organizer access is `/admin` with Supabase Auth plus `admin_users`. There is no public admin signup.
 
 ## Emails
 

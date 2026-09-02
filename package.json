@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx --test src/lib/vendor-ops/vendor-ops.test.ts src/lib/forms/notification-copy.test.ts src/lib/sponsor-ops/sponsor-ops.test.ts"
+    "test": "tsx --test src/lib/vendor-ops/vendor-ops.test.ts src/lib/forms/notification-copy.test.ts src/lib/sponsor-ops/sponsor-ops.test.ts src/lib/admin/auth.test.ts src/lib/persistence/persistence.test.ts"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.5",
+    "@supabase/supabase-js": "^2.113.0",
     "next": "16.3.3",
     "react": "19.2.8",
     "react-dom": "19.2.8",

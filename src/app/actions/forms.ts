@@ -3,6 +3,11 @@
 import { createApplicationReference } from "@/lib/forms/vendor-application";
 import { createSponsorReference } from "@/lib/sponsor-ops/reference";
 import { deliverSubmission, isFormDeliveryConfigured } from "@/lib/forms/deliver";
+import {
+  isPersistedFormKind,
+  persistOperationalSubmission,
+  persistenceRequired,
+} from "@/lib/persistence/forms";
 import { DEFAULT_NOTIFICATION_EMAIL } from "@/lib/forms/mail-addresses";
 import {
   errorState,
@@ -37,6 +42,12 @@ const SUCCESS_COPY: Record<string, string> = {
 const NOT_CONFIGURED_MESSAGE =
   "This form is not connected to a delivery provider yet, so we did not record your submission. Try again after the inquiry inbox is live, or check News for updates.";
 
+const PERSIST_FAILED_MESSAGE =
+  `We couldn't save your submission. Please try again or contact ${DEFAULT_NOTIFICATION_EMAIL}.`;
+
+const PERSIST_NOT_CONFIGURED_MESSAGE =
+  "This form is not connected to secure storage yet, so we did not record your submission.";
+
 const DELIVERY_FAILED_MESSAGE =
   `We couldn't send your submission right now. Please try again or contact ${DEFAULT_NOTIFICATION_EMAIL}.`;
 
@@ -64,6 +75,7 @@ export async function submitForm(
   }
 
   const kind = parsed.data.kind;
+  parsed.data.fields.submissionId = readString(formData, "submissionId");
 
   if (kind === "vendor_application") {
     const reference = createApplicationReference();
@@ -77,17 +89,52 @@ export async function submitForm(
       kind === "sponsor_inquiry" ? "inquiry_received" : "committed";
   }
 
-  if (!isFormDeliveryConfigured(kind)) {
-    return errorState(NOT_CONFIGURED_MESSAGE);
-  }
-
-  const result = await deliverSubmission({
+  const payload = {
     kind,
     submittedAt: new Date().toISOString(),
     fields: parsed.data.fields,
-  });
+  };
+
+  if (isPersistedFormKind(kind)) {
+    if (persistenceRequired()) {
+      const persisted = await persistOperationalSubmission(payload);
+      if (!persisted.ok) {
+        return errorState(
+          persisted.code === "not_configured"
+            ? PERSIST_NOT_CONFIGURED_MESSAGE
+            : PERSIST_FAILED_MESSAGE,
+        );
+      }
+      if (persisted.reference) {
+        if (kind === "vendor_application") {
+          parsed.data.fields.applicationReference = persisted.reference;
+          payload.fields.applicationReference = persisted.reference;
+        }
+        if (kind === "sponsor_inquiry" || kind === "sponsor_commitment") {
+          parsed.data.fields.sponsorReference = persisted.reference;
+          payload.fields.sponsorReference = persisted.reference;
+        }
+      }
+    }
+  }
+
+  if (!isFormDeliveryConfigured(kind)) {
+    if (isPersistedFormKind(kind) && persistenceRequired()) {
+      return successAfterPersist(kind, parsed.data.fields);
+    }
+    return errorState(NOT_CONFIGURED_MESSAGE);
+  }
+
+  const result = await deliverSubmission(payload);
 
   if (!result.ok) {
+    if (isPersistedFormKind(kind) && persistenceRequired()) {
+      console.error("form_notification_failed_after_persist", {
+        kind,
+        code: result.code,
+      });
+      return successAfterPersist(kind, parsed.data.fields);
+    }
     if (result.code === "not_configured") {
       return errorState(NOT_CONFIGURED_MESSAGE);
     }
@@ -112,5 +159,21 @@ export async function submitForm(
     return successState(`${SUCCESS_COPY[kind]}${referenceText}`);
   }
 
+  return successState(SUCCESS_COPY[kind] ?? SUCCESS_COPY.contact);
+}
+
+function successAfterPersist(kind: string, fields: Record<string, string | string[]>): FormState {
+  if (kind === "vendor_application") {
+    const reference = fields.applicationReference;
+    const referenceText =
+      typeof reference === "string" && reference ? ` Application reference: ${reference}.` : "";
+    return successState(`${SUCCESS_COPY.vendor_application}${referenceText}`);
+  }
+  if (kind === "sponsor_inquiry" || kind === "sponsor_commitment") {
+    const reference = fields.sponsorReference;
+    const referenceText =
+      typeof reference === "string" && reference ? ` Sponsor reference: ${reference}.` : "";
+    return successState(`${SUCCESS_COPY[kind]}${referenceText}`);
+  }
   return successState(SUCCESS_COPY[kind] ?? SUCCESS_COPY.contact);
 }
