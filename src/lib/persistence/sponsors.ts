@@ -217,6 +217,10 @@ export function sponsorshipToRecord(detail: SponsorshipDetail): SponsorshipRecor
   };
 }
 
+function isUniqueViolation(error: { code?: string } | null): boolean {
+  return error?.code === "23505";
+}
+
 export async function persistSponsorshipRecord(
   supabase: SupabaseClient,
   sponsorshipId: string,
@@ -224,39 +228,59 @@ export async function persistSponsorshipRecord(
   record: SponsorshipRecord,
   actorUserId: string,
 ): Promise<void> {
-  const { error } = await supabase
+  const { error, count } = await supabase
     .from("sponsorships")
-    .update({
-      status: record.status,
-      contacted_at: record.contactedAt,
-      committed_at: record.committedAt,
-      invoice_created_at: record.invoiceCreatedAt,
-      invoice_sent_at: record.invoiceSentAt,
-      payment_due_at: record.paymentDueAt,
-      paid_at: record.paidAt,
-      amount_committed: record.amountCommitted,
-      amount_invoiced: record.amountInvoiced,
-      amount_paid: record.amountPaid,
-      invoice_status: record.invoice.status,
-      square_invoice_id: record.invoice.squareInvoiceId,
-      square_invoice_url: record.invoice.squareInvoiceUrl,
-      assets_needed: record.assetsNeeded,
-      assets_received_at: record.assetsReceivedAt,
-      activated_at: record.activatedAt,
-      activation_override: record.activationOverride,
-      activation_override_reason: record.activationOverrideReason,
-      public_directory_enabled: record.publicDirectoryEnabled,
-      acknowledgment: record.acknowledgment,
-      directory: record.directory,
-      selected_level: record.selectedLevel,
-    })
-    .eq("id", sponsorshipId);
+    .update(
+      {
+        status: record.status,
+        contacted_at: record.contactedAt,
+        committed_at: record.committedAt,
+        invoice_created_at: record.invoiceCreatedAt,
+        invoice_sent_at: record.invoiceSentAt,
+        payment_due_at: record.paymentDueAt,
+        paid_at: record.paidAt,
+        amount_committed: record.amountCommitted,
+        amount_invoiced: record.amountInvoiced,
+        amount_paid: record.amountPaid,
+        invoice_status: record.invoice.status,
+        square_invoice_id: record.invoice.squareInvoiceId,
+        square_invoice_url: record.invoice.squareInvoiceUrl,
+        assets_needed: record.assetsNeeded,
+        assets_received_at: record.assetsReceivedAt,
+        activated_at: record.activatedAt,
+        activation_override: record.activationOverride,
+        activation_override_reason: record.activationOverrideReason,
+        public_directory_enabled: record.publicDirectoryEnabled,
+        acknowledgment: record.acknowledgment,
+        directory: record.directory,
+        selected_level: record.selectedLevel,
+      },
+      { count: "exact" },
+    )
+    .eq("id", sponsorshipId)
+    .eq("status", previousStatus);
   if (error) throw new Error("unavailable");
 
+  const { data: saved, error: verifyError } = await supabase
+    .from("sponsorships")
+    .select("status")
+    .eq("id", sponsorshipId)
+    .maybeSingle();
+  if (verifyError) throw new Error("unavailable");
+  if (!saved || saved.status !== record.status) {
+    throw new Error("This sponsorship was updated by another action. Refresh and try again.");
+  }
+
   if (record.commitment) {
-    const snap = record.commitment;
-    const { error: commitError } = await supabase.from("sponsorship_commitments").upsert(
-      {
+    const { data: existingCommitment, error: existingError } = await supabase
+      .from("sponsorship_commitments")
+      .select("id")
+      .eq("sponsorship_id", sponsorshipId)
+      .maybeSingle();
+    if (existingError) throw new Error("unavailable");
+    if (!existingCommitment) {
+      const snap = record.commitment;
+      const { error: commitError } = await supabase.from("sponsorship_commitments").insert({
         sponsorship_id: sponsorshipId,
         package_id: snap.packageId,
         package_name: snap.packageName,
@@ -272,10 +296,9 @@ export async function persistSponsorshipRecord(
         agreement_version: snap.agreementVersion,
         contracting_entity_status: snap.contractingEntityStatus,
         snapshot: snap,
-      },
-      { onConflict: "sponsorship_id" },
-    );
-    if (commitError) throw new Error("unavailable");
+      });
+      if (commitError && !isUniqueViolation(commitError)) throw new Error("unavailable");
+    }
   }
 
   const { error: assetError } = await supabase.from("sponsor_assets").upsert(
@@ -302,9 +325,13 @@ export async function persistSponsorshipRecord(
   );
   if (assetError) throw new Error("unavailable");
 
-  await supabase.from("sponsor_fulfillment").delete().eq("sponsorship_id", sponsorshipId);
+  const { error: deleteFulfillmentError } = await supabase
+    .from("sponsor_fulfillment")
+    .delete()
+    .eq("sponsorship_id", sponsorshipId);
+  if (deleteFulfillmentError) throw new Error("unavailable");
   if (record.fulfillment.length > 0) {
-    await supabase.from("sponsor_fulfillment").insert(
+    const { error: fulfillmentError } = await supabase.from("sponsor_fulfillment").insert(
       record.fulfillment.map((item) => ({
         sponsorship_id: sponsorshipId,
         item_id: item.id,
@@ -312,15 +339,17 @@ export async function persistSponsorshipRecord(
         status: item.status,
       })),
     );
+    if (fulfillmentError) throw new Error("unavailable");
   }
 
-  if (previousStatus !== record.status) {
-    await supabase.from("sponsor_status_history").insert({
+  if (previousStatus !== record.status && count !== 0) {
+    const { error: historyError } = await supabase.from("sponsor_status_history").insert({
       sponsorship_id: sponsorshipId,
       from_status: previousStatus,
       to_status: record.status,
       changed_by: actorUserId,
     });
+    if (historyError) throw new Error("unavailable");
   }
 }
 

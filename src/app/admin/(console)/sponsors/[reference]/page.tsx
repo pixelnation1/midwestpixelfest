@@ -15,6 +15,10 @@ import { getSponsorshipByReference, sponsorshipToRecord } from "@/lib/persistenc
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { buildSponsorSquareInvoiceSummary } from "@/lib/sponsor-ops/invoice";
 import { SPONSOR_ASSET_STATUS_LABELS, SPONSORSHIP_STATUS_LABELS } from "@/lib/sponsor-ops/status";
+import {
+  allowedOrganizerStatusChoices,
+  canTransition,
+} from "@/lib/sponsor-ops/workflow";
 import { sponsorshipPackages } from "@/lib/sponsorships";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -42,6 +46,9 @@ export default async function SponsorDetailPage({
   }
   if (!detail) notFound();
   const record = sponsorshipToRecord(detail);
+  const statusChoices = allowedOrganizerStatusChoices(record.status, Boolean(record.commitment));
+  const canConfirmExistingCommitment =
+    Boolean(record.commitment) && canTransition(record.status, "committed");
   const payload = (detail.sponsorship.inquiry_payload ?? {}) as Record<string, unknown>;
   let invoiceSummary: string | null = null;
   try {
@@ -94,6 +101,18 @@ export default async function SponsorDetailPage({
           {record.commitment.customBenefits.length > 0 ? (
             <p>Custom: {record.commitment.customBenefits.map((item) => item.label).join(", ")}</p>
           ) : null}
+          {canConfirmExistingCommitment ? (
+            <ActionForm action={sponsorStatusAction} className="mt-3">
+              <input type="hidden" name="reference" value={reference} />
+              <input type="hidden" name="nextStatus" value="committed" />
+              <p>
+                Commitment exists but sponsorship status is{" "}
+                {SPONSORSHIP_STATUS_LABELS[record.status]}. Confirm the committed status before
+                creating an invoice.
+              </p>
+              <Button type="submit">Confirm committed status</Button>
+            </ActionForm>
+          ) : null}
         </Section>
       ) : (
         <Section title="Create commitment">
@@ -132,28 +151,43 @@ export default async function SponsorDetailPage({
         {invoiceSummary ? (
           <pre className="overflow-x-auto whitespace-pre-wrap border border-line bg-ink p-3 text-xs">{invoiceSummary}</pre>
         ) : null}
-        <ActionForm action={sponsorStatusAction} className="mt-3">
-          <input type="hidden" name="reference" value={reference} />
-          <input type="hidden" name="nextStatus" value="invoice_sent" />
-          <label className="block">
-            Square Invoice ID
-            <input name="squareInvoiceId" className="mt-1 w-full border border-line bg-ink px-3 py-2" />
-          </label>
-          <label className="block">
-            Square Invoice URL
-            <input name="squareInvoiceUrl" className="mt-1 w-full border border-line bg-ink px-3 py-2" />
-          </label>
-          <Button type="submit" variant="secondary">Record invoice sent</Button>
-        </ActionForm>
-        <ActionForm action={sponsorStatusAction} className="mt-3">
-          <input type="hidden" name="reference" value={reference} />
-          <input type="hidden" name="nextStatus" value="paid" />
-          <label className="block">
-            Amount received
-            <input name="amountPaid" className="mt-1 w-full border border-line bg-ink px-3 py-2" />
-          </label>
-          <Button type="submit">Record payment</Button>
-        </ActionForm>
+        {record.status === "committed" ? (
+          <ActionForm action={sponsorStatusAction} className="mt-3">
+            <input type="hidden" name="reference" value={reference} />
+            <input type="hidden" name="nextStatus" value="invoice_created" />
+            <p className="text-muted">
+              Square Invoice ID is optional at this step. Create the invoice in Square, then mark
+              this internal stage created.
+            </p>
+            <Button type="submit">Mark invoice created</Button>
+          </ActionForm>
+        ) : null}
+        {record.status === "invoice_created" ? (
+          <ActionForm action={sponsorStatusAction} className="mt-3">
+            <input type="hidden" name="reference" value={reference} />
+            <input type="hidden" name="nextStatus" value="invoice_sent" />
+            <label className="block">
+              Square Invoice ID
+              <input name="squareInvoiceId" className="mt-1 w-full border border-line bg-ink px-3 py-2" />
+            </label>
+            <label className="block">
+              Square Invoice URL
+              <input name="squareInvoiceUrl" className="mt-1 w-full border border-line bg-ink px-3 py-2" />
+            </label>
+            <Button type="submit" variant="secondary">Record invoice sent</Button>
+          </ActionForm>
+        ) : null}
+        {record.status === "invoice_sent" ? (
+          <ActionForm action={sponsorStatusAction} className="mt-3">
+            <input type="hidden" name="reference" value={reference} />
+            <input type="hidden" name="nextStatus" value="paid" />
+            <label className="block">
+              Amount received
+              <input name="amountPaid" className="mt-1 w-full border border-line bg-ink px-3 py-2" />
+            </label>
+            <Button type="submit">Record payment</Button>
+          </ActionForm>
+        ) : null}
       </Section>
 
       <Section title="Assets">
@@ -195,30 +229,34 @@ export default async function SponsorDetailPage({
       </Section>
 
       <Section title="Status actions">
-        <ActionForm action={sponsorStatusAction}>
-          <input type="hidden" name="reference" value={reference} />
-          <label className="flex flex-wrap items-center gap-2">
-            Move to
-            <select name="nextStatus" className="border border-line bg-ink px-2 py-1">
-              <option value="contacted">Contacted</option>
-              <option value="negotiating">Negotiating</option>
-              <option value="invoice_created">Invoice created</option>
-              <option value="assets_needed">Assets requested</option>
-              <option value="assets_received">Assets received</option>
-              <option value="active">Active</option>
-              <option value="completed">Completed</option>
-              <option value="declined">Declined</option>
-              <option value="withdrawn">Withdrawn</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
-            <Button type="submit" variant="secondary">Update</Button>
-          </label>
-          <label className="mt-2 flex gap-2">
-            <input type="checkbox" name="activationOverride" value="yes" />
-            Activation override (requires reason)
-          </label>
-          <input name="overrideReason" placeholder="Override reason" className="w-full border border-line bg-ink px-3 py-2" />
-        </ActionForm>
+        <p>Current status: {SPONSORSHIP_STATUS_LABELS[record.status]}</p>
+        {statusChoices.length === 0 ? (
+          <p className="text-muted">No further status moves from the current persisted state.</p>
+        ) : (
+          <ActionForm action={sponsorStatusAction}>
+            <input type="hidden" name="reference" value={reference} />
+            <label className="flex flex-wrap items-center gap-2">
+              Move to
+              <select name="nextStatus" className="border border-line bg-ink px-2 py-1">
+                {statusChoices.map((status) => (
+                  <option key={status} value={status}>
+                    {SPONSORSHIP_STATUS_LABELS[status]}
+                  </option>
+                ))}
+              </select>
+              <Button type="submit" variant="secondary">Update</Button>
+            </label>
+            {statusChoices.includes("active") ? (
+              <>
+                <label className="mt-2 flex gap-2">
+                  <input type="checkbox" name="activationOverride" value="yes" />
+                  Activation override (requires reason)
+                </label>
+                <input name="overrideReason" placeholder="Override reason" className="w-full border border-line bg-ink px-3 py-2" />
+              </>
+            ) : null}
+          </ActionForm>
+        )}
       </Section>
 
       <Section title="Emails">

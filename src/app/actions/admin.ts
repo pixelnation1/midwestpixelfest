@@ -453,26 +453,31 @@ export async function sponsorStatusAction(
     const previous = String(detail.sponsorship.status) as SponsorshipStatus;
     let record = sponsorshipToRecord(detail);
     if (next === "committed") {
-      const packageId = String(formData.get("packageId") ?? "");
-      const agreedAmount = Number(formData.get("agreedAmount") ?? 0);
+      const agreedRaw = String(formData.get("agreedAmount") ?? "").trim();
+      const agreedAmount = agreedRaw ? Number(agreedRaw) : undefined;
       const area = String(formData.get("approvedArea") ?? "").trim();
-      const paymentDueAt = String(formData.get("paymentDueAt") ?? "").trim() || null;
       record = commitSponsorship(record, {
-        packageId,
-        agreedAmount,
+        packageId: String(formData.get("packageId") ?? ""),
+        ...(agreedAmount != null && Number.isFinite(agreedAmount) ? { agreedAmount } : {}),
         areasSponsored: area ? [area] : [],
-        paymentDueAt,
+        paymentDueAt: String(formData.get("paymentDueAt") ?? "").trim() || null,
       });
     } else if (next === "invoice_created") {
-      record = createSponsorInvoice(record);
+      record = createSponsorInvoice(record, {
+        squareInvoiceId: String(formData.get("squareInvoiceId") ?? "").trim() || null,
+      });
     } else if (next === "invoice_sent") {
       record = markSponsorInvoiceSent(record, {
         squareInvoiceId: String(formData.get("squareInvoiceId") ?? "").trim() || null,
         squareInvoiceUrl: String(formData.get("squareInvoiceUrl") ?? "").trim() || null,
       });
     } else if (next === "paid") {
+      const amountPaid = Number(formData.get("amountPaid") ?? 0);
+      if (!Number.isFinite(amountPaid) || amountPaid <= 0) {
+        return fail("Enter the amount received.");
+      }
       record = recordSponsorshipPayment(record, {
-        amountPaid: Number(formData.get("amountPaid") ?? 0),
+        amountPaid,
         paidAt: new Date(),
       });
     } else if (next === "assets_needed") {

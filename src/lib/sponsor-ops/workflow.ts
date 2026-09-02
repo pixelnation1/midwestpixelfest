@@ -68,6 +68,41 @@ export function canTransition(from: SponsorshipStatus, to: SponsorshipStatus): b
   return ALLOWED_TRANSITIONS[from].includes(to);
 }
 
+export function allowedNextStatuses(from: SponsorshipStatus): readonly SponsorshipStatus[] {
+  return ALLOWED_TRANSITIONS[from];
+}
+
+export function allowedOrganizerStatusChoices(
+  from: SponsorshipStatus,
+  hasCommitment: boolean,
+): readonly SponsorshipStatus[] {
+  return ALLOWED_TRANSITIONS[from].filter((status) => {
+    if (status === "committed") return hasCommitment && from !== "committed";
+    if (status === "paid") return false;
+    return true;
+  });
+}
+
+export function statusMismatchMessage(
+  record: Pick<SponsorshipRecord, "status" | "commitment">,
+  action: "invoice" | "invoice_sent" | "payment",
+): string {
+  const current = record.status.replaceAll("_", " ");
+  if (action === "invoice") {
+    if (record.commitment && record.status !== "committed") {
+      return `Commitment exists but sponsorship status is ${current}.`;
+    }
+    return `Current sponsorship status is ${current}. Create the commitment before creating an invoice.`;
+  }
+  if (action === "invoice_sent") {
+    return `Current sponsorship status is ${current}. Mark the invoice created before recording it as sent.`;
+  }
+  if (!record.commitment) {
+    return `Current sponsorship status is ${current}. Create the commitment before recording payment.`;
+  }
+  return `Current sponsorship status is ${current}. Record the invoice as sent before recording full payment.`;
+}
+
 export function appendHistory(
   history: readonly SponsorStatusHistoryEntry[],
   status: SponsorshipStatus,
@@ -176,6 +211,40 @@ export function markSponsorNegotiating(
   return applyStatus(record, "negotiating", actor);
 }
 
+function applyCommittedSnapshot(
+  record: SponsorshipRecord,
+  snapshot: NonNullable<SponsorshipRecord["commitment"]>,
+  actor: StatusHistoryActor,
+  acknowledgment: Partial<SponsorCommitmentAcknowledgment> | undefined,
+  historyAt: string,
+): SponsorshipRecord {
+  const pkg = getPackageById(snapshot.packageId);
+  const levelLabel = pkg?.name ?? snapshot.packageName;
+  return {
+    ...record,
+    status: "committed",
+    committedAt: record.committedAt ?? snapshot.committedAt,
+    paymentDueAt: snapshot.paymentDueAt,
+    amountCommitted: record.amountCommitted ?? snapshot.agreedAmount,
+    selectedLevel: record.selectedLevel ?? levelLabel,
+    commitment: snapshot,
+    fulfillment:
+      record.fulfillment.length > 0 ? record.fulfillment : createFulfillmentChecklist(snapshot),
+    acknowledgment: {
+      ...record.acknowledgment,
+      ...acknowledgment,
+    },
+    directory: {
+      ...record.directory,
+      displayName: snapshot.businessName,
+      packageId: snapshot.packageId,
+      levelLabel: record.directory.levelLabel || levelLabel,
+      sponsoredArea: snapshot.areasSponsored[0] ?? record.directory.sponsoredArea,
+    },
+    history: appendHistory(record.history, "committed", actor, undefined, historyAt),
+  };
+}
+
 export function commitSponsorship(
   record: SponsorshipRecord,
   input: Omit<CreateCommitmentSnapshotInput, "sponsorReference" | "businessName" | "committedAt"> & {
@@ -184,8 +253,28 @@ export function commitSponsorship(
   },
   actor: StatusHistoryActor = "organizer",
 ): SponsorshipRecord {
+  if (record.commitment) {
+    if (record.status === "committed") {
+      return record;
+    }
+    if (!canTransition(record.status, "committed")) {
+      throw new Error(
+        `Commitment exists but sponsorship status is ${record.status.replaceAll("_", " ")}.`,
+      );
+    }
+    return applyCommittedSnapshot(
+      record,
+      record.commitment,
+      actor,
+      input.acknowledgment,
+      new Date().toISOString(),
+    );
+  }
+
   if (!canTransition(record.status, "committed")) {
-    throw new Error("Sponsorship can only be committed from negotiating.");
+    throw new Error(
+      `Current sponsorship status is ${record.status.replaceAll("_", " ")}. Move the sponsor to negotiating before creating a commitment.`,
+    );
   }
   const committedAt = input.committedAt ?? new Date();
   const snapshot = createCommitmentSnapshot({
@@ -194,29 +283,13 @@ export function commitSponsorship(
     businessName: record.businessName,
     committedAt,
   });
-  const committedIso = snapshot.committedAt;
-  const pkg = getPackageById(snapshot.packageId);
-  return {
-    ...record,
-    status: "committed",
-    committedAt: committedIso,
-    paymentDueAt: snapshot.paymentDueAt,
-    amountCommitted: snapshot.agreedAmount,
-    commitment: snapshot,
-    fulfillment: createFulfillmentChecklist(snapshot),
-    acknowledgment: {
-      ...record.acknowledgment,
-      ...input.acknowledgment,
-    },
-    directory: {
-      ...record.directory,
-      displayName: snapshot.businessName,
-      packageId: snapshot.packageId,
-      levelLabel: pkg?.name ?? snapshot.packageName,
-      sponsoredArea: snapshot.areasSponsored[0] ?? null,
-    },
-    history: appendHistory(record.history, "committed", actor, undefined, committedIso),
-  };
+  return applyCommittedSnapshot(
+    record,
+    snapshot,
+    actor,
+    input.acknowledgment,
+    snapshot.committedAt,
+  );
 }
 
 export function createSponsorInvoice(
@@ -230,10 +303,10 @@ export function createSponsorInvoice(
   actor: StatusHistoryActor = "organizer",
 ): SponsorshipRecord {
   if (!record.commitment) {
-    throw new Error("Create a commitment before preparing an invoice.");
+    throw new Error(statusMismatchMessage(record, "invoice"));
   }
   if (!canTransition(record.status, "invoice_created")) {
-    throw new Error("Invoice can only be created from a committed sponsorship.");
+    throw new Error(statusMismatchMessage(record, "invoice"));
   }
   const createdAt =
     typeof details.createdAt === "string"
@@ -269,7 +342,7 @@ export function markSponsorInvoiceSent(
   actor: StatusHistoryActor = "organizer",
 ): SponsorshipRecord {
   if (!canTransition(record.status, "invoice_sent")) {
-    throw new Error("Invoice can only be marked sent after it is created.");
+    throw new Error(statusMismatchMessage(record, "invoice_sent"));
   }
   const sentAt =
     typeof details.sentAt === "string" ? details.sentAt : (details.sentAt ?? new Date()).toISOString();
@@ -299,7 +372,10 @@ export function recordSponsorshipPayment(
   actor: StatusHistoryActor = "organizer",
 ): SponsorshipRecord {
   if (!record.commitment) {
-    throw new Error("Cannot record payment before commitment.");
+    throw new Error(statusMismatchMessage(record, "payment"));
+  }
+  if (record.status !== "paid" && !canTransition(record.status, "paid")) {
+    throw new Error(statusMismatchMessage(record, "payment"));
   }
   const paidAt =
     typeof details.paidAt === "string" ? details.paidAt : (details.paidAt ?? new Date()).toISOString();
@@ -319,10 +395,6 @@ export function recordSponsorshipPayment(
           details.paymentMethodOrReference ?? record.invoice.paymentMethodOrReference,
       },
     };
-  }
-
-  if (!canTransition(record.status, "paid") && record.status !== "paid") {
-    throw new Error("Full payment can only be recorded after the invoice is sent.");
   }
 
   const assetsReady = requiredAssetsArePresent(record.assets);
