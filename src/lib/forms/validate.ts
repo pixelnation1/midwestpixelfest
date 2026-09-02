@@ -4,6 +4,8 @@ export const FORM_KINDS = [
   "vendor_interest",
   "vendor_application",
   "sponsor_inquiry",
+  "sponsor_commitment",
+  "sponsor_assets",
   "volunteer_interest",
   "guest_inquiry",
   "press_inquiry",
@@ -22,6 +24,7 @@ export const FIELD_LIMITS = {
   select: 80,
   message: 4000,
   bio: 2500,
+  sponsorDescription: 500,
 } as const;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

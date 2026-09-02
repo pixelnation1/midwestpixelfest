@@ -20,7 +20,7 @@ npm run lint
 npm run build
 ```
 
-No email, newsletter, or analytics provider is required to run the site locally. Forms fail safely until delivery is configured. See `docs/forms-and-email.md`.
+No email, newsletter, or analytics provider is required to run the site locally. Forms fail safely until delivery is configured. See `docs/forms-and-email.md` and `docs/sponsorship-workflow.md`.
 
 ## Environment variables
 

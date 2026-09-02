@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CustomSponsorship } from "@/components/sponsors/CustomSponsorship";
 import { PackageGrid } from "@/components/sponsors/PackageGrid";
+import { SponsorDirectory } from "@/components/sponsors/SponsorDirectory";
 import { SponsorFaq } from "@/components/sponsors/SponsorFaq";
 import { SponsorLocalFit } from "@/components/sponsors/SponsorLocalFit";
 import { SponsorOpportunities } from "@/components/sponsors/SponsorOpportunities";
@@ -104,6 +105,7 @@ export default function SponsorsPage() {
       <CustomSponsorship />
       <SponsorOpportunities />
       <SponsorProcess />
+      <SponsorDirectory />
       <SponsorPayment />
       <SponsorFaq />
 

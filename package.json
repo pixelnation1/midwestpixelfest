@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx --test src/lib/vendor-ops/vendor-ops.test.ts src/lib/forms/notification-copy.test.ts"
+    "test": "tsx --test src/lib/vendor-ops/vendor-ops.test.ts src/lib/forms/notification-copy.test.ts src/lib/sponsor-ops/sponsor-ops.test.ts"
   },
   "dependencies": {
     "next": "16.3.3",

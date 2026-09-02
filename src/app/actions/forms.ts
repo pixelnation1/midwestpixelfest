@@ -1,6 +1,7 @@
 "use server";
 
 import { createApplicationReference } from "@/lib/forms/vendor-application";
+import { createSponsorReference } from "@/lib/sponsor-ops/reference";
 import { deliverSubmission, isFormDeliveryConfigured } from "@/lib/forms/deliver";
 import { DEFAULT_NOTIFICATION_EMAIL } from "@/lib/forms/mail-addresses";
 import {
@@ -20,7 +21,11 @@ const SUCCESS_COPY: Record<string, string> = {
   vendor_application:
     "Thank you for applying to Midwest Pixel Fest 2027. Your application has been received for review. Submission does not guarantee acceptance. If approved, you'll receive next-step and payment information separately.",
   sponsor_inquiry:
-    "Thanks for your interest in partnering with Midwest Pixel Fest. We'll review your sponsorship inquiry and contact you using the information you provided.",
+    "Thanks for your interest in partnering with Midwest Pixel Fest. We'll review your sponsorship inquiry and contact you using the information you provided. Submitting this form does not create a contract, require payment, or activate sponsorship benefits.",
+  sponsor_commitment:
+    "Your sponsorship commitment has been received for organizer review. This confirms the discussed package, subject to the final sponsorship agreement. It does not collect payment on this website.",
+  sponsor_assets:
+    "Your sponsor materials have been received for review. Midwest Pixel Fest may edit the public description for length, formatting, and clarity without materially changing its meaning.",
   volunteer_interest:
     "Your volunteer interest has been received. This is not a shift assignment, and selection is not guaranteed.",
   guest_inquiry:
@@ -66,6 +71,12 @@ export async function submitForm(
     parsed.data.fields.applicationStatus = "submitted";
   }
 
+  if (kind === "sponsor_inquiry" || kind === "sponsor_commitment") {
+    parsed.data.fields.sponsorReference = createSponsorReference();
+    parsed.data.fields.sponsorshipStatus =
+      kind === "sponsor_inquiry" ? "inquiry_received" : "committed";
+  }
+
   if (!isFormDeliveryConfigured(kind)) {
     return errorState(NOT_CONFIGURED_MESSAGE);
   }
@@ -90,6 +101,15 @@ export async function submitForm(
         ? ` Application reference: ${reference}.`
         : "";
     return successState(`${SUCCESS_COPY.vendor_application}${referenceText}`);
+  }
+
+  if (kind === "sponsor_inquiry" || kind === "sponsor_commitment") {
+    const reference = parsed.data.fields.sponsorReference;
+    const referenceText =
+      typeof reference === "string" && reference
+        ? ` Sponsor reference: ${reference}.`
+        : "";
+    return successState(`${SUCCESS_COPY[kind]}${referenceText}`);
   }
 
   return successState(SUCCESS_COPY[kind] ?? SUCCESS_COPY.contact);

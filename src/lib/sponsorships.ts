@@ -676,11 +676,97 @@ export const sponsorshipGuideUrl: string | null = null;
 /**
  * Public URL for the official Sponsorship Commitment Form.
  * Keep null unless a real file exists in /public or another confirmed location.
+ * The in-app commitment form stays closed until the contracting entity is confirmed.
  */
 export const sponsorshipCommitmentFormUrl: string | null = null;
 
 /** Future invoice or payment URL. Do not collect cards on this site. */
 export const sponsorshipPaymentUrl: string | null = null;
+
+export const sponsorshipAgreementVersion = "2027-v1";
+
+/**
+ * LEGAL TODO: confirm the contracting entity before any commitment form is
+ * used publicly. Public pages currently present PixelNation as organizer.
+ * Earlier paperwork used "Midwest PixelFest LLC". Do not invent or silently
+ * pick one of those names here.
+ */
+export const sponsorshipContractingEntityStatus: "pending_legal_review" | "confirmed" =
+  "pending_legal_review";
+export const sponsorshipContractingEntity: string | null = null;
+
+/** Do not open until sponsorshipContractingEntity is confirmed. */
+export const sponsorshipCommitmentOpen = false;
+
+/** Asset collection is organizer-issued after payment. Not a public CTA. */
+export const sponsorshipAssetCollectionOpen = false;
+
+/**
+ * Future payment is organizer-issued after commitment.
+ * Do not enable public self-service sponsorship checkout from this config.
+ * Square Invoices are the planned method; the Square API is not integrated.
+ */
+export const sponsorshipPayment = {
+  checkoutOpen: false,
+  publicSelfService: false,
+  method: "invoice" as "invoice" | "payment_link" | null,
+  provider: "square" as const,
+  automation: false,
+};
+
+/** LEGAL TODO: do not copy the vendor refund schedule onto sponsorships. */
+export const sponsorshipRefundPolicyStatus = "pending_review" as const;
+
+/** LEGAL TODO: event cancellation / postponement / force majeure terms. */
+export const sponsorshipEventCancellationPolicyStatus = "pending_review" as const;
+
+export const SPONSORSHIP_CUSTOM_BENEFIT_TYPES = [
+  "area_sponsorship",
+  "tournament_sponsorship",
+  "cosplay_sponsorship",
+  "branded_giveaway",
+  "on_site_activation",
+  "custom_signage",
+  "premium_placement",
+  "category_exclusivity",
+  "naming_opportunity",
+  "other",
+] as const;
+
+export type SponsorshipCustomBenefitType =
+  (typeof SPONSORSHIP_CUSTOM_BENEFIT_TYPES)[number];
+
+export const SPONSORSHIP_CUSTOM_BENEFIT_TYPE_LABELS: Record<
+  SponsorshipCustomBenefitType,
+  string
+> = {
+  area_sponsorship: "Area sponsorship",
+  tournament_sponsorship: "Tournament sponsorship",
+  cosplay_sponsorship: "Cosplay sponsorship",
+  branded_giveaway: "Branded giveaway",
+  on_site_activation: "On-site activation",
+  custom_signage: "Custom signage opportunity",
+  premium_placement: "Premium placement",
+  category_exclusivity: "Category exclusivity",
+  naming_opportunity: "Naming opportunity",
+  other: "Other custom benefit",
+};
+
+export function canUseSponsorshipCommitmentForm(): boolean {
+  return (
+    sponsorshipCommitmentOpen &&
+    sponsorshipContractingEntityStatus === "confirmed" &&
+    Boolean(sponsorshipContractingEntity)
+  );
+}
+
+export function canUseSponsorshipAssetForm(): boolean {
+  return sponsorshipAssetCollectionOpen;
+}
+
+export function formatSponsorshipAmount(amount: number): string {
+  return `$${amount.toLocaleString("en-US")}`;
+}
 
 export function getPublishedSponsors() {
   return confirmedSponsors.filter((sponsor) => sponsor.published);

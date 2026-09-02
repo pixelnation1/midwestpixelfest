@@ -17,6 +17,8 @@ const EVENT_BY_KIND: Record<FormKind, AnalyticsEventName> = {
   vendor_interest: ANALYTICS_EVENTS.vendor_interest_submit,
   vendor_application: ANALYTICS_EVENTS.vendor_application_submit,
   sponsor_inquiry: ANALYTICS_EVENTS.sponsor_inquiry_submit,
+  sponsor_commitment: ANALYTICS_EVENTS.sponsor_committed,
+  sponsor_assets: ANALYTICS_EVENTS.sponsor_assets_received,
   volunteer_interest: ANALYTICS_EVENTS.volunteer_interest_submit,
   guest_inquiry: ANALYTICS_EVENTS.guest_inquiry_submit,
   press_inquiry: ANALYTICS_EVENTS.press_inquiry_submit,

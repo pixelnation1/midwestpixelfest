@@ -1,4 +1,6 @@
 import { parseVendorApplication } from "@/lib/forms/vendor-application";
+import { parseSponsorAssets } from "@/lib/sponsor-ops/parse-assets";
+import { parseSponsorCommitment } from "@/lib/sponsor-ops/parse-commitment";
 import {
   AGE_RANGES,
   CONTACT_TYPES,
@@ -296,8 +298,24 @@ export function parseAndValidate(
     Object.assign(fields, parsed.fields);
   }
 
+  if (kind === "sponsor_commitment") {
+    const parsed = parseSponsorCommitment(formData);
+    Object.assign(errors, parsed.errors);
+    Object.assign(fields, parsed.fields);
+  }
+
+  if (kind === "sponsor_assets") {
+    const parsed = parseSponsorAssets(formData);
+    Object.assign(errors, parsed.errors);
+    Object.assign(fields, parsed.fields);
+  }
+
   const consent = readString(formData, "contactConsent");
-  if (kind !== "newsletter" && consent !== "on") {
+  if (
+    kind !== "newsletter" &&
+    kind !== "sponsor_commitment" &&
+    consent !== "on"
+  ) {
     errors.contactConsent =
       kind === "sponsor_inquiry"
         ? "Confirm that this inquiry does not create a sponsorship agreement."

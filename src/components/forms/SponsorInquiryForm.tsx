@@ -231,10 +231,11 @@ export function SponsorInquiryForm({ defaultLevel }: SponsorInquiryFormProps) {
       </FormSection>
 
       <p className="text-sm text-muted">
-        Submitting a sponsorship inquiry does not guarantee acceptance or
-        reserve a sponsorship opportunity. Sponsorship benefits begin after an
-        approved sponsorship is finalized, payment is received, and required
-        marketing materials are provided.
+        Submitting a sponsorship inquiry does not create a contract, require
+        payment, reserve inventory, guarantee exclusivity, or activate benefits.
+        Sponsorship recognition begins after an approved sponsorship is
+        finalized, payment is received, and required marketing materials are
+        provided.
       </p>
 
       <Checkbox

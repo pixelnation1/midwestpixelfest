@@ -44,6 +44,11 @@ export default async function SponsorInquiryPage({
 
       <ContentSection title="This is an inquiry, not a commitment">
         <p>
+          Submitting this form does not create a contract, does not require
+          payment, does not reserve sponsorship inventory, does not guarantee
+          exclusivity, and does not activate sponsorship benefits.
+        </p>
+        <p>
           The legally operative sponsorship paperwork is sent after Midwest
           Pixel Fest accepts a partnership. We do not collect signatures,
           card numbers, or bank details on this page.

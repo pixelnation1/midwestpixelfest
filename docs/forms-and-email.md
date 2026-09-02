@@ -14,6 +14,8 @@ If no provider is configured for that form type, the form **does not pretend to 
 | Vendor interest | `/vendors/interest` | `vendor_interest` | Resend (preferred) or `FORM_WEBHOOK_URL` fallback |
 | Official vendor / artist application | `/vendors/apply/vendor`, `/vendors/apply/artist` | `vendor_application` | Resend (preferred) or `FORM_WEBHOOK_URL` fallback. Applications remain closed until flags are opened. |
 | Sponsor inquiry | `/sponsors/inquiry` | `sponsor_inquiry` | Resend (preferred) or `FORM_WEBHOOK_URL` fallback |
+| Sponsorship commitment | `/sponsors/commitment` | `sponsor_commitment` | Same delivery path. Form is closed until the contracting entity is confirmed. Not a public CTA. |
+| Sponsor assets | `/sponsors/assets` | `sponsor_assets` | Same delivery path. Form is closed until organizer-issued collection is enabled. Logo storage is not connected. |
 | Volunteer interest | `/volunteer/interest` | `volunteer_interest` | Resend (preferred) or `FORM_WEBHOOK_URL` fallback |
 | Guest / talent | `/guests/inquiry` | `guest_inquiry` | Resend (preferred) or `FORM_WEBHOOK_URL` fallback |
 | Press | `/press/inquiry` | `press_inquiry` | Resend (preferred) or `FORM_WEBHOOK_URL` fallback |
@@ -42,6 +44,7 @@ Behavior:
 - Notification goes to `CONTACT_NOTIFICATION_EMAIL`, or `hello@midwestpixelfest.com` when that variable is unset
 - Subject examples: `[Midwest Pixel Fest] New Contact Message`, `[Midwest Pixel Fest] New Vendor Interest — Business Name`
 - Body includes form type, timestamp, source page, and sanitized fields (HTML + plain text)
+- Organizer-facing timestamps display as `September 2, 2026 at 7:36 AM CT` (no raw ISO timestamp in the visible email)
 - Honeypot values, secrets, and analytics IDs are not emailed
 - `Reply-To` is set to the submitter email after validation
 - Failures do not expose API responses, keys, or stack traces

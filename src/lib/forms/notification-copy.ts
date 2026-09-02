@@ -5,6 +5,8 @@ export const OPERATIONAL_FORM_KINDS = [
   "vendor_interest",
   "vendor_application",
   "sponsor_inquiry",
+  "sponsor_commitment",
+  "sponsor_assets",
   "volunteer_interest",
   "guest_inquiry",
   "press_inquiry",
@@ -43,6 +45,10 @@ export function operationalEmailSubject(
       return `[Midwest Pixel Fest] New Vendor Interest${namedSubjectSuffix(fields, "businessName")}`;
     case "sponsor_inquiry":
       return `[Midwest Pixel Fest] New Sponsorship Inquiry${namedSubjectSuffix(fields, "company")}`;
+    case "sponsor_commitment":
+      return `[Midwest Pixel Fest] Sponsorship Commitment${namedSubjectSuffix(fields, "businessName")}`;
+    case "sponsor_assets":
+      return `[Midwest Pixel Fest] Sponsor Assets${namedSubjectSuffix(fields, "publicBusinessName")}`;
     case "volunteer_interest":
       return "[Midwest Pixel Fest] New Volunteer Interest";
     case "guest_inquiry":
@@ -78,6 +84,10 @@ export function operationalSourcePath(
         : "/vendors/apply/vendor";
     case "sponsor_inquiry":
       return "/sponsors/inquiry";
+    case "sponsor_commitment":
+      return "/sponsors/commitment";
+    case "sponsor_assets":
+      return "/sponsors/assets";
     case "volunteer_interest":
       return "/volunteer/interest";
     case "guest_inquiry":

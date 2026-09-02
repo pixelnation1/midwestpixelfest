@@ -27,6 +27,8 @@ const KIND_LABELS: Record<OperationalKind, string> = {
   vendor_interest: "Vendor Interest",
   vendor_application: "Vendor / Artist Application",
   sponsor_inquiry: "Sponsorship Inquiry",
+  sponsor_commitment: "Sponsorship Commitment",
+  sponsor_assets: "Sponsor Assets",
   volunteer_interest: "Volunteer Interest",
   guest_inquiry: "Guest Inquiry",
   press_inquiry: "Press Inquiry",
@@ -141,6 +143,25 @@ const FIELD_LABELS: Record<string, string> = {
   signatureAuthAck: "Authorized to submit",
   applicationReference: "Application reference",
   applicationStatus: "Review status",
+  sponsorReference: "Sponsor reference",
+  sponsorshipStatus: "Sponsorship status",
+  representativeName: "Authorized representative",
+  representativeTitle: "Title / role",
+  businessAddress: "Business address",
+  agreedLevel: "Agreed sponsorship level",
+  agreedAmount: "Agreed sponsorship amount",
+  approvedArea: "Approved sponsorship area",
+  includedBenefitsSummary: "Included benefits summary",
+  customBenefitsSummary: "Approved custom benefits",
+  publicBusinessName: "Official public business name",
+  primarySocialUrl: "Primary public social URL",
+  additionalSocialUrl: "Additional social URL",
+  publicDescription: "Public sponsor description",
+  marketingContactName: "Primary marketing contact",
+  marketingContactEmail: "Marketing contact email",
+  marketingContactPhone: "Marketing contact phone",
+  preferredPublicUrl: "Preferred public URL",
+  brandGuidelinesUrl: "Brand guidelines URL",
   contactConsent: "Contact consent",
 };
 
@@ -170,12 +191,18 @@ function fieldRows(fields: Record<string, string | string[]>): { label: string; 
 function formatSubmittedAt(iso: string): string {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return iso;
-  const central = date.toLocaleString("en-US", {
+  const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/Chicago",
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
-  return `${central} CT (${iso})`;
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  }).formatToParts(date);
+  const value = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((part) => part.type === type)?.value ?? "";
+  return `${value("month")} ${value("day")}, ${value("year")} at ${value("hour")}:${value("minute")} ${value("dayPeriod")} CT`;
 }
 
 const VENDOR_APPLICATION_SECTIONS: Array<{ heading: string; keys: string[] }> = [

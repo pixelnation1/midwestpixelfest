@@ -14,6 +14,12 @@ export const ANALYTICS_EVENTS = {
   vendor_invoice_sent: "vendor_invoice_sent",
   vendor_payment_confirmed: "vendor_payment_confirmed",
   sponsor_inquiry_submit: "sponsor_inquiry_submit",
+  sponsor_contacted: "sponsor_contacted",
+  sponsor_committed: "sponsor_committed",
+  sponsor_invoice_sent: "sponsor_invoice_sent",
+  sponsor_payment_received: "sponsor_payment_received",
+  sponsor_assets_received: "sponsor_assets_received",
+  sponsor_activated: "sponsor_activated",
   volunteer_interest_submit: "volunteer_interest_submit",
   guest_inquiry_submit: "guest_inquiry_submit",
   press_inquiry_submit: "press_inquiry_submit",
@@ -86,7 +92,13 @@ const PII_PAYLOAD_KEYS = new Set([
   "internalNotes",
   "internalReason",
   "paymentMethodOrReference",
-  "customPricingInternalNote",
+  "amountCommitted",
+  "amountInvoiced",
+  "amountPaid",
+  "agreedAmount",
+  "negotiatedTerms",
+  "exclusivityCategory",
+  "internalDescription",
 ]);
 
 function sanitizeEventPayload(
