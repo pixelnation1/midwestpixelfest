@@ -47,6 +47,11 @@ const FIELD_LABELS: Record<string, string> = {
   vendorCategory: "Primary category",
   whatYouSell: "What you sell or create",
   socialMedia: "Social media",
+  socialPlatforms: "Social platforms",
+  cosplayCreatorName: "Public cosplay / creator name",
+  cosplaySellTypes: "Cosplay products planned",
+  creatorOwnWorkMajority: "Majority own work / creator identity",
+  programmingInterest: "Cosplay programming interest",
   notifyApplications: "Notify when applications open",
   company: "Business / organization",
   phone: "Phone",
@@ -237,6 +242,10 @@ const VENDOR_APPLICATION_SECTIONS: Array<{ heading: string; keys: string[] }> = 
       "primaryCategory",
       "secondaryCategories",
       "whatYouSell",
+      "cosplayCreatorName",
+      "cosplaySellTypes",
+      "creatorOwnWorkMajority",
+      "programmingInterest",
       "mixOriginal",
       "mixLicensed",
       "mixSecondhand",
@@ -489,9 +498,11 @@ function buildSponsorHtml(payload: DeliveryPayload): string {
 }
 
 function vendorApplicationTitle(payload: DeliveryPayload): string {
-  return payload.fields.applicationType === "Artist Alley"
-    ? "Artist Alley Application"
-    : "Vendor Hall Application";
+  if (payload.fields.applicationType === "Artist Alley") return "Artist Alley Application";
+  if (payload.fields.applicationType === "Cosplay Creator / Vendor") {
+    return "Cosplay Creator / Vendor Application";
+  }
+  return "Vendor Hall Application";
 }
 
 function buildVendorApplicationText(payload: DeliveryPayload): string {

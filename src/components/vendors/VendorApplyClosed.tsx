@@ -3,19 +3,21 @@ import { InnerPage } from "@/components/pages/InnerPage";
 import { Badge } from "@/components/ui/Badge";
 import {
   artistAlleyApplicationsAreOpen,
+  cosplayVendorApplicationsAreOpen,
   officialArtistApplyPath,
+  officialCosplayApplyPath,
   officialVendorApplyPath,
   vendorHallApplicationsAreOpen,
 } from "@/lib/vendors";
 
 type VendorApplyClosedProps = {
-  variant?: "all" | "vendor" | "artist";
+  variant?: "all" | "vendor" | "artist" | "cosplay";
 };
 
 const COPY = {
   all: {
     title: "Vendor Applications Are Not Open Yet",
-    body: "Official Midwest Pixel Fest 2027 Vendor Hall and Artist Alley applications are being prepared.",
+    body: "Official Midwest Pixel Fest 2027 Vendor Hall, Artist Alley, and Cosplay Creator / Vendor applications are being prepared.",
   },
   vendor: {
     title: "Vendor Hall Applications Are Not Open Yet",
@@ -25,26 +27,33 @@ const COPY = {
     title: "Artist Alley Applications Are Not Open Yet",
     body: "Official Midwest Pixel Fest 2027 Artist Alley applications are being prepared.",
   },
+  cosplay: {
+    title: "Cosplay Creator / Vendor Applications Are Not Open Yet",
+    body: "Official Midwest Pixel Fest 2027 Cosplay Creator / Vendor applications are being prepared. This pathway is for creators who want to sell merchandise — it is not a guest application.",
+  },
 } as const;
+
+function pathForVariant(variant: NonNullable<VendorApplyClosedProps["variant"]>): string {
+  if (variant === "vendor") return officialVendorApplyPath;
+  if (variant === "artist") return officialArtistApplyPath;
+  if (variant === "cosplay") return officialCosplayApplyPath;
+  return "/vendors/apply";
+}
 
 export function VendorApplyClosed({ variant = "all" }: VendorApplyClosedProps) {
   const copy = COPY[variant];
   const otherOpen =
     variant === "vendor"
-      ? artistAlleyApplicationsAreOpen()
+      ? artistAlleyApplicationsAreOpen() || cosplayVendorApplicationsAreOpen()
       : variant === "artist"
-        ? vendorHallApplicationsAreOpen()
-        : false;
+        ? vendorHallApplicationsAreOpen() || cosplayVendorApplicationsAreOpen()
+        : variant === "cosplay"
+          ? vendorHallApplicationsAreOpen() || artistAlleyApplicationsAreOpen()
+          : false;
 
   return (
     <InnerPage
-      path={
-        variant === "vendor"
-          ? officialVendorApplyPath
-          : variant === "artist"
-            ? officialArtistApplyPath
-            : "/vendors/apply"
-      }
+      path={pathForVariant(variant)}
       breadcrumbLabel="Apply"
       crumbs={[
         { name: "Home", path: "/" },
@@ -79,18 +88,18 @@ export function VendorApplyClosed({ variant = "all" }: VendorApplyClosedProps) {
             label="Register Vendor Interest"
             className="w-full sm:w-auto"
           />
-          {otherOpen ? (
+          {otherOpen && variant === "vendor" && artistAlleyApplicationsAreOpen() ? (
             <EventCta
-              href={
-                variant === "vendor"
-                  ? officialArtistApplyPath
-                  : officialVendorApplyPath
-              }
-              label={
-                variant === "vendor"
-                  ? "Apply for Artist Alley"
-                  : "Apply for Vendor Hall"
-              }
+              href={officialArtistApplyPath}
+              label="Apply for Artist Alley"
+              variant="secondary"
+              className="w-full sm:w-auto"
+            />
+          ) : null}
+          {otherOpen && variant === "artist" && vendorHallApplicationsAreOpen() ? (
+            <EventCta
+              href={officialVendorApplyPath}
+              label="Apply for Vendor Hall"
               variant="secondary"
               className="w-full sm:w-auto"
             />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Link from "next/link";
 import { Checkbox, CheckboxGroup } from "@/components/forms/Checkbox";
 import { ConsentCheckbox } from "@/components/forms/ConsentCheckbox";
@@ -16,6 +16,8 @@ import {
   APPLICATION_COUNTRIES,
   APPLICATION_FORM_SECTIONS,
   APPLICATION_PRIMARY_CATEGORIES,
+  COSPLAY_APPLICATION_SELL_TYPES,
+  CREATOR_OWN_WORK_ANSWERS,
   DISPLAY_ELEMENTS,
   INSURANCE_STATUSES,
   MERCHANDISE_MIX_RANGES,
@@ -27,8 +29,10 @@ import {
   type OfficialApplicationType,
 } from "@/lib/vendor-application";
 import {
+  COSPLAY_PROGRAMMING_INTEREST,
   formatSpacePriceLine,
   formatVendorPrice,
+  isCosplayCreatorApplicationType,
   spacesForApplicationType,
   vendorPricing,
 } from "@/lib/vendors";
@@ -88,6 +92,7 @@ function SpaceRequestField({
   const spaces = spacesForApplicationType(applicationType);
   const fieldError = useFieldError("spaceRequest");
   const errorId = fieldError ? "spaceRequest-error" : undefined;
+  const cosplay = isCosplayCreatorApplicationType(applicationType);
 
   return (
     <fieldset aria-describedby={errorId} className="flex flex-col gap-3">
@@ -100,8 +105,9 @@ function SpaceRequestField({
         <span className="sr-only"> (required)</span>
       </legend>
       <p className="text-sm text-muted">
-        Space requests are preferences and are subject to approval and
-        availability.
+        {cosplay
+          ? "Cosplay Creator / Vendor applicants may request an Artist Alley table or a Vendor Hall booth. Space requests are preferences. Final placement depends on product mix, available space, and floor planning."
+          : "Space requests are preferences and are subject to approval and availability."}
       </p>
       <div className="flex min-w-0 flex-col gap-3">
         {spaces.map((space) => (
@@ -152,9 +158,15 @@ export function VendorApplicationForm({
   const [hoursCommitment, setHoursCommitment] = useState("");
 
   const artist = applicationType === "Artist Alley";
+  const vendorHall = applicationType === "Vendor Hall";
+  const cosplay = isCosplayCreatorApplicationType(applicationType);
   const showElectricalNote = usesElectricalDisplay(displayElements);
   const extraBadgePrice = formatVendorPrice(vendorPricing.extraBadge);
   const extraTablePrice = formatVendorPrice(vendorPricing.extraTable);
+  const getAnalyticsPayload = useCallback(
+    () => (cosplay ? { applicant_type: "cosplay_creator_vendor" as const } : undefined),
+    [cosplay],
+  );
 
   return (
     <InquiryForm
@@ -171,6 +183,7 @@ export function VendorApplicationForm({
           ? ANALYTICS_EVENTS.artist_application_submit
           : ANALYTICS_EVENTS.vendor_application_submit
       }
+      getAnalyticsPayload={getAnalyticsPayload}
     >
       <input type="hidden" name="applicationType" value={applicationType} />
 
@@ -248,14 +261,19 @@ export function VendorApplicationForm({
         <TextInput
           id="apply-social-primary"
           name="socialPrimary"
-          label="Primary Social Media"
-          hint="Optional. A profile URL or handle is fine."
+          label={cosplay ? "Primary Social URL" : "Primary Social Media"}
+          required={cosplay}
+          hint={
+            cosplay
+              ? "Required. Instagram, TikTok, Facebook, YouTube, Twitch, website, or another public profile URL or handle."
+              : "Optional. A profile URL or handle is fine."
+          }
           maxLength={FIELD_LIMITS.url}
         />
         <TextInput
           id="apply-social-additional"
           name="socialAdditional"
-          label="Additional Social Media"
+          label={cosplay ? "Additional Social URL" : "Additional Social Media"}
           hint="Optional."
           maxLength={FIELD_LIMITS.url}
         />
@@ -383,6 +401,40 @@ export function VendorApplicationForm({
           rows={6}
           maxLength={FIELD_LIMITS.message}
         />
+        {cosplay ? (
+          <>
+            <TextInput
+              id="apply-cosplay-name"
+              name="cosplayCreatorName"
+              label="Public Cosplay / Creator Name"
+              hint="Optional if you only use your business name."
+              maxLength={FIELD_LIMITS.medium}
+            />
+            <CheckboxGroup
+              legend="Do you sell:"
+              name="cosplaySellTypes"
+              options={COSPLAY_APPLICATION_SELL_TYPES}
+              hint="Select every option that applies."
+            />
+            <RadioGroup
+              legend="Is the majority of the merchandise you plan to sell based on your own work, designs, photography, or creator identity?"
+              name="creatorOwnWorkMajority"
+              options={CREATOR_OWN_WORK_ANSWERS}
+            />
+            <p className="text-sm text-muted">
+              This answer is for placement and review. It does not automatically
+              accept or reject your application. Vendor status is separate from
+              guest or programming participation.
+            </p>
+            <RadioGroup
+              legend="Would you also be interested in participating in cosplay programming, panels, meetups, contests, or creator activities?"
+              name="programmingInterest"
+              options={COSPLAY_PROGRAMMING_INTEREST}
+              required={false}
+              hint="Vendor participation and guest/programming participation are separate. Checking this only tells our team you may be interested. It does not make you an official guest, and it does not include a free booth, travel, hotel, appearance fee, or featured placement."
+            />
+          </>
+        ) : null}
         <p className="text-sm text-muted">
           Approximate percentage of merchandise in each category. Exact
           accounting is not required.
@@ -445,7 +497,7 @@ export function VendorApplicationForm({
               options={PRODUCTION_METHODS}
             />
           </>
-        ) : (
+        ) : vendorHall ? (
           <>
             <CheckboxGroup
               legend="What types of inventory will you bring?"
@@ -470,7 +522,7 @@ export function VendorApplicationForm({
               />
             ) : null}
           </>
-        )}
+        ) : null}
       </ApplicationSection>
 
       <ApplicationSection

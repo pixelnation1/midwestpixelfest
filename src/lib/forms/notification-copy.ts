@@ -63,7 +63,9 @@ export function operationalEmailSubject(
       const prefix =
         fields.applicationType === "Artist Alley"
           ? "[MPF 2027 Artist Application]"
-          : "[MPF 2027 Vendor Application]";
+          : fields.applicationType === "Cosplay Creator / Vendor"
+            ? "[MPF 2027 Cosplay Vendor Application]"
+            : "[MPF 2027 Vendor Application]";
       return name ? `${prefix} ${name}` : prefix;
     }
   }
@@ -79,9 +81,9 @@ export function operationalSourcePath(
     case "vendor_interest":
       return "/vendors/interest";
     case "vendor_application":
-      return fields.applicationType === "Artist Alley"
-        ? "/vendors/apply/artist"
-        : "/vendors/apply/vendor";
+      if (fields.applicationType === "Artist Alley") return "/vendors/apply/artist";
+      if (fields.applicationType === "Cosplay Creator / Vendor") return "/vendors/apply/cosplay";
+      return "/vendors/apply/vendor";
     case "sponsor_inquiry":
       return "/sponsors/inquiry";
     case "sponsor_commitment":

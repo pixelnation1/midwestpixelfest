@@ -2,6 +2,8 @@ import { randomBytes } from "node:crypto";
 import {
   APPLICATION_COUNTRIES,
   APPLICATION_PRIMARY_CATEGORIES,
+  COSPLAY_APPLICATION_SELL_TYPES,
+  CREATOR_OWN_WORK_ANSWERS,
   INSURANCE_STATUSES,
   MERCHANDISE_MIX_RANGES,
   OFFICIAL_APPLICATION_TYPES,
@@ -13,7 +15,10 @@ import {
   type OfficialApplicationType,
 } from "@/lib/vendor-application";
 import {
+  COSPLAY_PROGRAMMING_INTEREST,
   artistApplicationsOpen,
+  cosplayVendorApplicationsOpen,
+  isCosplayCreatorApplicationType,
   spacesForApplicationType,
   vendorApplicationsOpen,
   vendorSpaces,
@@ -87,6 +92,10 @@ export function parseVendorApplication(formData: FormData): {
       errors.applicationType =
         "Artist Alley applications are not open yet. Register interest to be notified.";
     }
+    if (applicationType === "Cosplay Creator / Vendor" && !cosplayVendorApplicationsOpen) {
+      errors.applicationType =
+        "Cosplay Creator / Vendor applications are not open yet. Register interest to be notified.";
+    }
   }
 
   const contactName = clean(readString(formData, "contactName"));
@@ -111,7 +120,11 @@ export function parseVendorApplication(formData: FormData): {
   addError(errors, "email", validateEmail(email));
   addError(errors, "phone", requiredText(phone, "a phone number", FIELD_LIMITS.phone));
   addError(errors, "website", optionalUrl(website));
-  addError(errors, "socialPrimary", optionalText(socialPrimary, "Primary social media", FIELD_LIMITS.url));
+  if (isCosplayCreatorApplicationType(applicationType)) {
+    addError(errors, "socialPrimary", requiredText(socialPrimary, "a primary social URL", FIELD_LIMITS.url));
+  } else {
+    addError(errors, "socialPrimary", optionalText(socialPrimary, "Primary social media", FIELD_LIMITS.url));
+  }
   addError(
     errors,
     "socialAdditional",
@@ -177,6 +190,13 @@ export function parseVendorApplication(formData: FormData): {
   const inventoryTypes = allowedList(readStrings(formData, "inventoryTypes"), VENDOR_INVENTORY_TYPES);
   const mysteryMerchandise = clean(readString(formData, "mysteryMerchandise"));
   const mysteryDescription = clean(readString(formData, "mysteryDescription"));
+  const cosplayCreatorName = clean(readString(formData, "cosplayCreatorName"));
+  const cosplaySellTypes = allowedList(
+    readStrings(formData, "cosplaySellTypes"),
+    COSPLAY_APPLICATION_SELL_TYPES,
+  );
+  const creatorOwnWorkMajority = clean(readString(formData, "creatorOwnWorkMajority"));
+  const programmingInterest = clean(readString(formData, "programmingInterest"));
 
   if (applicationType === "Artist Alley") {
     addError(
@@ -242,6 +262,49 @@ export function parseVendorApplication(formData: FormData): {
       errors,
       "mysteryDescription",
       optionalText(mysteryDescription, "Mystery merchandise description", FIELD_LIMITS.message),
+    );
+  }
+
+  if (isCosplayCreatorApplicationType(applicationType)) {
+    addError(
+      errors,
+      "cosplayCreatorName",
+      optionalText(cosplayCreatorName, "Public cosplay / creator name"),
+    );
+    if (cosplaySellTypes.length === 0) {
+      errors.cosplaySellTypes = "Choose at least one option for what you plan to sell.";
+    }
+    addError(
+      errors,
+      "creatorOwnWorkMajority",
+      requireOneOf(
+        creatorOwnWorkMajority,
+        CREATOR_OWN_WORK_ANSWERS,
+        "whether the majority of merchandise is based on your own work, designs, photography, or creator identity",
+      ),
+    );
+    addError(
+      errors,
+      "programmingInterest",
+      programmingInterest
+        ? requireOneOf(
+            programmingInterest,
+            COSPLAY_PROGRAMMING_INTEREST,
+            "whether you may also be interested in cosplay programming",
+          )
+        : null,
+    );
+  } else {
+    addError(errors, "cosplayCreatorName", optionalText(cosplayCreatorName, "Public cosplay / creator name"));
+    addError(
+      errors,
+      "creatorOwnWorkMajority",
+      optionalText(creatorOwnWorkMajority, "Creator own-work majority"),
+    );
+    addError(
+      errors,
+      "programmingInterest",
+      optionalText(programmingInterest, "Programming interest"),
     );
   }
 
@@ -560,6 +623,10 @@ export function parseVendorApplication(formData: FormData): {
     inventoryTypes,
     mysteryMerchandise,
     mysteryDescription,
+    cosplayCreatorName,
+    cosplaySellTypes,
+    creatorOwnWorkMajority,
+    programmingInterest,
     spaceRequest,
     spaceRequestLabel,
     additionalSpace,

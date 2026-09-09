@@ -9,11 +9,15 @@
  * percentage, mystery merchandise, food, or duplicate merchandise types.
  */
 
-export type OfficialApplicationType = "Vendor Hall" | "Artist Alley";
+export type OfficialApplicationType =
+  | "Vendor Hall"
+  | "Artist Alley"
+  | "Cosplay Creator / Vendor";
 
 export const OFFICIAL_APPLICATION_TYPES = [
   "Vendor Hall",
   "Artist Alley",
+  "Cosplay Creator / Vendor",
 ] as const satisfies readonly OfficialApplicationType[];
 
 export {
@@ -30,6 +34,7 @@ export const APPLICATION_PRIMARY_CATEGORIES = [
   "Collectibles",
   "Art / Prints",
   "Comics / Zines",
+  "Cosplay / Cosplay Creator",
   "Handmade / Maker",
   "Apparel / Accessories",
   "Pop Culture Merchandise",
@@ -37,6 +42,22 @@ export const APPLICATION_PRIMARY_CATEGORIES = [
   "Creator Merchandise",
   "Other",
 ] as const;
+
+export const COSPLAY_APPLICATION_SELL_TYPES = [
+  "Prints",
+  "Signed Prints",
+  "Props",
+  "Prop Commissions",
+  "Costume Commissions",
+  "Accessories",
+  "Handmade Goods",
+  "Creator Merchandise",
+  "Photography Products",
+  "Original Art",
+  "Other",
+] as const;
+
+export const CREATOR_OWN_WORK_ANSWERS = ["Yes", "No", "Mixed"] as const;
 
 export const MERCHANDISE_MIX_RANGES = [
   "None",
@@ -189,6 +210,10 @@ export type VendorApplicationGroups = {
     inventoryTypes: string[];
     mysteryMerchandise: string;
     mysteryDescription: string;
+    cosplayCreatorName: string;
+    cosplaySellTypes: string[];
+    creatorOwnWorkMajority: string;
+    programmingInterest: string;
   };
   spaceRequest: {
     spaceRequest: string;

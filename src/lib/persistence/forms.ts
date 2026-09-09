@@ -123,6 +123,13 @@ async function persistVendorInterest(payload: DeliveryPayload): Promise<PersistR
     notify_when_open: fieldYes(fields, "notifyApplications"),
     source_page: operationalSourcePath("vendor_interest"),
     status: "new",
+    details: {
+      cosplayCreatorName: fieldString(fields, "cosplayCreatorName") || null,
+      cosplaySellTypes: fieldList(fields, "cosplaySellTypes"),
+      socialPlatforms: fieldList(fields, "socialPlatforms"),
+      socialAdditional: fieldString(fields, "socialAdditional") || null,
+      programmingInterest: fieldString(fields, "programmingInterest") || null,
+    },
   };
 
   const { data, error } = await supabase
@@ -176,7 +183,7 @@ async function persistVendorApplication(payload: DeliveryPayload): Promise<Persi
     electricity_requested: fieldString(fields, "electricityRequested") === "Yes",
     status: "submitted",
     vendor_agreement_version: fieldString(fields, "agreementVersion") || "2027-v1",
-    source_page: operationalSourcePath("vendor_application"),
+    source_page: operationalSourcePath("vendor_application", fields),
     merchandise: {
       whatYouSell: fieldString(fields, "whatYouSell"),
       secondaryCategories: fieldList(fields, "secondaryCategories"),
@@ -195,6 +202,10 @@ async function persistVendorApplication(payload: DeliveryPayload): Promise<Persi
       yearsActive: fieldString(fields, "yearsActive"),
       vendedBefore: fieldString(fields, "vendedBefore"),
       priorEvents: fieldString(fields, "priorEvents"),
+      cosplayCreatorName: fieldString(fields, "cosplayCreatorName"),
+      cosplaySellTypes: fieldList(fields, "cosplaySellTypes"),
+      creatorOwnWorkMajority: fieldString(fields, "creatorOwnWorkMajority"),
+      programmingInterest: fieldString(fields, "programmingInterest"),
     },
     display_setup: {
       tallDisplays: fieldString(fields, "tallDisplays"),

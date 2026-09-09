@@ -3,30 +3,43 @@ import { StatusPill } from "@/components/admin/StatusPill";
 import { formatAdminDateTime, money } from "@/lib/admin/time";
 import { listVendorApplications } from "@/lib/persistence/vendors";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { OFFICIAL_APPLICATION_TYPES } from "@/lib/vendor-application";
 import {
   VENDOR_APPLICATION_STATUS_LABELS,
   VENDOR_REVIEW_FILTERS,
   type VendorReviewFilterId,
 } from "@/lib/vendor-ops/status";
 import { formatSpaceLabel } from "@/lib/vendor-ops/pricing";
-import type { VendorSpaceId } from "@/lib/vendors";
+import { COSPLAY_PRIMARY_CATEGORY, type VendorSpaceId } from "@/lib/vendors";
 
 export default async function VendorApplicationsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ filter?: string; q?: string }>;
+  searchParams: Promise<{ filter?: string; q?: string; type?: string }>;
 }) {
   const params = await searchParams;
   const filter = (VENDOR_REVIEW_FILTERS.some((item) => item.id === params.filter)
     ? params.filter
     : "all") as VendorReviewFilterId;
   const q = params.q ?? "";
+  const typeParam = params.type ?? "";
+  const applicationType = (OFFICIAL_APPLICATION_TYPES as readonly string[]).includes(typeParam)
+    ? typeParam
+    : undefined;
+  const primaryCategory = typeParam === `category:${COSPLAY_PRIMARY_CATEGORY}`
+    ? COSPLAY_PRIMARY_CATEGORY
+    : undefined;
   const supabase = await createSupabaseServerClient();
   if (!supabase) return <p>Sign in again.</p>;
 
   let rows = [];
   try {
-    rows = await listVendorApplications(supabase, { filter, q });
+    rows = await listVendorApplications(supabase, {
+      filter,
+      q,
+      applicationType,
+      primaryCategory,
+    });
   } catch {
     return <p className="text-magenta">The organizer database is unavailable.</p>;
   }
@@ -41,6 +54,17 @@ export default async function VendorApplicationsPage({
               {item.label}
             </option>
           ))}
+        </select>
+        <select name="type" defaultValue={typeParam} className="border border-line bg-ink px-3 py-2">
+          <option value="">All types</option>
+          {OFFICIAL_APPLICATION_TYPES.map((item) => (
+            <option key={item} value={item}>
+              {item}
+            </option>
+          ))}
+          <option value={`category:${COSPLAY_PRIMARY_CATEGORY}`}>
+            Category: Cosplay / Cosplay Creator
+          </option>
         </select>
         <input
           name="q"

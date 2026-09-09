@@ -1,22 +1,31 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { Checkbox } from "@/components/forms/Checkbox";
+import { Checkbox, CheckboxGroup } from "@/components/forms/Checkbox";
 import { ConsentCheckbox } from "@/components/forms/ConsentCheckbox";
 import { InquiryForm } from "@/components/forms/InquiryForm";
+import { RadioGroup } from "@/components/forms/RadioGroup";
 import { Select } from "@/components/forms/Select";
 import { TextArea } from "@/components/forms/TextArea";
 import { TextInput } from "@/components/forms/TextInput";
 import { formOptionLists } from "@/lib/forms/options";
 import { FIELD_LIMITS } from "@/lib/forms/validate";
-import { applicantTypeAnalyticsId } from "@/lib/vendors";
+import {
+  COSPLAY_INTEREST_SELL_TYPES,
+  COSPLAY_PROGRAMMING_INTEREST,
+  COSPLAY_SOCIAL_PLATFORMS,
+  applicantTypeAnalyticsId,
+  showsCosplayVendorFields,
+} from "@/lib/vendors";
 
 export function VendorInterestForm() {
   const [applicantType, setApplicantType] = useState("");
+  const [primaryCategory, setPrimaryCategory] = useState("");
+  const showCosplayFields = showsCosplayVendorFields(applicantType, primaryCategory);
 
   const getAnalyticsPayload = useCallback(() => {
-    const applicant = applicantTypeAnalyticsId(applicantType);
-    return applicant ? { applicant } : undefined;
+    const applicantTypeId = applicantTypeAnalyticsId(applicantType);
+    return applicantTypeId ? { applicant: applicantTypeId, applicant_type: applicantTypeId } : undefined;
   }, [applicantType]);
 
   return (
@@ -65,23 +74,6 @@ export function VendorInterestForm() {
         hint="Optional."
         maxLength={FIELD_LIMITS.phone}
       />
-      <TextInput
-        id="vendor-website"
-        name="website"
-        label="Website"
-        type="text"
-        autoComplete="url"
-        hint="Optional. Full URL if you have one."
-        maxLength={FIELD_LIMITS.url}
-      />
-      <TextInput
-        id="vendor-social"
-        name="socialMedia"
-        label="Social Media"
-        type="text"
-        hint="Optional. A profile URL or handle is fine."
-        maxLength={FIELD_LIMITS.url}
-      />
       <Select
         id="vendor-type"
         name="vendorType"
@@ -96,7 +88,83 @@ export function VendorInterestForm() {
         label="Primary Category"
         required
         options={formOptionLists.vendorCategories}
+        onValueChange={setPrimaryCategory}
       />
+      {showCosplayFields ? (
+        <>
+          <TextInput
+            id="vendor-cosplay-name"
+            name="cosplayCreatorName"
+            label="Cosplay / Creator Name"
+            hint="Optional if you only use your business name. What name do you use publicly as a cosplayer or creator?"
+            maxLength={FIELD_LIMITS.medium}
+          />
+          <CheckboxGroup
+            legend="What do you plan to sell?"
+            name="cosplaySellTypes"
+            options={COSPLAY_INTEREST_SELL_TYPES}
+            hint="Choose every option that applies. This is for people who want vendor or Artist Alley space to sell products."
+          />
+          <CheckboxGroup
+            legend="Social presence"
+            name="socialPlatforms"
+            options={COSPLAY_SOCIAL_PLATFORMS}
+            required={false}
+            hint="Optional. Select the public profiles you use. You do not need every platform."
+          />
+          <TextInput
+            id="vendor-website"
+            name="website"
+            label="Website"
+            type="text"
+            autoComplete="url"
+            hint="Optional. Full URL if you have one."
+            maxLength={FIELD_LIMITS.url}
+          />
+          <TextInput
+            id="vendor-social"
+            name="socialMedia"
+            label="Primary social URL or handle"
+            type="text"
+            hint="Optional. Instagram, TikTok, Facebook, YouTube, Twitch, or another public profile URL or handle is fine."
+            maxLength={FIELD_LIMITS.url}
+          />
+          <TextInput
+            id="vendor-social-additional"
+            name="socialAdditional"
+            label="Additional social URL"
+            hint="Optional."
+            maxLength={FIELD_LIMITS.url}
+          />
+          <RadioGroup
+            legend="Would you also be interested in participating in cosplay programming, panels, meetups, contests, or creator activities?"
+            name="programmingInterest"
+            options={COSPLAY_PROGRAMMING_INTEREST}
+            required={false}
+            hint="Vendor participation and guest/programming participation are separate. Checking this only tells our team you may be interested. It does not make you an official guest, and it does not include a free booth, travel, hotel, appearance fee, or featured placement."
+          />
+        </>
+      ) : (
+        <>
+          <TextInput
+            id="vendor-website"
+            name="website"
+            label="Website"
+            type="text"
+            autoComplete="url"
+            hint="Optional. Full URL if you have one."
+            maxLength={FIELD_LIMITS.url}
+          />
+          <TextInput
+            id="vendor-social"
+            name="socialMedia"
+            label="Social Media"
+            type="text"
+            hint="Optional. A profile URL or handle is fine."
+            maxLength={FIELD_LIMITS.url}
+          />
+        </>
+      )}
       <TextArea
         id="vendor-sell"
         name="whatYouSell"

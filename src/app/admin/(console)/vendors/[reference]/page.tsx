@@ -92,6 +92,13 @@ export default async function VendorDetailPage({
       </Section>
       <Section title="Merchandise">
         <Line label="What they sell" value={String(merch.whatYouSell ?? "")} />
+        <Line label="Public cosplay / creator name" value={String(merch.cosplayCreatorName ?? "")} />
+        <Line
+          label="Cosplay products"
+          value={Array.isArray(merch.cosplaySellTypes) ? merch.cosplaySellTypes.join(", ") : ""}
+        />
+        <Line label="Own work / creator identity" value={String(merch.creatorOwnWorkMajority ?? "")} />
+        <Line label="Programming interest" value={String(merch.programmingInterest ?? "")} />
         <Line label="Inventory" value={Array.isArray(merch.inventoryTypes) ? merch.inventoryTypes.join(", ") : ""} />
         <Line label="Original mix" value={String(merch.mixOriginal ?? "")} />
         <Line label="Licensed mix" value={String(merch.mixLicensed ?? "")} />

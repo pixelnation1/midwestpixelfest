@@ -38,6 +38,7 @@ export type VendorInterestRow = {
   source_page: string | null;
   status: "new" | "contacted" | "converted" | "closed";
   created_at: string;
+  details: Record<string, unknown> | null;
 };
 
 export type VendorApplicationListRow = {
@@ -83,15 +84,16 @@ function searchOr<T>(query: T, q: string): T {
 
 export async function listVendorInterests(
   supabase: SupabaseClient,
-  q = "",
+  input: { q?: string; applicantType?: string } = {},
 ): Promise<VendorInterestRow[]> {
   let query = supabase
     .from("vendor_interests")
     .select(
-      "id, reference, contact_name, business_name, email, phone, website, social_media, applicant_type, primary_category, description, city, state, notify_when_open, source_page, status, created_at",
+      "id, reference, contact_name, business_name, email, phone, website, social_media, applicant_type, primary_category, description, city, state, notify_when_open, source_page, status, created_at, details",
     )
     .order("created_at", { ascending: false });
-  query = searchOr(query, q);
+  if (input.applicantType) query = query.eq("applicant_type", input.applicantType);
+  query = searchOr(query, input.q ?? "");
   const { data, error } = await query;
   if (error) throw new Error("unavailable");
   return (data ?? []) as VendorInterestRow[];
@@ -99,7 +101,12 @@ export async function listVendorInterests(
 
 export async function listVendorApplications(
   supabase: SupabaseClient,
-  input: { filter: VendorReviewFilterId; q?: string },
+  input: {
+    filter: VendorReviewFilterId;
+    q?: string;
+    applicationType?: string;
+    primaryCategory?: string;
+  },
 ): Promise<VendorApplicationListRow[]> {
   let query = supabase
     .from("vendor_applications")
@@ -110,6 +117,8 @@ export async function listVendorApplications(
 
   const statuses = statusesForReviewFilter(input.filter);
   if (statuses) query = query.in("status", [...statuses]);
+  if (input.applicationType) query = query.eq("application_type", input.applicationType);
+  if (input.primaryCategory) query = query.eq("primary_category", input.primaryCategory);
   query = searchOr(query, input.q ?? "");
 
   const { data, error } = await query;

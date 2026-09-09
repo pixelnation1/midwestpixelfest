@@ -77,6 +77,7 @@ const PII_PAYLOAD_KEYS = new Set([
   "shareDescription",
   "socialPrimary",
   "socialAdditional",
+  "cosplayCreatorName",
   "businessDescription",
   "priorEvents",
   "mysteryDescription",

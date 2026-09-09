@@ -37,7 +37,7 @@ export default function VendorsPage() {
       breadcrumbLabel="Vendors"
       eyebrow="Sell at the fest"
       title="Vendors & Artist Alley"
-      intro="Bring your shop, collection, creations, or brand to Midwest Pixel Fest 2027. We're building a marketplace around gaming, collectibles, original art, tabletop, TCGs, retro culture, and the creators who make convention floors worth exploring. Vendor and Artist Alley applications are not open yet. Register your interest now and we'll let you know when applications launch."
+      intro="Bring your shop, collection, creations, or brand to Midwest Pixel Fest 2027. We're building a marketplace around gaming, collectibles, original art, tabletop, TCGs, retro culture, and the creators who make convention floors worth exploring. Cosplayers who sell prints, props, accessories, commissions, handmade goods, or creator merchandise are welcome to register interest for vendor space. Vendor and Artist Alley applications are not open yet. Register your interest now and we'll let you know when applications launch."
       meta={`${site.dateLabel} · ${site.location}`}
       actions={[
         ...recruitmentCtas.map((cta) => ({
@@ -71,6 +71,18 @@ export default function VendorsPage() {
       <WhyVend />
       <VendorCategories />
       <VendorHallVsAlley />
+      <section className="scroll-mt-24 border border-line bg-panel p-6 sm:p-8" aria-labelledby="cosplay-vendors-heading">
+        <p className="font-pixel text-[10px] uppercase tracking-[0.18em] text-magenta">Cosplay Creators</p>
+        <h2 id="cosplay-vendors-heading" className="mt-3 font-display text-3xl uppercase tracking-wide text-paper">
+          Cosplay creators
+        </h2>
+        <p className="mt-4 max-w-3xl text-muted">
+          Cosplayers who sell prints, props, accessories, commissions, handmade
+          goods, or creator merchandise are welcome to register interest for
+          vendor space. This is optional — not every cosplayer sells products,
+          and registering vendor interest does not make someone an official guest.
+        </p>
+      </section>
       <VendorPricing />
       <VendorAddOns />
 

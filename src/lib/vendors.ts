@@ -13,6 +13,7 @@ export type { OfficialApplicationType };
 
 export const vendorApplicationsOpen = false;
 export const artistApplicationsOpen = false;
+export const cosplayVendorApplicationsOpen = false;
 export const vendorApplicationUrl: string | null = null;
 export const artistApplicationUrl: string | null = null;
 export const vendorPricingPublished = true;
@@ -21,6 +22,7 @@ export const vendorPricingPublished = true;
 export const officialApplyHubPath = "/vendors/apply";
 export const officialVendorApplyPath = "/vendors/apply/vendor";
 export const officialArtistApplyPath = "/vendors/apply/artist";
+export const officialCosplayApplyPath = "/vendors/apply/cosplay";
 
 /** Informational Founding Vendor deadline. Do not auto-open applications or payments from this date. */
 export const foundingVendorDeadline = "2027-04-30";
@@ -138,15 +140,27 @@ export function getArtistAlleyApplyCta(): VendorPrimaryCta {
   };
 }
 
+export function getCosplayVendorApplyCta(): VendorPrimaryCta {
+  if (!cosplayVendorApplicationsOpen) return interestCta();
+  return {
+    href: officialCosplayApplyPath,
+    label: "Apply as Cosplay Creator / Vendor",
+    mode: "apply",
+    external: false,
+  };
+}
+
 /**
- * Page-level CTA. While both flags are false this stays Register Vendor Interest.
+ * Page-level CTA. While application flags are false this stays Register Vendor Interest.
  * When a flag is turned on, the matching official apply route is used unless an
  * external URL override is set.
  */
 export function getVendorPrimaryCta(): VendorPrimaryCta {
   const vendor = getVendorHallApplyCta();
   const artist = getArtistAlleyApplyCta();
-  if (vendor.mode === "apply" && artist.mode === "apply") {
+  const cosplay = getCosplayVendorApplyCta();
+  const openApply = [vendor, artist, cosplay].filter((cta) => cta.mode === "apply");
+  if (openApply.length > 1) {
     return {
       href: officialApplyHubPath,
       label: "Apply for Vendor Hall or Artist Alley",
@@ -154,24 +168,24 @@ export function getVendorPrimaryCta(): VendorPrimaryCta {
       external: false,
     };
   }
-  if (vendor.mode === "apply") return vendor;
-  if (artist.mode === "apply") return artist;
+  if (openApply.length === 1) return openApply[0]!;
   return interestCta();
 }
 
 /** CTAs for recruitment surfaces. Closed: interest only. Open: hall and/or alley apply. */
 export function getVendorRecruitmentCtas(): VendorPrimaryCta[] {
-  if (!vendorApplicationsOpen && !artistApplicationsOpen) {
+  if (!vendorApplicationsOpen && !artistApplicationsOpen && !cosplayVendorApplicationsOpen) {
     return [interestCta()];
   }
   const ctas: VendorPrimaryCta[] = [];
   if (vendorApplicationsOpen) ctas.push(getVendorHallApplyCta());
   if (artistApplicationsOpen) ctas.push(getArtistAlleyApplyCta());
+  if (cosplayVendorApplicationsOpen) ctas.push(getCosplayVendorApplyCta());
   return ctas;
 }
 
 export function vendorApplicationsAreOpen(): boolean {
-  return vendorApplicationsOpen || artistApplicationsOpen;
+  return vendorApplicationsOpen || artistApplicationsOpen || cosplayVendorApplicationsOpen;
 }
 
 export function vendorHallApplicationsAreOpen(): boolean {
@@ -180,6 +194,10 @@ export function vendorHallApplicationsAreOpen(): boolean {
 
 export function artistAlleyApplicationsAreOpen(): boolean {
   return artistApplicationsOpen;
+}
+
+export function cosplayVendorApplicationsAreOpen(): boolean {
+  return cosplayVendorApplicationsOpen;
 }
 
 export function vendorApplicationStatusLabel(): string {
@@ -305,6 +323,9 @@ export function spacesForApplicationType(
   if (type === "Artist Alley") {
     return vendorSpaces.filter((space) => space.id === "artistAlley");
   }
+  if (type === "Cosplay Creator / Vendor") {
+    return vendorSpaces;
+  }
   return vendorSpaces.filter((space) => space.id !== "artistAlley");
 }
 
@@ -379,6 +400,11 @@ export const vendorBrowseCategories = [
     examples: "Clothing, convention merch",
   },
   {
+    title: "Cosplay",
+    icon: "cosplay" as const,
+    examples: "Prints, props, accessories",
+  },
+  {
     title: "Makers",
     icon: "cartridge" as const,
     examples: "Crafts, handmade goods",
@@ -409,6 +435,8 @@ export const vendorFitExamples = [
   "Convention merchandise",
   "Pop-culture merchandise",
   "Independent creators",
+  "Cosplay prints and props",
+  "Creator merchandise",
 ] as const;
 
 export const whoThisFloorIsFor = [
@@ -420,6 +448,7 @@ export const whoThisFloorIsFor = [
   "Creators and handmade goods",
   "Pop culture merchandise",
   "Independent makers",
+  "Cosplay creators selling merchandise",
 ] as const;
 
 export const whyVendPoints = [
@@ -466,6 +495,17 @@ export const artistAlleyFit = [
   "Handmade goods",
   "Commissions",
   "Creator merchandise",
+] as const;
+
+export const cosplayCreatorFit = [
+  "Cosplay prints",
+  "Signed prints",
+  "Props",
+  "Prop commissions",
+  "Costume accessories",
+  "Handmade goods",
+  "Creator merchandise",
+  "Photography products",
 ] as const;
 
 export const vendorApplicationSteps = [
@@ -518,10 +558,14 @@ export const vendorDetailsComing = [
 export const VENDOR_APPLICANT_TYPES = [
   "Vendor",
   "Artist Alley",
+  "Cosplay Creator / Vendor",
   "Not Sure",
 ] as const;
 
 export type VendorApplicantType = (typeof VENDOR_APPLICANT_TYPES)[number];
+
+export const COSPLAY_CREATOR_VENDOR_LABEL = "Cosplay Creator / Vendor";
+export const COSPLAY_PRIMARY_CATEGORY = "Cosplay / Cosplay Creator";
 
 export const VENDOR_PRIMARY_CATEGORIES = [
   "Video Games / Retro Gaming",
@@ -529,6 +573,7 @@ export const VENDOR_PRIMARY_CATEGORIES = [
   "Tabletop / Board Games / RPG",
   "Collectibles",
   "Art / Prints",
+  "Cosplay / Cosplay Creator",
   "Handmade / Maker",
   "Apparel / Accessories",
   "Pop Culture Merchandise",
@@ -537,9 +582,35 @@ export const VENDOR_PRIMARY_CATEGORIES = [
 
 export type VendorPrimaryCategory = (typeof VENDOR_PRIMARY_CATEGORIES)[number];
 
+export const COSPLAY_INTEREST_SELL_TYPES = [
+  "Prints / signed prints",
+  "Props",
+  "Prop commissions",
+  "Costume commissions",
+  "Accessories",
+  "Handmade items",
+  "Creator merchandise",
+  "Photography products",
+  "Art",
+  "Other",
+] as const;
+
+export const COSPLAY_SOCIAL_PLATFORMS = [
+  "Instagram",
+  "TikTok",
+  "Facebook",
+  "YouTube",
+  "Twitch",
+  "Website",
+  "Other public profile",
+] as const;
+
+export const COSPLAY_PROGRAMMING_INTEREST = ["Yes", "No", "Maybe"] as const;
+
 export type VendorApplicantAnalyticsId =
   | "vendor"
   | "artist_alley"
+  | "cosplay_creator_vendor"
   | "not_sure";
 
 export function applicantTypeAnalyticsId(
@@ -547,8 +618,23 @@ export function applicantTypeAnalyticsId(
 ): VendorApplicantAnalyticsId | null {
   if (value === "Vendor") return "vendor";
   if (value === "Artist Alley") return "artist_alley";
+  if (value === "Cosplay Creator / Vendor") return "cosplay_creator_vendor";
   if (value === "Not Sure") return "not_sure";
   return null;
+}
+
+export function showsCosplayVendorFields(
+  applicantType: string,
+  primaryCategory: string,
+): boolean {
+  return (
+    applicantType === COSPLAY_CREATOR_VENDOR_LABEL ||
+    primaryCategory === COSPLAY_PRIMARY_CATEGORY
+  );
+}
+
+export function isCosplayCreatorApplicationType(value: string): boolean {
+  return value === COSPLAY_CREATOR_VENDOR_LABEL;
 }
 
 export type ConfirmedVendor = {
@@ -617,7 +703,12 @@ export const vendorFaqs = [
   {
     question: "What's the difference between Vendor Hall and Artist Alley?",
     answer:
-      "Vendor Hall is for businesses selling products such as video games, retro games, trading cards, TCG accessories, collectibles, tabletop, board games, RPG products, gaming accessories, apparel, pop-culture merchandise, retail inventory, and specialty convention merchandise. Artist Alley is intended primarily for creators selling their own work, such as original artwork, prints, comics, zines, crafts, handmade goods, commissions, and creator merchandise. Resale-heavy retailers are not an automatic fit for Artist Alley. If you are not sure which fits, register interest and choose the closest option. Final placement can be determined during the application process.",
+      "Vendor Hall is for businesses selling products such as video games, retro games, trading cards, TCG accessories, collectibles, tabletop, board games, RPG products, gaming accessories, apparel, pop-culture merchandise, retail inventory, and specialty convention merchandise. Artist Alley is intended primarily for creators selling their own work, such as original artwork, prints, comics, zines, crafts, handmade goods, commissions, and creator merchandise. Cosplay creators who sell prints, props, accessories, commissions, or creator merchandise can register as Cosplay Creator / Vendor and may be placed in Artist Alley or Vendor Hall depending on product mix, space request, and floor planning. Resale-heavy retailers are not an automatic fit for Artist Alley. If you are not sure which fits, register interest and choose the closest option. Final placement can be determined during the application process.",
+  },
+  {
+    question: "Can cosplay creators vend at Midwest Pixel Fest?",
+    answer:
+      "Yes, if they want vendor or Artist Alley space to sell products such as prints, props, accessories, commissions, handmade goods, or creator merchandise. Registering as a cosplay vendor is optional — not every cosplayer sells products. Vendor participation is separate from invited cosplay guests and cosplay programming. Interest as a vendor does not grant guest status, a free booth, travel, hotel, an appearance fee, or featured placement.",
   },
   {
     question: "How much is an Artist Alley table?",

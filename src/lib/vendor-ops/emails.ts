@@ -111,9 +111,14 @@ function eventFooter(): string[] {
   ];
 }
 
+function placementLabel(type: OfficialApplicationType): string {
+  if (type === "Artist Alley") return "Artist Alley";
+  if (type === "Cosplay Creator / Vendor") return "Cosplay Creator / Vendor";
+  return "Vendor Hall";
+}
+
 export function buildApprovalEmail(input: ApprovalEmailInput): VendorLifecycleEmail {
-  const hallOrAlley =
-    input.applicationType === "Artist Alley" ? "Artist Alley" : "Vendor Hall";
+  const hallOrAlley = placementLabel(input.applicationType);
   const subject = `You're Approved — Midwest Pixel Fest 2027 ${hallOrAlley}`;
   const invoiceLine =
     input.invoiceState === "sent"

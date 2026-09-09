@@ -9,6 +9,7 @@ import { ANALYTICS_EVENTS } from "@/lib/analytics";
 import { createPageMetadata } from "@/lib/seo";
 import {
   artistApplicationsOpen,
+  cosplayVendorApplicationsOpen,
   officialApplyHubPath,
   vendorApplicationsOpen,
 } from "@/lib/vendors";
@@ -16,7 +17,7 @@ import {
 export const metadata: Metadata = createPageMetadata({
   title: "Register Vendor Interest | Midwest Pixel Fest 2027",
   description:
-    "Register vendor or Artist Alley interest for Midwest Pixel Fest 2027 in Emporia, Kansas. This is not an official application and does not reserve a booth.",
+    "Register vendor, Artist Alley, or Cosplay Creator / Vendor interest for Midwest Pixel Fest 2027 in Emporia, Kansas. This is not an official application and does not reserve a booth.",
   path: "/vendors/interest",
 });
 
@@ -32,12 +33,12 @@ export default function VendorInterestPage() {
       ]}
       eyebrow="Register interest"
       title="Register Vendor Interest"
-      intro="Tell us about your shop, collection, or creative work so we can notify you when official vendor and Artist Alley applications launch. This form is not an application, does not reserve a booth, and does not collect payment."
+      intro="Tell us about your shop, collection, creative work, or cosplay products so we can notify you when official vendor and Artist Alley applications launch. This form is not an application, does not reserve a booth, and does not collect payment."
       mood="business"
     >
       <TrackPageEvent name={ANALYTICS_EVENTS.vendor_interest_start} />
 
-      {vendorApplicationsOpen || artistApplicationsOpen ? (
+      {vendorApplicationsOpen || artistApplicationsOpen || cosplayVendorApplicationsOpen ? (
         <ContentSection title="Official applications are open">
           <p>
             Official Vendor Hall and Artist Alley applications are now available.

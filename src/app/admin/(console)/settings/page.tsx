@@ -5,7 +5,7 @@ import {
   sponsorshipEventCancellationPolicyStatus,
   sponsorshipRefundPolicyStatus,
 } from "@/lib/sponsorships";
-import { vendorApplicationsOpen, artistApplicationsOpen } from "@/lib/vendors";
+import { vendorApplicationsOpen, artistApplicationsOpen, cosplayVendorApplicationsOpen } from "@/lib/vendors";
 import { isSupabaseBrowserConfigured } from "@/lib/supabase/public-env";
 import { isSupabasePersistenceConfigured } from "@/lib/supabase/env";
 import { isResendConfigured } from "@/lib/forms/mail-config";
@@ -36,6 +36,7 @@ export default async function SettingsPage() {
         <h2 className="font-display text-xl uppercase tracking-wide">Public application flags</h2>
         <p className="mt-3 text-sm">Vendor Hall applications: {vendorApplicationsOpen ? "open" : "closed"}</p>
         <p className="text-sm">Artist Alley applications: {artistApplicationsOpen ? "open" : "closed"}</p>
+        <p className="text-sm">Cosplay Creator / Vendor applications: {cosplayVendorApplicationsOpen ? "open" : "closed"}</p>
       </section>
       <section className="border border-gold/40 bg-panel p-5">
         <h2 className="font-display text-xl uppercase tracking-wide text-gold">Legal TODOs</h2>

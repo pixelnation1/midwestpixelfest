@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx --test src/lib/vendor-ops/vendor-ops.test.ts src/lib/forms/notification-copy.test.ts src/lib/sponsor-ops/sponsor-ops.test.ts src/lib/admin/auth.test.ts src/lib/persistence/persistence.test.ts"
+    "test": "tsx --test src/lib/vendor-ops/vendor-ops.test.ts src/lib/forms/notification-copy.test.ts src/lib/forms/cosplay-vendor.test.ts src/lib/sponsor-ops/sponsor-ops.test.ts src/lib/admin/auth.test.ts src/lib/persistence/persistence.test.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.5",

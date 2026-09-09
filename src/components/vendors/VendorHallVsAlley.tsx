@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/Badge";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { artistAlleyFit, vendorHallFit } from "@/lib/vendors";
+import { artistAlleyFit, cosplayCreatorFit, vendorHallFit } from "@/lib/vendors";
 
 export function VendorHallVsAlley() {
   return (
@@ -11,18 +11,19 @@ export function VendorHallVsAlley() {
       <SectionHeading
         id="hall-vs-alley-heading"
         eyebrow="Placement"
-        title="Vendor Hall vs Artist Alley"
-        description="Choose the closest fit when you register interest. Final placement can be determined during the application process."
+        title="Vendor Hall, Artist Alley, and Cosplay Creators"
+        description="Choose the closest fit when you register interest. Cosplay creators who sell products may ultimately be placed in Artist Alley or Vendor Hall depending on product mix, space request, and floor planning."
         tone="cyan"
       />
-      <div className="mt-10 grid min-w-0 gap-4 md:grid-cols-2">
+      <div className="mt-10 grid min-w-0 gap-4 lg:grid-cols-3">
         <article className="min-w-0 border border-line bg-panel p-6 sm:p-8">
           <Badge tone="gold">Retail & specialty goods</Badge>
           <h3 className="mt-5 font-display text-3xl uppercase tracking-wide text-paper">
             Vendor Hall
           </h3>
           <p className="mt-4 text-muted">
-            Best suited for businesses selling products such as:
+            Retailers, dealers, gaming/collectibles sellers, and merchandise
+            businesses selling products such as:
           </p>
           <ul className="mt-4 grid gap-2">
             {vendorHallFit.map((item) => (
@@ -44,7 +45,7 @@ export function VendorHallVsAlley() {
             Artist Alley
           </h3>
           <p className="mt-4 text-muted">
-            Best suited for creators selling primarily their own work such as:
+            Artists and makers primarily selling their own original work such as:
           </p>
           <ul className="mt-4 grid gap-2">
             {artistAlleyFit.map((item) => (
@@ -59,6 +60,34 @@ export function VendorHallVsAlley() {
           <p className="mt-4 text-sm text-muted">
             Artist Alley is intended for original creative work. Resale-heavy
             retail is not an automatic fit for this category.
+          </p>
+        </article>
+        <article
+          id="cosplay-creators"
+          className="min-w-0 scroll-mt-24 border border-line bg-panel p-6 sm:p-8"
+        >
+          <Badge tone="magenta">Creator merchandise</Badge>
+          <h3 className="mt-5 font-display text-3xl uppercase tracking-wide text-paper">
+            Cosplay Creators
+          </h3>
+          <p className="mt-4 text-muted">
+            Cosplayers/creators selling prints, props, accessories, commissions,
+            or creator merchandise. Not every cosplayer needs to vend.
+          </p>
+          <ul className="mt-4 grid gap-2">
+            {cosplayCreatorFit.map((item) => (
+              <li key={item} className="flex gap-3 text-muted">
+                <span className="text-magenta" aria-hidden="true">
+                  ▸
+                </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 text-sm text-muted">
+            Vendor participation is separate from invited cosplay guests and
+            cosplay programming. Registering vendor interest does not grant guest
+            status.
           </p>
         </article>
       </div>

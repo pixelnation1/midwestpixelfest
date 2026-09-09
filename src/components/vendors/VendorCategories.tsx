@@ -21,7 +21,7 @@ export function VendorCategories() {
         tone="lime"
       />
 
-      <ul className="mt-10 grid min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7">
+      <ul className="mt-10 grid min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-8">
         {vendorBrowseCategories.map((item) => (
           <li
             key={item.title}

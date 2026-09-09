@@ -33,6 +33,12 @@ import {
   getSponsorshipLevelOptions,
   sponsorshipInterestAreas,
 } from "@/lib/sponsorships";
+import {
+  COSPLAY_INTEREST_SELL_TYPES,
+  COSPLAY_PROGRAMMING_INTEREST,
+  COSPLAY_SOCIAL_PLATFORMS,
+  showsCosplayVendorFields,
+} from "@/lib/vendors";
 
 function clean(value: string): string {
   return stripControlChars(value).trim();
@@ -111,6 +117,15 @@ export function parseAndValidate(
     const city = clean(readString(formData, "city"));
     const state = clean(readString(formData, "state"));
     const notify = readString(formData, "notifyApplications");
+    const cosplayCreatorName = clean(readString(formData, "cosplayCreatorName"));
+    const socialAdditional = clean(readString(formData, "socialAdditional"));
+    const programmingInterest = clean(readString(formData, "programmingInterest"));
+    const cosplaySellTypes = readStrings(formData, "cosplaySellTypes").filter((item) =>
+      (COSPLAY_INTEREST_SELL_TYPES as readonly string[]).includes(item),
+    );
+    const socialPlatforms = readStrings(formData, "socialPlatforms").filter((item) =>
+      (COSPLAY_SOCIAL_PLATFORMS as readonly string[]).includes(item),
+    );
     addError(errors, "contactName", requiredText(contactName, "a contact name"));
     addError(errors, "businessName", requiredText(businessName, "a business or artist name", FIELD_LIMITS.medium));
     addError(errors, "email", validateEmail(email));
@@ -122,6 +137,40 @@ export function parseAndValidate(
     addError(errors, "whatYouSell", requiredText(whatYouSell, "what you sell or create", FIELD_LIMITS.message));
     addError(errors, "city", optionalText(city, "City"));
     addError(errors, "state", optionalText(state, "State"));
+    if (showsCosplayVendorFields(vendorType, vendorCategory)) {
+      addError(
+        errors,
+        "cosplayCreatorName",
+        optionalText(cosplayCreatorName, "Cosplay / creator name"),
+      );
+      if (cosplaySellTypes.length === 0) {
+        errors.cosplaySellTypes = "Choose at least one option for what you plan to sell.";
+      }
+      addError(
+        errors,
+        "socialAdditional",
+        optionalText(socialAdditional, "Additional social URL", FIELD_LIMITS.url),
+      );
+      addError(
+        errors,
+        "programmingInterest",
+        programmingInterest
+          ? requireOneOf(
+              programmingInterest,
+              COSPLAY_PROGRAMMING_INTEREST,
+              "whether you may also be interested in cosplay programming",
+            )
+          : null,
+      );
+    } else {
+      addError(errors, "cosplayCreatorName", optionalText(cosplayCreatorName, "Cosplay / creator name"));
+      addError(errors, "socialAdditional", optionalText(socialAdditional, "Additional social URL", FIELD_LIMITS.url));
+      addError(
+        errors,
+        "programmingInterest",
+        optionalText(programmingInterest, "Programming interest"),
+      );
+    }
     if (notify !== "on") {
       errors.notifyApplications = "Confirm you want to be notified when applications open.";
     }
@@ -137,6 +186,11 @@ export function parseAndValidate(
     fields.city = city;
     fields.state = state;
     fields.notifyApplications = "yes";
+    fields.cosplayCreatorName = cosplayCreatorName;
+    fields.socialAdditional = socialAdditional;
+    fields.programmingInterest = programmingInterest;
+    fields.cosplaySellTypes = cosplaySellTypes;
+    fields.socialPlatforms = socialPlatforms;
   }
 
   if (kind === "sponsor_inquiry") {

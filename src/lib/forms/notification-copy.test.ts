@@ -44,6 +44,13 @@ describe("operational email subjects", () => {
       }),
       "[MPF 2027 Artist Application] Neon Ink",
     );
+    assert.equal(
+      operationalEmailSubject("vendor_application", {
+        applicationType: "Cosplay Creator / Vendor",
+        businessName: "Pixel Prints",
+      }),
+      "[MPF 2027 Cosplay Vendor Application] Pixel Prints",
+    );
   });
 });
 
