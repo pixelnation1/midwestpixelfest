@@ -38,6 +38,7 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
+      <InvolveSection audience="attendees-vendors" />
       <EventIntro />
       <PixelDivider />
       <ExploreTheFest />
@@ -55,7 +56,7 @@ export default function HomePage() {
       <CommunitySection />
       <HomeSponsorBand />
       <LatestNews />
-      <InvolveSection />
+      <InvolveSection audience="contributors" />
       <EmailSignup />
     </>
   );

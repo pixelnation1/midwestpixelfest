@@ -42,20 +42,25 @@ const paths = [
   },
 ];
 
-export function InvolveSection() {
+export function InvolveSection({ audience = "all" }: { audience?: "all" | "attendees-vendors" | "contributors" }) {
   const salesOpen = isTicketSalesOpen();
+  const featured = audience === "attendees-vendors";
+  const visiblePaths = paths.filter((item) => {
+    const primary = item.eyebrow === "Attendees" || item.eyebrow === "Vendors";
+    return audience === "all" || (featured ? primary : !primary);
+  });
 
   return (
     <section className="border-b border-line py-20 sm:py-28">
       <Container>
         <SectionHeading
           eyebrow="Get involved"
-          title="Pick a path."
-          description="Attendees, vendors, sponsors, guests, and volunteers each have a dedicated next step."
+          title={featured ? "Plan your weekend. Find your space." : "Be part of the fest."}
+          description={featured ? "Explore admission options or register your interest in selling at our inaugural marketplace." : "Explore opportunities for sponsors, creators, guests, and volunteers."}
           tone="cyan"
         />
-        <ul className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {paths.map((item) => (
+        <ul className={`mt-8 grid gap-4 md:grid-cols-2 ${featured ? "" : "xl:grid-cols-3"}`}>
+          {visiblePaths.map((item) => (
             <li key={item.eyebrow} className="flex h-full flex-col border border-line bg-panel p-6 sm:p-8">
               <p className="font-pixel text-[11px] uppercase tracking-[0.2em] text-gold">
                 {item.eyebrow}
