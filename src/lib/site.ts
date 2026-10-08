@@ -179,7 +179,10 @@ export const footerGroups = [
   },
 ] as const;
 
-export const footerLegalLinks = [{ href: "/privacy", label: "Privacy" }] as const;
+export const footerLegalLinks = [
+  { href: "/privacy", label: "Privacy" },
+  { href: "/image-credits", label: "Image credits" },
+] as const;
 
 export const exploreCards = [
   {
