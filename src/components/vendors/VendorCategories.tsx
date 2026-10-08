@@ -2,8 +2,6 @@ import { ArcadeIcon } from "@/components/retro/ArcadeIcon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import {
   vendorBrowseCategories,
-  vendorFitExamples,
-  whoThisFloorIsFor,
 } from "@/lib/vendors";
 
 export function VendorCategories() {
@@ -38,34 +36,6 @@ export function VendorCategories() {
         ))}
       </ul>
 
-      <p className="mt-6 max-w-3xl text-sm text-muted">
-        Examples of fit include the work below. These are examples, not
-        guarantees of acceptance.
-      </p>
-      <ul className="mt-4 flex min-w-0 flex-wrap gap-2">
-        {vendorFitExamples.map((item) => (
-          <li
-            key={item}
-            className="max-w-full break-words border border-line bg-panel px-3 py-2 font-pixel text-[10px] uppercase tracking-[0.12em] text-paper"
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-
-      <ul className="mt-8 grid min-w-0 gap-3 sm:grid-cols-2">
-        {whoThisFloorIsFor.map((item) => (
-          <li
-            key={item}
-            className="flex min-w-0 gap-3 border border-line bg-panel px-4 py-3 text-muted"
-          >
-            <span className="text-lime" aria-hidden="true">
-              ▸
-            </span>
-            {item}
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }
