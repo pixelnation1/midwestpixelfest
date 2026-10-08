@@ -82,7 +82,6 @@ function SpaceCard({ space }: { space: VendorSpace }) {
           </li>
         ))}
       </ul>
-      <p className="mt-4 text-sm text-muted">{status}.</p>
       <div className="mt-auto pt-6">
         <EventCta
           href={cta.href}
@@ -113,26 +112,11 @@ export function VendorPricing() {
         tone="gold"
       />
 
-      <div className="mt-10 border border-gold/50 bg-panel p-6 sm:p-8">
-        <Badge tone="gold">Founding Vendor Rate</Badge>
-        <h3 className="mt-5 font-display text-2xl uppercase tracking-wide text-paper sm:text-3xl">
-          Join the inaugural marketplace
-        </h3>
-        <p className="mt-4 max-w-3xl text-muted">
-          Join the inaugural Midwest Pixel Fest marketplace and save with our
-          Founding Vendor pricing. Founding Vendor Rate is an introductory
-          pricing tier — not permanent status, exclusive rights, special
-          placement, a marketing package, or a guaranteed renewal.
-        </p>
-        <p className="mt-4 max-w-3xl text-paper">
-          Founding Vendor pricing available through {deadline}.
-        </p>
-        <p className="mt-2 max-w-3xl text-sm text-muted">
-          Founding Vendor pricing is planned through {deadline}, subject to
-          availability. The deadline is informational until official
-          applications launch.
-        </p>
-      </div>
+      <p className="mt-6 max-w-3xl text-muted">
+        Founding Vendor rates are introductory prices for our first year, planned
+        through {deadline}, subject to availability. The deadline is informational
+        until official applications launch. See the FAQ below for rate and payment terms.
+      </p>
 
       <ul className="mt-8 grid min-w-0 gap-4 sm:grid-cols-2">
         {vendorSpaces.map((space) => (

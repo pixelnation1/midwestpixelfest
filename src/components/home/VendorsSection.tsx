@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { vendorBrowseCategories } from "@/lib/site";
+import { formatVendorPrice, foundingVendorDeadlineLabel, vendorSpaces } from "@/lib/vendors";
 
 export function VendorsSection() {
   return (
@@ -46,33 +47,31 @@ export function VendorsSection() {
         </ul>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2">
-          <article className="border border-line bg-panel p-8">
-            <Badge tone="gold">Applications not open</Badge>
-            <h3 className="mt-5 font-display text-4xl uppercase tracking-wide">
-              Vendor hall
-            </h3>
-            <p className="mt-4 text-muted">
-              Retail, collectibles, toys, games, and specialty goods. Space
-              assignments and rates will be published when applications go live.
-            </p>
-          </article>
-
-          <article className="border border-line bg-panel p-8">
-            <Badge tone="gold">Applications not open</Badge>
-            <h3 className="mt-5 font-display text-4xl uppercase tracking-wide">
-              Artist alley
-            </h3>
-            <p className="mt-4 text-muted">
-              Prints, originals, commissions, and handmade work. Artist alley is
-              part of the show, not an afterthought.
-            </p>
-          </article>
+          {vendorSpaces.filter((space) => space.id === "artistAlley" || space.id === "standard10x10").map((space) => (
+            <article key={space.id} className="border border-gold/50 bg-panel p-6 sm:p-8">
+              <Badge tone="gold">Founding Vendor Rate</Badge>
+              <h3 className="mt-5 font-display text-3xl uppercase tracking-wide">
+                {space.name}{space.dimensions ? ` · ${space.dimensions}` : ""}
+              </h3>
+              <p className="mt-4 font-display text-5xl text-gold">
+                {formatVendorPrice(space.founding ?? space.regular)}
+              </p>
+              <p className="mt-2 text-sm text-muted">Regular price {formatVendorPrice(space.regular)}</p>
+              <ul className="mt-4 space-y-2 text-muted">
+                {space.inclusions.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </article>
+          ))}
         </div>
+        <p className="mt-4 text-sm text-muted">
+          Founding pricing is planned through {foundingVendorDeadlineLabel()}, subject to availability.
+          Official applications are not open yet. Register interest for application updates.
+        </p>
 
         <div className="mt-8 flex flex-col gap-4 sm:flex-row">
           <Button href="/vendors/interest">Register Vendor Interest</Button>
-          <Button href="/vendors" variant="secondary">
-            Vendors
+          <Button href="/vendors#vendor-pricing" variant="secondary">
+            View All Booth Options & Pricing
           </Button>
         </div>
       </Container>
