@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { GuestAnnouncementCard, GuestCard } from "@/components/retro/GuestCard";
+import { GuestCard } from "@/components/retro/GuestCard";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -7,61 +6,34 @@ import { getAllGuests } from "@/content/guests";
 
 export function FeaturedGuests() {
   const announced = getAllGuests();
+  const hasGuests = announced.length > 0;
 
   return (
-    <section className="bg-ink-2 py-16 sm:py-24">
+    <section className="bg-ink-2 py-12 sm:py-16">
       <Container>
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <SectionHeading
             eyebrow="Featured guests"
-            title="Guest announcements coming."
-            description="Creators, artists, streamers, authors, performers, and community personalities will be posted here when they are confirmed."
+            title={hasGuests ? "Meet our guests." : "Guest announcements coming."}
+            description={hasGuests
+              ? "Meet the creators and community voices joining Midwest Pixel Fest. Explore their profiles for appearance details."
+              : "Our first lineup is taking shape. Join the update list for guest announcements as names are confirmed."}
             tone="magenta"
           />
-          <Button href="/guests" variant="secondary">
-            View Guests
-          </Button>
+          <div className="flex shrink-0 flex-wrap gap-3">
+            <Button href="/#updates">Get Guest Updates</Button>
+            {hasGuests ? (
+              <Button href="/guests" variant="secondary">View All Guests</Button>
+            ) : null}
+          </div>
         </div>
-        {announced.length > 0 ? (
-          <ul className="mt-12 grid gap-4 md:grid-cols-3">
+        {hasGuests ? (
+          <ul className="mt-10 grid gap-4 md:grid-cols-3">
             {announced.slice(0, 3).map((guest) => (
-              <li key={guest.slug}>
-                <GuestCard guest={guest} />
-              </li>
+              <li key={guest.slug}><GuestCard guest={guest} /></li>
             ))}
           </ul>
-        ) : (
-          <div className="mt-10 grid gap-4 lg:grid-cols-3">
-            <div className="relative overflow-hidden border border-magenta/40 bg-panel px-6 py-12 text-center pixel-frame lg:col-span-2 lg:flex lg:flex-col lg:justify-center">
-              <Image
-                src="/images/hero/retro-arcade-cabinets.jpg"
-                alt=""
-                fill
-                sizes="(min-width: 1024px) 60vw, 100vw"
-                className="object-cover opacity-35"
-                style={{ objectPosition: "70% 50%" }}
-              />
-              <div
-                className="pointer-events-none absolute inset-0 bg-ink/75"
-                aria-hidden="true"
-              />
-              <div className="relative">
-                <p className="font-pixel text-[11px] uppercase tracking-[0.28em] text-gold">
-                  Now loading
-                </p>
-                <h3 className="mt-3 font-display text-3xl uppercase tracking-wide sm:text-5xl">
-                  Guest announcements coming
-                </h3>
-                <p className="mx-auto mt-4 max-w-lg text-muted">
-                  Meet the creators and community voices joining our first event.
-                  Names, photos, and appearance details will be shared as
-                  guests are confirmed.
-                </p>
-              </div>
-            </div>
-            <GuestAnnouncementCard />
-          </div>
-        )}
+        ) : null}
       </Container>
     </section>
   );
