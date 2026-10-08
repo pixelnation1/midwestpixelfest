@@ -81,23 +81,14 @@ export default function ContactPage() {
 
       <ContentSection title="Send a message">
         <p>
-          For general questions, use the form below. If a public business inbox
-          is listed, you can also email it — we do not publish personal
-          addresses on this site.
+          For general questions, use the form below or email our team directly.
         </p>
-        {site.contactEmail ? (
-          <p>
-            Business inbox:{" "}
-            <a href={`mailto:${site.contactEmail}`} className="text-cyan">
-              {site.contactEmail}
-            </a>
-          </p>
-        ) : (
-          <p>
-            A public inbox address is not posted yet. The form is the official
-            contact path on this website.
-          </p>
-        )}
+        <p>
+          Business inbox:{" "}
+          <a href={`mailto:${site.contactEmail}`} className="text-cyan">
+            {site.contactEmail}
+          </a>
+        </p>
       </ContentSection>
 
       <div className="border border-line bg-panel p-6 sm:p-8">

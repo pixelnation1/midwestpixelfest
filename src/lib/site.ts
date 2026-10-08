@@ -96,7 +96,7 @@ export const site = {
   siteUrl,
   ogImagePath: "/opengraph-image",
   twitterImagePath: "/twitter-image",
-  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? null,
+  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "hello@midwestpixelfest.com",
 } as const;
 
 export function absoluteUrl(path = "/"): string {

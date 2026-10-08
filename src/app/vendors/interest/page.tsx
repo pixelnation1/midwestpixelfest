@@ -7,6 +7,7 @@ import { ContentSection } from "@/components/ui/ContentSection";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { ANALYTICS_EVENTS } from "@/lib/analytics";
 import { createPageMetadata } from "@/lib/seo";
+import { site } from "@/lib/site";
 import {
   artistApplicationsOpen,
   cosplayVendorApplicationsOpen,
@@ -68,6 +69,14 @@ export default function VendorInterestPage() {
       <div className="border border-line bg-panel p-6 sm:p-8">
         <VendorInterestForm />
       </div>
+
+      <p className="mt-5 text-sm text-muted">
+        Having trouble with the interest form? Email{" "}
+        <a href={`mailto:${site.contactEmail}`} className="text-cyan">
+          {site.contactEmail}
+        </a>
+        .
+      </p>
 
       <RelatedLinks
         links={[

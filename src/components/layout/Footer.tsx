@@ -59,6 +59,12 @@ export function Footer() {
             and community.
           </p>
           <p className="mt-1 text-sm text-muted">{site.venueLabel}</p>
+          <a
+            href={`mailto:${site.contactEmail}`}
+            className="mt-3 inline-block text-sm text-cyan transition-colors hover:text-magenta"
+          >
+            {site.contactEmail}
+          </a>
         </div>
 
         {footerGroups.map((group) => (
