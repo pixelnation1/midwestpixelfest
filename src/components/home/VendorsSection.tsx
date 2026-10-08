@@ -27,8 +27,8 @@ export function VendorsSection() {
           className="mt-10 aspect-[16/10] min-h-[220px] sm:aspect-[21/9] pixel-frame"
         />
         <p className="mt-3 max-w-2xl text-sm text-muted">
-          Illustrative marketplace photography. Photographed tables are not
-          Midwest Pixel Fest vendors.
+          A glimpse of convention marketplace culture. Our inaugural vendor
+          lineup will be announced as participants are confirmed.
         </p>
 
         <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7">

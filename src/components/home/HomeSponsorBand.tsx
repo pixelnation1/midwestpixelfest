@@ -14,7 +14,7 @@ export function HomeSponsorBand() {
           id="home-sponsor-heading"
           eyebrow="Partner with Midwest Pixel Fest"
           title="Be part of the weekend."
-          description="Want to put your business in front of the Midwest Pixel Fest community? An inquiry is not a sponsorship agreement."
+          description="Help bring Midwest Pixel Fest to life. Explore sponsorship opportunities and start a conversation about the right fit for your business."
           tone="gold"
         />
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">

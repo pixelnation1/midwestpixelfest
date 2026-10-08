@@ -12,7 +12,7 @@ export function CommunitySection() {
           <SectionHeading
             eyebrow="Player 1 ready"
             title="Show up with your people."
-            description="Midwest Pixel Fest is being built as a hangout as much as a show: friends on a couch, a table full of cards, a row of cabinets. The photos are community gaming — not pictures of a previous Pixel Fest."
+            description="Bring your friends. Meet your next gaming group. Midwest Pixel Fest is being built around the moments that make this community special: a shared game, a great trade, and a conversation that turns into a friendship."
             tone="cyan"
           />
           <div className="mt-8">

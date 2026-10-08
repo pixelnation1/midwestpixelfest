@@ -9,7 +9,7 @@ export function PlayTablesSection() {
         <SectionHeading
             eyebrow="Press start"
             title="Cards on the table."
-            description="Trading card games and tabletop belong on the same floor as the cabinets. Photography here is illustrative of the play this weekend is being built for."
+            description="Bring your love of cards, dice, and great company. Trading card games and tabletop are part of the weekend we are building, with games and event details to be announced."
           tone="gold"
         />
 

@@ -53,8 +53,9 @@ export function FeaturedGuests() {
                   Guest announcements coming
                 </h3>
                 <p className="mx-auto mt-4 max-w-lg text-muted">
-                  Confirmed names will appear here with photos and appearance
-                  details. Until a name is official, it is not on this site.
+                  Meet the creators and community voices joining our first event.
+                  Names, photos, and appearance details will be shared as
+                  guests are confirmed.
                 </p>
               </div>
             </div>

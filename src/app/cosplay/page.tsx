@@ -23,7 +23,7 @@ export default function CosplayPage() {
       breadcrumbLabel="Cosplay"
       eyebrow="Costume & character"
       title="Cosplay at Midwest Pixel Fest"
-      intro="Cosplay is a major part of Midwest Pixel Fest. Attendees are encouraged to participate. A contest is planned, along with community meetups. Contest details and rules will be announced — we will not invent prizes or judging criteria here."
+      intro="Bring your favorite character to life at Midwest Pixel Fest. First-time cosplayers, experienced makers, and fans are welcome. A cosplay contest and community meetups are planned, with details to come as programming is confirmed."
     >
       <div className="relative mb-10">
         <ScenePhoto
@@ -42,10 +42,10 @@ export default function CosplayPage() {
 
       <ContentSection title="Cosplay community">
         <p>
-          If this is your first con in costume or your fiftieth, the floor is
-          supposed to have room for you. Original characters and fandom looks
-          are both welcome. Keep it convention-appropriate; detailed costume
-          and coverage rules will be published with the event guide.
+          Whether this is your first costume or your fiftieth convention,
+          you belong here. Original characters and fandom favorites are welcome.
+          Costume guidelines will be published with the event guide to help
+          everyone plan for a comfortable, welcoming weekend.
         </p>
       </ContentSection>
 
@@ -54,34 +54,29 @@ export default function CosplayPage() {
           A cosplay contest is planned. Divisions, judging standards,
           registration, and prizes will be posted once they are finalized.
         </p>
-        <p>
-          Until that packet is public, there is no unofficial signup and no
-          prize list to cite.
-        </p>
       </ContentSection>
 
       <ContentSection id="meetups" title="Meetups">
         <p>
-          Themed and community meetups are planned as programming comes
-          together. We will not invent fandom-specific timeslots until groups
-          and space are confirmed. Watch the Schedule and this page.
+          Meet fellow fans, share your work, and connect over the characters
+          you love. Planned meetups will be added here and to the Schedule
+          page as groups, locations, and times are confirmed.
         </p>
       </ContentSection>
 
       <ContentSection title="Photography">
         <p>
-          Photo opportunities and designated photo-friendly areas may be part
-          of the weekend. Hallway shots happen at every con; designated space
-          is about giving people a better backdrop and a clearer yes-or-no
-          about being photographed.
+          Show off your costume and capture memories with fellow fans. Always
+          ask before taking a photo and respect anyone who declines. Details
+          about any designated photo areas will be shared as plans are finalized.
         </p>
       </ContentSection>
 
       <ContentSection id="rules" title="Cosplay safety">
         <p>
-          Full prop and replica rules depend on the venue and will be posted
-          here when that building is confirmed. In the meantime, plan around
-          these high-level expectations:
+          Help make the weekend welcoming for everyone. Full prop and replica
+          guidelines will be published after the venue is confirmed. Start
+          with these essentials:
         </p>
       </ContentSection>
 

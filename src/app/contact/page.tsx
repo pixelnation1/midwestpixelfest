@@ -18,32 +18,32 @@ const categories = [
   {
     title: "General Questions",
     href: "/faq",
-    note: "Dates, tickets, and weekend basics. Check FAQ first if the question is already answered there.",
+    note: "Find quick answers about dates, tickets, and planning your weekend in our FAQ.",
   },
   {
     title: "Vendors & Artists",
     href: "/vendors/interest",
-    note: "Booth and artist alley interest. Official applications are not open.",
+    note: "Tell us about your business or artwork and get notified when applications open.",
   },
   {
     title: "Sponsors",
     href: "/sponsors/inquiry",
-    note: "Partnership conversations. An inquiry is not a signed sponsorship.",
+    note: "Explore ways your business can support the fest and connect with our community.",
   },
   {
     title: "Press & Media",
     href: "/press/inquiry",
-    note: "Coverage questions. Official media credentials are not open yet.",
+    note: "Get in touch about event coverage. Media credential details will be announced.",
   },
   {
     title: "Guests / Talent",
     href: "/guests/inquiry",
-    note: "Creator and talent introductions. Submission is not a booking.",
+    note: "Introduce yourself and share what you would bring to Midwest Pixel Fest.",
   },
   {
     title: "Volunteers",
     href: "/volunteer/interest",
-    note: "Crew interest. This is not a shift assignment.",
+    note: "Interested in helping run the show? Tell us about your skills and availability.",
   },
 ];
 
@@ -54,12 +54,12 @@ export default function ContactPage() {
       breadcrumbLabel="Contact"
       eyebrow="Inbox"
       title="Contact Midwest Pixel Fest"
-      intro={`Questions about the ${site.year} convention in ${site.location} can start here. Use the form for a general message, or jump to the dedicated interest form if you already know your lane.`}
+      intro={`Have a question about Midwest Pixel Fest ${site.year} in ${site.location}? Send us a message below, or choose how you would like to get involved.`}
     >
       <ContentSection title="Inquiry categories">
         <p>
-          Pick the closest match. Dedicated forms keep vendor, sponsor, press,
-          guest, and volunteer notes out of the general pile.
+          Choose the topic that fits your question so we can get your message
+          to the right place.
         </p>
       </ContentSection>
 
