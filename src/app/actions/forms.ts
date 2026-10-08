@@ -19,7 +19,7 @@ import type { FormState } from "@/lib/forms/validate";
 import { readString } from "@/lib/forms/validate";
 
 const SUCCESS_COPY: Record<string, string> = {
-  newsletter: "You're on the list. We'll share official Midwest Pixel Fest updates as they land.",
+  newsletter: "Thanks! Your newsletter signup request has been received.",
   contact: "Your message has been received. We'll reply as planning allows.",
   vendor_interest:
     "Your vendor interest has been received. We'll share official application details when they open — this is not an application or a booth offer.",
@@ -122,7 +122,9 @@ export async function submitForm(
     if (isPersistedFormKind(kind) && persistenceRequired()) {
       return successAfterPersist(kind, parsed.data.fields);
     }
-    return errorState(NOT_CONFIGURED_MESSAGE);
+    return errorState(kind === "newsletter"
+      ? "Newsletter signup is temporarily unavailable. Please try again later."
+      : NOT_CONFIGURED_MESSAGE);
   }
 
   const result = await deliverSubmission(payload);
@@ -136,9 +138,13 @@ export async function submitForm(
       return successAfterPersist(kind, parsed.data.fields);
     }
     if (result.code === "not_configured") {
-      return errorState(NOT_CONFIGURED_MESSAGE);
+      return errorState(kind === "newsletter"
+      ? "Newsletter signup is temporarily unavailable. Please try again later."
+      : NOT_CONFIGURED_MESSAGE);
     }
-    return errorState(DELIVERY_FAILED_MESSAGE);
+    return errorState(kind === "newsletter"
+      ? "We couldn't save your newsletter signup. Please try again."
+      : DELIVERY_FAILED_MESSAGE);
   }
 
   if (kind === "vendor_application") {

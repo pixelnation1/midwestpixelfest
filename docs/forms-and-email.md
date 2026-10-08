@@ -16,7 +16,7 @@ When persistence is configured:
 
 | Form | Route | Kind | Delivery |
 | --- | --- | --- | --- |
-| Newsletter | Homepage, Tickets, News, Travel, FAQ | `newsletter` | `NEWSLETTER_WEBHOOK_URL` only |
+| Newsletter | Homepage, Tickets, News, Travel, FAQ | `newsletter` | Newsletter webhook, or private Supabase storage |
 | Contact | `/contact` | `contact` | Resend (preferred) or `FORM_WEBHOOK_URL` fallback |
 | Vendor interest | `/vendors/interest` | `vendor_interest` | Resend (preferred) or `FORM_WEBHOOK_URL` fallback |
 | Official vendor / artist application | `/vendors/apply/vendor`, `/vendors/apply/artist` | `vendor_application` | Resend (preferred) or `FORM_WEBHOOK_URL` fallback. Applications remain closed until flags are opened. |
@@ -67,7 +67,7 @@ Newsletter signup is a **separate** integration from operational email.
 
 Do not automatically add newsletter addresses to Resend or the ops inbox.
 
-Current provider: environment-driven webhook.
+Provider order: configured `NEWSLETTER_WEBHOOK_URL`, otherwise Supabase using the existing server-only service role. A webhook failure is reported; it does not silently switch providers.
 
 | Variable | Scope | Purpose |
 | --- | --- | --- |
@@ -93,10 +93,13 @@ To connect a named ESP later, add a provider in that file. The form UI does not 
 - Brevo
 - Mailchimp
 - ConvertKit
-- Supabase
 - another CRM / list tool
 
-Until `NEWSLETTER_WEBHOOK_URL` is set, newsletter forms fail safely (no fake success).
+Without a webhook, apply the newsletter_subscribers migration and configure `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`. Signups are saved in `public.newsletter_subscribers`, with normalized unique email, optional name, explicit consent text, consent time, source, and status. RLS is enabled and anonymous/authenticated clients have no table privileges.
+
+Repeat signups do not change existing records, including unsubscribed or suppressed addresses. Success acknowledges receipt without disclosing an address's status. Storage errors fail the submission. Without either provider, the form reports temporary unavailability.
+
+This is single opt-in capture, not verified email ownership or campaign sending. Before sending campaigns, connect a mailing provider with unsubscribe and suppression handling (and preferably confirmation/double opt-in); only subscribed records may be considered. No messages are sent by this storage adapter.
 
 ## Optional operational webhook
 
