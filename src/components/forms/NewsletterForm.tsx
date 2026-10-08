@@ -10,7 +10,7 @@ export function NewsletterForm() {
     <InquiryForm
       kind="newsletter"
       submitLabel="Join the List"
-      successTitle="You're on the list"
+      successTitle="Thanks for signing up"
     >
       <div className="grid gap-6 sm:grid-cols-2">
         <TextInput
@@ -36,6 +36,9 @@ export function NewsletterForm() {
         required
         label="I want updates about Midwest Pixel Fest."
       />
+      <p className="text-sm text-muted">
+        Read our <a href="/privacy" className="underline">Privacy Policy</a> for how we use your information.
+      </p>
     </InquiryForm>
   );
 }

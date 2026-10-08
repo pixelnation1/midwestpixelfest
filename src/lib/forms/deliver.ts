@@ -67,7 +67,7 @@ async function postFormWebhook(payload: DeliveryPayload): Promise<DeliveryResult
 /**
  * Delivers a sanitized submission.
  *
- * Newsletter: NEWSLETTER_WEBHOOK_URL only (never the ops inbox).
+ * Newsletter: newsletter webhook or private Supabase storage (never the ops inbox).
  * Operational forms: Resend when configured. FORM_WEBHOOK_URL is a fallback
  * when Resend is not configured, or an extra channel only when
  * FORM_WEBHOOK_WITH_RESEND is explicitly set.

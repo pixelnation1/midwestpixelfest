@@ -32,6 +32,10 @@ In the Supabase SQL editor, run in order:
 
 1. `supabase/migrations/0001_organizer_ops.sql`
 2. `supabase/migrations/0002_service_role_grants.sql`
+3. `supabase/migrations/0003_cosplay_vendor_support.sql`
+4. `supabase/migrations/20261008201317_newsletter_subscribers.sql`
+
+On an existing project, apply only migrations not already applied. Newsletter storage is server-only and requires no new public grants.
 
 Or with the CLI from this repo:
 
