@@ -91,7 +91,7 @@ export function Footer() {
       <div className="border-t border-line">
         <Container className="flex flex-col gap-4 py-6 text-sm text-muted sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <p>
-            © {copyrightYear} {site.name}. All rights reserved.
+            © {copyrightYear} {site.name}. All rights reserved.{" "}<a href="https://hqxholdings.com/" className="inline-flex min-h-11 items-center underline underline-offset-4">An HQX Holdings company</a>
           </p>
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
             {footerLegalLinks.map((item) => (
