@@ -30,9 +30,14 @@ export function EventIntro() {
               coastal mega-con.
             </p>
             <p>
-              <Button href="/about" variant="ghost">
-                About Midwest Pixel Fest
-              </Button>
+              <span className="inline-flex flex-wrap gap-3">
+                <Button href="/first-timers-guide" variant="secondary">
+                  First time? Start here
+                </Button>
+                <Button href="/about" variant="ghost">
+                  About Midwest Pixel Fest
+                </Button>
+              </span>
             </p>
           </div>
         </div>

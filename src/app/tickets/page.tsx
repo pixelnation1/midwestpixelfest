@@ -97,6 +97,7 @@ export default function TicketsPage() {
       <RelatedLinks
         heading="Keep planning"
         links={[
+          { href: "/first-timers-guide", label: "First-Timer's Guide" },
           { href: "/faq", label: "FAQ" },
           { href: "/travel", label: "Travel" },
           { href: "/gaming", label: "Gaming" },

@@ -10,6 +10,7 @@ import { getPublishedSponsors } from "@/lib/sponsorships";
 export const publicRoutes = [
   { path: "/", changeFrequency: "weekly" as const, priority: 1 },
   { path: "/tickets", changeFrequency: "weekly" as const, priority: 0.9 },
+  { path: "/first-timers-guide", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/merch", changeFrequency: "monthly" as const, priority: 0.75 },
   { path: "/news", changeFrequency: "weekly" as const, priority: 0.8 },
   { path: "/contact", changeFrequency: "monthly" as const, priority: 0.6 },
