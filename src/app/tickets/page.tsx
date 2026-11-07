@@ -16,7 +16,7 @@ const salesOpen = isTicketSalesOpen();
 export const metadata: Metadata = createPageMetadata({
   title: "Tickets | Midwest Pixel Fest 2027",
   description: salesOpen
-    ? "Get Midwest Pixel Fest 2027 tickets for October 16–17 in Emporia, Kansas. Weekend $30, Saturday $20, Sunday $15, kids 12 and under free with a paid adult."
+    ? "Buy Midwest Pixel Fest 2027 tickets for October 16–17. Weekend $30, Saturday $20, Sunday $15, kids 12 and under free with a paid adult. Webb Hall at ESU is the selected venue; reservation is pending final agreement."
     : "Midwest Pixel Fest 2027 tickets for October 16–17, with Webb Hall at ESU selected as the planned venue (reservation pending). Weekend $30, Saturday $20, Sunday $15, kids 12 and under free with a paid adult. Ticket sales remain on hold pending the venue agreement.",
   path: "/tickets",
 });
@@ -33,6 +33,24 @@ export default function TicketsPage() {
     >
       <EventInfoPanel className="mb-8" compact />
 
+      <div className="mb-6 border border-cyan/50 bg-panel-2 p-5 sm:p-6">
+        <p className="font-pixel text-[11px] uppercase tracking-[0.14em] text-gold">
+          Important venue and travel notice
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-paper sm:text-base">
+          Webb Hall at Emporia State University is our selected venue, but the
+          reservation is not yet confirmed. The venue agreement and deposit are
+          still pending. Purchasing a ticket now reserves admission for the planned
+          October 16–17, 2027 event, not a guaranteed space at Webb Hall.
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-muted">
+          If you are traveling from out of state, please avoid nonrefundable
+          hotel, flight, or other travel purchases until the venue is formally
+          booked. Check the refund and transfer terms shown in Ticketleap before
+          paying. We will update ticket holders if venue or event plans change.
+        </p>
+      </div>
+
       <div className="border border-gold/40 bg-panel p-6 sm:p-8">
         <Badge tone="gold">
           {salesOpen ? "On sale" : "Ticket sales on hold"}
@@ -42,7 +60,7 @@ export default function TicketsPage() {
         </h2>
         <p className="mt-4 max-w-2xl text-muted">
           {salesOpen
-            ? "Weekend, Saturday, Sunday, and kids prices are below. Checkout opens in a new tab on Ticketleap. Midwest Pixel Fest does not process card details on this website."
+            ? "Weekend, Saturday, Sunday, and kids prices are below. Checkout opens in a new tab on Ticketleap. The venue reservation is pending; please read the notice above before purchasing. Midwest Pixel Fest does not process card details on this website."
             : "Weekend, Saturday, Sunday, and kids prices for Midwest Pixel Fest 2027 are below. Sales are on hold until the venue agreement is finalized. Join the update list for an official reopening announcement."}
         </p>
         <div className="mt-8">
