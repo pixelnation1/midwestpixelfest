@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { EmailSignup } from "@/components/home/EmailSignup";
 import { EventInfoPanel } from "@/components/retro/EventInfoPanel";
 import { ContentSection } from "@/components/ui/ContentSection";
@@ -104,10 +105,15 @@ export default function TravelPage() {
 
       <ContentSection id="things-to-do" title="Food & things to do">
         <p>
-          Local restaurant and sightseeing guides will be added as we work with
-          Emporia partners. This page will link out to deeper travel notes when
-          those guides are worth publishing — not as a scraped list of every
-          storefront in town.
+          Make a full weekend of Midwest Pixel Fest. Our Visit Emporia guide brings together
+          local places to eat, museums, family-friendly attractions, gaming, shopping and outdoor adventures.
+          Each listing links to visitor information and directions. Business hours and offerings may change
+          before October 2027.
+        </p>
+        <p className="mt-4">
+          <Link href="/visit-emporia" className="inline-flex min-h-11 items-center border border-cyan px-5 py-3 font-display text-sm uppercase tracking-widest text-cyan hover:bg-cyan/10">
+            Discover things to do in Emporia →
+          </Link>
         </p>
       </ContentSection>
 
@@ -122,6 +128,7 @@ export default function TravelPage() {
 
       <RelatedLinks
         links={[
+          { href: "/visit-emporia", label: "Visit Emporia" },
           { href: "/first-timers-guide", label: "First-Timer's Guide" },
           { href: "/tickets", label: "Tickets" },
           { href: "/faq", label: "FAQ" },

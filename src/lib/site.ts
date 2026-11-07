@@ -143,6 +143,7 @@ export const infoLinks = [
   { href: "/weapons-policy", label: "Weapons & Props Policy" },
   { href: "/faq", label: "FAQ" },
   { href: "/travel", label: "Hotels, Parking & Travel" },
+  { href: "/visit-emporia", label: "Visit Emporia / Things to Do" },
   { href: "/cosplay", label: "Cosplay Information" },
   { href: "/contact", label: "Contact Us" },
 ] as const;
@@ -197,6 +198,7 @@ export const footerGroups = [
       { href: "/first-timers-guide", label: "First-Timer's Guide" },
       { href: "/weapons-policy", label: "Weapons & Props Policy" },
       { href: "/travel", label: "Travel & Hotels" },
+      { href: "/visit-emporia", label: "Visit Emporia" },
       { href: "/faq", label: "FAQ" },
       { href: "/news", label: "News" },
       { href: "/contact", label: "Contact" },

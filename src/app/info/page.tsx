@@ -53,6 +53,14 @@ const topics = [
   },
   {
     number: "06",
+    title: "Visit Emporia / Things to Do",
+    description: "Explore downtown, local dining, games, family attractions, museums and parks beyond the convention.",
+    href: "/visit-emporia",
+    accent: "border-cyan/60",
+    action: "Explore the city",
+  },
+  {
+    number: "07",
     title: "Contact the Team",
     description: "Questions about accessibility, attending with kids, props, tickets, or something else? Start here.",
     href: "/contact",

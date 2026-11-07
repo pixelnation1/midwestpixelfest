@@ -27,6 +27,7 @@ export const publicRoutes = [
   { path: "/vendors/interest", changeFrequency: "monthly" as const, priority: 0.5 },
   { path: "/vendors/policies", changeFrequency: "monthly" as const, priority: 0.5 },
   { path: "/travel", changeFrequency: "monthly" as const, priority: 0.7 },
+  { path: "/visit-emporia", changeFrequency: "monthly" as const, priority: 0.75 },
   { path: "/sponsors", changeFrequency: "monthly" as const, priority: 0.7 },
   { path: "/sponsors/inquiry", changeFrequency: "monthly" as const, priority: 0.6 },
   { path: "/faq", changeFrequency: "monthly" as const, priority: 0.6 },
