@@ -52,8 +52,13 @@ export default function CosplayPage() {
 
       <ContentSection id="contest" title="Cosplay contest">
         <p>
-          A cosplay contest is planned. Divisions, judging standards,
-          registration, and prizes will be posted once they are finalized.
+          We're collecting individual, group and youth cosplay contest applications for
+          organizer review. Explore provisional divisions, judging considerations, and
+          participation guidelines. The final awards, stage schedule, eligibility and
+          venue-specific rules will be published once confirmed.
+        </p>
+        <p className="mt-5">
+          <Link href="/cosplay/contest" className="inline-flex min-h-11 items-center border border-cyan px-5 py-3 font-display text-sm uppercase tracking-widest text-cyan hover:bg-cyan/10">Contest details & registration →</Link>
         </p>
       </ContentSection>
 
@@ -114,6 +119,7 @@ export default function CosplayPage() {
             eventName: ANALYTICS_EVENTS.ticket_click,
             eventPayload: { source: "cosplay", outbound: tickets.external },
           },
+          { href: "/cosplay/contest/register", label: "Contest Registration", variant: "secondary" },
           { href: "/schedule", label: "View Schedule", variant: "secondary" },
           { href: "/faq", label: "FAQ", variant: "secondary" },
         ]}
@@ -121,6 +127,7 @@ export default function CosplayPage() {
 
       <RelatedLinks
         links={[
+          { href: "/cosplay/contest", label: "Cosplay Contest" },
           { href: "/schedule", label: "Schedule" },
           { href: "/faq", label: "FAQ" },
           { href: "/weapons-policy", label: "Weapons & Props Policy" },

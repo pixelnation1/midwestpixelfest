@@ -10,6 +10,7 @@ export const FORM_KINDS = [
   "guest_inquiry",
   "press_inquiry",
   "panel_submission",
+  "cosplay_contest_entry",
 ] as const;
 
 export type FormKind = (typeof FORM_KINDS)[number];

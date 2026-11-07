@@ -149,6 +149,7 @@ export const infoLinks = [
   { href: "/travel", label: "Hotels, Parking & Travel" },
   { href: "/visit-emporia", label: "Visit Emporia / Things to Do" },
   { href: "/cosplay", label: "Cosplay Information" },
+  { href: "/cosplay/contest", label: "Cosplay Contest & Registration" },
   { href: "/contact", label: "Contact Us" },
 ] as const;
 
@@ -183,6 +184,7 @@ export const footerGroups = [
       { href: "/guests", label: "Guests" },
       { href: "/gaming", label: "Gaming" },
       { href: "/cosplay", label: "Cosplay" },
+      { href: "/cosplay/contest", label: "Cosplay Contest" },
     ],
   },
   {

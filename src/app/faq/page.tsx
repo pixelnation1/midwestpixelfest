@@ -47,6 +47,7 @@ export default function FaqPage() {
           { href: "/tickets", label: "Tickets" },
           { href: "/vendors", label: "Vendors" },
           { href: "/cosplay", label: "Cosplay" },
+          { href: "/cosplay/contest", label: "Cosplay Contest" },
           { href: "/travel", label: "Travel" },
           { href: "/volunteer", label: "Volunteer" },
           { href: "/sponsors", label: "Sponsors" },

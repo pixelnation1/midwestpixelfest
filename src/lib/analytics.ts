@@ -24,6 +24,7 @@ export const ANALYTICS_EVENTS = {
   guest_inquiry_submit: "guest_inquiry_submit",
   press_inquiry_submit: "press_inquiry_submit",
   panel_submission_submit: "panel_submission_submit",
+  cosplay_contest_submit: "cosplay_contest_submit",
   contact_submit: "contact_submit",
   sponsor_page_view: "sponsor_page_view",
   sponsor_package_select: "sponsor_package_select",

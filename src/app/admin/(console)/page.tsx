@@ -30,12 +30,16 @@ export default async function AdminDashboardPage() {
   let sponsorCounts: Record<string, number> = {};
   let interestCount = 0;
   let panelCount = 0;
+  let cosplayCount = 0;
   try {
-    [vendorCounts, sponsorCounts, interestCount, panelCount] = await Promise.all([
+    [vendorCounts, sponsorCounts, interestCount, panelCount, cosplayCount] = await Promise.all([
       countVendorStatuses(supabase),
       countSponsorStatuses(supabase),
       countVendorInterests(supabase),
       supabase.from("panel_submissions").select("id", { count: "exact", head: true })
+        .in("status", ["submitted", "under_review", "shortlisted"])
+        .then(({count,error}) => { if (error) throw error; return count ?? 0; }),
+      supabase.from("cosplay_contest_entries").select("id", { count: "exact", head: true })
         .in("status", ["submitted", "under_review", "shortlisted"])
         .then(({count,error}) => { if (error) throw error; return count ?? 0; }),
     ]);
@@ -62,6 +66,7 @@ export default async function AdminDashboardPage() {
         <h2 className="font-display text-2xl uppercase tracking-wide">Programming</h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <Card label="Panel proposals in review" value={panelCount} href="/admin/panels" />
+          <Card label="Cosplay entries in review" value={cosplayCount} href="/admin/cosplay" />
         </div>
       </section>
       <section>

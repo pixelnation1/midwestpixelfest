@@ -85,6 +85,14 @@ const topics = [
   },
   {
     number: "10",
+    title: "Cosplay Contest Registration",
+    description: "Discover proposed contest divisions, judging guidelines, and apply to participate in the inaugural cosplay contest.",
+    href: "/cosplay/contest",
+    accent: "border-magenta/60",
+    action: "Explore the contest",
+  },
+  {
+    number: "11",
     title: "Contact the Team",
     description: "Questions about accessibility, attending with kids, props, tickets, or something else? Start here.",
     href: "/contact",

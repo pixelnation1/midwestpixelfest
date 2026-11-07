@@ -11,6 +11,7 @@ export const OPERATIONAL_FORM_KINDS = [
   "guest_inquiry",
   "press_inquiry",
   "panel_submission",
+  "cosplay_contest_entry",
 ] as const satisfies readonly FormKind[];
 
 export type OperationalFormKind = (typeof OPERATIONAL_FORM_KINDS)[number];
@@ -58,6 +59,8 @@ export function operationalEmailSubject(
       return "[Midwest Pixel Fest] New Press Inquiry";
     case "panel_submission":
       return `[Midwest Pixel Fest] New Panel Proposal${namedSubjectSuffix(fields, "panelTitle")}`;
+    case "cosplay_contest_entry":
+      return `[Midwest Pixel Fest] New Cosplay Contest Application${namedSubjectSuffix(fields, "characterName")}`;
     case "vendor_application": {
       const name =
         typeof fields.businessName === "string"
@@ -101,5 +104,7 @@ export function operationalSourcePath(
       return "/press/inquiry";
     case "panel_submission":
       return "/panels/submit";
+    case "cosplay_contest_entry":
+      return "/cosplay/contest/register";
   }
 }
