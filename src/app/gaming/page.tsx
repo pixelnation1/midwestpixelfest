@@ -18,7 +18,7 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function GamingPage() {
-  const tickets = getTicketAction("purchase");
+  const tickets = getTicketAction("nav");
   return (
     <InnerPage
       path="/gaming"

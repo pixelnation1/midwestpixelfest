@@ -8,7 +8,7 @@ const paths = [
   {
     eyebrow: "Attendees",
     title: "Join the weekend",
-    body: "Tickets are on sale. Weekend $30, Saturday $20, Sunday $15. Kids 12 and under are free with a paid adult.",
+    body: "Tickets are available through Ticketleap. Weekend $30, Saturday $20, Sunday $15; kids 12 and under free with a paid adult. Webb Hall is selected but the reservation is pending. Review details before purchasing.",
     primary: "tickets" as const,
     secondary: { href: "/tickets", label: "Ticket Types", variant: "secondary" as const },
   },

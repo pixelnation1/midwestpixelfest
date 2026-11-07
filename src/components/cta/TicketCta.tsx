@@ -34,7 +34,11 @@ export function TicketCta({
   source,
   ticketType,
 }: TicketCtaProps) {
-  const ticket = action ?? getTicketAction(intent);
+  // Only the Tickets page may link directly to checkout. All other ticket
+  // CTAs route through the venue-status and travel notice first.
+  const ticket = action ?? getTicketAction(
+    intent === "purchase" && source === "tickets_page" ? "purchase" : "nav",
+  );
 
   return (
     <EventCta
