@@ -137,6 +137,7 @@ export const navItems = [
 ] as const;
 
 export const mobileMoreLinks = [
+  { href: "/first-timers-guide", label: "First-Timer's Guide" },
   { href: "/faq", label: "FAQ" },
   { href: "/about", label: "About" },
   { href: "/news", label: "News" },
@@ -184,6 +185,7 @@ export const footerGroups = [
   {
     heading: "Plan",
     links: [
+      { href: "/first-timers-guide", label: "First-Timer's Guide" },
       { href: "/travel", label: "Travel" },
       { href: "/faq", label: "FAQ" },
       { href: "/news", label: "News" },

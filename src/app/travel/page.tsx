@@ -122,6 +122,7 @@ export default function TravelPage() {
 
       <RelatedLinks
         links={[
+          { href: "/first-timers-guide", label: "First-Timer's Guide" },
           { href: "/tickets", label: "Tickets" },
           { href: "/faq", label: "FAQ" },
           { href: "/schedule", label: "Schedule" },
