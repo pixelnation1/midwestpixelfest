@@ -34,7 +34,7 @@ export default function MerchPage() {
           </div>
           <div className="relative mx-auto w-full max-w-md">
             <div className="pointer-events-none absolute -inset-4 rounded-full border border-cyan/20 shadow-[0_0_60px_rgba(45,226,255,.13)]" aria-hidden="true" />
-            <Image src="/merch/midwest-nights-tee.webp" width={880} height={1000} alt="Midwest Nights artwork on a black graphic T-shirt" priority className="relative aspect-[.9] w-full object-cover" />
+            <Image src="/merch/designs/midwest-nights.webp" width={1200} height={1200} alt="Original Midwest Nights neon gaming artwork" priority className="relative aspect-square w-full object-contain" />
             <div className="absolute -bottom-3 -left-3 border-l-4 border-magenta bg-panel px-4 py-3 font-display text-sm uppercase tracking-widest text-paper">5 designs • 3 ways to wear</div>
           </div>
         </Container>
@@ -49,7 +49,7 @@ export default function MerchPage() {
           <p className="font-pixel text-xs uppercase tracking-[.24em] text-cyan">The collection</p>
           <div className="mt-3 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
             <h2 className="font-display text-4xl uppercase tracking-wide text-paper sm:text-6xl">Choose your gear</h2>
-            <p className="max-w-sm leading-relaxed text-muted">Each design is previewed on T-shirts, hoodies, and canvas totes. Pick a design to see it up close.</p>
+            <p className="max-w-sm leading-relaxed text-muted">Each design is previewed on T-shirts, hoodies, and canvas totes. Browse each design across all three products and tap a photo to see it up close.</p>
           </div>
           <div className="my-8 border border-cyan/30 bg-[#0b2136] px-5 py-4 text-sm leading-relaxed text-paper">
             <strong className="text-cyan">Concept gallery:</strong> Products are not currently available to purchase. Images are digital mockups; final pricing, sizes, and production details are coming later.
