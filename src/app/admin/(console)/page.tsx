@@ -29,10 +29,11 @@ export default async function AdminDashboardPage() {
   let vendorCounts: Record<string, number> = {};
   let sponsorCounts: Record<string, number> = {};
   let interestCount = 0;
+  let publishedExhibitorCount = 0;
   let panelCount = 0;
   let cosplayCount = 0;
   try {
-    [vendorCounts, sponsorCounts, interestCount, panelCount, cosplayCount] = await Promise.all([
+    [vendorCounts, sponsorCounts, interestCount, panelCount, cosplayCount, publishedExhibitorCount] = await Promise.all([
       countVendorStatuses(supabase),
       countSponsorStatuses(supabase),
       countVendorInterests(supabase),
@@ -41,6 +42,9 @@ export default async function AdminDashboardPage() {
         .then(({count,error}) => { if (error) throw error; return count ?? 0; }),
       supabase.from("cosplay_contest_entries").select("id", { count: "exact", head: true })
         .in("status", ["submitted", "under_review", "shortlisted"])
+        .then(({count,error}) => { if (error) throw error; return count ?? 0; }),
+      supabase.from("public_vendor_listings").select("id", { count: "exact", head: true })
+        .eq("published", true)
         .then(({count,error}) => { if (error) throw error; return count ?? 0; }),
     ]);
   } catch {
@@ -73,6 +77,7 @@ export default async function AdminDashboardPage() {
         <h2 className="font-display text-2xl uppercase tracking-wide">Vendor pipeline</h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <Card label="Vendor interests" value={interestCount} href="/admin/vendor-interests" />
+          <Card label="Published exhibitors" value={publishedExhibitorCount} href="/admin/exhibitors" />
           <Card label="New applications" value={vendorCounts.submitted ?? 0} href="/admin/vendors?filter=new" />
           <Card label="Under review" value={vendorCounts.under_review ?? 0} href="/admin/vendors?filter=under_review" />
           <Card label="Approved" value={vendorCounts.approved ?? 0} href="/admin/vendors?filter=approved" />

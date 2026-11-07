@@ -132,6 +132,7 @@ export const navItems = [
   { href: "/merch", label: "Merch" },
   { href: "/guests", label: "Guests" },
   { href: "/vendors", label: "Vendors" },
+  { href: "/exhibitors", label: "Exhibitors" },
   { href: "/sponsors", label: "Sponsors" },
   { href: "/schedule", label: "Schedule" },
   { href: "/info", label: "Info" },
@@ -140,6 +141,7 @@ export const navItems = [
 /** A dedicated mobile Info accordion and the desktop /info hub use these links. */
 export const infoLinks = [
   { href: "/info", label: "Info Overview" },
+  { href: "/exhibitors", label: "Exhibitor & Artist Directory" },
   { href: "/panels/submit", label: "Panel Submissions" },
   { href: "/first-timers-guide", label: "First-Timer's Guide" },
   { href: "/attendee-services", label: "Attendee Services & Accessibility" },
@@ -180,6 +182,7 @@ export const footerGroups = [
       { href: "/tickets", label: "Tickets" },
       { href: "/merch", label: "Official Merch" },
       { href: "/schedule", label: "Schedule" },
+      { href: "/exhibitors", label: "Exhibitors & Artist Alley" },
       { href: "/panels", label: "Panels & Programming" },
       { href: "/guests", label: "Guests" },
       { href: "/gaming", label: "Gaming" },

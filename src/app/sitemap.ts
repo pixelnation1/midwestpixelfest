@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { getDynamicSitemapEntries, publicRoutes } from "@/lib/routes";
 import { absoluteUrl } from "@/lib/site";
 
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const staticEntries: MetadataRoute.Sitemap = publicRoutes.map((route) => ({

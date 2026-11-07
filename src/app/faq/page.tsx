@@ -46,6 +46,7 @@ export default function FaqPage() {
           { href: "/code-of-conduct", label: "Code of Conduct" },
           { href: "/tickets", label: "Tickets" },
           { href: "/vendors", label: "Vendors" },
+          { href: "/exhibitors", label: "Exhibitor Directory" },
           { href: "/cosplay", label: "Cosplay" },
           { href: "/cosplay/contest", label: "Cosplay Contest" },
           { href: "/travel", label: "Travel" },
