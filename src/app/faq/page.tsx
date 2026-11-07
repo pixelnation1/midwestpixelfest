@@ -49,6 +49,7 @@ export default function FaqPage() {
           { href: "/guests/authors", label: "Invited Author Guest Program" },
           { href: "/exhibitors", label: "Exhibitor Directory" },
           { href: "/cosplay", label: "Cosplay" },
+          { href: "/tournaments", label: "Tournament Registration" },
           { href: "/cosplay/contest", label: "Cosplay Contest" },
           { href: "/travel", label: "Travel" },
           { href: "/volunteer", label: "Volunteer" },

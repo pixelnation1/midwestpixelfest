@@ -34,8 +34,10 @@ export default async function AdminDashboardPage() {
   let cosplayCount = 0;
   let publicGuestCount = 0;
   let invitedAuthorsInProgress = 0;
+  let tournamentCount = 0;
+  let tournamentEntryCount = 0;
   try {
-    [vendorCounts, sponsorCounts, interestCount, panelCount, cosplayCount, publishedExhibitorCount, publicGuestCount, invitedAuthorsInProgress] = await Promise.all([
+    [vendorCounts, sponsorCounts, interestCount, panelCount, cosplayCount, publishedExhibitorCount, publicGuestCount, invitedAuthorsInProgress, tournamentCount, tournamentEntryCount] = await Promise.all([
       countVendorStatuses(supabase),
       countSponsorStatuses(supabase),
       countVendorInterests(supabase),
@@ -53,6 +55,11 @@ export default async function AdminDashboardPage() {
         .then(({count,error}) => { if(error) throw error; return count ?? 0; }),
       supabase.from("invited_author_guests").select("id", { count: "exact", head: true })
         .in("invitation_status", ["prospect", "contacted", "interested", "terms_discussion"])
+        .then(({count,error}) => { if(error) throw error; return count ?? 0; }),
+      supabase.from("tournament_events").select("id", { count: "exact", head: true })
+        .then(({count,error}) => { if(error) throw error; return count ?? 0; }),
+      supabase.from("tournament_registrations").select("id", { count: "exact", head: true })
+        .in("status",["registered","checked_in","waitlisted"])
         .then(({count,error}) => { if(error) throw error; return count ?? 0; }),
     ]);
   } catch {
@@ -78,6 +85,8 @@ export default async function AdminDashboardPage() {
         <h2 className="font-display text-2xl uppercase tracking-wide">Programming</h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <Card label="Panel proposals in review" value={panelCount} href="/admin/panels" />
+          <Card label="Tournaments planned" value={tournamentCount} href="/admin/tournaments" />
+          <Card label="Tournament registrations" value={tournamentEntryCount} href="/admin/tournaments" />
           <Card label="Cosplay entries in review" value={cosplayCount} href="/admin/cosplay" />
           <Card label="Published guests" value={publicGuestCount} href="/admin/guest-experiences" />
           <Card label="Invited authors in progress" value={invitedAuthorsInProgress} href="/admin/invited-authors" />

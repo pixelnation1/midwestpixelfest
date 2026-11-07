@@ -92,6 +92,7 @@ export default function SchedulePage() {
       <RelatedLinks
         links={[
           { href: "/gaming", label: "Gaming" },
+          { href: "/tournaments", label: "Tournaments & Signup" },
           { href: "/cosplay", label: "Cosplay" },
           { href: "/cosplay/contest", label: "Cosplay Contest" },
           { href: "/guests", label: "Guests" },

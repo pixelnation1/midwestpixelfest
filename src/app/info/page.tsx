@@ -125,6 +125,14 @@ const topics = [
   },
   {
     number: "15",
+    title: "Tournament Registration & Brackets",
+    description: "Find confirmed gaming tournaments, register players or teams, view rules, waitlists, check-in and results.",
+    href: "/tournaments",
+    accent: "border-cyan/60",
+    action: "Explore tournaments",
+  },
+  {
+    number: "16",
     title: "Contact the Team",
     description: "Questions about accessibility, attending with kids, props, tickets, or something else? Start here.",
     href: "/contact",
