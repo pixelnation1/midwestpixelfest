@@ -69,6 +69,14 @@ const topics = [
   },
   {
     number: "08",
+    title: "Code of Conduct",
+    description: "Our community rules for respectful participation, cosplay and photography consent, safe gaming, reporting and accountability.",
+    href: "/code-of-conduct",
+    accent: "border-magenta/60",
+    action: "Read community standards",
+  },
+  {
+    number: "09",
     title: "Contact the Team",
     description: "Questions about accessibility, attending with kids, props, tickets, or something else? Start here.",
     href: "/contact",

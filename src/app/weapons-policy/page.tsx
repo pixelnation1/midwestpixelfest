@@ -175,6 +175,7 @@ export default function WeaponsPolicyPage() {
           <Link href="/contact" className="inline-flex min-h-11 items-center bg-magenta px-5 py-3 font-display text-sm uppercase tracking-widest text-ink">Ask about a prop</Link>
           <Link href="/cosplay" className="inline-flex min-h-11 items-center border border-cyan px-5 py-3 font-display text-sm uppercase tracking-widest text-cyan">Cosplay info</Link>
           <Link href="/first-timers-guide" className="inline-flex min-h-11 items-center border border-line px-5 py-3 font-display text-sm uppercase tracking-widest text-paper">First-timer&apos;s guide</Link>
+          <Link href="/code-of-conduct" className="inline-flex min-h-11 items-center border border-cyan px-5 py-3 font-display text-sm uppercase tracking-widest text-cyan">Code of Conduct</Link>
         </div>
       </div>
     </InnerPage>

@@ -228,6 +228,9 @@ export default function FirstTimersGuidePage() {
             ))}
           </div>
           <p className="mt-5 text-sm text-muted">
+            Everyone deserves a respectful weekend. <InlineLink href="/code-of-conduct">Read our Code of Conduct</InlineLink> before attending.
+          </p>
+          <p className="mt-5 text-sm text-muted">
             Have accessibility or family-service questions? <InlineLink href="/attendee-services">Read the Attendee Services & Accessibility guide</InlineLink>.
           </p>
           <p className="mt-5 text-sm text-muted">
