@@ -83,6 +83,7 @@ export default function GuestsPage() {
         title="Creators and talent"
         actions={[
           { href: "/guests/inquiry", label: "Guest Inquiry" },
+          { href: "/panels/submit", label: "Panel Submissions", variant: "secondary" },
           { href: "/press", label: "Press", variant: "secondary" },
         ]}
       >

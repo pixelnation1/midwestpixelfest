@@ -128,6 +128,7 @@ export const navItems = [
   { href: "/#explore", label: "Explore" },
   { href: "/gaming", label: "Gaming" },
   { href: "/cosplay", label: "Cosplay" },
+  { href: "/panels", label: "Panels" },
   { href: "/merch", label: "Merch" },
   { href: "/guests", label: "Guests" },
   { href: "/vendors", label: "Vendors" },
@@ -139,6 +140,7 @@ export const navItems = [
 /** A dedicated mobile Info accordion and the desktop /info hub use these links. */
 export const infoLinks = [
   { href: "/info", label: "Info Overview" },
+  { href: "/panels/submit", label: "Panel Submissions" },
   { href: "/first-timers-guide", label: "First-Timer's Guide" },
   { href: "/attendee-services", label: "Attendee Services & Accessibility" },
   { href: "/weapons-policy", label: "Weapons & Props Policy" },
@@ -177,6 +179,7 @@ export const footerGroups = [
       { href: "/tickets", label: "Tickets" },
       { href: "/merch", label: "Official Merch" },
       { href: "/schedule", label: "Schedule" },
+      { href: "/panels", label: "Panels & Programming" },
       { href: "/guests", label: "Guests" },
       { href: "/gaming", label: "Gaming" },
       { href: "/cosplay", label: "Cosplay" },
@@ -188,6 +191,7 @@ export const footerGroups = [
       { href: "/vendors", label: "Vendors" },
       { href: "/sponsors", label: "Sponsors" },
       { href: "/sponsors/inquiry", label: "Become a Sponsor" },
+      { href: "/panels/submit", label: "Panel Submissions" },
       { href: "/volunteer", label: "Volunteer" },
       { href: "/guests/inquiry", label: "Guest Inquiry" },
       { href: "/press", label: "Press" },
