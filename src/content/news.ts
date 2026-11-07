@@ -51,7 +51,7 @@ export const newsArticles: NewsArticle[] = [
       {
         heading: "What rolls out from here",
         paragraphs: [
-          "Tickets are on sale from the Tickets page. Gaming, cosplay, collectibles, creators, vendors, and community programming continue to take shape for the weekend.",
+          "Ticket prices are posted on the Tickets page. Sales are currently on hold pending a finalized venue agreement. Gaming, cosplay, collectibles, creators, vendors, and community programming continue to take shape for the weekend.",
           "Join the update list so you hear about the venue, guests, and application windows in one place.",
         ],
       },
@@ -84,14 +84,14 @@ export const newsArticles: NewsArticle[] = [
       {
         heading: "What we can say now",
         paragraphs: [
-          "The inaugural weekend is October 16–17, 2027. The city is Emporia. The organizer is PixelNation. The exact venue will be announced once it is confirmed — not before.",
+          "The inaugural weekend is October 16–17, 2027. The city is Emporia. The event is organized independently as Midwest Pixel Fest. The exact venue will be announced once it is confirmed — not before.",
           "If you are planning a trip from Kansas City, Wichita, Topeka, Lawrence, Manhattan, or farther into the Midwest, bookmark the Travel page. Hotel blocks and parking notes will land there after the venue is public.",
         ],
       },
       {
         heading: "What happens next",
         paragraphs: [
-          "Tickets are on sale from the Tickets page. Guest names and application windows will be posted on this News page and on the matching topic pages. Join the update list for venue, guests, and vendor news.",
+          "Ticket prices are posted, but checkout is on hold while venue arrangements are finalized. Guest names and application windows will be posted on this News page and on the matching topic pages. Join the update list for venue, guests, and vendor news.",
         ],
       },
     ],
