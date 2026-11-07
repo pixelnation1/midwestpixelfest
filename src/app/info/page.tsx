@@ -101,6 +101,14 @@ const topics = [
   },
   {
     number: "12",
+    title: "Convention Floor Map",
+    description: "Find confirmed activity zones, exhibitor booths, entrances and attendee services once the approved layout is released.",
+    href: "/floor-map",
+    accent: "border-cyan/60",
+    action: "Explore the map",
+  },
+  {
+    number: "13",
     title: "Contact the Team",
     description: "Questions about accessibility, attending with kids, props, tickets, or something else? Start here.",
     href: "/contact",

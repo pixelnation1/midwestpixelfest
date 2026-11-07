@@ -131,6 +131,7 @@ export default function TravelPage() {
           { href: "/attendee-services", label: "Accessibility & Attendee Services" },
           { href: "/visit-emporia", label: "Visit Emporia" },
           { href: "/first-timers-guide", label: "First-Timer's Guide" },
+          { href: "/floor-map", label: "Convention Floor Map" },
           { href: "/tickets", label: "Tickets" },
           { href: "/faq", label: "FAQ" },
           { href: "/schedule", label: "Schedule" },

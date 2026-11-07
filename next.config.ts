@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   // workers (ImageResponse OG/icons). Cap workers so `next build` completes.
   experimental: {
     cpus: 2,
+    // Organizer-only image uploads, server validated and capped at 3MB.
+    serverActions: { bodySizeLimit: "4mb" },
   },
 };
 
