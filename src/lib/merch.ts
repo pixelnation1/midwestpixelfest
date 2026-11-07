@@ -33,9 +33,9 @@ export const merchDesigns = [
 ] as const;
 
 export const merchTypes = [
-  { slug: 'tee', name: 'Graphic T-Shirt', color: 'Black' },
-  { slug: 'hoodie', name: 'Pullover Hoodie', color: 'Black' },
-  { slug: 'tote', name: 'Canvas Tote Bag', color: 'Natural' },
+  { slug: 'tee', name: 'Graphic T-Shirt', color: 'Black', priceCents: 2499, priceLabel: '$24.99' },
+  { slug: 'hoodie', name: 'Pullover Hoodie', color: 'Black', priceCents: 4999, priceLabel: '$49.99' },
+  { slug: 'tote', name: 'Canvas Tote Bag', color: 'Natural', priceCents: 1999, priceLabel: '$19.99' },
 ] as const;
 
 export const merchProducts = merchDesigns.flatMap((design) =>
@@ -48,6 +48,8 @@ export const merchProducts = merchDesigns.flatMap((design) =>
     category: type.slug,
     productType: type.name,
     color: type.color,
+    priceCents: type.priceCents,
+    priceLabel: type.priceLabel,
     image: `/merch/${design.slug}-${type.slug}.webp`,
   })),
 );

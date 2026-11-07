@@ -104,7 +104,8 @@ export function MerchGallery() {
                 {product.productType}
               </span>
             </button>
-            <p className="mt-2 font-display text-sm uppercase tracking-[.16em] text-gold">Coming Soon</p>
+            <p className="mt-2 font-display text-lg font-semibold tracking-[.06em] text-white">{product.priceLabel}</p>
+            <p className="mt-1 font-display text-xs uppercase tracking-[.16em] text-[#fff0a1]">Coming Soon</p>
           </article>
         ))}
       </div>
@@ -149,6 +150,7 @@ export function MerchGallery() {
               <p className="font-pixel text-[11px] uppercase tracking-widest text-cyan">Official Midwest PixelFest Merchandise</p>
               <h2 id="merch-product-title" className="font-display text-4xl uppercase leading-none text-paper sm:text-5xl">{selected.title}</h2>
               <p className="font-display text-xl uppercase tracking-wide text-gold">{selected.productType} · {selected.color}</p>
+              <p className="font-display text-3xl font-semibold tracking-wider text-paper">{selected.priceLabel}</p>
               <p className="leading-relaxed text-muted">{selected.description}</p>
               <p className="border-t border-line pt-5 font-display text-lg uppercase tracking-widest text-cyan">Coming Soon</p>
               <p className="text-sm leading-relaxed text-muted">Orders are not open yet. Get notified when the first collection drops.</p>
