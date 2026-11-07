@@ -1,7 +1,7 @@
 "use client";
 import { useActionState, useState } from "react";
 import Link from "next/link";
-import { submitPanelProposal, panelInitialState } from "@/app/actions/panels";
+import { submitPanelProposal, type PanelSubmissionState } from "@/app/actions/panels";
 import { PANEL_CATEGORIES, PANEL_FORMATS, PANEL_DURATIONS, PANEL_AUDIENCES, PANEL_ATTENDANCE } from "@/lib/panels/schema";
 
 const inputStyle = "mt-2 w-full min-h-11 border border-paper/25 bg-ink px-4 py-3 text-paper placeholder:text-muted/75 focus:border-cyan focus:outline-none";
@@ -20,7 +20,7 @@ function Choice({name,label,errors,options}:{name:string;label:string;errors:Rec
 }
 function Section({number,title,children}:{number:string;title:string;children:React.ReactNode}){return <section className="space-y-5 border-t border-line pt-8"><h2 className="font-display text-2xl uppercase text-paper"><span className="mr-3 text-cyan">{number}</span>{title}</h2>{children}</section>;}
 export function PanelProposalForm(){
- const [state,action,pending]=useActionState(submitPanelProposal,panelInitialState);
+ const [state,action,pending]=useActionState(submitPanelProposal, {status:"idle",message:"",fieldErrors:{}} as PanelSubmissionState);
  const [submissionId]=useState(()=>crypto.randomUUID());
  const errors=state.fieldErrors;
  if(state.status==="success")return <div role="status" className="border border-cyan/50 bg-[#10182b] p-7 sm:p-10"><p className="font-pixel text-[11px] uppercase tracking-widest text-gold">Submission received</p><h2 className="mt-3 font-display text-3xl uppercase">You're in the queue!</h2><p className="mt-4 text-muted">{state.message}</p>{state.reference&&<p className="mt-4 border border-cyan/30 bg-ink px-4 py-3 font-display text-lg text-cyan">Reference: {state.reference}</p>}<p className="mt-4 text-sm text-muted">Save your reference. No panel slot is reserved by this form.</p><Link href="/schedule" className="mt-6 inline-flex min-h-11 items-center border border-cyan px-5 py-3 font-display text-sm uppercase text-cyan">Event schedule</Link></div>;
