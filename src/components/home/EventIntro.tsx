@@ -34,6 +34,9 @@ export function EventIntro() {
                 <Button href="/first-timers-guide" variant="secondary">
                   First time? Start here
                 </Button>
+                <Button href="/visit-emporia" variant="ghost">
+                  Explore Emporia
+                </Button>
                 <Button href="/about" variant="ghost">
                   About Midwest Pixel Fest
                 </Button>
