@@ -95,6 +95,7 @@ export default function SchedulePage() {
           { href: "/cosplay", label: "Cosplay" },
           { href: "/cosplay/contest", label: "Cosplay Contest" },
           { href: "/guests", label: "Guests" },
+          { href: "/guests/autographs", label: "Autographs & Photo Ops" },
           { href: "/panels/submit", label: "Submit a Panel" },
           { href: "/tickets", label: "Tickets" },
           { href: "/travel", label: "Travel" },

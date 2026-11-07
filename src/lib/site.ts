@@ -141,6 +141,7 @@ export const navItems = [
 /** A dedicated mobile Info accordion and the desktop /info hub use these links. */
 export const infoLinks = [
   { href: "/info", label: "Info Overview" },
+  { href: "/guests/autographs", label: "Guest Autographs & Photo Ops" },
   { href: "/floor-map", label: "Convention Floor Map" },
   { href: "/exhibitors", label: "Exhibitor & Artist Directory" },
   { href: "/panels/submit", label: "Panel Submissions" },
@@ -186,6 +187,7 @@ export const footerGroups = [
       { href: "/exhibitors", label: "Exhibitors & Artist Alley" },
       { href: "/panels", label: "Panels & Programming" },
       { href: "/guests", label: "Guests" },
+      { href: "/guests/autographs", label: "Autographs & Photo Ops" },
       { href: "/gaming", label: "Gaming" },
       { href: "/cosplay", label: "Cosplay" },
       { href: "/cosplay/contest", label: "Cosplay Contest" },

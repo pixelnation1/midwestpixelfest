@@ -3,6 +3,7 @@ import { getAllGuests } from "@/content/guests";
 import { absoluteUrl } from "@/lib/site";
 import { getPublishedSponsors } from "@/lib/sponsorships";
 import { listPublishedVendors } from "@/lib/persistence/directory";
+import { listPublicGuestExperiences } from "@/lib/persistence/guest-experiences";
 
 /**
  * Public routes included in the sitemap today.
@@ -22,6 +23,7 @@ export const publicRoutes = [
   { path: "/contact", changeFrequency: "monthly" as const, priority: 0.6 },
   { path: "/privacy", changeFrequency: "yearly" as const, priority: 0.3 },
   { path: "/guests", changeFrequency: "weekly" as const, priority: 0.8 },
+  { path: "/guests/autographs", changeFrequency: "weekly" as const, priority: 0.8 },
   { path: "/guests/inquiry", changeFrequency: "monthly" as const, priority: 0.5 },
   { path: "/schedule", changeFrequency: "weekly" as const, priority: 0.8 },
   { path: "/panels", changeFrequency: "monthly" as const, priority: 0.8 },
@@ -97,6 +99,14 @@ export async function getDynamicSitemapEntries(): Promise<SitemapEntry[]> {
     priority: 0.7,
   }));
 
+  const publicGuests = (await listPublicGuestExperiences())
+    .filter(g => !getAllGuests().some(existing => existing.slug === g.slug))
+    .map(g => ({
+      url: absoluteUrl("/guests/" + g.slug),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
+
   const partnerDirectory =
     getPublishedSponsors().length > 0
       ? [
@@ -114,5 +124,5 @@ export async function getDynamicSitemapEntries(): Promise<SitemapEntry[]> {
     priority: 0.6,
   }));
 
-  return [...news, ...guestProfiles, ...partnerDirectory, ...exhibitorProfiles];
+  return [...news, ...guestProfiles, ...publicGuests, ...partnerDirectory, ...exhibitorProfiles];
 }
