@@ -112,10 +112,10 @@ export default async function TournamentPage({params}:Props){
          <p className="font-pixel text-[10px] uppercase tracking-wider text-cyan">Match {m.number} · {m.status}</p>
          <div className="mt-4 space-y-3 text-sm">
           <p className={"flex justify-between gap-2 "+(m.winner===m.playerA&&m.winner?"text-gold":"text-paper")}>
-           <span>{m.playerA||"TBD"}</span><span>{m.scoreA??"—"}</span>
+           <span>{m.playerA||(m.status==="bye"?"BYE":"TBD")}</span><span>{m.scoreA??"—"}</span>
           </p>
           <p className={"flex justify-between gap-2 "+(m.winner===m.playerB&&m.winner?"text-gold":"text-paper")}>
-           <span>{m.playerB||"TBD"}</span><span>{m.scoreB??"—"}</span>
+           <span>{m.playerB||(m.status==="bye"?"BYE":"TBD")}</span><span>{m.scoreB??"—"}</span>
           </p>
          </div>
          {m.winner&&<p className="mt-4 border-t border-line pt-3 text-xs text-gold">Winner: {m.winner}</p>}
@@ -137,7 +137,7 @@ export default async function TournamentPage({params}:Props){
      <thead className="border-b border-line text-gold"><tr>
       <th className="p-4">Rank</th><th className="p-4">Player / team</th><th className="p-4">Wins</th><th className="p-4">Losses</th><th className="p-4">Points</th>
      </tr></thead>
-     <tbody>{t.standings.map((s,i)=><tr key={s.playerName} className="border-b border-line/70">
+     <tbody>{t.standings.map((s,i)=><tr key={s.playerName+":"+i} className="border-b border-line/70">
       <td className="p-4">{i+1}</td><td className="p-4">{s.playerName}</td>
       <td className="p-4">{s.wins}</td><td className="p-4">{s.losses}</td><td className="p-4">{s.points}</td>
      </tr>)}</tbody>
