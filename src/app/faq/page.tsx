@@ -21,7 +21,7 @@ export default function FaqPage() {
       breadcrumbLabel="FAQ"
       eyebrow="Questions"
       title="FAQ"
-      intro="Ticket prices, dates, and the city are locked. The venue and a lot of policy are still to be announced. These are the questions we hear most — answered with what we can actually stand behind today."
+      intro="Our planned venue is Webb Hall at Emporia State University. The reservation is pending final agreement, while ticket prices and event dates are already published. Find the current answers here."
       after={<EmailSignup />}
     >
       <JsonLd data={buildFaqPageJsonLd()} />
