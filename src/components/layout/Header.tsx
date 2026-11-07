@@ -185,7 +185,6 @@ export function Header() {
                 <li className="border-b border-line">
                   <details
                     className="group"
-                    defaultOpen={pathname === "/info" || infoLinks.some((item) => pathname === item.href)}
                   >
                     <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between py-3 font-display text-2xl uppercase tracking-[0.12em] text-paper [&::-webkit-details-marker]:hidden">
                       Info
