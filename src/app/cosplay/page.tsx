@@ -16,7 +16,7 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function CosplayPage() {
-  const tickets = getTicketAction("purchase");
+  const tickets = getTicketAction("nav");
   return (
     <InnerPage
       path="/cosplay"
