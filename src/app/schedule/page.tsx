@@ -98,6 +98,7 @@ export default function SchedulePage() {
           { href: "/panels/submit", label: "Submit a Panel" },
           { href: "/tickets", label: "Tickets" },
           { href: "/travel", label: "Travel" },
+          { href: "/floor-map", label: "Convention Floor Map" },
         ]}
       />
     </InnerPage>

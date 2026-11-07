@@ -141,6 +141,7 @@ export const navItems = [
 /** A dedicated mobile Info accordion and the desktop /info hub use these links. */
 export const infoLinks = [
   { href: "/info", label: "Info Overview" },
+  { href: "/floor-map", label: "Convention Floor Map" },
   { href: "/exhibitors", label: "Exhibitor & Artist Directory" },
   { href: "/panels/submit", label: "Panel Submissions" },
   { href: "/first-timers-guide", label: "First-Timer's Guide" },
@@ -208,6 +209,7 @@ export const footerGroups = [
       { href: "/info", label: "Attendee Info" },
       { href: "/first-timers-guide", label: "First-Timer's Guide" },
       { href: "/attendee-services", label: "Attendee Services & Accessibility" },
+      { href: "/floor-map", label: "Convention Floor Map" },
       { href: "/weapons-policy", label: "Weapons & Props Policy" },
       { href: "/code-of-conduct", label: "Code of Conduct" },
       { href: "/travel", label: "Travel & Hotels" },

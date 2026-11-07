@@ -89,7 +89,9 @@ export default async function ExhibitorsPage() {
             not sponsors or partners unless separately designated.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-muted">
-            Booth numbers will appear when the venue agreement and floor layout are finalized.
+            Booth numbers will appear when the venue agreement and floor layout are finalized. See our{" "}
+            <Link href="/floor-map" className="text-cyan underline underline-offset-4">interactive floor map</Link>{" "}
+            for published activity and booth locations.
             Webb Hall at Emporia State University remains our selected venue, with the reservation pending.
           </p>
         </div>

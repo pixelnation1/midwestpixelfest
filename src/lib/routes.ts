@@ -13,6 +13,7 @@ export const publicRoutes = [
   { path: "/tickets", changeFrequency: "weekly" as const, priority: 0.9 },
   { path: "/first-timers-guide", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/attendee-services", changeFrequency: "monthly" as const, priority: 0.8 },
+  { path: "/floor-map", changeFrequency: "weekly" as const, priority: 0.8 },
   { path: "/info", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/weapons-policy", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/code-of-conduct", changeFrequency: "monthly" as const, priority: 0.8 },
