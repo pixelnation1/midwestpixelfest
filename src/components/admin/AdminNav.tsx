@@ -14,6 +14,7 @@ const NAV = [
   { href: "/admin/exhibitors", label: "Exhibitor Directory" },
   { href: "/admin/floor-map", label: "Floor Map Editor" },
   { href: "/admin/guest-experiences", label: "Guest Experiences" },
+  { href: "/admin/invited-authors", label: "Invited Author Guests" },
   { href: "/admin/sponsors", label: "Sponsors" },
   { href: "/admin/sponsor-inquiries", label: "Sponsor Inquiries" },
   { href: "/admin/payments", label: "Payments / Offers" },

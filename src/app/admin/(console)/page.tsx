@@ -33,8 +33,9 @@ export default async function AdminDashboardPage() {
   let panelCount = 0;
   let cosplayCount = 0;
   let publicGuestCount = 0;
+  let invitedAuthorsInProgress = 0;
   try {
-    [vendorCounts, sponsorCounts, interestCount, panelCount, cosplayCount, publishedExhibitorCount, publicGuestCount] = await Promise.all([
+    [vendorCounts, sponsorCounts, interestCount, panelCount, cosplayCount, publishedExhibitorCount, publicGuestCount, invitedAuthorsInProgress] = await Promise.all([
       countVendorStatuses(supabase),
       countSponsorStatuses(supabase),
       countVendorInterests(supabase),
@@ -49,6 +50,9 @@ export default async function AdminDashboardPage() {
         .then(({count,error}) => { if (error) throw error; return count ?? 0; }),
       supabase.from("guest_experiences").select("id", { count: "exact", head: true })
         .eq("booking_status", "contracted").eq("is_published", true)
+        .then(({count,error}) => { if(error) throw error; return count ?? 0; }),
+      supabase.from("invited_author_guests").select("id", { count: "exact", head: true })
+        .in("invitation_status", ["prospect", "contacted", "interested", "terms_discussion"])
         .then(({count,error}) => { if(error) throw error; return count ?? 0; }),
     ]);
   } catch {
@@ -76,6 +80,7 @@ export default async function AdminDashboardPage() {
           <Card label="Panel proposals in review" value={panelCount} href="/admin/panels" />
           <Card label="Cosplay entries in review" value={cosplayCount} href="/admin/cosplay" />
           <Card label="Published guests" value={publicGuestCount} href="/admin/guest-experiences" />
+          <Card label="Invited authors in progress" value={invitedAuthorsInProgress} href="/admin/invited-authors" />
         </div>
       </section>
       <section>

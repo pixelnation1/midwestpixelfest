@@ -142,6 +142,7 @@ export const navItems = [
 export const infoLinks = [
   { href: "/info", label: "Info Overview" },
   { href: "/guests/autographs", label: "Guest Autographs & Photo Ops" },
+  { href: "/guests/authors", label: "Invited Author Guest Program" },
   { href: "/floor-map", label: "Convention Floor Map" },
   { href: "/exhibitors", label: "Exhibitor & Artist Directory" },
   { href: "/panels/submit", label: "Panel Submissions" },
@@ -188,6 +189,7 @@ export const footerGroups = [
       { href: "/panels", label: "Panels & Programming" },
       { href: "/guests", label: "Guests" },
       { href: "/guests/autographs", label: "Autographs & Photo Ops" },
+      { href: "/guests/authors", label: "Invited Author Guests" },
       { href: "/gaming", label: "Gaming" },
       { href: "/cosplay", label: "Cosplay" },
       { href: "/cosplay/contest", label: "Cosplay Contest" },

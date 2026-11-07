@@ -117,6 +117,14 @@ const topics = [
   },
   {
     number: "14",
+    title: "Invited Author Guest Program",
+    description: "Explore a separate invited author track for readings, writing workshops, panels and signings beyond paid Artist Alley spaces.",
+    href: "/guests/authors",
+    accent: "border-magenta/60",
+    action: "Discover invited authors",
+  },
+  {
+    number: "15",
     title: "Contact the Team",
     description: "Questions about accessibility, attending with kids, props, tickets, or something else? Start here.",
     href: "/contact",
