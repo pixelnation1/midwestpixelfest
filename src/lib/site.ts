@@ -21,10 +21,22 @@ export type Venue = {
 /**
  * Confirmed public event facts.
  *
- * venue: still TBA until the signed venue agreement is in place.
+ * event.venue stays null until a signed venue agreement is in place.
+ * plannedVenue reflects the venue selected after the site tour, not a booking.
  * ticketUrl: keep null while the venue is unconfirmed; sales status and
  * purchase CTAs throughout the site read this field via src/lib/tickets.ts.
  */
+export const plannedVenue = {
+  name: "Webb Hall",
+  institution: "Emporia State University",
+  building: "Memorial Union",
+  streetAddress: "1331 Market St.",
+  city: "Emporia",
+  region: "KS",
+  postalCode: "66801",
+  status: "reservation pending" as const,
+} as const;
+
 export const event = {
   status: "scheduled" as const,
   year: 2027,
@@ -86,10 +98,10 @@ export const site = {
   year: event.year,
   dateLabel: "October 16–17, 2027",
   dateLongLabel: "Saturday, October 16 – Sunday, October 17, 2027",
-  venueLabel: "Emporia, Kansas — venue announcement coming",
+  venueLabel: "Webb Hall at Emporia State University — selected venue; reservation pending",
   tagline: "Gaming • Cosplay • Collectibles • Community",
   description:
-    "Midwest Pixel Fest is a gaming, cosplay, collectibles, and pop-culture convention in Emporia, Kansas on October 16–17, 2027.",
+    "Midwest Pixel Fest is a gaming, cosplay, collectibles, and pop-culture convention planned for Webb Hall at Emporia State University in Emporia, Kansas on October 16–17, 2027. Venue reservation pending.",
   defaultTitle:
     "Midwest Pixel Fest 2027 | Gaming, Cosplay & Pop Culture Convention in Kansas",
   siteUrl,
@@ -321,7 +333,7 @@ export function getFaqs() {
     {
       question: "Where is Midwest Pixel Fest?",
       answer:
-        "Midwest Pixel Fest is in Emporia, Kansas. The exact venue will be announced.",
+        "We have selected Webb Hall inside Emporia State University\u0027s Memorial Union, 1331 Market St., Emporia, KS 66801, as our planned venue. The reservation is pending a signed agreement and deposit; we will confirm the booking once completed.",
     },
     {
       question: "How much are tickets?",
@@ -416,7 +428,7 @@ export function getFaqs() {
     {
       question: "Will there be food?",
       answer:
-        "Food options depend on the venue and any on-site or nearby partners. Details will be added to Travel and the event guide once the building is confirmed.",
+        "The planned venue, ESU Memorial Union, has on-site food service. Any event-specific food arrangements will be announced after the reservation and catering details are finalized.",
     },
     {
       question: "Is the event accessible?",
