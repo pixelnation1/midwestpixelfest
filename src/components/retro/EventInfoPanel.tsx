@@ -36,10 +36,11 @@ export function EventInfoPanel({ className, compact = false }: EventInfoPanelPro
           </dd>
         </div>
         <div>
-          <dt className="font-pixel text-[10px] uppercase tracking-[0.2em] text-gold">Venue</dt>
+          <dt className="font-pixel text-[10px] uppercase tracking-[0.2em] text-gold">Selected venue</dt>
           <dd className="mt-1 font-display text-sm uppercase tracking-[0.12em] text-paper sm:text-base">
-            Venue announcement coming
+            Webb Hall · ESU
           </dd>
+          <p className="mt-1 text-xs text-muted">Reservation pending final agreement</p>
         </div>
       </dl>
     </aside>
