@@ -39,6 +39,9 @@ export default function FaqPage() {
       </div>
       <RelatedLinks
         links={[
+          { href: "/info", label: "Attendee Information" },
+          { href: "/first-timers-guide", label: "First-Timer's Guide" },
+          { href: "/weapons-policy", label: "Weapons & Props Policy" },
           { href: "/tickets", label: "Tickets" },
           { href: "/vendors", label: "Vendors" },
           { href: "/cosplay", label: "Cosplay" },

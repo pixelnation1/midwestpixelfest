@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ScenePhoto } from "@/components/media/ScenePhoto";
 import { ContentSection } from "@/components/ui/ContentSection";
 import { CtaStrip } from "@/components/ui/CtaStrip";
@@ -75,8 +76,9 @@ export default function CosplayPage() {
       <ContentSection id="rules" title="Cosplay safety">
         <p>
           Help make the weekend welcoming for everyone. Full prop and replica
-          guidelines will be published after the venue is confirmed. Start
-          with these essentials:
+          procedures are still pending venue confirmation. Read the
+          <Link href="/weapons-policy" className="ml-1 text-cyan underline underline-offset-4">preliminary Weapons & Props Policy</Link>
+          before building your costume. Start with these essentials:
         </p>
       </ContentSection>
 
@@ -119,6 +121,7 @@ export default function CosplayPage() {
         links={[
           { href: "/schedule", label: "Schedule" },
           { href: "/faq", label: "FAQ" },
+          { href: "/weapons-policy", label: "Weapons & Props Policy" },
           { href: "/tickets", label: "Tickets" },
           { href: "/news", label: "News" },
           { href: "/about", label: "About" },
