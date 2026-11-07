@@ -47,7 +47,10 @@ export async function listPublicFloorMaps(): Promise<PublicFloorMap[]> {
     updated_at:m.updated_at,image_url:await signedFloorPlanUrl(m.image_path),
   })));
   return signed.filter(m=>!!m.image_url).map(m=>{
-    const pins:PublicFloorPin[]=all.filter(pin=>pin.map_id===m.id).map(pin=>({
+    // If an exhibitor is subsequently unpublished, do not expose its former booth marker.
+    const pins:PublicFloorPin[]=all.filter(pin=>
+      pin.map_id===m.id && (!pin.exhibitor_id || exhibitors.has(pin.exhibitor_id))
+    ).map(pin=>({
       ...pin,
       x_pct:Number(pin.x_pct),y_pct:Number(pin.y_pct),
       exhibitor_name:pin.exhibitor_id?exhibitors.get(pin.exhibitor_id)??null:null,
