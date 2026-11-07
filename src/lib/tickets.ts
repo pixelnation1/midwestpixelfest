@@ -25,16 +25,25 @@ export type TicketAction = {
 export type TicketCtaIntent = "nav" | "purchase";
 
 /**
- * Nav / hero: label stays "Tickets".
+ * Nav / hero: always route through the internal Tickets page so attendees
+ * see venue-booking disclosures before leaving for checkout.
  * Purchase: "Get Tickets" when checkout is live, otherwise fallback copy.
- * All live purchase/nav destinations read event.ticketUrl through getPublicTicketUrl().
+ * Only explicit purchase actions link directly to the validated checkout URL.
  */
 export function getTicketAction(intent: TicketCtaIntent = "nav"): TicketAction {
   const checkout = publicTicketUrl();
+  if (intent === "nav") {
+    return {
+      href: "/tickets",
+      label: "Tickets",
+      external: false,
+    };
+  }
+
   if (checkout) {
     return {
       href: checkout,
-      label: intent === "purchase" ? "Get Tickets" : "Tickets",
+      label: "Get Tickets",
       external: true,
     };
   }
