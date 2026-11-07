@@ -11,6 +11,7 @@ describe("operational email subjects", () => {
       operationalEmailSubject("contact", {}),
       "[Midwest Pixel Fest] New Contact Message",
     );
+    assert.equal(operationalEmailSubject("cosplay_contest_entry",{characterName:"Neon Knight"}), "[Midwest Pixel Fest] New Cosplay Contest Application — Neon Knight");
   });
 
   it("sanitizes vendor interest business names in the subject", () => {
@@ -64,5 +65,6 @@ describe("operational source paths", () => {
     );
     assert.equal(operationalSourcePath("sponsor_inquiry"), "/sponsors/inquiry");
     assert.equal(operationalSourcePath("panel_submission"), "/panels/submit");
+    assert.equal(operationalSourcePath("cosplay_contest_entry"), "/cosplay/contest/register");
   });
 });

@@ -93,6 +93,7 @@ export default function SchedulePage() {
         links={[
           { href: "/gaming", label: "Gaming" },
           { href: "/cosplay", label: "Cosplay" },
+          { href: "/cosplay/contest", label: "Cosplay Contest" },
           { href: "/guests", label: "Guests" },
           { href: "/panels/submit", label: "Submit a Panel" },
           { href: "/tickets", label: "Tickets" },

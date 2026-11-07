@@ -73,6 +73,7 @@ export function parseAndValidate(
   }
   const kind = kindRaw as FormKind;
   if (kind === "panel_submission") return { ok: false, fieldErrors: {}, message: "Use the dedicated panel submission form." };
+  if (kind === "cosplay_contest_entry") return { ok: false, fieldErrors: {}, message: "Use the dedicated cosplay contest registration form." };
   const errors: FieldErrors = {};
   const fields: Record<string, string | string[]> = {};
 

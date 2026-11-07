@@ -26,6 +26,8 @@ export const publicRoutes = [
   { path: "/panels/submit", changeFrequency: "monthly" as const, priority: 0.7 },
   { path: "/gaming", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/cosplay", changeFrequency: "monthly" as const, priority: 0.8 },
+  { path: "/cosplay/contest", changeFrequency: "monthly" as const, priority: 0.8 },
+  { path: "/cosplay/contest/register", changeFrequency: "monthly" as const, priority: 0.7 },
   { path: "/about", changeFrequency: "monthly" as const, priority: 0.7 },
   { path: "/vendors", changeFrequency: "monthly" as const, priority: 0.7 },
   { path: "/vendors/interest", changeFrequency: "monthly" as const, priority: 0.5 },

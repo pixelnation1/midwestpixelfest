@@ -23,6 +23,7 @@ const EVENT_BY_KIND: Record<FormKind, AnalyticsEventName> = {
   guest_inquiry: ANALYTICS_EVENTS.guest_inquiry_submit,
   press_inquiry: ANALYTICS_EVENTS.press_inquiry_submit,
   panel_submission: ANALYTICS_EVENTS.panel_submission_submit,
+  cosplay_contest_entry: ANALYTICS_EVENTS.cosplay_contest_submit,
 };
 
 type InquiryFormProps = {
