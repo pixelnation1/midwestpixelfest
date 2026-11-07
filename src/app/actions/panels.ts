@@ -17,7 +17,6 @@ export type PanelSubmissionState = {
   reference?: string;
   fieldErrors: Record<string, string>;
 };
-export const panelInitialState: PanelSubmissionState = { status: "idle", message: "", fieldErrors: {} };
 const fail = (message: string, fieldErrors: Record<string, string> = {}): PanelSubmissionState =>
   ({ status: "error", message, fieldErrors });
 
