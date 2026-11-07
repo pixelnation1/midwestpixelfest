@@ -23,8 +23,8 @@ export type Venue = {
  *
  * event.venue stays null until a signed venue agreement is in place.
  * plannedVenue reflects the venue selected after the site tour, not a booking.
- * ticketUrl: keep null while the venue is unconfirmed; sales status and
- * purchase CTAs throughout the site read this field via src/lib/tickets.ts.
+ * ticketUrl: public checkout link. Venue booking remains pending, and all
+ * purchase flows must show that disclosure before leaving for checkout.
  */
 export const plannedVenue = {
   name: "Webb Hall",
@@ -46,7 +46,8 @@ export const event = {
   doorsLabel: "Saturday at 10:00 AM",
   closeLabel: "Sunday at 5:00 PM",
   venue: null as Venue | null,
-  ticketUrl: null as string | null,
+  ticketUrl:
+    "https://events.ticketleap.com/tickets/midwestpixelfest/midwest-pixel-fest-2027",
 };
 
 export const organizer = {
@@ -342,7 +343,7 @@ export function getFaqs() {
     {
       question: "Are tickets available yet?",
       answer: ticketsLive
-        ? "Yes. Get tickets from the Tickets page. Checkout opens in a new tab on Ticketleap."
+        ? "Yes. Tickets can be purchased through the Tickets page and Ticketleap. Webb Hall is our selected venue, but the reservation is still pending a signed agreement and deposit. Please review the venue status and refund/transfer terms before purchasing, and avoid nonrefundable travel arrangements until the booking is confirmed."
         : "Ticket types and prices are posted on the Tickets page. Ticket sales are temporarily on hold while we finalize the venue agreement. Join the update list for the next announcement.",
     },
     {
