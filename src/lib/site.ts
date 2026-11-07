@@ -128,6 +128,7 @@ export const navItems = [
   { href: "/#explore", label: "Explore" },
   { href: "/gaming", label: "Gaming" },
   { href: "/cosplay", label: "Cosplay" },
+  { href: "/merch", label: "Merch" },
   { href: "/guests", label: "Guests" },
   { href: "/vendors", label: "Vendors" },
   { href: "/sponsors", label: "Sponsors" },
@@ -162,6 +163,7 @@ export const footerGroups = [
     heading: "Event",
     links: [
       { href: "/tickets", label: "Tickets" },
+      { href: "/merch", label: "Official Merch" },
       { href: "/schedule", label: "Schedule" },
       { href: "/guests", label: "Guests" },
       { href: "/gaming", label: "Gaming" },
