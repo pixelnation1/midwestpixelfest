@@ -7,7 +7,7 @@ import { SiteLogo } from "@/components/brand/SiteLogo";
 import { TicketCta } from "@/components/cta/TicketCta";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
-import { mobileMoreLinks, navItems, site } from "@/lib/site";
+import { infoLinks, mobileMoreLinks, navItems, site } from "@/lib/site";
 
 export function Header() {
   const pathname = usePathname();
@@ -157,7 +157,7 @@ export function Header() {
                     </span>
                   </Link>
                 </li>
-                {navItems.map((item) => {
+                {navItems.filter((item) => item.href !== "/info").map((item) => {
                   const isHash = item.href.includes("#");
                   const active = isHash
                     ? false
@@ -182,6 +182,33 @@ export function Header() {
                     </li>
                   );
                 })}
+                <li className="border-b border-line">
+                  <details
+                    className="group"
+                  >
+                    <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between py-3 font-display text-2xl uppercase tracking-[0.12em] text-paper [&::-webkit-details-marker]:hidden">
+                      Info
+                      <span aria-hidden="true" className="text-cyan transition-transform group-open:rotate-180">⌄</span>
+                    </summary>
+                    <ul className="mb-3 border-l-2 border-cyan/50 pl-4">
+                      {infoLinks.map((item) => (
+                        <li key={item.href} className="border-b border-line/60 last:border-b-0">
+                          <Link
+                            href={item.href}
+                            className={cn(
+                              "flex min-h-11 items-center py-3 font-display text-lg uppercase tracking-[0.08em]",
+                              pathname === item.href ? "text-magenta" : "text-muted hover:text-cyan",
+                            )}
+                            aria-current={pathname === item.href ? "page" : undefined}
+                            onClick={() => setOpen(false)}
+                          >
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
               </ul>
               <p className="mt-8 font-pixel text-[11px] uppercase tracking-[0.2em] text-gold">
                 More

@@ -133,17 +133,25 @@ export const navItems = [
   { href: "/vendors", label: "Vendors" },
   { href: "/sponsors", label: "Sponsors" },
   { href: "/schedule", label: "Schedule" },
-  { href: "/travel", label: "Travel" },
+  { href: "/info", label: "Info" },
+] as const;
+
+/** A dedicated mobile Info accordion and the desktop /info hub use these links. */
+export const infoLinks = [
+  { href: "/info", label: "Info Overview" },
+  { href: "/first-timers-guide", label: "First-Timer's Guide" },
+  { href: "/weapons-policy", label: "Weapons & Props Policy" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/travel", label: "Hotels, Parking & Travel" },
+  { href: "/cosplay", label: "Cosplay Information" },
+  { href: "/contact", label: "Contact Us" },
 ] as const;
 
 export const mobileMoreLinks = [
-  { href: "/first-timers-guide", label: "First-Timer's Guide" },
-  { href: "/faq", label: "FAQ" },
   { href: "/about", label: "About" },
   { href: "/news", label: "News" },
   { href: "/volunteer", label: "Volunteer" },
   { href: "/press", label: "Press" },
-  { href: "/contact", label: "Contact" },
 ] as const;
 
 export const socialLinks = [
@@ -183,10 +191,12 @@ export const footerGroups = [
     ],
   },
   {
-    heading: "Plan",
+    heading: "Info",
     links: [
+      { href: "/info", label: "Attendee Info" },
       { href: "/first-timers-guide", label: "First-Timer's Guide" },
-      { href: "/travel", label: "Travel" },
+      { href: "/weapons-policy", label: "Weapons & Props Policy" },
+      { href: "/travel", label: "Travel & Hotels" },
       { href: "/faq", label: "FAQ" },
       { href: "/news", label: "News" },
       { href: "/contact", label: "Contact" },

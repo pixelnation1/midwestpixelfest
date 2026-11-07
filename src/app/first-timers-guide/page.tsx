@@ -203,7 +203,7 @@ export default function FirstTimersGuidePage() {
               <ul className="mt-5 space-y-3 text-paper/90">
                 <li className="flex gap-3"><span className="text-magenta" aria-hidden="true">◆</span>Ask permission before photographing anyone.</li>
                 <li className="flex gap-3"><span className="text-magenta" aria-hidden="true">◆</span>Don't touch costumes, props, or other attendees without consent.</li>
-                <li className="flex gap-3"><span className="text-magenta" aria-hidden="true">◆</span>Functional weapons aren't allowed; full replica and inspection rules are forthcoming.</li>
+                <li className="flex gap-3"><span className="text-magenta" aria-hidden="true">◆</span>Functional weapons aren't allowed. Read our <Link href="/weapons-policy" className="text-cyan underline underline-offset-4">Weapons & Props Policy</Link> for preliminary guidance; final venue procedures are forthcoming.</li>
                 <li className="flex gap-3"><span className="text-magenta" aria-hidden="true">◆</span>You don't need a costume to enjoy cosplay.</li>
               </ul>
               <p className="mt-5"><InlineLink href="/cosplay">Cosplay details and rules</InlineLink></p>
