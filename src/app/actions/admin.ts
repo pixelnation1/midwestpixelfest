@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { parseAllowedHttpUrl } from "@/lib/safe-url";
 import { requireOrganizer } from "@/lib/admin/auth";
 import { publicErrorMessage, organizerActionError } from "@/lib/admin/safe-error";
 import { recordOrganizerAudit } from "@/lib/persistence/audit";
@@ -398,43 +399,91 @@ export async function setVendorDirectoryAction(
 ): Promise<AdminActionState> {
   try {
     const { organizer, supabase } = await adminClient();
-    const reference = String(formData.get("reference") ?? "");
-    const publish = String(formData.get("publish")) === "yes";
+    const reference = String(formData.get("reference") ?? "").trim();
     const detail = await getVendorApplicationByReference(supabase, reference);
     if (!detail) return fail("Application not found.");
-    const previous = String(detail.application.status) as VendorApplicationStatus;
+
+    const publish = String(formData.get("publish")) === "yes";
+    const featured = String(formData.get("featured")) === "yes";
+    const displayName = String(formData.get("displayName") ?? "").trim();
+    const category = String(formData.get("category") ?? "").trim();
+    const shortDescription = String(formData.get("shortDescription") ?? "").trim();
+    const websiteRaw = String(formData.get("website") ?? "").trim();
+    const socialRaw = String(formData.get("socialUrl") ?? "").trim();
+    const logoRaw = String(formData.get("logoUrl") ?? "").trim();
+    const boothLocation = String(formData.get("boothLocation") ?? "").trim();
+    const sortOrderRaw = String(formData.get("sortOrder") ?? "0").trim();
+    const sortOrder = Number(sortOrderRaw);
+
+    if (!displayName || displayName.length > 120 ||
+        category.length > 120 || shortDescription.length > 900 ||
+        boothLocation.length > 100 ||
+        !Number.isInteger(sortOrder) || sortOrder < 0 || sortOrder > 9999) {
+      return fail("Check the display name, category, description, booth label, and sort order.");
+    }
+    const validateLink = (value: string): string | null =>
+      value ? parseAllowedHttpUrl(value)?.href ?? null : null;
+    const website = validateLink(websiteRaw);
+    const socialUrl = validateLink(socialRaw);
+    const logo = validateLink(logoRaw);
+    if ((websiteRaw && !website) || (socialRaw && !socialUrl) || (logoRaw && !logo)) {
+      return fail("Website, social and logo links must be valid HTTPS URLs.");
+    }
+    const appStatus = String(detail.application.status) as VendorApplicationStatus;
+    if (publish && appStatus !== "confirmed") {
+      return fail("Only confirmed vendors can be published. Save this profile without publishing until the vendor is confirmed.");
+    }
+    const rawType = String(detail.application.application_type);
+    const exhibitorType = rawType === "Artist Alley" || rawType === "Cosplay Creator / Vendor"
+      ? rawType : "Vendor Hall";
+
     const record = applicationToRecord(detail.application, detail.offer, detail.history);
     const next = {
       ...record,
       directory: {
         ...record.directory,
-        displayName: String(formData.get("displayName") ?? record.directory.displayName).trim() || record.directory.displayName,
-        category: String(formData.get("category") ?? record.directory.category).trim(),
-        shortDescription: String(formData.get("shortDescription") ?? record.directory.shortDescription).trim(),
-        website: String(formData.get("website") ?? record.directory.website ?? "").trim() || null,
-        socialUrl: String(formData.get("socialUrl") ?? record.directory.socialUrl ?? "").trim() || null,
+        displayName,
+        category,
+        shortDescription,
+        website,
+        socialUrl,
+        logo,
         publishInDirectory: publish,
       },
     };
-    await persistVendorRecord(supabase, String(detail.application.id), previous, next, organizer.userId);
+    await persistVendorRecord(
+      supabase, String(detail.application.id), appStatus, next, organizer.userId,
+    );
     await syncPublicVendorListing(supabase, String(detail.application.id), {
       status: next.status,
-      displayName: next.directory.displayName,
-      category: next.directory.category,
-      shortDescription: next.directory.shortDescription,
-      logo: next.directory.logo,
-      website: next.directory.website,
-      socialUrl: next.directory.socialUrl,
+      displayName,
+      exhibitorType,
+      category,
+      shortDescription,
+      logo,
+      website,
+      socialUrl,
+      boothLocation: boothLocation || null,
+      featured,
+      sortOrder,
       publishInDirectory: publish,
     });
     await recordOrganizerAudit({
-      action: publish ? "vendor_directory_published" : "vendor_directory_unpublished",
+      action: publish ? "vendor_directory_published" : "vendor_directory_saved_unpublished",
       entityType: "vendor_application",
       entityReference: reference,
       actor: organizer,
     });
+    revalidatePath("/exhibitors");
+    revalidatePath("/vendors");
+    revalidatePath("/admin/exhibitors");
     revalidatePath(`/admin/vendors/${reference}`);
-    return { status: "success", message: publish ? "Vendor is eligible for the public directory." : "Vendor removed from the public directory." };
+    return {
+      status: "success",
+      message: publish
+        ? "Confirmed exhibitor profile is now publicly listed."
+        : "Directory profile saved without publishing.",
+    };
   } catch (error) {
     return fail(organizerActionError(error, "Could not update directory settings."));
   }

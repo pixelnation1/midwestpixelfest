@@ -23,7 +23,7 @@ import { getVendorPrimaryCta, getVendorRecruitmentCtas, vendorFaqs } from "@/lib
 export const metadata: Metadata = createPageMetadata({
   title: "Vendors & Artist Alley | Midwest Pixel Fest 2027",
   description:
-    "Interested in vending at Midwest Pixel Fest 2027 in Emporia, Kansas, October 16–17? See Vendor Hall and Artist Alley pricing and register for application updates.",
+    "Explore Vendor Hall and Artist Alley pricing for Midwest Pixel Fest 2027, register for application updates, and browse our official exhibitor directory.",
   path: "/vendors",
 });
 
@@ -126,6 +126,7 @@ export default function VendorsPage() {
 
       <RelatedLinks
         links={[
+          { href: "/exhibitors", label: "Exhibitor & Artist Directory" },
           { href: "/vendors/policies", label: "Vendor Policies" },
           { href: "/sponsors", label: "Sponsors" },
           { href: "/travel", label: "Travel" },

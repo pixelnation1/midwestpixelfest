@@ -20,13 +20,16 @@ function publicClient() {
 }
 
 export type PublicVendorCard = {
+  id: string;
   displayName: string;
+  exhibitorType: "Vendor Hall" | "Artist Alley" | "Cosplay Creator / Vendor";
   category: string;
   shortDescription: string;
   logo: string | null;
   website: string | null;
   socialUrl: string | null;
   boothLocation: string | null;
+  featured: boolean;
 };
 
 export async function listPublishedSponsors(): Promise<PublicSponsorCard[]> {
@@ -54,26 +57,74 @@ export async function listPublishedSponsors(): Promise<PublicSponsorCard[]> {
   }));
 }
 
-export async function listPublishedVendors(): Promise<PublicVendorCard[]> {
-  const supabase = publicClient();
-  if (!supabase) return [];
-  const { data, error } = await supabase
-    .from("public_vendor_listings")
-    .select(
-      "display_name, category, short_description, logo_url, website, social_url, booth_location, sort_order",
-    )
-    .eq("published", true)
-    .order("sort_order", { ascending: true });
-  if (error || !data) return [];
-  return data.map((row) => ({
+const PUBLIC_VENDOR_FIELDS =
+  "id, display_name, exhibitor_type, category, short_description, logo_url, website, social_url, booth_location, featured";
+
+type PublicVendorRow = {
+  id: string;
+  display_name: string;
+  exhibitor_type: string | null;
+  category: string | null;
+  short_description: string | null;
+  logo_url: string | null;
+  website: string | null;
+  social_url: string | null;
+  booth_location: string | null;
+  featured: boolean | null;
+};
+
+function mapVendor(row: PublicVendorRow): PublicVendorCard {
+  const kind = row.exhibitor_type;
+  const exhibitorType = kind === "Artist Alley" || kind === "Cosplay Creator / Vendor"
+    ? kind
+    : "Vendor Hall";
+  return {
+    id: row.id,
     displayName: row.display_name,
+    exhibitorType,
     category: row.category ?? "",
     shortDescription: row.short_description ?? "",
     logo: row.logo_url,
     website: row.website,
     socialUrl: row.social_url,
     boothLocation: row.booth_location,
-  }));
+    featured: row.featured === true,
+  };
+}
+
+/**
+ * Only reads curated PUBLIC listings; excludes contact information, draft
+ * applications and unconfirmed exhibitors by RLS + published filter.
+ */
+export async function listPublishedVendors(): Promise<PublicVendorCard[]> {
+  const supabase = publicClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("public_vendor_listings")
+    .select(PUBLIC_VENDOR_FIELDS)
+    .eq("published", true)
+    .order("featured", { ascending: false })
+    .order("sort_order", { ascending: true })
+    .order("display_name", { ascending: true })
+    .limit(500);
+  if (error || !data) {
+    if (error) console.error("public_exhibitor_listing_failed", { code: error.code });
+    return [];
+  }
+  return (data as PublicVendorRow[]).map(mapVendor);
+}
+
+export async function getPublishedVendorById(id: string): Promise<PublicVendorCard | null> {
+  if (!/^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(id)) return null;
+  const supabase = publicClient();
+  if (!supabase) return null;
+  const { data, error } = await supabase.from("public_vendor_listings")
+    .select(PUBLIC_VENDOR_FIELDS)
+    .eq("published", true)
+    .eq("id", id)
+    .maybeSingle();
+  if (error || !data) return null;
+  return mapVendor(data as PublicVendorRow);
 }
 
 export async function syncPublicSponsorListing(
@@ -123,6 +174,10 @@ export async function syncPublicVendorListing(
     logo: string | null;
     website: string | null;
     socialUrl: string | null;
+    boothLocation: string | null;
+    exhibitorType: "Vendor Hall" | "Artist Alley" | "Cosplay Creator / Vendor";
+    featured: boolean;
+    sortOrder: number;
     publishInDirectory: boolean;
   },
 ): Promise<void> {
@@ -139,6 +194,10 @@ export async function syncPublicVendorListing(
       logo_url: input.logo,
       website: input.website,
       social_url: input.socialUrl,
+      booth_location: input.boothLocation,
+      exhibitor_type: input.exhibitorType,
+      featured: input.featured,
+      sort_order: input.sortOrder,
       published,
     },
     { onConflict: "application_id" },

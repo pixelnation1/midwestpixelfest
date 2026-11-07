@@ -56,6 +56,11 @@ export default async function VendorDetailPage({
   if (!detail) notFound();
 
   const app = detail.application;
+  const { data: publicListing } = await supabase
+    .from("public_vendor_listings")
+    .select("published, booth_location, featured, sort_order, logo_url")
+    .eq("application_id", String(app.id))
+    .maybeSingle();
   const merch = (app.merchandise ?? {}) as Record<string, unknown>;
   const display = (app.display_setup ?? {}) as Record<string, unknown>;
   const compliance = (app.compliance ?? {}) as Record<string, unknown>;
@@ -329,12 +334,53 @@ export default async function VendorDetailPage({
               className="mt-1 w-full border border-line bg-ink px-3 py-2"
             />
           </label>
-          <label className="flex gap-2">
-            <input type="checkbox" name="publish" value="yes" defaultChecked={record.directory.publishInDirectory} />
-            Publish in public vendor directory
+          <div className="grid gap-3 sm:grid-cols-2">
+            <label className="block">
+              Assigned booth / table number
+              <input
+                name="boothLocation"
+                maxLength={100}
+                placeholder="Leave blank until floor plan is confirmed"
+                defaultValue={publicListing?.booth_location ?? ""}
+                className="mt-1 w-full border border-line bg-ink px-3 py-2"
+              />
+            </label>
+            <label className="block">
+              Logo image URL (HTTPS)
+              <input
+                type="url"
+                name="logoUrl"
+                placeholder="https://..."
+                defaultValue={publicListing?.logo_url ?? record.directory.logo ?? ""}
+                className="mt-1 w-full border border-line bg-ink px-3 py-2"
+              />
+            </label>
+            <label className="block">
+              Display order (lower comes first)
+              <input
+                type="number"
+                name="sortOrder"
+                min={0}
+                max={9999}
+                defaultValue={publicListing?.sort_order ?? 0}
+                className="mt-1 w-full border border-line bg-ink px-3 py-2"
+              />
+            </label>
+          </div>
+          <label className="flex items-center gap-2">
+            <input type="checkbox" name="featured" value="yes" defaultChecked={publicListing?.featured ?? false} />
+            Feature this exhibitor first in the directory
           </label>
+          <label className="flex items-center gap-2">
+            <input type="checkbox" name="publish" value="yes" defaultChecked={publicListing?.published ?? false} />
+            Publish in official exhibitor directory
+          </label>
+          <p className="text-xs text-muted">
+            Public listings show approved name, category, description, image, links, and booth only.
+            A vendor must be confirmed before their listing can go live.
+          </p>
           <Button type="submit" variant="secondary">
-            Save directory settings
+            Save exhibitor profile
           </Button>
         </ActionForm>
       </Section>

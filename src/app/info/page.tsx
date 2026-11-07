@@ -93,6 +93,14 @@ const topics = [
   },
   {
     number: "11",
+    title: "Exhibitor & Artist Directory",
+    description: "Explore confirmed exhibitors, Artist Alley creators, shops and booth assignments as they're announced.",
+    href: "/exhibitors",
+    accent: "border-cyan/60",
+    action: "Browse exhibitors",
+  },
+  {
+    number: "12",
     title: "Contact the Team",
     description: "Questions about accessibility, attending with kids, props, tickets, or something else? Start here.",
     href: "/contact",

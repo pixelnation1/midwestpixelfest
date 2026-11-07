@@ -56,7 +56,7 @@ export function Header() {
           <SiteLogo variant="header" priority />
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center lg:flex">
+        <nav aria-label="Primary" className="hidden items-center xl:flex">
           <ul className="flex flex-nowrap items-center">
             {navItems.map((item) => {
               const isHash = item.href.includes("#");
@@ -93,7 +93,7 @@ export function Header() {
           </span>
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center border border-paper/20 text-paper lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center border border-paper/20 text-paper xl:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -130,7 +130,7 @@ export function Header() {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
-          className="border-t border-line bg-ink lg:hidden"
+          className="border-t border-line bg-ink xl:hidden"
         >
           <Container className="flex max-h-[calc(100dvh-3.75rem)] flex-col overflow-y-auto py-6">
             <div className="mb-4 flex justify-end">
