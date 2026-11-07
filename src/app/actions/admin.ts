@@ -244,16 +244,32 @@ export async function confirmVendorPaymentAction(
       paymentMethodOrReference: String(formData.get("paymentReference") ?? "").trim() || null,
     });
     await persistVendorRecord(supabase, String(detail.application.id), previous, record, organizer.userId);
+    // Preserve any organizer-assigned public directory metadata on payment confirmation.
+    const { data: priorListing, error: priorListingError } = await supabase
+      .from("public_vendor_listings")
+      .select("booth_location,featured,sort_order")
+      .eq("application_id", String(detail.application.id))
+      .maybeSingle();
+    if (priorListingError) throw new Error("unavailable");
+    const rawType = String(detail.application.application_type);
+    const exhibitorType = rawType === "Artist Alley" || rawType === "Cosplay Creator / Vendor"
+      ? rawType : "Vendor Hall";
     await syncPublicVendorListing(supabase, String(detail.application.id), {
       status: record.status,
       displayName: record.directory.displayName,
+      exhibitorType,
       category: record.directory.category,
       shortDescription: record.directory.shortDescription,
       logo: record.directory.logo,
       website: record.directory.website,
       socialUrl: record.directory.socialUrl,
+      boothLocation: priorListing?.booth_location ?? null,
+      featured: priorListing?.featured ?? false,
+      sortOrder: priorListing?.sort_order ?? 0,
       publishInDirectory: record.directory.publishInDirectory,
     });
+    revalidatePath("/exhibitors");
+    revalidatePath("/admin/exhibitors");
     await recordOrganizerAudit({
       action: "vendor_payment_confirmed",
       entityType: "vendor_application",
