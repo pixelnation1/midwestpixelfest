@@ -10,7 +10,7 @@ import {
  TOURNAMENT_CATEGORIES,TOURNAMENT_FORMATS,TOURNAMENT_AGE_POLICIES,
  TOURNAMENT_STATUSES,TOURNAMENT_STATUS_LABELS,TOURNAMENT_ENTRY_STATUS_LABELS,
  TOURNAMENT_ENTRY_TYPES,formatTournamentTime,
- type TournamentRecord,type TournamentEntry,type TournamentRegistrationStatus,
+ type TournamentRecord,type TournamentEntry,
 } from "@/lib/tournaments/model";
 
 export const dynamic="force-dynamic";
