@@ -141,6 +141,7 @@ export const navItems = [
 /** A dedicated mobile Info accordion and the desktop /info hub use these links. */
 export const infoLinks = [
   { href: "/info", label: "Info Overview" },
+  { href: "/tournaments", label: "Tournament Registration" },
   { href: "/guests/autographs", label: "Guest Autographs & Photo Ops" },
   { href: "/guests/authors", label: "Invited Author Guest Program" },
   { href: "/floor-map", label: "Convention Floor Map" },
@@ -185,6 +186,7 @@ export const footerGroups = [
       { href: "/tickets", label: "Tickets" },
       { href: "/merch", label: "Official Merch" },
       { href: "/schedule", label: "Schedule" },
+      { href: "/tournaments", label: "Tournaments & Registration" },
       { href: "/exhibitors", label: "Exhibitors & Artist Alley" },
       { href: "/panels", label: "Panels & Programming" },
       { href: "/guests", label: "Guests" },
@@ -318,7 +320,7 @@ export const gamingPillars = [
   {
     title: "Tournaments / Organized Play",
     slug: "tournaments",
-    href: "/gaming#tournaments",
+    href: "/tournaments",
     icon: "trophy" as const,
     tone: "magenta" as const,
     description: "Competitive formats and signup rules will be posted once they are final.",

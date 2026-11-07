@@ -4,6 +4,7 @@ import { absoluteUrl } from "@/lib/site";
 import { getPublishedSponsors } from "@/lib/sponsorships";
 import { listPublishedVendors } from "@/lib/persistence/directory";
 import { listPublicGuestExperiences } from "@/lib/persistence/guest-experiences";
+import { listPublicTournaments } from "@/lib/persistence/tournaments";
 
 /**
  * Public routes included in the sitemap today.
@@ -30,6 +31,7 @@ export const publicRoutes = [
   { path: "/panels", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/panels/submit", changeFrequency: "monthly" as const, priority: 0.7 },
   { path: "/gaming", changeFrequency: "monthly" as const, priority: 0.8 },
+  { path: "/tournaments", changeFrequency: "weekly" as const, priority: 0.85 },
   { path: "/cosplay", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/cosplay/contest", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/cosplay/contest/register", changeFrequency: "monthly" as const, priority: 0.7 },
@@ -125,5 +127,10 @@ export async function getDynamicSitemapEntries(): Promise<SitemapEntry[]> {
     priority: 0.6,
   }));
 
-  return [...news, ...guestProfiles, ...publicGuests, ...partnerDirectory, ...exhibitorProfiles];
+  const tournamentPages = (await listPublicTournaments()).map(t=>({
+    url:absoluteUrl("/tournaments/"+t.slug),
+    changeFrequency:"weekly" as const,priority:0.7,
+  }));
+
+  return [...news, ...guestProfiles, ...publicGuests, ...partnerDirectory, ...exhibitorProfiles, ...tournamentPages];
 }

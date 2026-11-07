@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ScenePhoto } from "@/components/media/ScenePhoto";
 import { GameSelectCard } from "@/components/retro/GameSelectCard";
 import { ContentSection } from "@/components/ui/ContentSection";
@@ -77,6 +78,10 @@ export default function GamingPage() {
         <p id="console-tournaments">
           Tournament formats, title lists, and signup rules will be published
           when they are final — not as a teaser sheet of games we cannot run.
+          Browse confirmed competitions through our{" "}
+          <Link href="/tournaments" className="text-cyan underline underline-offset-4">
+            Tournament Registration directory
+          </Link>.
         </p>
       </ContentSection>
 
@@ -121,6 +126,9 @@ export default function GamingPage() {
           Official tournament schedules, rules, and formats will be published
           as they are finalized. Until then, treat competitive play as planned —
           not as a promise of a specific game on a specific day.
+          <Link href="/tournaments" className="mt-4 inline-flex min-h-11 items-center border border-cyan px-5 py-3 font-display text-sm uppercase tracking-wider text-cyan">
+            Explore tournaments & registration →
+          </Link>
         </p>
       </ContentSection>
 
@@ -152,6 +160,7 @@ export default function GamingPage() {
       <RelatedLinks
         links={[
           { href: "/schedule", label: "Schedule" },
+          { href: "/tournaments", label: "Tournament Registration" },
           { href: "/tickets", label: "Tickets" },
           { href: "/faq", label: "FAQ" },
           { href: "/news", label: "News" },
