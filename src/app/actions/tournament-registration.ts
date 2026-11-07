@@ -53,6 +53,28 @@ export async function registerForTournament(
  if(!rate.ok)return fail("Too many registrations. Please try again in a few minutes.");
  const service=createSupabaseServiceClient();
  if(!service)return fail("Registration is temporarily unavailable.");
+ // Idempotent retry before the live signup window check: a lost response
+ // must not become a misleading "registration closed" after brackets start.
+ const {data:prior,error:priorError}=await service.from("tournament_registrations")
+  .select("tournament_id,reference,status").eq("idempotency_key",idempotency)
+  .maybeSingle();
+ if(priorError)return fail("We couldn't verify a previous submission. Please try again.");
+ if(prior){
+  if(prior.tournament_id!==tournamentId)
+   return fail("This registration attempt is already associated with another tournament. Refresh and retry.");
+  if(prior.status==="registered"||prior.status==="checked_in"||prior.status==="waitlisted"){
+   return {
+    status:"success",
+    message:prior.status==="waitlisted"
+      ?"Your waitlist request was already saved. Keep your original reference; a place is not guaranteed."
+      :"This registration was already recorded. Keep your original reference for event-day check-in.",
+    fieldErrors:{},
+    reference:prior.reference,
+    registrationStatus:prior.status==="waitlisted"?"waitlisted":"registered",
+   };
+  }
+  return fail("This registration has been withdrawn or disqualified. Contact organizers if you need to discuss reinstatement.");
+ }
  const response=await service.from("tournament_events")
   .select("id,age_policy,entry_type,status,is_published,registration_open,registration_deadline")
   .eq("id",tournamentId).maybeSingle();

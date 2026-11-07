@@ -12,7 +12,7 @@ import {
  buildSingleElimination,buildRoundRobin,validTournamentSlug,
  validTournamentDate,validTournamentTime,
 } from "@/lib/tournaments/model";
-import type {TournamentRecord,TournamentStatus,TournamentFormat} from "@/lib/tournaments/model";
+import type {TournamentStatus,TournamentRegistrationStatus} from "@/lib/tournaments/model";
 import type {AdminActionState} from "@/app/actions/admin";
 
 const ok=(message:string):AdminActionState=>({status:"success",message});
@@ -138,7 +138,7 @@ export async function updateTournamentEntryAction(
 ):Promise<AdminActionState>{
  const session=await admin();if(!session)return bad("Tournament database unavailable.");
  const entryId=read(f,"entryId",36),next=read(f,"status",25);
- if(!uuid(entryId)||!TOURNAMENT_REGISTRATION_STATUSES.includes(next as any))
+ if(!uuid(entryId)||!TOURNAMENT_REGISTRATION_STATUSES.includes(next as TournamentRegistrationStatus))
   return bad("Invalid player or registration status.");
  const {data:entry,error}=await session.db.from("tournament_registrations")
   .select("id,tournament_id,status").eq("id",entryId).maybeSingle();

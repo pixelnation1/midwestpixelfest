@@ -1,0 +1,56 @@
+name: Verify website and tournament logic
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Unit tests and production build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Run automated tests
+        run: npm test
+      - name: Verify Next.js production build
+        run: npm run build
+      - name: Smoke test public routes and organizer protection
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run start -- -p 3100 > /tmp/midwestpixelfest-smoke.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3100/tournaments || true)
+            if [[ "$code" == "200" ]]; then break; fi
+            sleep 1
+          done
+          if [[ "$code" != "200" ]]; then
+            cat /tmp/midwestpixelfest-smoke.log
+            echo "Tournament directory did not respond with 200" >&2
+            exit 1
+          fi
+          echo "Tournament directory: HTTP 200"
+          code=$(curl -s -o /dev/null -w '%{http_code}'             http://127.0.0.1:3100/tournaments/internal-qa-tournament-2027)
+          [[ "$code" == "404" ]] || { echo "Private tournament exposed: HTTP $code" >&2; exit 1; }
+          echo "Private QA tournament: HTTP 404"
+          code=$(curl -s -o /dev/null -w '%{http_code}'             http://127.0.0.1:3100/admin/tournaments)
+          case "$code" in
+            301|302|303|307|308) echo "Organizer dashboard protected: HTTP $code" ;;
+            *) echo "Organizer dashboard failed redirect check: HTTP $code" >&2; exit 1 ;;
+          esac

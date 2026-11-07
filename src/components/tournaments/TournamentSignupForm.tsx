@@ -1,9 +1,8 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 import { registerForTournament, type TournamentSignupState } from "@/app/actions/tournament-registration";
-import { TOURNAMENT_ENTRY_STATUS_LABELS } from "@/lib/tournaments/model";
 import type { TournamentPublic } from "@/lib/tournaments/model";
 
 const input="mt-2 min-h-11 w-full border border-paper/25 bg-ink px-4 py-3 text-base text-paper focus:border-cyan focus:outline-none";
@@ -12,7 +11,9 @@ function ErrorText({value}:{value?:string}) {return value?<p role="alert" classN
 export function TournamentSignupForm({tournament}:{tournament:TournamentPublic}){
  const [state,action,pending]=useActionState(registerForTournament,
   {status:"idle",message:"",fieldErrors:{}} as TournamentSignupState);
- const [submissionId]=useState(()=>crypto.randomUUID());
+ const [submissionId,setSubmissionId]=useState("");
+ // Avoid server/client hydration mismatches; generate a UUID only after mount.
+ useEffect(()=>{setSubmissionId(crypto.randomUUID());},[]);
  const [age,setAge]=useState("");
  const errors=state.fieldErrors;
  if(state.status==="success")return <div role="status" className="border border-cyan/35 bg-[#111a2e] p-6 sm:p-9">
@@ -117,7 +118,7 @@ export function TournamentSignupForm({tournament}:{tournament:TournamentPublic})
      the tournament and have read the <Link href="/privacy" className="text-cyan underline">Privacy Policy</Link>.</span>
    </label>
    <ErrorText value={errors.privacyAck}/>
-   <button type="submit" disabled={pending}
+   <button type="submit" disabled={pending||!submissionId}
     className="inline-flex min-h-12 w-full items-center justify-center bg-magenta px-6 py-3 font-display text-base uppercase tracking-wider text-ink hover:bg-gold disabled:opacity-50 sm:w-auto">
     {pending?"Submitting...":"Register / Join Waitlist"}
    </button>
