@@ -31,7 +31,7 @@ export default async function GuestsPage() {
       breadcrumbLabel="Guests"
       eyebrow="Talent & creators"
       title="Special guests"
-      intro={`Guest announcements are coming. Confirmed names for ${site.dateLabel} in ${site.location} will appear here.`}
+      intro={announced.length > 0 ? `Meet the confirmed guests joining Midwest Pixel Fest on ${site.dateLabel} in ${site.location}. Guest schedules and experiences are announced as they are finalized.` : `Guest announcements are coming. Confirmed names for ${site.dateLabel} in ${site.location} will appear here.`}
     >
       {announced.length===0 ? <div className="mb-10 overflow-hidden border border-magenta/40 bg-panel px-6 py-10 text-center pixel-frame">
         <p className="font-pixel text-[11px] uppercase tracking-[0.28em] text-gold">
