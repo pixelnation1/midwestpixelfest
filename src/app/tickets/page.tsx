@@ -17,7 +17,7 @@ export const metadata: Metadata = createPageMetadata({
   title: "Tickets | Midwest Pixel Fest 2027",
   description: salesOpen
     ? "Get Midwest Pixel Fest 2027 tickets for October 16–17 in Emporia, Kansas. Weekend $30, Saturday $20, Sunday $15, kids 12 and under free with a paid adult."
-    : "Midwest Pixel Fest 2027 tickets for October 16–17 in Emporia, Kansas. Weekend $30, Saturday $20, Sunday $15, kids 12 and under free with a paid adult. Ticket sales are temporarily on hold until the venue agreement is finalized.",
+    : "Midwest Pixel Fest 2027 tickets for October 16–17, with Webb Hall at ESU selected as the planned venue (reservation pending). Weekend $30, Saturday $20, Sunday $15, kids 12 and under free with a paid adult. Ticket sales remain on hold pending the venue agreement.",
   path: "/tickets",
 });
 
