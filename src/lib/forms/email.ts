@@ -32,6 +32,7 @@ const KIND_LABELS: Record<OperationalKind, string> = {
   volunteer_interest: "Volunteer Interest",
   guest_inquiry: "Guest Inquiry",
   press_inquiry: "Press Inquiry",
+  panel_submission: "Panel Proposal",
 };
 
 const FIELD_LABELS: Record<string, string> = {
@@ -168,6 +169,17 @@ const FIELD_LABELS: Record<string, string> = {
   preferredPublicUrl: "Preferred public URL",
   brandGuidelinesUrl: "Brand guidelines URL",
   contactConsent: "Contact consent",
+  panelReference: "Proposal reference",
+  panelTitle: "Proposed panel title",
+  topicCategory: "Topic category",
+  panelFormat: "Panel format",
+  durationMinutes: "Duration (minutes)",
+  estimatedAttendance: "Estimated audience size",
+  coPresenters: "Other presenters",
+  pastExperience: "Relevant experience",
+  avNeeds: "Equipment requested",
+  schedulingNotes: "Scheduling preferences",
+  accessibilityNeeds: "Accessibility request",
 };
 
 function escapeHtml(value: string): string {

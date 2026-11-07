@@ -63,5 +63,6 @@ describe("operational source paths", () => {
       "/vendors/apply/artist",
     );
     assert.equal(operationalSourcePath("sponsor_inquiry"), "/sponsors/inquiry");
+    assert.equal(operationalSourcePath("panel_submission"), "/panels/submit");
   });
 });

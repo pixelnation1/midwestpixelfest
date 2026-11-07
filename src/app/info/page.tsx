@@ -77,6 +77,14 @@ const topics = [
   },
   {
     number: "09",
+    title: "Panel Submissions",
+    description: "Propose a workshop, talk, fan discussion, or community programming session for Midwest Pixel Fest 2027.",
+    href: "/panels/submit",
+    accent: "border-cyan/60",
+    action: "Submit an idea",
+  },
+  {
+    number: "10",
     title: "Contact the Team",
     description: "Questions about accessibility, attending with kids, props, tickets, or something else? Start here.",
     href: "/contact",

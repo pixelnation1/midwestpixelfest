@@ -94,6 +94,7 @@ export default function SchedulePage() {
           { href: "/gaming", label: "Gaming" },
           { href: "/cosplay", label: "Cosplay" },
           { href: "/guests", label: "Guests" },
+          { href: "/panels/submit", label: "Submit a Panel" },
           { href: "/tickets", label: "Tickets" },
           { href: "/travel", label: "Travel" },
         ]}

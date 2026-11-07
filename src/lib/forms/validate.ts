@@ -9,6 +9,7 @@ export const FORM_KINDS = [
   "volunteer_interest",
   "guest_inquiry",
   "press_inquiry",
+  "panel_submission",
 ] as const;
 
 export type FormKind = (typeof FORM_KINDS)[number];

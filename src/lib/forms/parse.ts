@@ -72,6 +72,7 @@ export function parseAndValidate(
     };
   }
   const kind = kindRaw as FormKind;
+  if (kind === "panel_submission") return { ok: false, fieldErrors: {}, message: "Use the dedicated panel submission form." };
   const errors: FieldErrors = {};
   const fields: Record<string, string | string[]> = {};
 

@@ -29,11 +29,15 @@ export default async function AdminDashboardPage() {
   let vendorCounts: Record<string, number> = {};
   let sponsorCounts: Record<string, number> = {};
   let interestCount = 0;
+  let panelCount = 0;
   try {
-    [vendorCounts, sponsorCounts, interestCount] = await Promise.all([
+    [vendorCounts, sponsorCounts, interestCount, panelCount] = await Promise.all([
       countVendorStatuses(supabase),
       countSponsorStatuses(supabase),
       countVendorInterests(supabase),
+      supabase.from("panel_submissions").select("id", { count: "exact", head: true })
+        .in("status", ["submitted", "under_review", "shortlisted"])
+        .then(({count,error}) => { if (error) throw error; return count ?? 0; }),
     ]);
   } catch {
     return (
@@ -54,6 +58,12 @@ export default async function AdminDashboardPage() {
         <h1 className="font-display text-4xl uppercase tracking-wide">Dashboard</h1>
         <p className="mt-2 text-muted">Live counts from the organizer database. Empty pipelines show zero.</p>
       </div>
+      <section>
+        <h2 className="font-display text-2xl uppercase tracking-wide">Programming</h2>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Card label="Panel proposals in review" value={panelCount} href="/admin/panels" />
+        </div>
+      </section>
       <section>
         <h2 className="font-display text-2xl uppercase tracking-wide">Vendor pipeline</h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
