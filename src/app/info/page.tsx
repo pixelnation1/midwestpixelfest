@@ -109,6 +109,14 @@ const topics = [
   },
   {
     number: "13",
+    title: "Guest Autographs & Photo Opportunities",
+    description: "Find official guest signing prices, selfie and photo-op options, schedules, and purchasing information when announced.",
+    href: "/guests/autographs",
+    accent: "border-gold/60",
+    action: "Explore guest experiences",
+  },
+  {
+    number: "14",
     title: "Contact the Team",
     description: "Questions about accessibility, attending with kids, props, tickets, or something else? Start here.",
     href: "/contact",
