@@ -25,6 +25,12 @@ export default function PanelPage(){return <InnerPage path="/panels" eyebrow="Pr
   <h2 className="mt-3 font-display text-4xl uppercase tracking-wide">Your fandom, your stage</h2>
   <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{ideas.map(i=><article key={i.title} className="border border-line bg-panel p-6"><h3 className="font-display text-2xl uppercase text-paper">{i.title}</h3><p className="mt-3 text-muted">{i.note}</p></article>)}</div>
  </section>
+ <section className="mt-12 border-l-4 border-gold bg-panel p-6 sm:p-8">
+  <p className="font-pixel text-[11px] uppercase tracking-widest text-gold">Author guests & storytelling</p>
+  <h2 className="mt-3 font-display text-2xl uppercase tracking-wide">Invited Author Guest Program</h2>
+  <p className="mt-3 max-w-3xl leading-relaxed text-muted">Authors who bring readings, craft talks, publishing workshops or conversations can be considered for a separate invited guest track, rather than a paid Artist Alley space. Each invitation and appearance arrangement is handled individually.</p>
+  <Link href="/guests/authors" className="mt-5 inline-flex min-h-11 items-center font-display text-sm uppercase tracking-wider text-cyan underline">Learn about invited authors →</Link>
+ </section>
  <section className="mt-12 border border-cyan/30 bg-ink-2 p-6 sm:p-8">
   <h2 className="font-display text-3xl uppercase tracking-wide">How panel selection works</h2>
   <ol className="mt-5 grid gap-5 sm:grid-cols-3">{[

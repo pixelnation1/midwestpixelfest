@@ -58,6 +58,20 @@ export default async function GuestsPage() {
         </a>
       </div>
 
+      <div className="mb-10 border border-gold/30 bg-panel p-6 sm:p-8">
+        <p className="font-pixel text-[11px] uppercase tracking-widest text-gold">A separate author guest track</p>
+        <h2 className="mt-3 font-display text-2xl uppercase tracking-wide text-paper">Invited Author Guest Program</h2>
+        <p className="mt-3 max-w-3xl leading-relaxed text-muted">
+          We're welcoming storytelling into the programming lineup with invited
+          authors who can contribute readings, workshops, writing panels and signings.
+          This is separate from the regular paid Artist Alley application process.
+          Confirmed author appearances will be announced only after agreements are finalized.
+        </p>
+        <a href="/guests/authors" className="mt-5 inline-flex min-h-11 items-center border border-cyan px-5 py-3 font-display text-sm uppercase tracking-widest text-cyan hover:bg-cyan/10">
+          Explore the Invited Author Program →
+        </a>
+      </div>
+
       <ContentSection title="Who may appear">
         <p>
           Midwest Pixel Fest may feature creators, artists, streamers, authors,
@@ -105,6 +119,7 @@ export default async function GuestsPage() {
           { href: "/guests/inquiry", label: "Guest Inquiry" },
           { href: "/panels/submit", label: "Panel Submissions", variant: "secondary" },
           { href: "/guests/autographs", label: "Autographs & Photo Ops", variant: "secondary" },
+          { href: "/guests/authors", label: "Invited Authors", variant: "secondary" },
           { href: "/press", label: "Press", variant: "secondary" },
         ]}
       >

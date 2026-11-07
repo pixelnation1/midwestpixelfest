@@ -37,9 +37,21 @@ export default function GuestInquiryPage() {
         <GuestInquiryForm />
       </div>
 
+      <div className="mb-8 border border-gold/30 bg-panel p-5 sm:p-7">
+        <h2 className="font-display text-xl uppercase tracking-wide text-paper">Are you an author?</h2>
+        <p className="mt-3 text-sm leading-relaxed text-muted">
+          Our invitation-based Author Guest Program is separate from paid Artist Alley.
+          You're welcome to introduce your writing, books, or workshop idea here,
+          but an inquiry doesn't guarantee a guest invitation, table or appearance.
+        </p>
+        <a href="/guests/authors" className="mt-4 inline-flex min-h-11 items-center font-display text-sm uppercase tracking-wider text-cyan underline">
+          Read the Invited Author Guest Program →
+        </a>
+      </div>
       <RelatedLinks
         links={[
           { href: "/guests", label: "Guests" },
+          { href: "/guests/authors", label: "Invited Author Guest Program" },
           { href: "/press/inquiry", label: "Press Inquiry" },
           { href: "/about", label: "About" },
           { href: "/contact", label: "Contact" },

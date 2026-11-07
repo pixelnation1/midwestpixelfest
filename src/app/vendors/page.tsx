@@ -79,6 +79,20 @@ export default function VendorsPage() {
         </p>
       </CtaStrip>
 
+      <div className="mb-8 border-l-4 border-gold bg-panel p-6 sm:p-8">
+        <h2 className="font-display text-2xl uppercase tracking-wide text-paper">Authors: a separate guest opportunity</h2>
+        <p className="mt-3 max-w-3xl leading-relaxed text-muted">
+          Authors who want to sell books as exhibitors can explore Artist Alley.
+          But authors invited to lead talks, writing workshops, readings or other
+          experiences may be considered through our separate Invited Author Guest Program.
+          Invited programming is not a standard paid booth application; table space,
+          book sales and other arrangements are agreed on individually.
+        </p>
+        <a href="/guests/authors" className="mt-5 inline-flex min-h-11 items-center border border-cyan px-5 py-3 font-display text-sm uppercase tracking-widest text-cyan hover:bg-cyan/10">
+          Learn about invited author guests →
+        </a>
+      </div>
+
       <VendorHallVsAlley />
       <VendorProcess />
       <VendorPoliciesSummary />
@@ -127,6 +141,7 @@ export default function VendorsPage() {
       <RelatedLinks
         links={[
           { href: "/exhibitors", label: "Exhibitor & Artist Directory" },
+          { href: "/guests/authors", label: "Invited Author Guest Program" },
           { href: "/vendors/policies", label: "Vendor Policies" },
           { href: "/sponsors", label: "Sponsors" },
           { href: "/travel", label: "Travel" },
