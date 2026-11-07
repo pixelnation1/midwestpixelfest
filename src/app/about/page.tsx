@@ -29,7 +29,7 @@ export default function AboutPage() {
       breadcrumbLabel="About"
       eyebrow="The fest"
       title="About Midwest Pixel Fest"
-      intro={`${site.name} is a gaming, cosplay, collectibles, and pop-culture convention coming to ${site.location} in October 2027 — ${site.dateLabel}. The venue is still to be announced.`}
+      intro={`${site.name} is a gaming, cosplay, collectibles, and pop-culture convention coming to ${site.location} on ${site.dateLabel}. Webb Hall at Emporia State University is our selected venue, with the reservation still pending.`}
     >
       <ContentSection title="What is Midwest Pixel Fest?">
         <p>
@@ -41,8 +41,9 @@ export default function AboutPage() {
         </p>
         <p>
           The official home for tickets, guests, applications, and travel is
-          this website. The venue is still to be announced. Until it is locked,
-          we will not invent it.
+          this website. We have selected Webb Hall at Emporia State University
+          as our planned venue. The reservation and final venue details are
+          pending a signed agreement and deposit.
         </p>
       </ContentSection>
 

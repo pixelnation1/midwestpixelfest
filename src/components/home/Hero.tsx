@@ -93,6 +93,24 @@ export function Hero() {
             and the people who keep the floor loud.
           </p>
 
+          <div className="mt-6 max-w-xl border-l-4 border-gold bg-ink/85 px-4 py-4">
+            <p className="font-pixel text-[10px] uppercase tracking-[0.16em] text-gold">
+              Venue selected for 2027
+            </p>
+            <p className="mt-2 font-display text-2xl uppercase tracking-wide text-paper">
+              Webb Hall · Emporia State University
+            </p>
+            <p className="mt-1 text-sm text-muted">
+              Memorial Union, Emporia, Kansas. Reservation pending final agreement.
+            </p>
+            <a
+              href="/news/webb-hall-selected-as-planned-venue"
+              className="mt-3 inline-block text-sm font-semibold text-cyan underline underline-offset-4 transition-colors hover:text-magenta"
+            >
+              Read our venue update
+            </a>
+          </div>
+
           <div className="mt-7 flex flex-col gap-4 sm:mt-8 sm:flex-row">
             <TicketCta intent="nav" size="lg" source="homepage" />
             <Button href="#explore" variant="secondary" size="lg">
