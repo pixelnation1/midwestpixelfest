@@ -41,7 +41,7 @@ export function getTicketAction(intent: TicketCtaIntent = "nav"): TicketAction {
 
   return {
     href: "/tickets",
-    label: intent === "purchase" ? "Checkout Being Finalized" : "Tickets",
+    label: intent === "purchase" ? "Ticket Sales On Hold" : "Tickets",
     external: false,
   };
 }

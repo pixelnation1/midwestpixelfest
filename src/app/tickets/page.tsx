@@ -17,7 +17,7 @@ export const metadata: Metadata = createPageMetadata({
   title: "Tickets | Midwest Pixel Fest 2027",
   description: salesOpen
     ? "Get Midwest Pixel Fest 2027 tickets for October 16–17 in Emporia, Kansas. Weekend $30, Saturday $20, Sunday $15, kids 12 and under free with a paid adult."
-    : "Midwest Pixel Fest 2027 tickets for October 16–17 in Emporia, Kansas. Weekend $30, Saturday $20, Sunday $15, kids 12 and under free with a paid adult. Online checkout is being finalized.",
+    : "Midwest Pixel Fest 2027 tickets for October 16–17 in Emporia, Kansas. Weekend $30, Saturday $20, Sunday $15, kids 12 and under free with a paid adult. Ticket sales are temporarily on hold until the venue agreement is finalized.",
   path: "/tickets",
 });
 
@@ -35,15 +35,15 @@ export default function TicketsPage() {
 
       <div className="border border-gold/40 bg-panel p-6 sm:p-8">
         <Badge tone="gold">
-          {salesOpen ? "On sale" : "Online checkout being finalized"}
+          {salesOpen ? "On sale" : "Ticket sales on hold"}
         </Badge>
         <h2 className="mt-5 font-display text-3xl uppercase tracking-wide sm:text-4xl">
-          {salesOpen ? "Get tickets" : "Prices are posted. Checkout is next."}
+          {salesOpen ? "Get tickets" : "Admission prices are posted"}
         </h2>
         <p className="mt-4 max-w-2xl text-muted">
           {salesOpen
             ? "Weekend, Saturday, Sunday, and kids prices are below. Checkout opens in a new tab on Ticketleap. Midwest Pixel Fest does not process card details on this website."
-            : "Weekend, Saturday, Sunday, and kids prices for Midwest Pixel Fest 2027 are below. Online checkout is being finalized. Join the list to hear when purchase goes live."}
+            : "Weekend, Saturday, Sunday, and kids prices for Midwest Pixel Fest 2027 are below. Sales are on hold until the venue agreement is finalized. Join the update list for an official reopening announcement."}
         </p>
         <div className="mt-8">
           {salesOpen ? (

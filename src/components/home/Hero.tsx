@@ -72,7 +72,7 @@ export function Hero() {
           </div>
 
           <p className="mt-4 font-pixel text-[11px] uppercase tracking-[0.28em] text-magenta sm:mt-5 sm:text-xs">
-            Inaugural year · Presented by {site.organizer}
+            Inaugural year · Gaming, comics, cosplay & community
           </p>
 
           <h1

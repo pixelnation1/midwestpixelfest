@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = createPageMetadata({
   title: "About Midwest Pixel Fest | Emporia, Kansas Convention",
   description:
-    "About Midwest Pixel Fest, a gaming, cosplay, collectibles, and pop-culture convention in Emporia, Kansas on October 16–17, 2027. Presented by PixelNation.",
+    "About Midwest Pixel Fest, a gaming, cosplay, collectibles, and pop-culture convention in Emporia, Kansas on October 16–17, 2027. Organized by Midwest Pixel Fest.",
   path: "/about",
 });
 
@@ -88,20 +88,12 @@ export default function AboutPage() {
         </ul>
       </div>
 
-      <ContentSection title="Presented by PixelNation">
+      <ContentSection title="Our event, our community">
         <p>
-          Midwest Pixel Fest is presented by{" "}
-          <a
-            href={site.organizerUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-cyan"
-          >
-            {site.organizer}
-          </a>
-          . PixelNation is building this event as a regional convention for the
-          Midwest gaming, cosplay, and collectibles community — with Emporia as
-          the home base.
+          Midwest Pixel Fest is being built as its own regional convention for
+          gaming, independent comics, cosplay, artists, and collectibles — with
+          Emporia as the home base. Our event planning and finances are separate
+          from other local businesses.
         </p>
       </ContentSection>
 

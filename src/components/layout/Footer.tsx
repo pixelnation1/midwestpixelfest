@@ -44,15 +44,7 @@ export function Footer() {
             {site.tagline}
           </p>
           <p className="mt-2 text-sm text-muted">
-            Presented by{" "}
-            <a
-              href={site.organizerUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cyan transition-colors hover:text-magenta"
-            >
-              {site.organizer}
-            </a>
+            Organized by Midwest Pixel Fest
           </p>
           <p className="mt-4 max-w-md text-muted">
             A regional convention for gaming, cosplay, collectibles, creators,
@@ -114,17 +106,7 @@ export function Footer() {
               </li>
             ))}
           </ul>
-          <p className="font-display uppercase tracking-[0.16em] text-paper/80">
-            Presented by{" "}
-            <a
-              href={site.organizerUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cyan transition-colors hover:text-magenta"
-            >
-              {site.organizer}
-            </a>
-          </p>
+
         </Container>
       </div>
     </footer>

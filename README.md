@@ -4,7 +4,7 @@ Official website for **Midwest Pixel Fest**, a gaming, cosplay, collectibles, an
 
 - Production: https://midwestpixelfest.com
 - Dates: October 16–17, 2027
-- Presented by [PixelNation](https://pixelnation.co)
+- Organized by Midwest Pixel Fest as a standalone convention project.
 
 ## Local development
 

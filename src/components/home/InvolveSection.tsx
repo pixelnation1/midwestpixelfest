@@ -70,7 +70,7 @@ export function InvolveSection({ audience = "all" }: { audience?: "all" | "atten
               </h2>
               <p className="mt-3 flex-1 text-muted">
                 {item.primary === "tickets" && !salesOpen
-                  ? "Ticket types and prices are posted. Online checkout is being finalized. Join the list so you hear when purchase goes live."
+                  ? "Ticket prices are posted. Sales are on hold while the venue agreement is finalized. Join the list for the next announcement."
                   : item.body}
               </p>
               <div className="mt-6 flex flex-wrap gap-3">

@@ -21,9 +21,9 @@ export type Venue = {
 /**
  * Confirmed public event facts.
  *
- * venue: still TBA — do not invent a building name or street address.
- * ticketUrl: official public Ticketleap checkout. All ticket CTAs read this
- * value through src/lib/tickets.ts. Leave null only to take checkout offline.
+ * venue: still TBA until the signed venue agreement is in place.
+ * ticketUrl: keep null while the venue is unconfirmed; sales status and
+ * purchase CTAs throughout the site read this field via src/lib/tickets.ts.
  */
 export const event = {
   status: "scheduled" as const,
@@ -34,13 +34,12 @@ export const event = {
   doorsLabel: "Saturday at 10:00 AM",
   closeLabel: "Sunday at 5:00 PM",
   venue: null as Venue | null,
-  ticketUrl:
-    "https://events.ticketleap.com/tickets/midwestpixelfest/midwest-pixel-fest-2027",
+  ticketUrl: null as string | null,
 };
 
 export const organizer = {
-  name: "PixelNation",
-  url: "https://pixelnation.co",
+  name: "Midwest Pixel Fest",
+  url: PRODUCTION_SITE_URL,
 } as const;
 
 export const ticketProducts = [
@@ -332,7 +331,7 @@ export function getFaqs() {
       question: "Are tickets available yet?",
       answer: ticketsLive
         ? "Yes. Get tickets from the Tickets page. Checkout opens in a new tab on Ticketleap."
-        : "Ticket types and prices are posted on the Tickets page. Online checkout is being finalized. Join the update list so you hear when purchase goes live.",
+        : "Ticket types and prices are posted on the Tickets page. Ticket sales are temporarily on hold while we finalize the venue agreement. Join the update list for the next announcement.",
     },
     {
       question: "Is Midwest Pixel Fest family-friendly?",
@@ -427,7 +426,7 @@ export function getFaqs() {
     {
       question: "Who is organizing the event?",
       answer:
-        "Midwest Pixel Fest is presented by PixelNation, building a regional convention for the Midwest gaming, cosplay, and collectibles community.",
+        "Midwest Pixel Fest is organized by the Midwest Pixel Fest team as a distinct gaming, cosplay, and pop-culture event in Emporia, Kansas.",
     },
     {
       question: "How do I get to Emporia?",
