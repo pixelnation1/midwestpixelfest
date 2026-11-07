@@ -43,6 +43,9 @@ export default function MerchPage() {
             </a>
           </div>
           <MerchGallery />
+          <p className="mt-12 text-center text-sm text-white/85">
+            Listed prices exclude applicable tax and shipping. Ordering opens soon.
+          </p>
         </Container>
       </section>
 
