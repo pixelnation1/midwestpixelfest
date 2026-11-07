@@ -24,6 +24,7 @@ export const newsArticles: NewsArticle[] = [
     excerpt:
       "We've selected Webb Hall in ESU's Memorial Union as our planned home for October 16–17, 2027. Reservation is pending the final agreement and deposit.",
     publishedAt: "2026-11-06",
+    updatedAt: "2026-11-07",
     category: "Venue update",
     seoTitle: "Webb Hall Selected as Planned Midwest Pixel Fest 2027 Venue",
     seoDescription:
@@ -32,7 +33,7 @@ export const newsArticles: NewsArticle[] = [
       { href: "/travel", label: "Plan Your Visit" },
       { href: "/vendors", label: "Vendor Interest" },
       { href: "/sponsors", label: "Sponsorship Opportunities" },
-      { href: "/tickets", label: "Admission Prices" },
+      { href: "/tickets", label: "Buy Tickets" },
     ],
     body: [
       {
@@ -51,7 +52,7 @@ export const newsArticles: NewsArticle[] = [
       {
         heading: "What happens next",
         paragraphs: [
-          "We're working toward finalizing the reservation. Ticket prices are published, but online ticket sales remain on hold while the venue agreement is pending. Vendor interest and sponsorship inquiries remain open.",
+          "We're working toward finalizing the reservation. Tickets are now available for purchase through Ticketleap via our Tickets page. Webb Hall is still our selected venue, not a confirmed booking; please review the venue notice and Ticketleap refund and transfer terms before purchasing. Vendor interest and sponsorship inquiries remain open.",
           "We will publish an official booking confirmation and event-specific parking, access, and arrival details once the venue agreement is completed.",
         ],
       },
@@ -64,7 +65,7 @@ export const newsArticles: NewsArticle[] = [
     excerpt:
       "Midwest Pixel Fest will be Saturday, October 16 and Sunday, October 17, 2027 in Emporia, Kansas. Venue details will follow.",
     publishedAt: "2026-08-31",
-    updatedAt: "2026-09-01",
+    updatedAt: "2026-11-07",
     category: "Announcement",
     seoTitle: "Midwest Pixel Fest 2027 Dates Announced: October 16–17",
     seoDescription:
@@ -91,7 +92,7 @@ export const newsArticles: NewsArticle[] = [
       {
         heading: "What rolls out from here",
         paragraphs: [
-          "Ticket prices are posted on the Tickets page. Sales are currently on hold pending a finalized venue agreement. Gaming, cosplay, collectibles, creators, vendors, and community programming continue to take shape for the weekend.",
+          "Update (November 7, 2026): Tickets are available for purchase through Ticketleap via our Tickets page. Webb Hall remains our selected venue with the agreement pending; review the venue notice before buying. Gaming, cosplay, collectibles, creators, vendors, and community programming continue to take shape for the weekend.",
           "Join the update list so you hear about the venue, guests, and application windows in one place.",
         ],
       },
@@ -103,7 +104,7 @@ export const newsArticles: NewsArticle[] = [
     excerpt:
       "A new regional convention for gaming, cosplay, collectibles, and community is being built in Emporia for October 16–17, 2027.",
     publishedAt: "2026-08-31",
-    updatedAt: "2026-08-31",
+    updatedAt: "2026-11-07",
     category: "Announcement",
     seoTitle: "Midwest Pixel Fest Coming to Emporia, Kansas in 2027",
     seoDescription:
@@ -131,7 +132,7 @@ export const newsArticles: NewsArticle[] = [
       {
         heading: "What happens next",
         paragraphs: [
-          "Ticket prices are posted, but checkout is on hold while venue arrangements are finalized. Guest names and application windows will be posted on this News page and on the matching topic pages. Join the update list for venue, guests, and vendor news.",
+          "Update (November 7, 2026): Ticket checkout is open through Ticketleap, with admission options on our Tickets page. The Webb Hall reservation is still pending; review the venue status and ticket terms before purchasing. Guest names and application windows will be posted on this News page and on the matching topic pages. Join the update list for venue, guests, and vendor news.",
         ],
       },
     ],

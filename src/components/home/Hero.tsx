@@ -111,7 +111,11 @@ export function Hero() {
             </a>
           </div>
 
-          <div className="mt-7 flex flex-col gap-4 sm:mt-8 sm:flex-row">
+          <p className="mt-6 font-pixel text-[11px] uppercase tracking-[0.18em] text-gold">
+            Tickets on sale now · Weekend $30 · Saturday $20 · Sunday $15
+          </p>
+
+          <div className="mt-5 flex flex-col gap-4 sm:mt-6 sm:flex-row">
             <TicketCta intent="nav" size="lg" source="homepage" />
             <Button href="#explore" variant="secondary" size="lg">
               Explore the Fest
