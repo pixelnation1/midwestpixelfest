@@ -66,3 +66,52 @@ describe("round robin bracket generation",()=>{
   assert.equal(buildRoundRobin(["a","b"]).length,1);
  });
 });
+
+
+describe("tournament bracket regressions across supported sizes",()=>{
+ it("seeds every 2–64-player single-elimination bracket without duplicate entrants",()=>{
+  for(let count=2;count<=64;count++){
+   const participants=Array.from({length:count},(_,i)=>"player-"+i);
+   const matches=buildSingleElimination(participants);
+   const size=2**Math.ceil(Math.log2(count));
+   assert.equal(matches.length,size-1,"total matches for "+count);
+   const first=matches.filter(m=>m.round_number===1);
+   const seeded=first.flatMap(m=>[m.player_a,m.player_b]).filter(Boolean);
+   assert.equal(seeded.length,count,"participants seeded for "+count);
+   assert.equal(new Set(seeded).size,count,"no duplicate participant for "+count);
+   assert.equal(first.filter(m=>m.status==="bye").length,size-count,"bye count for "+count);
+   const seen=new Set(matches.map(m=>m.round_number+":"+m.match_number));
+   assert.equal(seen.size,matches.length,"unique match positions for "+count);
+   for(const m of matches.filter(m=>m.status==="bye"&&m.round_number===1)){
+    assert.ok(m.winner_id,"bye should have a winner for "+count);
+    const next=matches.find(n=>n.round_number===2&&n.match_number===Math.ceil(m.match_number/2));
+    if(next)assert.equal(m.match_number%2===1?next.player_a:next.player_b,m.winner_id);
+   }
+  }
+ });
+ it("creates a complete, non-overlapping round robin for 2–16 entrants",()=>{
+  for(let count=2;count<=16;count++){
+   const participants=Array.from({length:count},(_,i)=>"player-"+i);
+   const matches=buildRoundRobin(participants);
+   assert.equal(matches.length,count*(count-1)/2,"pairings for "+count);
+   const seen=new Set<string>();
+   for(const match of matches){
+    assert.ok(match.player_a&&match.player_b);
+    const pair=[match.player_a,match.player_b].sort().join("|");
+    assert.ok(!seen.has(pair),"no repeated matchup "+pair);
+    seen.add(pair);
+    assert.equal(match.bracket_side,"round_robin");
+   }
+   for(let round=1;round<=(count%2===0?count-1:count);round++){
+    const playing=matches.filter(m=>m.round_number===round)
+      .flatMap(m=>[m.player_a,m.player_b]);
+    assert.equal(new Set(playing).size,playing.length,"no one scheduled twice in round "+round);
+   }
+  }
+ });
+ it("closes registration if deadline passes, even when announcement is public",()=>{
+  const event={registration_open:true,is_published:true,status:"confirmed" as const,registration_deadline:"2027-10-16T12:00:00-05:00"};
+  assert.equal(tournamentRegistrationAvailable(event,new Date("2027-10-16T11:00:00-05:00")),true);
+  assert.equal(tournamentRegistrationAvailable(event,new Date("2027-10-16T12:00:00-05:00")),false);
+ });
+});
