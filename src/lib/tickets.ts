@@ -35,7 +35,7 @@ export function getTicketAction(intent: TicketCtaIntent = "nav"): TicketAction {
   if (intent === "nav") {
     return {
       href: "/tickets",
-      label: "Tickets",
+      label: checkout ? "Buy Tickets" : "Tickets",
       external: false,
     };
   }
