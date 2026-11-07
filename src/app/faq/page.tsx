@@ -43,6 +43,7 @@ export default function FaqPage() {
           { href: "/first-timers-guide", label: "First-Timer's Guide" },
           { href: "/attendee-services", label: "Attendee Services & Accessibility" },
           { href: "/weapons-policy", label: "Weapons & Props Policy" },
+          { href: "/code-of-conduct", label: "Code of Conduct" },
           { href: "/tickets", label: "Tickets" },
           { href: "/vendors", label: "Vendors" },
           { href: "/cosplay", label: "Cosplay" },

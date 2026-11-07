@@ -14,6 +14,7 @@ export const publicRoutes = [
   { path: "/attendee-services", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/info", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/weapons-policy", changeFrequency: "monthly" as const, priority: 0.8 },
+  { path: "/code-of-conduct", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/merch", changeFrequency: "monthly" as const, priority: 0.75 },
   { path: "/news", changeFrequency: "weekly" as const, priority: 0.8 },
   { path: "/contact", changeFrequency: "monthly" as const, priority: 0.6 },

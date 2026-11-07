@@ -21,6 +21,11 @@ const categories = [
     note: "Request accommodations and review accessibility planning details for our first event.",
   },
   {
+    title: "Code of Conduct & Safety",
+    href: "/code-of-conduct",
+    note: "Review the community rules and learn how to report harassment, unsafe behavior, or other conduct concerns.",
+  },
+  {
     title: "General Questions",
     href: "/faq",
     note: "Find quick answers about dates, tickets, and planning your weekend in our FAQ.",

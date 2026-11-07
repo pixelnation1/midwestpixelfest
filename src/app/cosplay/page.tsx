@@ -70,6 +70,8 @@ export default function CosplayPage() {
           Show off your costume and capture memories with fellow fans. Always
           ask before taking a photo and respect anyone who declines. Details
           about any designated photo areas will be shared as plans are finalized.
+          Our <Link href="/code-of-conduct" className="ml-1 text-cyan underline underline-offset-4">Code of Conduct</Link>
+          explains consent and community expectations for everyone.
         </p>
       </ContentSection>
 
