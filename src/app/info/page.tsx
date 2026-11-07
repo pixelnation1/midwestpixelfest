@@ -61,6 +61,14 @@ const topics = [
   },
   {
     number: "07",
+    title: "Attendee Services & Accessibility",
+    description: "Mobility routes, seating, sensory needs, family services, service animals and how to request accommodations.",
+    href: "/attendee-services",
+    accent: "border-cyan/60",
+    action: "Plan for accessibility",
+  },
+  {
+    number: "08",
     title: "Contact the Team",
     description: "Questions about accessibility, attending with kids, props, tickets, or something else? Start here.",
     href: "/contact",
