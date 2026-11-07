@@ -116,6 +116,8 @@ export async function updateTournamentAction(
     date!==current.event_date)){
   return bad("Tournament format, team configuration and date cannot be changed after brackets are created.");
  }
+ if((matchCount??0)>0&&registrationOpen)
+  return bad("Registration cannot reopen after a tournament bracket has been seeded.");
  if(bracketPublished&&(!publish||(matchCount??0)<1||!yes(f,"bracketApproved")))
   return bad("Publish brackets only after a confirmed public tournament has matches and the organizer has reviewed them.");
  const {error}=await session.db.from("tournament_events").update({
@@ -139,15 +141,15 @@ export async function updateTournamentEntryAction(
  if(!uuid(entryId)||!TOURNAMENT_REGISTRATION_STATUSES.includes(next as any))
   return bad("Invalid player or registration status.");
  const {data:entry,error}=await session.db.from("tournament_registrations")
-  .select("id,tournament_id").eq("id",entryId).maybeSingle();
+  .select("id,tournament_id,status").eq("id",entryId).maybeSingle();
  if(error||!entry)return bad("Registration not found.");
  const {data:tournament}=await session.db.from("tournament_events")
   .select("slug").eq("id",entry.tournament_id).maybeSingle();
  const {count,error:matchError}=await session.db.from("tournament_matches")
   .select("id",{count:"exact",head:true}).eq("tournament_id",entry.tournament_id);
  if(matchError)return bad("Could not verify tournament bracket.");
- if((count??0)>0 && next!=="checked_in")
-  return bad("Brackets already exist. Entry status changes that affect bracket participants are locked.");
+ if((count??0)>0 && next!==entry.status)
+  return bad("Brackets already exist. Changing participant status now could invalidate match pairings; resolve any withdrawals or disqualifications through the event's competition rules.");
  const {data,error:rpcError}=await session.service.rpc("manage_tournament_entry",{
   p_entry_id:entryId,p_next_status:next,
  });
