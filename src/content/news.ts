@@ -19,6 +19,46 @@ export type NewsArticle = {
 
 export const newsArticles: NewsArticle[] = [
   {
+    slug: "webb-hall-selected-as-planned-venue",
+    title: "Webb Hall at Emporia State University Selected for Midwest Pixel Fest 2027",
+    excerpt:
+      "We've selected Webb Hall in ESU's Memorial Union as our planned home for October 16–17, 2027. Reservation is pending the final agreement and deposit.",
+    publishedAt: "2026-11-06",
+    category: "Venue update",
+    seoTitle: "Webb Hall Selected as Planned Midwest Pixel Fest 2027 Venue",
+    seoDescription:
+      "Midwest Pixel Fest 2027 has selected Webb Hall in Emporia State University's Memorial Union as its planned venue for October 16–17, 2027. Reservation pending.",
+    related: [
+      { href: "/travel", label: "Plan Your Visit" },
+      { href: "/vendors", label: "Vendor Interest" },
+      { href: "/sponsors", label: "Sponsorship Opportunities" },
+      { href: "/tickets", label: "Admission Prices" },
+    ],
+    body: [
+      {
+        paragraphs: [
+          "Midwest Pixel Fest is taking shape in Emporia, Kansas. Following our venue tour, we have selected Webb Hall at Emporia State University as the planned home of our inaugural convention on Saturday and Sunday, October 16–17, 2027.",
+          "Webb Hall is inside the ESU Memorial Union at 1331 Market St., Emporia, KS 66801. Our venue reservation is pending a signed agreement and deposit, so this is a venue selection announcement — not a confirmation that the space has been booked.",
+        ],
+      },
+      {
+        heading: "Why Webb Hall?",
+        paragraphs: [
+          "The venue offers a large event hall and adjoining lobby space that would let us bring gaming, cosplay, indie creators, comic books, vendors, and panels together in one place.",
+          "During our tour, the venue team outlined tables, large displays, security, signage, setup support, food service, and a possible panel stage. Final amenities, room layout, capacity, and arrangements are subject to the venue contract and required approvals.",
+        ],
+      },
+      {
+        heading: "What happens next",
+        paragraphs: [
+          "We're working toward finalizing the reservation. Ticket prices are published, but online ticket sales remain on hold while the venue agreement is pending. Vendor interest and sponsorship inquiries remain open.",
+          "We will publish an official booking confirmation and event-specific parking, access, and arrival details once the venue agreement is completed.",
+        ],
+      },
+    ],
+  },
+
+  {
     slug: "midwest-pixel-fest-2027-dates-announced",
     title: "Midwest Pixel Fest 2027 Dates Announced: October 16–17",
     excerpt:
@@ -45,7 +85,7 @@ export const newsArticles: NewsArticle[] = [
       {
         heading: "Venue comes next",
         paragraphs: [
-          "The city is Emporia. The exact venue is not finalized. Venue details will be announced here and on the Travel page when they are confirmed. We are not naming a building until that is official.",
+          "Update (November 2026): We have selected Webb Hall inside ESU Memorial Union as our planned venue, with the reservation pending a signed agreement and deposit. See our newest venue update for details.",
         ],
       },
       {
@@ -78,13 +118,13 @@ export const newsArticles: NewsArticle[] = [
       {
         paragraphs: [
           "Midwest Pixel Fest is a new regional convention being built in Emporia, Kansas for October 16–17, 2027. The weekend is meant for people who play games, wear costumes, hunt collectibles, sell their work, and show up for a packed convention floor.",
-          "This is the official site for tickets, guests, vendor applications, and travel information. The venue is still to be announced. When it is confirmed, it will be published here first.",
+          "This is the official site for tickets, guests, vendor applications, and travel information. Update (November 2026): Webb Hall at ESU has been selected as our planned venue; final reservation is still pending.",
         ],
       },
       {
         heading: "What we can say now",
         paragraphs: [
-          "The inaugural weekend is October 16–17, 2027. The city is Emporia. The event is organized independently as Midwest Pixel Fest. The exact venue will be announced once it is confirmed — not before.",
+          "The inaugural weekend is October 16–17, 2027 in Emporia. The event is organized independently as Midwest Pixel Fest. Update (November 2026): Webb Hall at ESU is the selected venue, with the booking still pending.",
           "If you are planning a trip from Kansas City, Wichita, Topeka, Lawrence, Manhattan, or farther into the Midwest, bookmark the Travel page. Hotel blocks and parking notes will land there after the venue is public.",
         ],
       },
