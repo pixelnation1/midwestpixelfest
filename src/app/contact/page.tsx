@@ -16,6 +16,11 @@ export const metadata: Metadata = createPageMetadata({
 
 const categories = [
   {
+    title: "Attendee Services & Accessibility",
+    href: "/attendee-services",
+    note: "Request accommodations and review accessibility planning details for our first event.",
+  },
+  {
     title: "General Questions",
     href: "/faq",
     note: "Find quick answers about dates, tickets, and planning your weekend in our FAQ.",

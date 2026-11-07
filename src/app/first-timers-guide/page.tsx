@@ -228,6 +228,9 @@ export default function FirstTimersGuidePage() {
             ))}
           </div>
           <p className="mt-5 text-sm text-muted">
+            Have accessibility or family-service questions? <InlineLink href="/attendee-services">Read the Attendee Services & Accessibility guide</InlineLink>.
+          </p>
+          <p className="mt-5 text-sm text-muted">
             Want more to do while you're here? <InlineLink href="/visit-emporia">Explore our Visit Emporia guide</InlineLink>.
           </p>
           <p className="mt-5 text-sm text-muted">Questions about accommodations, family planning, or event policies? <InlineLink href="/contact">Contact the Midwest Pixel Fest team.</InlineLink></p>

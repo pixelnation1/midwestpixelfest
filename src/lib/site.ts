@@ -140,6 +140,7 @@ export const navItems = [
 export const infoLinks = [
   { href: "/info", label: "Info Overview" },
   { href: "/first-timers-guide", label: "First-Timer's Guide" },
+  { href: "/attendee-services", label: "Attendee Services & Accessibility" },
   { href: "/weapons-policy", label: "Weapons & Props Policy" },
   { href: "/faq", label: "FAQ" },
   { href: "/travel", label: "Hotels, Parking & Travel" },
@@ -196,6 +197,7 @@ export const footerGroups = [
     links: [
       { href: "/info", label: "Attendee Info" },
       { href: "/first-timers-guide", label: "First-Timer's Guide" },
+      { href: "/attendee-services", label: "Attendee Services & Accessibility" },
       { href: "/weapons-policy", label: "Weapons & Props Policy" },
       { href: "/travel", label: "Travel & Hotels" },
       { href: "/visit-emporia", label: "Visit Emporia" },

@@ -41,6 +41,7 @@ export default function FaqPage() {
         links={[
           { href: "/info", label: "Attendee Information" },
           { href: "/first-timers-guide", label: "First-Timer's Guide" },
+          { href: "/attendee-services", label: "Attendee Services & Accessibility" },
           { href: "/weapons-policy", label: "Weapons & Props Policy" },
           { href: "/tickets", label: "Tickets" },
           { href: "/vendors", label: "Vendors" },

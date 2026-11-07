@@ -128,6 +128,7 @@ export default function TravelPage() {
 
       <RelatedLinks
         links={[
+          { href: "/attendee-services", label: "Accessibility & Attendee Services" },
           { href: "/visit-emporia", label: "Visit Emporia" },
           { href: "/first-timers-guide", label: "First-Timer's Guide" },
           { href: "/tickets", label: "Tickets" },
