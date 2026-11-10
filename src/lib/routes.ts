@@ -11,6 +11,7 @@ import { listPublicTournaments } from "@/lib/persistence/tournaments";
  * Add a page here only after it has real content.
  */
 export const publicRoutes = [
+  { path: "/hotels", changeFrequency: "weekly" as const, priority: 0.8 },
   { path: "/grading-services", changeFrequency: "weekly" as const, priority: 0.75 },
   { path: "/", changeFrequency: "weekly" as const, priority: 1 },
   { path: "/tickets", changeFrequency: "weekly" as const, priority: 0.9 },

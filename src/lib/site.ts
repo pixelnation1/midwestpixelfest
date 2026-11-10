@@ -153,7 +153,8 @@ export const infoLinks = [
   { href: "/weapons-policy", label: "Weapons & Props Policy" },
   { href: "/code-of-conduct", label: "Code of Conduct" },
   { href: "/faq", label: "FAQ" },
-  { href: "/travel", label: "Hotels, Parking & Travel" },
+  { href: "/hotels", label: "Hotels & Lodging" },
+  { href: "/travel", label: "Parking & Travel" },
   { href: "/visit-emporia", label: "Visit Emporia / Things to Do" },
   { href: "/cosplay", label: "Cosplay Information" },
   { href: "/cosplay/contest", label: "Cosplay Contest & Registration" },
@@ -220,7 +221,8 @@ export const footerGroups = [
       { href: "/floor-map", label: "Convention Floor Map" },
       { href: "/weapons-policy", label: "Weapons & Props Policy" },
       { href: "/code-of-conduct", label: "Code of Conduct" },
-      { href: "/travel", label: "Travel & Hotels" },
+      { href: "/hotels", label: "Hotels & Lodging" },
+      { href: "/travel", label: "Parking & Travel" },
       { href: "/visit-emporia", label: "Visit Emporia" },
       { href: "/faq", label: "FAQ" },
       { href: "/news", label: "News" },
@@ -448,7 +450,7 @@ export function getFaqs() {
     {
       question: "Where should I stay?",
       answer:
-        "Official hotel partners and room blocks are not live yet. They will be listed on the Travel page after the venue is confirmed. We are not endorsing specific hotels until those partnerships exist.",
+        "No official hotel partners, room blocks or event rates have been confirmed. Our Hotels & Lodging page lists local options for trip planning and will publish any confirmed event offers. Local listings do not imply an event partnership.",
     },
     {
       question: "Is parking available?",

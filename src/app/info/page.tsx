@@ -140,6 +140,7 @@ const topics = [
     action: "Get in touch",
   },
   { number: "17", title: "Comic & TCG Card Grading", description: "Follow grading provider announcements for comics and trading cards, with submission guidance and collector FAQs. Providers and services to be announced.", href: "/grading-services", accent: "border-gold/60", action: "View grading updates" },
+  { number: "18", title: "Hotels & Lodging", description: "Find Emporia lodging options and watch for official hotel partners, room blocks and event-rate announcements.", href: "/hotels", accent: "border-cyan/60", action: "Find a place to stay" },
 ];
 
 export default function AttendeeInfoPage() {

@@ -91,9 +91,11 @@ export default function TravelPage() {
       <ContentSection id="hotels" title="Hotels">
         <p>
           Official hotel partners and room blocks have not been confirmed.
-          We will publish any negotiated accommodations after the venue agreement.
+          Visit our hotels page for local lodging options and future event-rate announcements.
         </p>
       </ContentSection>
+
+      <Link href="/hotels" className="inline-flex min-h-11 items-center text-cyan underline underline-offset-4">Explore hotels & lodging →</Link>
 
       <ContentSection id="parking" title="Parking">
         <p>
