@@ -54,10 +54,10 @@ export function CosplaySection() {
         </div>
 
         <ScenePhoto
-          src="/images/cosplay/convention-cosplayers.jpg"
-          alt="A group of Assassin’s Creed cosplayers posing at New York Comic Con"
+          src="/images/cosplay/cosplay-character-mix.jpg"
+          alt="Cosplayers in a variety of anime, gaming, fantasy, and comic-book costumes at New York Comic Con"
           caption="Cosplay"
-          objectPosition="center 52%"
+          objectPosition="center 60%"
           overlay="stage"
           sizes="(min-width: 1024px) 42vw, 100vw"
           className="mx-auto aspect-[4/5] w-full max-w-md pixel-frame"

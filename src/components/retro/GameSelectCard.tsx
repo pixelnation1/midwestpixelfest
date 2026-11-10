@@ -7,7 +7,7 @@ const categoryPhotos: Partial<Record<ArcadeIconName, { src: string; position?: s
   retro: { src: "/images/hero/retro-arcade-cabinets.jpg" },
   tcg: { src: "/images/tcg/mtg-match.jpg" },
   tabletop: { src: "/images/tabletop/tabletop-dice-session.jpg" },
-  cosplay: { src: "/images/cosplay/convention-cosplayers.jpg", position: "center 52%" },
+  cosplay: { src: "/images/cosplay/cosplay-character-mix.jpg", position: "center 60%" },
   vendors: { src: "/images/vendors/collectible-figurines.jpg" },
   guests: { src: "/images/guests/panel-microphone.jpg" },
 };
