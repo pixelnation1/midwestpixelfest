@@ -15,8 +15,8 @@ export function PlayTablesSection() {
 
         <div className="mt-10 grid gap-4 lg:grid-cols-2">
           <ScenePhoto
-            src="/images/tcg/tcg-players-table.jpg"
-            alt="Players seated around a table holding illustrated game cards"
+            src="/images/tcg/mtg-match.jpg"
+            alt="Players competing in a Magic: The Gathering match with cards on the battlefield"
             caption="Trading card games"
             objectPosition="center 45%"
             overlay="dark"

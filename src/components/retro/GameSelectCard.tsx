@@ -5,9 +5,9 @@ import { cn } from "@/lib/cn";
 
 const categoryPhotos: Partial<Record<ArcadeIconName, { src: string; position?: string }>> = {
   retro: { src: "/images/hero/retro-arcade-cabinets.jpg" },
-  tcg: { src: "/images/tcg/tcg-players-table.jpg" },
+  tcg: { src: "/images/tcg/mtg-match.jpg" },
   tabletop: { src: "/images/tabletop/tabletop-dice-session.jpg" },
-  cosplay: { src: "/images/cosplay/cosplay-convention-hall.jpg", position: "center 25%" },
+  cosplay: { src: "/images/cosplay/convention-cosplayers.jpg", position: "center 52%" },
   vendors: { src: "/images/vendors/collectible-figurines.jpg" },
   guests: { src: "/images/guests/panel-microphone.jpg" },
 };

@@ -53,6 +53,12 @@ export default function ImageCreditsPage() {
         </p>
       </ContentSection>
 
+      <ContentSection title="Magic: The Gathering photography">
+        <p><a className="text-cyan" href="https://commons.wikimedia.org/wiki/File:Magic_The_Gathering_players.JPG">Magic The Gathering players</a> by U.S. Air Force photographer Airman 1st Class Kyle Gese. Public domain in the United States. Resized and displayed with cropping and a gradient overlay.</p>
+      </ContentSection>
+      <ContentSection title="Cosplay photography">
+        <p><a className="text-cyan" href="https://commons.wikimedia.org/wiki/File:NYCC_2023_Assassin%27s_Creed_Group_Cosplay.jpg">NYCC 2023 Assassin’s Creed Group Cosplay</a> by lostplanetcomics1, used under <a className="text-cyan" href="https://creativecommons.org/licenses/by-sa/2.0/" rel="license">CC BY-SA 2.0</a>. Resized, cropped for display, and shown with a gradient overlay. This adapted image remains available under CC BY-SA 2.0.</p>
+      </ContentSection>
       <ContentSection title="Other imagery">
         <p>
           Additional illustrative photography comes from Pexels and Unsplash.
