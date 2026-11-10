@@ -2,11 +2,7 @@ import Image from "next/image";
 import officialLogoImage from "../../../public/logo.jpg";
 import { cn } from "@/lib/cn";
 
-/**
- * Official mark lives at /public/logo.jpg (square JPEG on a white ground).
- * Do not crop or key out that background in code — it will look worse.
- * Transparent official logo recommended when a PNG/WebP with alpha exists.
- */
+/** Official mark supplied by Midwest Pixel Fest; preserve the complete artwork. */
 
 export const officialLogo = {
   src: officialLogoImage,
