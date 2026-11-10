@@ -1,7 +1,16 @@
 import Link from "next/link";
 import { ArcadeIcon, type ArcadeIconName } from "@/components/retro/ArcadeIcon";
-import { CategoryEmblem } from "./CategoryEmblem";
+import Image from "next/image";
 import { cn } from "@/lib/cn";
+
+const categoryPhotos: Partial<Record<ArcadeIconName, { src: string; position?: string }>> = {
+  retro: { src: "/images/hero/retro-arcade-cabinets.jpg" },
+  tcg: { src: "/images/tcg/tcg-players-table.jpg" },
+  tabletop: { src: "/images/tabletop/tabletop-dice-session.jpg" },
+  cosplay: { src: "/images/cosplay/cosplay-convention-hall.jpg", position: "center 25%" },
+  vendors: { src: "/images/vendors/collectible-figurines.jpg" },
+  guests: { src: "/images/guests/panel-microphone.jpg" },
+};
 
 const accent = {
   cyan: {
@@ -52,6 +61,7 @@ export function GameSelectCard({
   cta = "Enter",
 }: GameSelectCardProps) {
   const colors = accent[tone];
+  const photo = categoryPhotos[icon];
 
   return (
     <Link
@@ -62,18 +72,13 @@ export function GameSelectCard({
         colors.glow,
       )}
     >
-      <div
-        className={cn(
-          "relative flex min-h-[11rem] items-center justify-center overflow-hidden border-b border-line bg-ink-2",
-          colors.icon,
-        )}
-      >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(38,198,237,0.09),transparent_70%)]" />
-        {["retro", "tcg", "tabletop", "cosplay", "vendors", "guests"].includes(icon) ? (
-          <CategoryEmblem name={icon} />
-        ) : (
-          <ArcadeIcon name={icon} className="relative h-20 w-20" />
-        )}
+      <div className="relative flex h-52 items-center justify-center overflow-hidden border-b border-line bg-ink-2 sm:h-56">
+        {photo ? (
+          <>
+            <Image src={photo.src} alt="" fill sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover saturate-[0.8] transition-transform duration-500 group-hover:scale-105 motion-reduce:transform-none" style={{ objectPosition: photo.position ?? "center" }} />
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-panel via-ink/10 to-ink/10" />
+          </>
+        ) : <ArcadeIcon name={icon} className={cn("relative h-20 w-20", colors.icon)} />}
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         {index != null ? (
