@@ -28,9 +28,7 @@ export default function PressInquiryPage() {
     >
       <ContentSection title="Credentials">
         <p>
-          A credential application, if we run one, will be posted on the Press
-          page when it exists. Until then, this form is for introductions and
-          coverage questions only.
+          Formal credential applications and deadlines will be announced on the Press & Media page. This form is for coverage introductions, organizer interview requests and media questions; it does not reserve a badge.
         </p>
       </ContentSection>
 

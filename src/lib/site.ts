@@ -141,6 +141,7 @@ export const navItems = [
 /** A dedicated mobile Info accordion and the desktop /info hub use these links. */
 export const infoLinks = [
   { href: "/info", label: "Info Overview" },
+  { href: "/press", label: "Press & Media Credentials" },
   { href: "/grading-services", label: "Comic & TCG Grading" },
   { href: "/tournaments", label: "Tournament Registration" },
   { href: "/guests/autographs", label: "Guest Autographs & Photo Ops" },
@@ -215,6 +216,7 @@ export const footerGroups = [
     heading: "Info",
     links: [
       { href: "/info", label: "Attendee Info" },
+      { href: "/press", label: "Press & Media Credentials" },
       { href: "/grading-services", label: "Comic & TCG Grading" },
       { href: "/first-timers-guide", label: "First-Timer's Guide" },
       { href: "/attendee-services", label: "Attendee Services & Accessibility" },
