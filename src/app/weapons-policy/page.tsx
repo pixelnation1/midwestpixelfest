@@ -68,10 +68,15 @@ export default function WeaponsPolicyPage() {
     <InnerPage
       path="/weapons-policy"
       breadcrumbLabel="Weapons & Props Policy"
-      eyebrow="Info / Convention safety"
+      mood="business"
+      eyebrow="Cosplay safely · Midwest Pixel Fest 2027"
       title="Weapons & Props Policy"
-      intro="Bring the creativity. Leave the danger behind. These are our preliminary cosplay prop safety expectations for Midwest Pixel Fest 2027."
+      intro="Build something memorable. Carry it safely. Review our costume-prop guidelines before bringing your cosplay to the convention."
+      actions={[{href:"#prop-guide",label:"Check your prop",variant:"primary"},{href:"/contact",label:"Ask about your build",variant:"secondary"}]}
     >
+      <nav aria-label="On this page" className="mb-10 flex flex-wrap gap-x-7 gap-y-3 border-y border-line py-5 text-sm font-semibold text-muted">
+        {[["prop-guide","Quick prop guide"],["leave-at-home","Prohibited props"],["safe-props","Materials & builds"],["how-checking-works","Inspection"],["vendors","Vendor purchases"],["questions","FAQs"]].map(([id,label]) => <a key={id} href={"#"+id} className="inline-flex min-h-11 items-center hover:text-cyan">{label}<span aria-hidden="true" className="ml-2 text-cyan">↓</span></a>)}
+      </nav>
       <div className="mb-10 border-l-4 border-gold bg-panel px-5 py-6 sm:px-7">
         <p className="font-pixel text-[11px] uppercase tracking-[.16em] text-gold">
           Preliminary policy — venue review pending
@@ -83,6 +88,19 @@ export default function WeaponsPolicyPage() {
           We will publish updates before the convention.
         </p>
       </div>
+
+      <section id="prop-guide" className="mb-14 scroll-mt-28">
+        <h2 className="font-display text-3xl uppercase tracking-wide text-paper sm:text-4xl">Check your build before you travel.</h2>
+        <p className="mt-4 max-w-3xl leading-relaxed text-muted">These preliminary guidelines apply to costume props. Materials, weight, edges, mechanisms and how an item is carried all matter. A photo or online discussion is not final admission approval.</p>
+        <div className="mt-7 overflow-x-auto border border-line"><table className="w-full min-w-[540px] text-left text-sm leading-relaxed"><caption className="sr-only">Preliminary costume prop guidance</caption><thead className="bg-panel text-paper"><tr><th scope="col" className="px-5 py-4">Prop type</th><th scope="col" className="px-5 py-4">Planning guidance</th><th scope="col" className="px-5 py-4">What to know</th></tr></thead><tbody className="divide-y divide-line">{[
+          ["Lightweight foam or fabric", "Generally suitable for review", "No sharp edges, exposed cores or hazardous mechanisms."],
+          ["3D-printed or rigid plastic builds", "Ask before bringing", "Not automatically approved: brittle points, weight and hard edges can create hazards."],
+          ["Fantasy blasters & lightsabers", "Ask before bringing", "Must be visibly fictional, lightweight and non-firing. Realistic firearm replicas are not acceptable costume props."],
+          ["Realistic replica guns / projectile devices", "Do not bring as props", "An orange tip or removing ammunition does not make these acceptable."],
+          ["Metal blades / heavy striking props", "Do not bring as props", "Includes blunt metal costume blades and sheathed real weapons."],
+          ["Large wings, staffs or oversized costumes", "Contact us first", "Size, visibility and safe movement through crowds need review."],
+        ].map(([type,status,note]) => <tr key={type}><th scope="row" className="px-5 py-5 font-semibold text-paper">{type}</th><td className="px-5 py-5 text-gold">{status}</td><td className="max-w-xl px-5 py-5 text-muted">{note}</td></tr>)}</tbody></table></div>
+      </section>
 
       <section className="mb-12" aria-labelledby="safety-first">
         <h2 id="safety-first" className="font-display text-3xl uppercase tracking-wide text-paper">
@@ -101,9 +119,9 @@ export default function WeaponsPolicyPage() {
         </p>
       </section>
 
-      <section className="mb-12" aria-labelledby="leave-at-home">
+      <section id="leave-at-home" className="mb-12 scroll-mt-28" aria-labelledby="prohibited-heading">
         <p className="font-pixel text-[11px] uppercase tracking-[.16em] text-magenta">Not permitted as costume props</p>
-        <h2 id="leave-at-home" className="mt-2 font-display text-3xl uppercase tracking-wide text-paper">
+        <h2 id="prohibited-heading" className="mt-2 font-display text-3xl uppercase tracking-wide text-paper">
           Leave these items at home
         </h2>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -116,9 +134,9 @@ export default function WeaponsPolicyPage() {
         </div>
       </section>
 
-      <section className="mb-12 border border-cyan/30 bg-ink-2 p-6 sm:p-8" aria-labelledby="safe-props">
+      <section id="safe-props" className="mb-12 scroll-mt-28 border border-cyan/30 bg-ink-2 p-6 sm:p-8" aria-labelledby="safe-props-heading">
         <p className="font-pixel text-[11px] uppercase tracking-[.16em] text-cyan">Plan your costume</p>
-        <h2 id="safe-props" className="mt-2 font-display text-3xl uppercase tracking-wide text-paper">
+        <h2 id="safe-props-heading" className="mt-2 font-display text-3xl uppercase tracking-wide text-paper">
           Safer cosplay props
         </h2>
         <ul className="mt-5 space-y-4">
@@ -134,8 +152,8 @@ export default function WeaponsPolicyPage() {
         </p>
       </section>
 
-      <section className="mb-12" aria-labelledby="how-checking-works">
-        <h2 id="how-checking-works" className="font-display text-3xl uppercase tracking-wide text-paper">
+      <section id="how-checking-works" className="mb-12 scroll-mt-28" aria-labelledby="inspection-heading">
+        <h2 id="inspection-heading" className="font-display text-3xl uppercase tracking-wide text-paper">
           How prop review will work
         </h2>
         <ol className="mt-6 grid gap-4 md:grid-cols-3">
@@ -153,6 +171,13 @@ export default function WeaponsPolicyPage() {
         </p>
       </section>
 
+      <section id="vendors" className="mb-12 scroll-mt-28 border-t border-line pt-10">
+        <h2 className="font-display text-3xl uppercase tracking-wide text-paper">Vendors & prop purchases</h2>
+        <p className="mt-4 max-w-4xl leading-relaxed text-muted">Vendors must disclose prop merchandise in their application and obtain approval before displaying or selling it. A vendor’s acceptance does not approve every item they bring, and buying an item at the event does not grant permission to carry it on the floor.</p>
+        <p className="mt-4 max-w-4xl leading-relaxed text-muted">Weapons, restricted replicas and functional launchers are not approved merchandise under this preliminary costume-prop policy. Secure packaging and any collection or removal procedure must be agreed with the event and venue team before sales begin. No weapons storage, item-check service or automatic purchase exception is promised.</p>
+        <Link href="/vendors/policies" className="mt-4 inline-flex min-h-11 items-center font-semibold text-cyan underline underline-offset-4">Vendor policies →</Link>
+      </section>
+
       <section className="mb-12" aria-labelledby="respect">
         <h2 id="respect" className="font-display text-3xl uppercase tracking-wide text-paper">
           Respect everyone on the floor
@@ -165,10 +190,29 @@ export default function WeaponsPolicyPage() {
         </p>
       </section>
 
+      <section id="questions" className="mb-12 scroll-mt-28 border-t border-line pt-10">
+        <h2 className="font-display text-3xl uppercase tracking-wide text-paper">Prop questions</h2>
+        <div className="mt-6 divide-y divide-line border-y border-line">{[
+          ["Can I bring an airsoft gun if it is unloaded?", "No. Airsoft, BB, pellet, paintball and similar devices are not acceptable costume props, even if unloaded. Bring a lightweight, non-firing fantasy prop instead and request guidance if unsure."],
+          ["Does an orange tip guarantee approval?", "No. An orange tip is not permission to bring a realistic firearm replica. Shape, materials, mechanisms and the potential to alarm or injure others all matter."],
+          ["Are 3D-printed props allowed?", "Some builds may be suitable for review. There is no blanket approval for 3D printing or resin. Send the dimensions, approximate weight, materials, any internal core and photos through the contact process. Avoid sharp, brittle or heavy parts."],
+          ["What if my prop is refused?", "Follow authorized staff directions and do not bring the item onto the event floor. We have not announced storage or a check-in service for refused items. Never leave an item unattended or ask another attendee to hide it."],
+          ["Will props need a tag or daily inspection?", "Inspection locations, tagging methods and any repeat inspection requirements will be published after venue and security review. Be prepared to present your item when requested; no specific process is confirmed yet."],
+          ["Do these rules apply to mobility aids?", "Mobility aids and assistive equipment are not costume weapons. Contact the team about access needs; do not modify an essential aid into a hazardous prop."],
+          ["What if I see threatening behavior?", "Move away and notify event or venue staff. Do not confront the person, attempt to disarm them or handle an unattended suspicious item. For an immediate emergency, call 911."],
+        ].map(([q,a]) => <details key={q} className="group py-5"><summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold text-paper [&::-webkit-details-marker]:hidden">{q}<span aria-hidden="true" className="text-2xl text-cyan group-open:rotate-45">+</span></summary><p className="mt-3 max-w-4xl leading-relaxed text-muted">{a}</p></details>)}</div>
+      </section>
+
+      <aside className="mb-12 border-l-2 border-gold bg-panel p-6">
+        <h2 className="font-display text-xl uppercase text-paper">University policy & final event arrangements</h2>
+        <p className="mt-3 leading-relaxed text-muted">This page addresses costume props and does not replace university policy or determine legal carry permissions. ESU’s official weapons policy applies independently. Final event screening, vendor restrictions and any exceptions require coordination with the venue and authorized security team.</p>
+        <a href="https://www.emporia.edu/university-policy-manual/table-of-contents/campus-and-facilities/weapons-possession/" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex min-h-11 items-center font-semibold text-cyan underline underline-offset-4">Read ESU’s official weapons policy ↗<span className="sr-only"> (opens in a new tab)</span></a>
+      </aside>
+
       <div className="border border-line bg-panel p-6 sm:p-8">
         <h2 className="font-display text-2xl uppercase tracking-wide">Not sure about your build?</h2>
         <p className="mt-3 leading-relaxed text-muted">
-          Reach out before attending and tell us what the item is made of, its approximate dimensions, and whether it moves,
+          Reach out before attending and tell us what the item is made of, its approximate dimensions and weight, any internal support materials, and whether it moves,
           lights up or makes noise. We can discuss likely concerns, but final admission depends on the approved event policy.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
