@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArcadeIcon, type ArcadeIconName } from "@/components/retro/ArcadeIcon";
+import { CategoryEmblem } from "./CategoryEmblem";
 import { cn } from "@/lib/cn";
 
 const accent = {
@@ -63,12 +64,16 @@ export function GameSelectCard({
     >
       <div
         className={cn(
-          "relative flex min-h-[7.5rem] items-center justify-center overflow-hidden border-b border-line bg-ink-2",
+          "relative flex min-h-[11rem] items-center justify-center overflow-hidden border-b border-line bg-ink-2",
           colors.icon,
         )}
       >
-        <div className="pointer-events-none absolute inset-0 pixel-dots opacity-40" />
-        <ArcadeIcon name={icon} className="relative h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(38,198,237,0.09),transparent_70%)]" />
+        {["retro", "tcg", "tabletop", "cosplay", "vendors", "guests"].includes(icon) ? (
+          <CategoryEmblem name={icon} />
+        ) : (
+          <ArcadeIcon name={icon} className="relative h-20 w-20" />
+        )}
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         {index != null ? (
