@@ -139,6 +139,7 @@ const topics = [
     accent: "border-gold/60",
     action: "Get in touch",
   },
+  { number: "17", title: "Comic & TCG Card Grading", description: "Follow grading provider announcements for comics and trading cards, with submission guidance and collector FAQs. Providers and services to be announced.", href: "/grading-services", accent: "border-gold/60", action: "View grading updates" },
 ];
 
 export default function AttendeeInfoPage() {
