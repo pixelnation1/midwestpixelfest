@@ -1,6 +1,6 @@
 name: Build Android attendee guide
 on:
-  push:
+  pull_request:
     paths: ['android/**', '.github/workflows/android-guide.yml']
   workflow_dispatch:
 permissions:
