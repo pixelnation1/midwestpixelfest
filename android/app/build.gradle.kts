@@ -5,6 +5,10 @@ plugins {
 }
 android {
     namespace = "com.midwestpixelfest.guide"
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
     compileSdk = 35
     defaultConfig {
         applicationId = "com.midwestpixelfest.guide"
