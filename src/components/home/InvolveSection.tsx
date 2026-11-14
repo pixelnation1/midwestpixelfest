@@ -15,8 +15,8 @@ const paths = [
   {
     eyebrow: "Vendors",
     title: "Sell on the floor",
-    body: "Bring your shop or creative work to the fest. Register interest and get notified when official applications open.",
-    primary: { href: "/vendors/interest", label: "Vendor Interest" },
+    body: "Bring your shop or creative work to the fest. Vendor applications are now open. Apply for Vendor Hall, Artist Alley, or Cosplay Creator / Vendor.",
+    primary: { href: "/vendors/apply", label: "Apply Now" },
     secondary: { href: "/vendors", label: "Vendors", variant: "secondary" as const },
   },
   {
@@ -56,7 +56,7 @@ export function InvolveSection({ audience = "all" }: { audience?: "all" | "atten
         <SectionHeading
           eyebrow="Get involved"
           title={featured ? "Plan your weekend. Find your space." : "Be part of the fest."}
-          description={featured ? "Explore admission options or register your interest in selling at our inaugural marketplace." : "Explore opportunities for sponsors, creators, guests, and volunteers."}
+          description={featured ? "Explore admission options or apply to sell at our inaugural marketplace." : "Explore opportunities for sponsors, creators, guests, and volunteers."}
           tone="cyan"
         />
         <ul className={`mt-8 grid gap-4 md:grid-cols-2 ${featured ? "" : "xl:grid-cols-3"}`}>

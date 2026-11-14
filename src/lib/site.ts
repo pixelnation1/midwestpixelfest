@@ -422,12 +422,12 @@ export function getFaqs() {
     {
       question: "Can I become a vendor?",
       answer:
-        "Official vendor applications are not open. Vendor Hall and Artist Alley pricing and vendor policies are published on the Vendors page. Register vendor interest there to be notified when applications launch. That form is not an application, does not reserve a booth, and does not collect payment.",
+        "Vendor applications are now open. Visit the Vendors page for pricing, policies, and applications for Vendor Hall, Artist Alley, or Cosplay Creator / Vendor. Applying is free and does not guarantee acceptance or reserve a booth.",
     },
     {
       question: "Can I apply as an artist?",
       answer:
-        "Artist Alley applications are not open yet. Artist Alley pricing is listed on the Vendors page. Register interest there. When official applications open, they will live next to Vendor Hall applications.",
+        "Artist Alley applications are now open. Visit the Vendors page for pricing and the official application. Applications are subject to review and available space.",
     },
     {
       question: "Can my business sponsor?",

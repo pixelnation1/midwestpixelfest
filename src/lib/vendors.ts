@@ -11,9 +11,9 @@ export type { OfficialApplicationType };
  * food-vendor opportunities. Do not add vendor fees to Event ticket schema.
  */
 
-export const vendorApplicationsOpen = false;
-export const artistApplicationsOpen = false;
-export const cosplayVendorApplicationsOpen = false;
+export const vendorApplicationsOpen = true;
+export const artistApplicationsOpen = true;
+export const cosplayVendorApplicationsOpen = true;
 export const vendorApplicationUrl: string | null = null;
 export const artistApplicationUrl: string | null = null;
 export const vendorPricingPublished = true;
@@ -163,7 +163,7 @@ export function getVendorPrimaryCta(): VendorPrimaryCta {
   if (openApply.length > 1) {
     return {
       href: officialApplyHubPath,
-      label: "Apply for Vendor Hall or Artist Alley",
+      label: "Apply Now",
       mode: "apply",
       external: false,
     };
@@ -668,17 +668,17 @@ export const vendorFaqs = [
   {
     question: "When do vendor applications open?",
     answer:
-      "Official dates will be announced when the application launches. Applications are not open yet. Register interest to receive updates.",
+      "Applications are now open for Vendor Hall, Artist Alley, and Cosplay Creator / Vendor. Apply through the Vendors page.",
   },
   {
     question: "Are applications open yet?",
     answer:
-      "No. Official applications are being prepared. Register vendor interest and we will notify you when applications launch.",
+      "Yes. Vendor Hall, Artist Alley, and Cosplay Creator / Vendor applications are now open. Applications are free to submit and subject to review and available space.",
   },
   {
     question: "How do I know when applications open?",
     answer:
-      "Register vendor interest and we will notify you when official applications launch.",
+      "Applications are open now. Choose your application type at /vendors/apply.",
   },
   {
     question: "Is there an application fee?",
@@ -712,11 +712,11 @@ export const vendorFaqs = [
   },
   {
     question: "How much is an Artist Alley table?",
-    answer: `An Artist Alley table is ${formatVendorPrice(artistAlley.founding)} at the Founding Vendor Rate, and ${formatVendorPrice(artistAlley.regular)} regular. Founding Vendor pricing is planned through ${foundingVendorDeadlineLabel()}, subject to availability. Applications are not open yet.`,
+    answer: `An Artist Alley table is ${formatVendorPrice(artistAlley.founding)} at the Founding Vendor Rate, and ${formatVendorPrice(artistAlley.regular)} regular. Founding Vendor pricing is planned through ${foundingVendorDeadlineLabel()}, subject to availability. Applications are now open.`,
   },
   {
     question: "How much is a standard vendor booth?",
-    answer: `A standard 10×10 vendor booth is ${formatVendorPrice(standard.founding)} at the Founding Vendor Rate, and ${formatVendorPrice(standard.regular)} regular. Founding Vendor pricing is planned through ${foundingVendorDeadlineLabel()}, subject to availability. Applications are not open yet.`,
+    answer: `A standard 10×10 vendor booth is ${formatVendorPrice(standard.founding)} at the Founding Vendor Rate, and ${formatVendorPrice(standard.regular)} regular. Founding Vendor pricing is planned through ${foundingVendorDeadlineLabel()}, subject to availability. Applications are now open.`,
   },
   {
     question: "What is the Founding Vendor Rate?",

@@ -41,10 +41,10 @@ function interestForm(overrides: Record<string, string | string[]> = {}): FormDa
 }
 
 describe("cosplay vendor pathway", () => {
-  it("keeps applications closed and does not change listed prices", () => {
-    assert.equal(vendorApplicationsOpen, false);
-    assert.equal(artistApplicationsOpen, false);
-    assert.equal(cosplayVendorApplicationsOpen, false);
+  it("opens applications and does not change listed prices", () => {
+    assert.equal(vendorApplicationsOpen, true);
+    assert.equal(artistApplicationsOpen, true);
+    assert.equal(cosplayVendorApplicationsOpen, true);
     assert.equal(vendorPricing.artistAlley.founding, 75);
     assert.equal(vendorPricing.artistAlley.regular, 100);
     assert.equal(vendorPricing.standard10x10.founding, 175);
@@ -128,19 +128,16 @@ describe("cosplay vendor pathway", () => {
     assert.match(result.fieldErrors.cosplaySellTypes ?? "", /at least one option/);
   });
 
-  it("keeps official cosplay applications closed and does not skip Vendor Hall validation", () => {
+  it("opens official cosplay applications and does not skip Vendor Hall validation", () => {
     const form = new FormData();
     form.set("applicationType", "Cosplay Creator / Vendor");
     const parsed = parseVendorApplication(form);
-    assert.match(
-      parsed.errors.applicationType ?? "",
-      /Cosplay Creator \/ Vendor applications are not open yet/,
-    );
+    assert.equal(parsed.errors.applicationType, undefined);
 
     const hall = new FormData();
     hall.set("applicationType", "Vendor Hall");
     const hallParsed = parseVendorApplication(hall);
-    assert.match(hallParsed.errors.applicationType ?? "", /Vendor Hall applications are not open yet/);
+    assert.equal(hallParsed.errors.applicationType, undefined);
     assert.equal(hallParsed.errors.inventoryTypes, "Choose at least one inventory type.");
   });
 

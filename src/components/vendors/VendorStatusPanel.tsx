@@ -20,7 +20,7 @@ export function VendorStatusPanel() {
         id="vendor-status-heading"
         className="mt-5 font-display text-3xl uppercase tracking-wide text-paper sm:text-4xl"
       >
-        {open ? "Applications open" : "Not open yet"}
+        {open ? "Vendor applications are now open" : "Not open yet"}
       </p>
       <p className="mt-4 max-w-2xl text-muted">
         {open

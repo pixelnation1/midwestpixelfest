@@ -23,7 +23,7 @@ import { getVendorPrimaryCta, getVendorRecruitmentCtas, vendorFaqs } from "@/lib
 export const metadata: Metadata = createPageMetadata({
   title: "Vendors & Artist Alley | Midwest Pixel Fest 2027",
   description:
-    "Explore Vendor Hall and Artist Alley pricing for Midwest Pixel Fest 2027, register for application updates, and browse our official exhibitor directory.",
+    "Explore Vendor Hall and Artist Alley pricing for Midwest Pixel Fest 2027, apply for vendor space, and browse our official exhibitor directory.",
   path: "/vendors",
 });
 
@@ -37,7 +37,7 @@ export default function VendorsPage() {
       breadcrumbLabel="Vendors"
       eyebrow="Sell at the fest"
       title="Vendors & Artist Alley"
-      intro="Bring your shop, artwork, collectibles, or cosplay creations to our inaugural marketplace. Explore space options and pricing below, then register interest to hear when official applications open."
+      intro="Bring your shop, artwork, collectibles, or cosplay creations to our inaugural marketplace. Explore space options and pricing below, then submit your application. Vendor applications are now open."
       meta={`${site.dateLabel} · ${site.location}`}
       actions={[
         ...recruitmentCtas.map((cta) => ({

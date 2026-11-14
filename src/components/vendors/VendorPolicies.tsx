@@ -124,11 +124,11 @@ export function VendorPoliciesContent() {
           <li>The full vendor agreement (this page is not the vendor contract)</li>
         </ul>
         <p>
-          Official applications are not open yet.{" "}
-          <Link href="/vendors/interest" className="text-cyan underline-offset-2 hover:underline">
-            Register vendor interest
+          Vendor applications are now open.{" "}
+          <Link href="/vendors/apply" className="text-cyan underline-offset-2 hover:underline">
+            Apply now
           </Link>{" "}
-          to be notified, or return to{" "}
+          or return to{" "}
           <Link href="/vendors" className="text-cyan underline-offset-2 hover:underline">
             vendor information
           </Link>

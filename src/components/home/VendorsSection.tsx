@@ -14,7 +14,7 @@ export function VendorsSection() {
         <SectionHeading
           eyebrow="Artist alley & vendor hall"
           title="Walk the marketplace."
-          description="Games, cards, collectibles, art, apparel, makers, and pop culture merchandise are the kind of tables this floor is being built for. Applications are not open, and no vendors are listed yet."
+          description="Games, cards, collectibles, art, apparel, makers, and pop culture merchandise are the kind of tables this floor is being built for. Vendor applications are now open. Our vendor lineup will be announced as participants are confirmed."
           tone="lime"
         />
 
@@ -65,11 +65,11 @@ export function VendorsSection() {
         </div>
         <p className="mt-4 text-sm text-muted">
           Founding pricing is planned through {foundingVendorDeadlineLabel()}, subject to availability.
-          Official applications are not open yet. Register interest for application updates.
+          Vendor applications are now open. Apply for Vendor Hall, Artist Alley, or Cosplay Creator / Vendor.
         </p>
 
         <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-          <Button href="/vendors/interest">Register Vendor Interest</Button>
+          <Button href="/vendors/apply">Apply Now</Button>
           <Button href="/vendors#vendor-pricing" variant="secondary">
             View All Booth Options & Pricing
           </Button>

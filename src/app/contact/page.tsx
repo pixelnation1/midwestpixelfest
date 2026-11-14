@@ -32,8 +32,8 @@ const categories = [
   },
   {
     title: "Vendors & Artists",
-    href: "/vendors/interest",
-    note: "Tell us about your business or artwork and get notified when applications open.",
+    href: "/vendors/apply",
+    note: "Vendor applications are now open. Tell us about your business or artwork and apply for space.",
   },
   {
     title: "Sponsors",
